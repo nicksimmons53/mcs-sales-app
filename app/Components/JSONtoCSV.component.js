@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
+import * as FileSystem from 'expo-file-system';
 import Firebase from '../../config/Firebase';
+
+const saveFile = async(client, programName, csvString) => {
+  let fileName = client.clientName + '_' + programName + '.csv';
+  console.log(fileName);
+  let fileURI = FileSystem.documentDirectory;
+}
 
 const jsonToCsv = async(client) => {
   let tables = [ ];
+  let filesURI = [ ];
 
   // Retrieve Data from DB
   var tableRef = await Firebase.firestore( )
@@ -18,21 +26,25 @@ const jsonToCsv = async(client) => {
     });
 
   // Convert JSON Data to CSV
-  tables.map((program, key) => {
+  tables.map((program) => {
+    let csvTables = [ ];
+    let programName = '';
     Object.keys(program).map((table) => {
       let rows = program[table].rows;
-      const replacer = (key, value) => value === null ? '' : value;
-      let csvTable = [ ];
-      let csvHeader = Object.keys(rows[0]);
-      console.log(csvHeader);
+      let csv = Object.keys(rows[0]).join(',') + '\r\n';
 
-      rows.map((row, key) => {
-        console.log(row);
+      rows.map((row) => {
+        let rowValues = Object.values(row);
+        let csvRow = rowValues.join(',');
+        csv = csv.concat(csvRow + '\r\n');
       });
+
+      csv.concat('\r\n');
+      saveFile(client, program[table].program, csv);
     });
   });
 
-  return tables;
+  return filesURI;
 }
 
 export default jsonToCsv;

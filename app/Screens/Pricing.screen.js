@@ -132,7 +132,7 @@ export default class Pricing extends Component {
         program: 'Wood',
         parent: 'Wood Table',
         name: 'Wood',
-        columnHeaders: ['Style #', 'Style Name', 'Species', 'Width', 'Description', 'Core', 'Level', 'Price'],
+        columnHeaders: ['Style #', 'Name', 'Species', 'Width', 'Description', 'Core', 'Level', 'Price'],
         rows: [{style: '', name: '', species: '', width: '', desc: '', core: '', level: '', price: ''}],
         newRow: {style: '', name: '', species: '', width: '', desc: '', core: '', level: '', price: ''}
       },
@@ -141,16 +141,16 @@ export default class Pricing extends Component {
         parent: 'Wood Table',
         name: 'Miscellaneous',
         columnHeaders: ['Item', 'Price'],
-        rows: [{item: '', price: ''}],
-        newRow: {item: '', price: ''}
+        rows: [{item: '', total: ''}],
+        newRow: {item: '', total: ''}
       },
       2: {
         program: 'Wood',
         parent: 'Wood Table',
         name: 'Wood Extras',
         columnHeaders: ['Item', 'Price'],
-        rows: [{item: '', cost: ''}],
-        newRow: {item: '', cost: ''}
+        rows: [{item: '', total: ''}],
+        newRow: {item: '', total: ''}
       }
     },
     Carpet: {
