@@ -9,10 +9,17 @@ class SpreadSheet extends Component {
   handleInputChange = (tables, tableIndex, rowIndex, targetValue, newValue) => {
     let row = tables[tableIndex].rows[rowIndex];
     row[targetValue] = newValue;
+    console.log(targetValue);
+    console.log(row[targetValue])
   }
 
   row = (tables, tableIndex, rowObj, rowIndex) => {
     const keys = Object.keys(tables[tableIndex].newRow);
+    console.log(keys);
+    keys.map((i) => {
+      console.log(i);
+    })
+
     return (
       <DataTable.Row key={rowIndex}>
         <View style={styles.tableRow}>

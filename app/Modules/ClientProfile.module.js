@@ -150,7 +150,7 @@ class ClientProfile extends Component {
                 raised
                 containerStyle={styles.submitButtonContainer}
                 buttonStyle={styles.submitButton}
-                onPress={sendEmail}/>
+                onPress={( ) => sendEmail(client, true)}/>
             </View>
           </ScrollView>
 
