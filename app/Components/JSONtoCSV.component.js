@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import * as FileSystem from 'expo-file-system';
 import Firebase from '../../config/Firebase';
 
 const saveFile = async(client, programName, csvString) => {
-  let fileName = client.clientName + '_' + programName + '.csv';
-  console.log(fileName);
-  let fileURI = FileSystem.documentDirectory;
+  // const fileName = client.clientName + '_' + programName + '.csv';
+  // const filePath = FileSystem.documentDirectory + fileName;
+
+  // await FileSystem.writeAsStringAsync(filePath, csvString);
+  //
+  // return filePath;
 }
 
 const jsonToCsv = async(client) => {
@@ -27,20 +29,26 @@ const jsonToCsv = async(client) => {
 
   // Convert JSON Data to CSV
   tables.map((program) => {
-    let csvTables = [ ];
-    let programName = '';
+    let tables = '';
+
     Object.keys(program).map((table) => {
-      let rows = program[table].rows;
-      let csv = Object.keys(rows[0]).join(',') + '\r\n';
+      let index = 1;
+      let csv = '';
+      let string = '';
+      let header = Object.keys(program[table].rows[0]);
+      let values = program[table].rows.map(row => Object.values(row).join(',')).join('\n');
 
-      rows.map((row) => {
-        let rowValues = Object.values(row);
-        let csvRow = rowValues.join(',');
-        csv = csv.concat(csvRow + '\r\n');
-      });
+      for (var i = 0; i < header.length; i++) {
+        if (index == header.length) {
+          string += header[i] + '\n';
+        } else {
+          string += header[i] + ',';
+          index += 1;
+        }
+      }
 
-      csv.concat('\r\n');
-      saveFile(client, program[table].program, csv);
+      csv = string + values;
+      console.log("CHECK " + csv)
     });
   });
 
