@@ -20,7 +20,7 @@ class UpdateClient extends Component {
       .collection('clients')
       .doc(this.client.uid);
 
-    await clientRef.update(values);
+    await clientRef.set(values, { merge: true });
   }
 
   render( ) {

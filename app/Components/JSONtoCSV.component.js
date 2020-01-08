@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Firebase from '../../config/Firebase';
+import * as FileSystem from 'expo-file-system';
 
 const saveFile = async(client, programName, csvString) => {
   // const fileName = client.clientName + '_' + programName + '.csv';
@@ -29,26 +30,68 @@ const jsonToCsv = async(client) => {
 
   // Convert JSON Data to CSV
   tables.map((program) => {
-    let tables = '';
 
     Object.keys(program).map((table) => {
-      let index = 1;
-      let csv = '';
-      let string = '';
-      let header = Object.keys(program[table].rows[0]);
-      let values = program[table].rows.map(row => Object.values(row).join(',')).join('\n');
+      let programs = [ ];
+      let header = program[table].columnHeaders.toString( );
+      let values = '';
 
-      for (var i = 0; i < header.length; i++) {
-        if (index == header.length) {
-          string += header[i] + '\n';
-        } else {
-          string += header[i] + ',';
-          index += 1;
+      program[table].rows.map((row) => {
+        let tempArr = [ ];
+        Object.values(row).map((val) => {
+          if (val === '' || typeof(val) === undefined) {
+            tempArr.push("''");
+          } else {
+            tempArr.push(val);
+          }
+        });
+
+        let reorderedArr = [ ];
+        if (program[table].program === 'Tile') {
+          if (tempArr.length === 6) {
+            reorderedArr.push(tempArr[1]);
+            reorderedArr.push(tempArr[0]);
+            reorderedArr.push(tempArr[4]);
+            reorderedArr.push(tempArr[2]);
+            reorderedArr.push(tempArr[3]);
+            reorderedArr.push(tempArr[5]);
+          } else if (tempArr.length === 3) {
+            reorderedArr.push(tempArr[2]);
+            reorderedArr.push(tempArr[0]);
+            reorderedArr.push(tempArr[1]);
+          } else {
+            reorderedArr = tempArr;
+          }
         }
-      }
 
-      csv = string + values;
-      console.log("CHECK " + csv)
+        if (program[table].program === 'Wood') {
+          if (tempArr.length === 8) {
+            reorderedArr.push(tempArr[5]);
+            reorderedArr.push(tempArr[4]);
+            reorderedArr.push(tempArr[6]);
+            reorderedArr.push(tempArr[1]);
+            reorderedArr.push(tempArr[7]);
+            reorderedArr.push(tempArr[3]);
+            reorderedArr.push(tempArr[2]);
+            reorderedArr.push(tempArr[0]);
+            reorderedArr.push(tempArr[4]);
+          } else {
+            reorderedArr = tempArr;
+          }
+        }
+
+        if (program[table].program === 'Carpet') {
+          if (tempArr.length === 3) {
+            reorderedArr.push(tempArr[1]);
+            reorderedArr.push(tempArr[2]);
+            reorderedArr.push(tempArr[0]);
+          } else {
+            reorderedArr = tempArr;
+          }
+        }
+
+        console.log(reorderedArr.toString( ));
+      });
     });
   });
 
