@@ -5,7 +5,7 @@ import { Button } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import Firebase from '../../config/Firebase';
 import * as DocumentPicker from 'expo-document-picker';
-import { deleteClient } from '../Components/FBfunctions.component';
+import { deleteClient } from '../Components/ClientFunc.component';
 import colors from '../Library/Colors';
 
 // Presentational Component of Buttons inside Client Profile

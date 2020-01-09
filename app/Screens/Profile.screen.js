@@ -7,6 +7,7 @@ import ClientList from '../Modules/ClientList.module';
 import ClientProfile from '../Modules/ClientProfile.module';
 import Toolbar from '../Components/Toolbar.component';
 import { networkALert } from '../Components/Alert.component';
+import { retrieveClientInfo } from '../Components/ClientFunc.component';
 import Firebase from '../../config/Firebase';
 import styles from './Styles/Profile.style';
 import colors from '../Library/Colors';
@@ -39,41 +40,17 @@ export default class Profile extends Component {
     });
   }
 
-  async componentDidMount( ) {
-    const user = Firebase.auth( ).currentUser;
-    if (user) {
-      AsyncStorage.setItem('userId', user.uid);
-      console.log('UID: ' + user.uid);
-    } else {
-      console.log('No user logged in.');
-    }
-  }
-
-  // Retrieves Selected Client Info from the Firestore DB
-  async _retrieveClientInfo(uid) {
-    this.setState({ loading: true });
-    let client = null;
-
-    await Firebase.firestore( )
-      .collection('clients')
-      .doc(Firebase.auth( ).currentUser.uid)
-      .collection('clients')
-      .doc(uid)
-      .get( )
-      .then(function(doc) {
-        client = doc.data( );
-      });
-
-    this.setState({ client: client });
-    this.setState({ loading: false });
-    console.log(this.state.client);
-  }
-
   // Sets the UID when a client is selected for viewing
   setClientUID = (uid) => {
     this.setState({ clientUID: uid })
-    this._retrieveClientInfo(uid);
+    this.setState({ loading: true });
+
+    let client = retrieveClientInfo(uid);
+
     this.setState({clientModal: true});
+
+    this.setState({ client: client });
+    this.setState({ loading: false });
   }
 
   // User Sign Out (clears AsyncStorage and Firebase)

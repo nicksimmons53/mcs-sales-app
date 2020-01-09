@@ -48,6 +48,17 @@ class ClientProfile extends Component {
       this.refs.toast.show(this.props.client.clientName + ' has been inactivated.');
   }
 
+  dataTable = ( ) => (
+    <DataTable>
+      <DataTable.Header>
+        <DataTable.Title>Name</DataTable.Title>
+        <DataTable.Title>Title</DataTable.Title>
+        <DataTable.Title>Phone</DataTable.Title>
+        <DataTable.Title>Email</DataTable.Title>
+      </DataTable.Header>
+    </DataTable>
+  );
+
   render( ) {
     let headerStyle = { };
 
@@ -76,14 +87,6 @@ class ClientProfile extends Component {
                 cancel={this.toggleUpdate}/>
             :
               <View style={styles.table}>
-                <DataTable>
-                  <DataTable.Header>
-                    <DataTable.Title>Name</DataTable.Title>
-                    <DataTable.Title>Title</DataTable.Title>
-                    <DataTable.Title>Phone</DataTable.Title>
-                    <DataTable.Title>Email</DataTable.Title>
-                  </DataTable.Header>
-                </DataTable>
               </View>
             }
             <View style={styles.lists}>
@@ -91,10 +94,9 @@ class ClientProfile extends Component {
                 refs={this.refs}
                 update={this.toggleUpdate}
                 nav={this.props.nav}
-                client={client}
+                client={this.props.client}
                 loading={this.props.loading}
                 modal={this.props.toggleModal}
-                isPortrait={this.props.isPortrait}
                 showFileToast={this.showFileToast}
                 showInactivationToast={this.showInactivationToast} />
             </View>

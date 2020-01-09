@@ -1,9 +1,7 @@
 import Firebase from '../../config/Firebase';
 
 // Inactivate the Currently Selected Client
-const deleteClient = async(client, loading, modal, isPortrait) => {
-  let programs = [ ];
-
+const deleteClient = async(client, loading, modal) => {
   // New Client Location (inactivate clients)
   const clientRef = Firebase.firestore( )
     .collection('inactiveClients')
@@ -14,7 +12,7 @@ const deleteClient = async(client, loading, modal, isPortrait) => {
   clientRef.set(client);
 
   // Client Programs
-  const programRef = await Firebase.firestore( )
+  await Firebase.firestore( )
     .collection('clients')
     .doc(Firebase.auth( ).currentUser.uid)
     .collection('clients')
@@ -39,6 +37,24 @@ const deleteClient = async(client, loading, modal, isPortrait) => {
   loading( );
 }
 
+// Retrieves Selected Client Info from the Firestore DB
+const retrieveClientInfo = async(uid) => {
+  let client = null;
+
+  await Firebase.firestore( )
+    .collection('clients')
+    .doc(Firebase.auth( ).currentUser.uid)
+    .collection('clients')
+    .doc(uid)
+    .get( )
+    .then(function(doc) {
+      client = doc.data( );
+    });
+
+  return client;
+}
+
 export {
   deleteClient,
+  retrieveClientInfo,
 }
