@@ -3,12 +3,15 @@ import Firebase from '../../config/Firebase';
 import * as FileSystem from 'expo-file-system';
 
 const saveFile = async(client, programName, csvString) => {
-  // const fileName = client.clientName + '_' + programName + '.csv';
-  // const filePath = FileSystem.documentDirectory + fileName;
+  const fileName = client.clientName + '_' + programName + '.csv';
+  const filePath = FileSystem.documentDirectory + fileName;
+  let string = '';
+  let index = 0;
 
-  // await FileSystem.writeAsStringAsync(filePath, csvString);
-  //
-  // return filePath;
+  csvString.map((values) => {
+    string += '\n' + values;
+    console.log(values)
+  });
 }
 
 const jsonToCsv = async(client) => {
@@ -30,9 +33,11 @@ const jsonToCsv = async(client) => {
 
   // Convert JSON Data to CSV
   tables.map((program) => {
+    let programs = [ ];
+    let programName = '';
 
     Object.keys(program).map((table) => {
-      let programs = [ ];
+      programName = program[table].program;
       let header = program[table].columnHeaders.toString( );
       let values = '';
 
@@ -90,10 +95,13 @@ const jsonToCsv = async(client) => {
           }
         }
 
-        console.log(reorderedArr.toString( ));
+        programs.push(header);
+        programs.push(reorderedArr.toString( ) + '\n');
       });
     });
+      saveFile(client, programName, programs);
   });
+
 
   return filesURI;
 }

@@ -127,7 +127,8 @@ export default class Profile extends Component {
                   <ClientProfile
                     nav={this.props.navigation}
                     client={this.state.client}
-                    loading={this.toggleLoading} />
+                    loading={this.toggleLoading}
+                    toggleModal={this.toggleModal} />
               }
             </View>
           </View>
@@ -165,7 +166,7 @@ export default class Profile extends Component {
                   nav={this.props.navigation}
                   client={this.state.client}
                   loading={this.toggleLoading}
-                  portrait={true}
+                  isPortrait={true}
                   toggleModal={this.toggleModal} />
             }
           </Modal>

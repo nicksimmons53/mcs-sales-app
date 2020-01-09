@@ -44,9 +44,7 @@ const styles = StyleSheet.create({
   },
 
   // Row View
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  table: {
     margin: 10,
     marginBottom: 5,
     borderWidth: 1,

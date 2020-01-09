@@ -5,6 +5,7 @@ import { Button } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import Firebase from '../../config/Firebase';
 import * as DocumentPicker from 'expo-document-picker';
+import { deleteClient } from '../Components/FBfunctions.component';
 import colors from '../Library/Colors';
 
 // Presentational Component of Buttons inside Client Profile
@@ -68,7 +69,7 @@ const ClientActions = ({...props}) => {
     }).then(( ) => {
       console.log('File Uploaded');
       if (showToastBool === true)
-        props.showToast( );
+        props.showFileToast( );
     }).catch((error) => {
       throw error;
     });
@@ -148,7 +149,10 @@ const ClientActions = ({...props}) => {
           color: colors.white,
         }}
         buttonStyle={styles.button}
-        onPress={props.inactivate}/>
+        onPress={( ) => {
+          deleteClient(props.client, props.loading, props.modal, props.isPortrait);
+          props.showInactivationToast( );
+        }}/>
     </ScrollView>
   );
 };
