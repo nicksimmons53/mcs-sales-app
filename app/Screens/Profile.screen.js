@@ -48,7 +48,7 @@ export default class Profile extends Component {
     let client = retrieveClientInfo(uid);
 
     this.setState({clientModal: true});
-
+    console.log(client.uid);
     this.setState({ client: client });
     this.setState({ loading: false });
   }
