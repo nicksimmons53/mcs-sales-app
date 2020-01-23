@@ -31,7 +31,14 @@ class ClientProfile extends Component {
       'Inactivate Client',
       'Are you sure you want to continue? This client will be removed from view.',
       [
-        {text: 'Continue', onPress: ( ) => Client.deleteInfo(this.state.client)},
+        {
+          text: 'Continue',
+          onPress: ( ) => {
+            Client.deleteInfo(this.state.client);
+            this.showInactivationToast( );
+            this.props.toggleModal( );
+          }
+        },
         {text: 'Cancel', style: 'cancel'}
       ],
       {cancelable: true},

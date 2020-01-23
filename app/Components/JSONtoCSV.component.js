@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import Firebase from '../../config/Firebase';
 import * as FileSystem from 'expo-file-system';
 

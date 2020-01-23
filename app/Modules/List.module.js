@@ -1,10 +1,9 @@
 // Library Imports
 import React, { Component } from 'react';
-import { View, Text, FlatList, TouchableHighlight, ScrollView, Image } from 'react-native';
-import Firebase from '../../config/Firebase';
+import { Text, ScrollView } from 'react-native';
 import { Divider, ListItem, Icon } from 'react-native-elements';
-import * as FileSystem from 'expo-file-system';
 import  { WebView } from 'react-native-webview';
+import File from '../Functions/File';
 import Modal from 'react-native-modal';
 import styles from './Styles/List.style';
 import colors from '../Library/Colors';
@@ -20,45 +19,11 @@ class List extends Component {
 
   // Will retrieve list of files and notifications per client
   componentDidMount( ) {
-    let files = [ ];
-
-    const folderPath = Firebase.auth( ).currentUser.uid + '/' + this.state.client.uid + '/';
-    const storageRef = Firebase.storage( ).ref( );
-
-    const folderRef = storageRef.child(folderPath);
-    folderRef.listAll( ).then((res) => {
-      res.items.forEach((itemRef) => {
-        fileObj = { };
-        fileObj['name'] = itemRef.name;
-
-        files.push(fileObj);
-      });
-
-      this.setState({files: [...files]});
-
-    }).catch((err) => {
-      console.error(err);
-    });
-  }
-
-  _getFile = async(fileName) => {
-    const filePath = Firebase.auth( ).currentUser.uid + '/' + this.state.client.uid
-                        + '/' + fileName;
-    const storageRef = Firebase.storage( ).ref( );
-    const fileRef = storageRef.child(filePath);
-    await fileRef.getDownloadURL( ).then((url) => {
-      let promise = fetch(url);
-      return promise;
-    }).then((result) => {
-      this.setState({fileURL: result.url});
-      console.log(result.url);
-    }).catch((error) => {
-      console.log(error);
-    });
+    this.setState({files: [...File.retrieveAll(this.state.client)]});
   }
 
   displayFile = async(fileName) => {
-    await this._getFile(fileName);
+    this.setState({fileURL: await File.retrieveData(fileName)});
     console.log(this.state.fileURL);
     this.setState({modalVisible: true});
   }

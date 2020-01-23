@@ -4,23 +4,21 @@ import { View, Text, Switch } from 'react-native';
 import { Icon, Divider, Input, Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import { UpdateClientValues } from '../Form/Values.form';
+import Client from '../Functions/Client';
 import Toast from 'react-native-easy-toast';
-import Firebase from '../../config/Firebase';
 import styles from './Styles/Form.style';
 
 // Class Component to show Update Client Form
 class UpdateClient extends Component {
-  client = this.props.client;
+  state = {
+    client: this.props.client
+  }
 
-  _saveClientInfo = async(values) => {
-    console.log(this.client.corpAddr);
-    const clientRef = Firebase.firestore( )
-      .collection('clients')
-      .doc(Firebase.auth( ).currentUser.uid)
-      .collection('clients')
-      .doc(this.client.uid);
+  _updateClient = (values, actions) => {
+    setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    await clientRef.set(values, { merge: true });
+    Client.updateInfo(values, 'clients', this.state.client);
+    this.props.cancel( );
   }
 
   render( ) {
@@ -28,15 +26,7 @@ class UpdateClient extends Component {
       <View style={styles.background}>
         <Formik
           initialValues={UpdateClientValues}
-          onSubmit={(values, actions) => {
-            console.log('Updated Client Info');
-            setTimeout(( ) => {
-              actions.setSubmitting(false);
-            }, 1000);
-
-            this._saveClientInfo(values);
-            this.props.cancel( );
-          }}>
+          onSubmit={(values, actions) => this._updateClient(values, actions)}>
         {formikProps => (
         <View style={styles.form}>
           <View style={styles.header}>

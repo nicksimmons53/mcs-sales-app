@@ -2,57 +2,15 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
-import Toast from 'react-native-easy-toast';
-import Firebase from '../../config/Firebase';
+import File from '../Functions/File';
+import Client from '../Functions/Client';
 import * as DocumentPicker from 'expo-document-picker';
-import { deleteClient } from '../Components/ClientFunc.component';
 import colors from '../Library/Colors';
 
 // Presentational Component of Buttons inside Client Profile
 const ClientActions = ({...props}) => {
-  // Upload the File to Firebase
-  const _uploadFile = (blob) => {
-    console.log(blob);
-    return new Promise((resolve, reject) => {
-      var storageRef = Firebase.storage( ).ref( );
-
-      storageRef.child(Firebase.auth( ).currentUser.uid + '/' + props.client.uid + '/' + blob._data.name).put(blob, {
-        contentType: blob._data.type
-      }).then((snapshot) => {
-        blob.close( );
-
-        resolve(snapshot);
-      }).catch((error) => {
-        reject(error);
-      });
-    });
-  }
-
-  // Convert File URI to Blob
-  const uriToBlob = (uri) => {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest( );
-
-      xhr.onload = function( ) {
-        resolve(xhr.response);
-      };
-
-      xhr.onerror = function( ) {
-        reject(new Error('uriToBlob failed'));
-      };
-
-      xhr.responseType = 'blob';
-
-      xhr.open('GET', uri, true);
-
-      xhr.send(null);
-    });
-  }
-
   // Expo Cli Document Picker Component
   const filePicker = async( ) => {
-    let showToastBool = false;
-
     let result = await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: false
     }).then((result) => {
@@ -60,16 +18,13 @@ const ClientActions = ({...props}) => {
       if (result.type === 'cancel')
         return;
       else
-        return uriToBlob(result.uri);
+        return File.uriToBlob(result.uri);
     }).then((blob) => {
       if (blob !== undefined) {
-        showToastBool = true;
-        return _uploadFile(blob);
+        return File.saveData(blob, props.client.uid);
       }
     }).then(( ) => {
-      console.log('File Uploaded');
-      if (showToastBool === true)
-        props.showFileToast( );
+      props.showFileToast( );
     }).catch((error) => {
       throw error;
     });
@@ -150,8 +105,7 @@ const ClientActions = ({...props}) => {
         }}
         buttonStyle={styles.button}
         onPress={( ) => {
-          deleteClient(props.client, props.loading, props.modal, props.isPortrait);
-          props.showInactivationToast( );
+          Client.deleteInfo(props.client);
         }}/>
     </ScrollView>
   );

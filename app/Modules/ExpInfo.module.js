@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 import { Divider, Input, Button } from 'react-native-elements';
 import * as DocumentPicker from 'expo-document-picker';
 import Toast from 'react-native-easy-toast';
-import Firebase from '../../config/Firebase';
+import File from '../Functions/File';
 import styles from './Styles/Form.style';
 import colors from '../Library/Colors';
 
@@ -12,45 +12,6 @@ import colors from '../Library/Colors';
 class ExpInfo extends Component {
 
   render( ) {
-    // Upload the File to Firebase
-    const _uploadFile = (blob) => {
-      console.log(blob);
-      return new Promise((resolve, reject) => {
-        var storageRef = Firebase.storage( ).ref( );
-
-        storageRef.child(Firebase.auth( ).currentUser.uid + '/' + this.props.client.uid + '/' + blob._data.name).put(blob, {
-          contentType: blob._data.type
-        }).then((snapshot) => {
-          blob.close( );
-
-          resolve(snapshot);
-        }).catch((error) => {
-          reject(error);
-        });
-      });
-    }
-
-    // Convert File URI to Blob
-    const uriToBlob = (uri) => {
-      return new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest( );
-
-        xhr.onload = function( ) {
-          resolve(xhr.response);
-        };
-
-        xhr.onerror = function( ) {
-          reject(new Error('uriToBlob failed'));
-        };
-
-        xhr.responseType = 'blob';
-
-        xhr.open('GET', uri, true);
-
-        xhr.send(null);
-      });
-    }
-
     // Expo Cli Document Picker Component
     const filePicker = async( ) => {
       let result = await DocumentPicker.getDocumentAsync({
@@ -59,16 +20,13 @@ class ExpInfo extends Component {
         if (result.type === 'cancel')
           return;
         else
-          return uriToBlob(result.uri);
+          return File.uriToBlob(result.uri);
       }).then((blob) => {
         if (blob !== undefined) {
-          showToastBool = true;
-          return _uploadFile(blob);
+          return File.saveFile(blob, this.props.client);
         }
       }).then(( ) => {
-        console.log('File Uploaded');
-        if (showToastBool === true)
-          this.refs.toast.show('File Was Attached Successfully');
+        this.refs.toast.show('File Was Attached Successfully');
       }).catch((error) => {
         throw error;
       });

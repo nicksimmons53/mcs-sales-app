@@ -66,12 +66,12 @@ const saveInfo = async(values, collection, clientUID) => {
 }
 
 // Update Client Info
-const updateInfo = async(values) => {
+const updateInfo = async(values, collection, client) => {
   const clientRef = Firebase.firestore( )
-    .collection('clients')
+    .collection(collection)
     .doc(Firebase.auth( ).currentUser.uid)
     .collection('clients')
-    .doc(this.client.uid);
+    .doc(client.uid);
 
   await clientRef.set(values, { merge: true });
 }
