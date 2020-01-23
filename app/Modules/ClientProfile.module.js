@@ -1,10 +1,10 @@
 // Library Imports
 import React, { Component } from 'react';
 import { Alert, ScrollView, View, Text, KeyboardAvoidingView } from 'react-native';
-import { Button, Divider } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import { DataTable } from 'react-native-paper';
-import Firebase from '../../config/Firebase';
 import Toast from 'react-native-easy-toast';
+import Client from '../Functions/Client';
 import UpdateClient from '../Modules/UpdateClient.module';
 import ClientActions from '../Components/ClientActions.component';
 import List from './List.module';
@@ -16,7 +16,7 @@ class ClientProfile extends Component {
   // State
   state = {
     update: false,
-    client: null,
+    client: this.props.client,
     files: [ ]
   };
 
@@ -31,7 +31,7 @@ class ClientProfile extends Component {
       'Inactivate Client',
       'Are you sure you want to continue? This client will be removed from view.',
       [
-        {text: 'Continue', onPress: ( ) => deleteClient(this.props.client, this.refs)},
+        {text: 'Continue', onPress: ( ) => Client.deleteInfo(this.state.client)},
         {text: 'Cancel', style: 'cancel'}
       ],
       {cancelable: true},

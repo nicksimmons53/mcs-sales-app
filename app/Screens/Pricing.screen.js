@@ -5,6 +5,7 @@ import { Divider, Icon, ButtonGroup } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import Firebase from '../../config/Firebase';
 import { Formik } from 'formik';
+import Program from '../Functions/Program';
 import SpreadSheet from '../Modules/SpreadSheet.module';
 import { styles, colors } from './Styles/Pricing.style';
 
@@ -195,27 +196,13 @@ export default class Pricing extends Component {
     this.setState({selectedSpreadsheet: selected});
   }
 
-  _retrieveTableData = async( ) => {
-
-  }
-
   _saveTableData = async(values, actions, client, index) => {
     let docName = this.state.buttonGroup[index];
+    setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    setTimeout(( ) => {
-      actions.setSubmitting(false);
-    }, 1000);
-
-    const clientRef = Firebase.firestore( )
-      .collection('clients')
-      .doc(Firebase.auth( ).currentUser.uid)
-      .collection('clients')
-      .doc(client.uid)
-      .collection('programs')
-      .doc(docName)
+    Program.saveTable(values, docName, 'clients', client);
 
     this.refs.toast.show('Client Program Saved');
-    await clientRef.set(values[docName], { merge: true });
   }
 
   addRow = (tables, tableIndex) => {

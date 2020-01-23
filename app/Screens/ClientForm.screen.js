@@ -10,6 +10,7 @@ import {
 import { Divider, Icon, Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import { CreateClientValues, ContinueClientValues } from '../Form/Values.form';
+import Client from '../Functions/Client';
 import Toast from 'react-native-easy-toast';
 import Toolbar from '../Components/Toolbar.component';
 import BasicInfo from '../Modules/BasicInfo.module';
@@ -31,42 +32,23 @@ class ClientForm extends Component {
 
   // Saving Basic Client Info
   _saveBasicInfo = async(values, actions) => {
-    setTimeout(( ) => {
-      actions.setSubmitting(false);
-    }, 1000);
+    setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    const clientRef = Firebase.firestore( )
-      .collection('clients')
-      .doc(Firebase.auth( ).currentUser.uid)
-      .collection('clients')
-      .doc( );
-    values.uid = clientRef.id;
-    await clientRef.set(values);
+    Client.saveInfo(values, 'clients');
 
     this.refs.toast.show(values.clientName + ' has been saved.');
-    setTimeout(( ) => {
-      this.props.navigation.popToTop( );
-    }, 2000);
+    setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
   }
 
   // Saving Accounting/Expediting Information
   _saveAdvancedInfo = async(values, actions) => {
     let client = this.props.navigation.getParam('client');
-    setTimeout(( ) => {
-      actions.setSubmitting(false);
-    }, 1000);
+    setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    const clientRef = Firebase.firestore( )
-      .collection('clients')
-      .doc(Firebase.auth( ).currentUser.uid)
-      .collection('clients')
-      .doc(client.uid);
-    await clientRef.update(values);
+    Client.saveInfo(values, 'clients', client.uid);
 
     this.refs.toast.show('Client Information has been saved.');
-    setTimeout(( ) => {
-      this.props.navigation.popToTop( );
-    }, 2000);
+    setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
   }
 
   render( ) {

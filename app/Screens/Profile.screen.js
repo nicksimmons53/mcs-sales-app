@@ -7,7 +7,7 @@ import ClientList from '../Modules/ClientList.module';
 import ClientProfile from '../Modules/ClientProfile.module';
 import Toolbar from '../Components/Toolbar.component';
 import { networkALert } from '../Components/Alert.component';
-import { retrieveClientInfo } from '../Components/ClientFunc.component';
+import Client from '../Functions/Client';
 import Firebase from '../../config/Firebase';
 import styles from './Styles/Profile.style';
 import colors from '../Library/Colors';
@@ -45,7 +45,7 @@ export default class Profile extends Component {
     this.setState({ clientUID: uid })
     this.setState({ loading: true });
 
-    let client = retrieveClientInfo(uid);
+    let client = Client.retrieveInfo(uid);
 
     this.setState({clientModal: true});
     console.log(client.uid);

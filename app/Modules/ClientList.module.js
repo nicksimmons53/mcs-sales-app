@@ -2,9 +2,8 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, View, RefreshControl, ActivityIndicator } from 'react-native';
 import { Divider, Icon } from 'react-native-elements';
-import * as Progress from 'react-native-progress';
+import Client from '../Functions/Client';
 import ListObject from '../Components/ListObject.component';
-import Firebase from '../../config/Firebase';
 import styles from './Styles/ClientList.style';
 import colors from '../Library/Colors';
 
@@ -18,35 +17,15 @@ class ClientList extends Component {
 
   // Retrieve All Clients from the Firestore DB
   async componentDidMount( ) {
-    this._retrieveClients( );
-  }
-
-  // Retrieve All Clients from the Firestore DB
-  async _retrieveClients( ) {
-    let clients = [ ];
-
-    await Firebase.firestore( )
-      .collection('clients')
-      .doc(Firebase.auth( ).currentUser.uid)
-      .collection('clients')
-      .get( ).then(function(querySnap) {
-        querySnap.forEach(function(doc) {
-          clients.push(doc.data( ))
-          console.log('Retrieved Client: ' + doc.id);
-        })
-      });
-
-    this.setState({ clients: [...clients] })
+    this.setState({ clients: Client.retrieveAll('clients') });
     this.setState({ loading: false });
   }
 
   // Refresh List
   _refreshList( ) {
     this.setState({ refreshing: true });
-    this._retrieveClients( );
-    setTimeout(( ) => {
-      this.setState({ refreshing: false });
-    }, 2000);
+    Client.retrieveAll('clients');
+    setTimeout(( ) => { this.setState({ refreshing: false }); }, 2000);
   }
 
   render( ) {
