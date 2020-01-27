@@ -88,7 +88,7 @@ const uriToBlob = (uri) => {
   });
 }
 
-export var File {
+export {
   saveData,
   retrieveData,
   retrieveAll,

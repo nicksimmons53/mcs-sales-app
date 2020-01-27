@@ -3,9 +3,8 @@ import React, { Component } from 'react';
 import { View, StatusBar, KeyboardAvoidingView, Text } from 'react-native';
 import { Divider, Icon, ButtonGroup } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
-import Firebase from '../../config/Firebase';
 import { Formik } from 'formik';
-import Program from '../Functions/Program';
+import * as Program from '../Functions/Program';
 import SpreadSheet from '../Modules/SpreadSheet.module';
 import { styles, colors } from './Styles/Pricing.style';
 

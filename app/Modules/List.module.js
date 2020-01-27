@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { Text, ScrollView } from 'react-native';
 import { Divider, ListItem, Icon } from 'react-native-elements';
 import  { WebView } from 'react-native-webview';
-import File from '../Functions/File';
+import * as File from '../Functions/File';
 import Modal from 'react-native-modal';
 import styles from './Styles/List.style';
 import colors from '../Library/Colors';

@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 import { Divider, Input, Button } from 'react-native-elements';
 import * as DocumentPicker from 'expo-document-picker';
 import Toast from 'react-native-easy-toast';
-import File from '../Functions/File';
+import * as File from '../Functions/File';
 import styles from './Styles/Form.style';
 import colors from '../Library/Colors';
 

@@ -4,7 +4,7 @@ import { Alert, ScrollView, View, Text, KeyboardAvoidingView } from 'react-nativ
 import { Button } from 'react-native-elements';
 import { DataTable } from 'react-native-paper';
 import Toast from 'react-native-easy-toast';
-import Client from '../Functions/Client';
+import * as Client from '../Functions/Client';
 import UpdateClient from '../Modules/UpdateClient.module';
 import ClientActions from '../Components/ClientActions.component';
 import List from './List.module';

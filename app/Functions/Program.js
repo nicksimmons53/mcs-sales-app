@@ -25,10 +25,10 @@ const updateTable = async() => {
 
 // Delete Table Data
 const deleteTable = async() => {
-  
+
 }
 
-export var Program = {
+export {
   saveTable,
   retrieveTable,
   updateTable,

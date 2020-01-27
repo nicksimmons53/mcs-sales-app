@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { ScrollView, Text, View, RefreshControl, ActivityIndicator } from 'react-native';
 import { Divider, Icon } from 'react-native-elements';
-import Client from '../Functions/Client';
+import * as Client from '../Functions/Client';
 import ListObject from '../Components/ListObject.component';
 import styles from './Styles/ClientList.style';
 import colors from '../Library/Colors';
@@ -16,15 +16,18 @@ class ClientList extends Component {
   };
 
   // Retrieve All Clients from the Firestore DB
-  async componentDidMount( ) {
-    this.setState({ clients: Client.retrieveAll('clients') });
+  componentDidMount( ) {
+    Client.retrieveAll('clients').then((res) => {
+      this.setState({clients: [...res]});
+    });
+
     this.setState({ loading: false });
   }
 
   // Refresh List
   _refreshList( ) {
     this.setState({ refreshing: true });
-    Client.retrieveAll('clients');
+    let clients = Client.retrieveAll('clients');
     setTimeout(( ) => { this.setState({ refreshing: false }); }, 2000);
   }
 

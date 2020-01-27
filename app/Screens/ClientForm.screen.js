@@ -10,7 +10,7 @@ import {
 import { Divider, Icon, Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import { CreateClientValues, ContinueClientValues } from '../Form/Values.form';
-import Client from '../Functions/Client';
+import * as Client from '../Functions/Client';
 import Toast from 'react-native-easy-toast';
 import Toolbar from '../Components/Toolbar.component';
 import BasicInfo from '../Modules/BasicInfo.module';

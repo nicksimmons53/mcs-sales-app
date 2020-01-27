@@ -95,7 +95,7 @@ const retrieveAll = async(collection) => {
 
 //
 // Export All Client Functions
-export var Client = {
+export {
   deleteInfo,
   retrieveInfo,
   saveInfo,

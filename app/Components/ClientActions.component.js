@@ -2,8 +2,8 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
-import File from '../Functions/File';
-import Client from '../Functions/Client';
+import * as File from '../Functions/File';
+import * as Client from '../Functions/Client';
 import * as DocumentPicker from 'expo-document-picker';
 import colors from '../Library/Colors';
 
