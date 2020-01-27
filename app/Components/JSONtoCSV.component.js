@@ -9,7 +9,6 @@ const saveFile = async(client, programName, csvString) => {
 
   csvString.map((values) => {
     string += '\n' + values;
-    console.log(values)
   });
 }
 

@@ -88,7 +88,6 @@ export const signoutAlert = (navigation) => {
       {
         text: 'Sign Out',
         onPress: ( ) => {
-          console.log("Logging Out: " + Firebase.auth( ).currentUser.email)
           Firebase.auth( ).signOut( );
           AsyncStorage.clear( );
           navigation.navigate('Auth')

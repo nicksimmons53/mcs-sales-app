@@ -24,7 +24,6 @@ import colors from '../Library/Colors';
 class ClientForm extends Component {
   // Signout Function
   _signOutAsync = async( ) => {
-    console.log('Logging Out: ' + Firebase.auth( ).currentUser.email);
     await AsyncStorage.clear( );
     Firebase.auth( ).signOut( );
     this.props.navigation.navigate('Auth');

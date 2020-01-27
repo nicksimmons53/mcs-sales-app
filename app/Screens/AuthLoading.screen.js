@@ -1,6 +1,6 @@
 // Library Imports
 import React, { Component } from 'react';
-import { 
+import {
   ActivityIndicator,
   AsyncStorage,
   StatusBar,
@@ -17,9 +17,8 @@ class AuthLoading extends Component {
 
   _bootstrapAsync = async( ) => {
     const userToken = await AsyncStorage.getItem('userId');
-    console.log(userToken);
 
-    if (userToken === null || !Firebase.auth( ).uid) 
+    if (userToken === null || !Firebase.auth( ).uid)
       this.props.navigation.navigate('Login');
     else
       this.props.navigation.navigate('Login');

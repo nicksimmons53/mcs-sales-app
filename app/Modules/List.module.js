@@ -24,7 +24,6 @@ class List extends Component {
 
   displayFile = async(fileName) => {
     this.setState({fileURL: await File.retrieveData(fileName)});
-    console.log(this.state.fileURL);
     this.setState({modalVisible: true});
   }
 
@@ -60,7 +59,6 @@ class List extends Component {
   }
 
   render( ) {
-    console.log(this.state.fileURL);
     return (
       <ScrollView style={styles.background}>
         <Text style={styles.header}>{this.props.title}</Text>

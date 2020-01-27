@@ -14,7 +14,6 @@ const ClientActions = ({...props}) => {
     let result = await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: false
     }).then((result) => {
-      console.log(result.type)
       if (result.type === 'cancel')
         return;
       else

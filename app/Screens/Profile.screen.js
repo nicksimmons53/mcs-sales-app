@@ -48,14 +48,12 @@ export default class Profile extends Component {
     let client = Client.retrieveInfo(uid);
 
     this.setState({clientModal: true});
-    console.log(client.uid);
     this.setState({ client: client });
     this.setState({ loading: false });
   }
 
   // User Sign Out (clears AsyncStorage and Firebase)
   _signOutAsync = async( ) => {
-    console.log("Logging Out: " + Firebase.auth( ).currentUser.email);
     Firebase.auth( ).signOut( );
     await AsyncStorage.clear( );
     this.props.navigation.navigate('Auth');

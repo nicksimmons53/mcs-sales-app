@@ -78,7 +78,6 @@ class ClientProfile extends Component {
     // Display a shown client or null if none
     if (this.props.client != null) {
       let client = this.props.client;
-      console.log("Client is Being Displayed");
 
       return (
         <KeyboardAvoidingView enabled behavior='padding' style={styles.background}>

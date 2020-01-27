@@ -26,7 +26,6 @@ class Login extends Component {
   };
 
   _signIn = (values, actions) => {
-    console.log('Logging In: ' + values.username);
     setTimeout(( ) => {
       actions.setSubmitting(false);
     }, 1000);
