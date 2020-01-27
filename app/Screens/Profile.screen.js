@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { View, StatusBar, AsyncStorage, ActivityIndicator, Dimensions } from 'react-native';
+import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
 import NetInfo from '@react-native-community/netinfo';
 import ClientList from '../Modules/ClientList.module';
@@ -45,10 +46,11 @@ export default class Profile extends Component {
     this.setState({ clientUID: uid })
     this.setState({ loading: true });
 
-    let client = Client.retrieveInfo(uid);
+    Client.retrieveInfo(uid).then((res) => {
+      this.setState({client: res});
+    });
 
     this.setState({clientModal: true});
-    this.setState({ client: client });
     this.setState({ loading: false });
   }
 
@@ -89,7 +91,7 @@ export default class Profile extends Component {
                 createClient={true}
                 signOut={true}
                 navigation={this.props.navigation}
-                signOut={this._signOutAsync} />
+                signOutFunc={this._signOutAsync} />
 
               <ClientList setClientUID={this.setClientUID} />
             </View>
@@ -123,7 +125,7 @@ export default class Profile extends Component {
                 signOut={true}
                 navigation={this.props.navigation}
                 showIssue={this.toggleIssue}
-                signOut={this._signOutAsync} />
+                signOutFunc={this._signOutAsync} />
 
               <ClientList setClientUID={this.setClientUID} />
             </View>
@@ -149,4 +151,9 @@ export default class Profile extends Component {
       )
     }
   }
-};
+}
+
+// Prop Validation
+Profile.propTypes = {
+  navigation: PropTypes.object
+}

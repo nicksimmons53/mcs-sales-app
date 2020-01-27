@@ -1,6 +1,7 @@
 // Library Imports
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
 import * as File from '../Functions/File';
 import * as Client from '../Functions/Client';
@@ -11,7 +12,7 @@ import colors from '../Library/Colors';
 const ClientActions = ({...props}) => {
   // Expo Cli Document Picker Component
   const filePicker = async( ) => {
-    let result = await DocumentPicker.getDocumentAsync({
+    await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: false
     }).then((result) => {
       if (result.type === 'cancel')
@@ -134,5 +135,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
 });
+
+// Props Validation
+ClientActions.propTypes = {
+  showFileToast: PropTypes.func,
+  client: PropTypes.object,
+  toggleModal: PropTypes.func,
+  nav: PropTypes.object,
+  update: PropTypes.func
+}
 
 export default ClientActions;

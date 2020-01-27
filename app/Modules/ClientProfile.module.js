@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { Alert, ScrollView, View, Text, KeyboardAvoidingView } from 'react-native';
+import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
 import { DataTable } from 'react-native-paper';
 import Toast from 'react-native-easy-toast';
@@ -134,6 +135,15 @@ class ClientProfile extends Component {
       return null;
     }
   }
+}
+
+// Props Valdidation
+ClientProfile.propTypes = {
+  nav: PropTypes.object,
+  client: PropTypes.object,
+  loading: PropTypes.func,
+  toggleModal: PropTypes.func,
+  isPortrait: PropTypes.bool
 }
 
 export default ClientProfile;

@@ -1,12 +1,10 @@
 // Library Imports
-import React, { Component } from 'react';
 import * as Mail from 'expo-mail-composer';
 import jsonToCsv from './JSONtoCSV.component';
 
 const sendEmail = (client, forApproval) => {
-  let data = [ ];
   if (forApproval === true)
-    data = jsonToCsv(client);
+    jsonToCsv(client);
 
   Mail.composeAsync({
     recipients: ['nicks@mcsurfacesinc.com'],

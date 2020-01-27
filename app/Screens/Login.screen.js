@@ -8,6 +8,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { Button, CheckBox, Input, Icon } from 'react-native-elements';
 import { Formik } from 'formik';
 import { LoginSchema } from '../Form/YupSchema.form';
@@ -114,7 +115,7 @@ class Login extends Component {
               containerStyle={styles.inputItem}
             />
             {this.state.error ?
-              <Text style={styles.error}>Whoops, something doesn't look right.</Text>
+              <Text style={styles.error}>Whoops, something doesn&apost look right.</Text>
               :
               null
             }
@@ -146,6 +147,10 @@ class Login extends Component {
       </TouchableWithoutFeedback>
     );
   }
+}
+
+Login.propTypes = {
+  navigation: PropTypes.object
 }
 
 export default Login;

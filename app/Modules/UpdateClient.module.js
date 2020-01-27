@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { View, Text, Switch } from 'react-native';
+import PropTypes from 'prop-types';
 import { Icon, Divider, Input, Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import { UpdateClientValues } from '../Form/Values.form';
@@ -280,6 +281,13 @@ class UpdateClient extends Component {
     </View>
     );
   }
-};
+}
+
+// Props Valdidation
+UpdateClient.propTypes = {
+  formikProps: PropTypes.object,
+  client: PropTypes.object,
+  cancel: PropTypes.func
+}
 
 export default UpdateClient;

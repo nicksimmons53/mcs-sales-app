@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { Text, ScrollView } from 'react-native';
+import PropTypes from 'prop-types';
 import { Divider, ListItem, Icon } from 'react-native-elements';
 import  { WebView } from 'react-native-webview';
 import * as File from '../Functions/File';
@@ -76,6 +77,13 @@ class List extends Component {
       </ScrollView>
     );
   }
+}
+
+// Props Valdidation
+List.propTypes = {
+  title: PropTypes.string,
+  files: PropTypes.array,
+  client: PropTypes.object
 }
 
 export default List;

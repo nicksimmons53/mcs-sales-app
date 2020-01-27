@@ -7,6 +7,7 @@ import {
   Text,
   AsyncStorage
 } from 'react-native';
+import PropTypes from 'prop-types';
 import { Divider, Icon, Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import { CreateClientValues, ContinueClientValues } from '../Form/Values.form';
@@ -59,7 +60,7 @@ class ClientForm extends Component {
             calendar={true}
             reportIssue={true}
             signOut={true}
-            signOut={this._signOutAsync}
+            signOutFunc={this._signOutAsync}
             showIssue={this.toggleIssue}
             navigation={this.props.navigation} />
 
@@ -120,6 +121,11 @@ class ClientForm extends Component {
       </KeyboardAvoidingView>
     )
   }
+}
+
+// Props Validation
+ClientForm.propTypes = {
+  navigation: PropTypes.object
 }
 
 export default ClientForm;

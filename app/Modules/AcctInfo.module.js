@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { View, Text, Switch } from 'react-native';
+import PropTypes from 'prop-types';
 import { Divider, Input } from 'react-native-elements';
 import colors from '../Library/Colors';
 import styles from './Styles/Form.style';
@@ -172,7 +173,7 @@ class AcctInfo extends Component {
               trackColor={{true: colors.green}} />
           </View>
           <View style={styles.textRow}>
-            <Text style={styles.label}>PO's Required?</Text>
+            <Text style={styles.label}>PO&aposs Required?</Text>
             <Switch
               onChange={( ) => this.props.formik.setFieldValue('POToggle', !this.props.formik.values.POToggle)}
               value={this.props.formik.values.POToggle}
@@ -204,6 +205,11 @@ class AcctInfo extends Component {
       </View>
     );
   }
+}
+
+// Props Valdidation
+AcctInfo.propTypes = {
+  formik: PropTypes.object
 }
 
 export default AcctInfo;

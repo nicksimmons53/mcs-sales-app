@@ -1,6 +1,7 @@
 // Library Imports
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import { ListItem } from 'react-native-elements';
 import colors from '../Library/Colors';
 
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
     height: 70,
   },
 
-  // Title 
+  // Title
   title: {
     fontFamily: 'opensans-reg',
     fontSize: 20,
@@ -43,5 +44,11 @@ const styles = StyleSheet.create({
     color: colors.blue,
   },
 });
+
+// Props Validation
+ListObject.propTypes = {
+  client: PropTypes.object,
+  setClientUID: PropTypes.func
+}
 
 export default ListObject;

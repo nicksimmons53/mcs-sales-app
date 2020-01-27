@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { View, StatusBar, KeyboardAvoidingView, Text } from 'react-native';
+import PropTypes from 'prop-types';
 import { Divider, Icon, ButtonGroup } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import { Formik } from 'formik';
@@ -310,4 +311,9 @@ export default class Pricing extends Component {
       </KeyboardAvoidingView>
     )
   }
+}
+
+// Props Validation
+Pricing.propTypes = {
+  navigation: PropTypes.object
 }

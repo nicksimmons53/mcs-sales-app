@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { ScrollView, Text, View, RefreshControl, ActivityIndicator } from 'react-native';
+import PropTypes from 'prop-types';
 import { Divider, Icon } from 'react-native-elements';
 import * as Client from '../Functions/Client';
 import ListObject from '../Components/ListObject.component';
@@ -27,7 +28,7 @@ class ClientList extends Component {
   // Refresh List
   _refreshList( ) {
     this.setState({ refreshing: true });
-    let clients = Client.retrieveAll('clients');
+    Client.retrieveAll('clients');
     setTimeout(( ) => { this.setState({ refreshing: false }); }, 2000);
   }
 
@@ -68,6 +69,11 @@ class ClientList extends Component {
       </View>
     );
   }
-};
+}
+
+// Props Valdidation
+ClientList.propTypes = {
+  setClientUID: PropTypes.func
+}
 
 export default ClientList;

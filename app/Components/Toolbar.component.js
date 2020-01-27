@@ -1,6 +1,7 @@
 // Library Imports
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import { StackActions } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import { signoutAlert } from '../Components/Alert.component';
@@ -67,5 +68,24 @@ const SignOut = ({...props}) => (
     containerStyle={styles.icons}
     onPress={( ) => signoutAlert(props.navigation)} />
 )
+
+// Props Validation
+Toolbar.propTypes = {
+  home: PropTypes.bool,
+  createClient: PropTypes.bool,
+  signOut: PropTypes.bool
+}
+
+Home.propTypes = {
+  navigation: PropTypes.object
+}
+
+ClientForm.propTypes = {
+  navigation: PropTypes.object
+}
+
+SignOut.propTypes = {
+  navigation: PropTypes.object
+}
 
 export default Toolbar;

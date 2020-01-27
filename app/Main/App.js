@@ -1,8 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { ThemeProvider } from 'react-native-elements';
-import { Provider } from 'react-redux';
 import { Provider as PaperProvider } from 'react-native-paper';
 import * as Font from 'expo-font';
 import AppContainer from './AppNavigator';

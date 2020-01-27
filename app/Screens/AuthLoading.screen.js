@@ -6,6 +6,7 @@ import {
   StatusBar,
   View
 } from 'react-native';
+import PropTypes from 'prop-types';
 import Firebase from '../../config/Firebase';
 
 // Class Component that will display loading screen for a user who is already
@@ -32,6 +33,11 @@ class AuthLoading extends Component {
       </View>
     )
   }
+}
+
+// Props Validation
+AuthLoading.propTypes = {
+  navigation: PropTypes.object
 }
 
 export default AuthLoading;

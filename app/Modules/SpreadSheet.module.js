@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
+import PropTypes from 'prop-types';
 import { Divider, Icon, Input, Button } from 'react-native-elements';
 import { DataTable } from 'react-native-paper';
 import { styles, colors } from './Styles/SpreadSheet.style';
@@ -85,6 +86,13 @@ class SpreadSheet extends Component {
       </ScrollView>
     );
   }
+}
+
+// Props Valdidation
+SpreadSheet.propTypes = {
+  addRow: PropTypes.func,
+  tables: PropTypes.array,
+  formikProps: PropTypes.object
 }
 
 export default SpreadSheet;

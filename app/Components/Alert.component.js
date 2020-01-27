@@ -105,7 +105,7 @@ export const signoutAlert = (navigation) => {
 export const networkALert = ( ) => {
   Alert.alert(
     'Network Connection',
-    'This device isn\'t connected to the network. Any work will be saved when reconnected'
+    'This device isn\'t connected to the network. Any work will be saved when reconnected',
     [
       {
         text: 'Okay',

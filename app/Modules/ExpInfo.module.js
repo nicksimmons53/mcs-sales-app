@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import PropTypes from 'prop-types';
 import { Divider, Input, Button } from 'react-native-elements';
 import * as DocumentPicker from 'expo-document-picker';
 import Toast from 'react-native-easy-toast';
@@ -10,11 +11,10 @@ import colors from '../Library/Colors';
 
 // Class Component to show Expeditor Form Information
 class ExpInfo extends Component {
-
   render( ) {
     // Expo Cli Document Picker Component
     const filePicker = async( ) => {
-      let result = await DocumentPicker.getDocumentAsync({
+      await DocumentPicker.getDocumentAsync({
         copyToCacheDirectory: false
       }).then((result) => {
         if (result.type === 'cancel')
@@ -216,6 +216,11 @@ class ExpInfo extends Component {
       </View>
     );
   }
+}
+
+// Props Valdidation
+ExpInfo.propTypes = {
+  formik: PropTypes.object
 }
 
 export default ExpInfo;

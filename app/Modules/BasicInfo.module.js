@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { View, Text, Switch } from 'react-native';
+import PropTypes from 'prop-types';
 import { Input } from 'react-native-elements';
 import styles from './Styles/Form.style';
 import colors from '../Library/Colors';
@@ -276,6 +277,11 @@ class BasicInfo extends Component {
       </View>
     );
   }
+}
+
+// Props Valdidation
+BasicInfo.propTypes = {
+  formik: PropTypes.object
 }
 
 export default BasicInfo;
