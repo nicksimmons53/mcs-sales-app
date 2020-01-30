@@ -11,7 +11,7 @@ import colors from '../Library/Colors';
 // Presentational Component of Buttons inside Client Profile
 const ClientActions = ({...props}) => {
   // Expo Cli Document Picker Component
-  const filePicker = async( ) => {
+  const filePicker = async(client) => {
     await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: false
     }).then((result) => {
@@ -21,7 +21,7 @@ const ClientActions = ({...props}) => {
         return File.uriToBlob(result.uri);
     }).then((blob) => {
       if (blob !== undefined) {
-        return File.saveData(blob, props.client.uid);
+        return File.saveData(blob, client.uid);
       }
     }).then(( ) => {
       props.showFileToast( );
@@ -67,7 +67,7 @@ const ClientActions = ({...props}) => {
           color: colors.white,
         }}
         buttonStyle={styles.button}
-        onPress={( ) => filePicker( )} />
+        onPress={( ) => filePicker(props.client)} />
       <Button
         title='Continue Client'
         icon={{

@@ -1,9 +1,10 @@
 import Firebase from '../../config/Firebase';
 
 // Save File
-const saveData = (blob, client) => {
+const saveData = (blob, uid) => {
   let user = Firebase.auth( ).currentUser.uid;
-  let filePath = user + '/' + client.uid + '/' + blob._data.name;
+  let filePath = user + '/' + uid + '/' + blob._data.name;
+  console.log(filePath)
 
   return new Promise((resolve, reject) => {
     var storageRef = Firebase.storage( ).ref( );
@@ -25,6 +26,7 @@ const retrieveData = async(fileName, client) => {
   let fileURL = '';
   const user = Firebase.auth( ).currentUser;
   const filePath = user.uid + '/' + client.uid + '/' + fileName;
+  console.log(filePath);
 
   const storageRef = Firebase.storage( ).ref( );
   const fileRef = storageRef.child(filePath);

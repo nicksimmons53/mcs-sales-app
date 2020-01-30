@@ -53,7 +53,7 @@ class ClientProfile extends Component {
 
   // Show Inactivated Client
   showInactivationToast = ( ) => {
-      this.refs.toast.show(this.props.client.clientName + ' has been inactivated.');
+    this.refs.toast.show(this.props.client.clientName + ' has been inactivated.');
   }
 
   dataTable = ( ) => (

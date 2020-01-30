@@ -19,8 +19,11 @@ class List extends Component {
   }
 
   // Will retrieve list of files and notifications per client
-  componentDidMount( ) {
-    this.setState({files: [...File.retrieveAll(this.state.client)]});
+  UNSAFE_componentWillMount( ) {
+    File.retrieveAll(this.props.client).then((res) => {
+      console.log(res);
+    })
+    // this.setState({files: [...File.retrieveAll(this.props.client)]});
   }
 
   displayFile = async(fileName) => {
@@ -82,7 +85,7 @@ class List extends Component {
 // Props Valdidation
 List.propTypes = {
   title: PropTypes.string,
-  files: PropTypes.array,
+  files: PropTypes.bool,
   client: PropTypes.object
 }
 
