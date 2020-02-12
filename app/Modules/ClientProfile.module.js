@@ -94,6 +94,7 @@ class ClientProfile extends Component {
                 cancel={this.toggleUpdate}/>
             :
               <View style={styles.table}>
+                {this.dataTable( )}
               </View>
             }
             <View style={styles.lists}>

@@ -37,6 +37,11 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 3,
     backgroundColor: colors.light_grey
+  },
+
+  // File Share Button
+  fileShare: {
+    margin: 20,
   }
 });
 

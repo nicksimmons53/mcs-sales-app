@@ -4,7 +4,6 @@ import Firebase from '../../config/Firebase';
 const saveData = (blob, uid) => {
   let user = Firebase.auth( ).currentUser.uid;
   let filePath = user + '/' + uid + '/' + blob._data.name;
-  console.log(filePath)
 
   return new Promise((resolve, reject) => {
     var storageRef = Firebase.storage( ).ref( );
@@ -26,7 +25,6 @@ const retrieveData = async(fileName, client) => {
   let fileURL = '';
   const user = Firebase.auth( ).currentUser;
   const filePath = user.uid + '/' + client.uid + '/' + fileName;
-  console.log(filePath);
 
   const storageRef = Firebase.storage( ).ref( );
   const fileRef = storageRef.child(filePath);
@@ -48,14 +46,13 @@ const retrieveData = async(fileName, client) => {
 // Delete File
 
 // Retrieve All Files
-const retrieveAll = (client) => {
-  let files = [ ];
-
+const retrieveAll = async(client) => {
   const folderPath = Firebase.auth( ).currentUser.uid + '/' + client.uid + '/';
   const storageRef = Firebase.storage( ).ref( );
+  let files = [ ];
 
   const folderRef = storageRef.child(folderPath);
-  folderRef.listAll( ).then((res) => {
+  await folderRef.listAll( ).then((res) => {
     res.items.forEach((itemRef) => {
       let fileObj = { };
 

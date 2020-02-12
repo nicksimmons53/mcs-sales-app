@@ -28,7 +28,10 @@ class ClientList extends Component {
   // Refresh List
   _refreshList( ) {
     this.setState({ refreshing: true });
-    Client.retrieveAll('clients');
+    Client.retrieveAll('clients').then((res) => {
+      this.setState({clients: [...res]});
+    });
+    
     setTimeout(( ) => { this.setState({ refreshing: false }); }, 2000);
   }
 

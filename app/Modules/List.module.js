@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Text, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
-import { Divider, ListItem, Icon } from 'react-native-elements';
+import { Divider, ListItem, Icon, Button } from 'react-native-elements';
 import  { WebView } from 'react-native-webview';
 import * as File from '../Functions/File';
 import Modal from 'react-native-modal';
@@ -19,15 +19,14 @@ class List extends Component {
   }
 
   // Will retrieve list of files and notifications per client
-  UNSAFE_componentWillMount( ) {
-    File.retrieveAll(this.props.client).then((res) => {
-      console.log(res);
-    })
-    // this.setState({files: [...File.retrieveAll(this.props.client)]});
+  componentDidMount( ) {
+    File.retrieveAll(this.state.client).then((res) => {
+      this.setState({files: [...res]});
+    });
   }
 
   displayFile = async(fileName) => {
-    this.setState({fileURL: await File.retrieveData(fileName)});
+    this.setState({fileURL: await File.retrieveData(fileName, this.state.client)});
     this.setState({modalVisible: true});
   }
 
@@ -41,7 +40,7 @@ class List extends Component {
         <ListItem
           key={0}
           title='No File Attachments Found'
-          titleStyle={styles.listItemTitle}/>
+          titleStyle={styles.listItemTitle}/> 
       )
     } else {
       return (
@@ -49,7 +48,11 @@ class List extends Component {
           <ListItem
             key={i}
             title={l.name}
-            rightIcon={<Icon name='external-link-square' type='font-awesome' color={colors.green}/>}
+            rightIcon={
+              <Icon
+                name='external-link-square'
+                type='font-awesome'
+                color={colors.green}/>}
             topDivider={moreThanOneIndex}
             titleStyle={styles.listItemTitle}
             onPress={( ) => this.displayFile(l.name)}/>
@@ -57,6 +60,10 @@ class List extends Component {
       );
     }
   }
+
+  fileToolbar = ( ) => (
+
+  );
 
   toggleModal = ( ) => {
     this.setState({modalVisible: !this.state.modalVisible});
@@ -70,9 +77,10 @@ class List extends Component {
         {this.props.files ? this.renderFileList( ) : null}
         {this.state.modalVisible
           ?
-          <Modal isVisible={this.state.modalVisible}
-            onBackdropPress={this.toggleModal}>
-            <WebView source={{uri: this.state.fileURL}} style={styles.filePreview}/>
+          <Modal isVisible={this.state.modalVisible} onBackdropPress={this.toggleModal}>
+            <WebView source={{uri: this.state.fileURL}} style={styles.filePreview}>
+            <Button style={styles.fileShare}/>
+          </WebView>
           </Modal>
           :
           null
