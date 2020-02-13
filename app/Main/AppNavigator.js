@@ -5,14 +5,12 @@ import AuthLoading from '../Screens/AuthLoading.screen';
 import Login from '../Screens/Login.screen';
 import Profile from '../Screens/Profile.screen';
 import ClientForm from '../Screens/ClientForm.screen';
-import Pricing from '../Screens/Pricing.screen';
 
 // Stack Navigator
 const MainStack = createStackNavigator(
   {
     Profile: Profile,
-    ClientForm: ClientForm,
-    Pricing: Pricing
+    ClientForm: ClientForm
   },
   {
     headerMode: 'none'

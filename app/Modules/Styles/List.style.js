@@ -34,13 +34,14 @@ const styles = StyleSheet.create({
 
   // File Preview
   fileModal: {
+    borderWidth: 2,
     borderRadius: 5,
+    borderColor: colors.green,
     backgroundColor: colors.green,
   },
   filePreview: {
     flex: 1,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    borderRadius: 5,
     backgroundColor: colors.light_grey
   },
   toolbar: {

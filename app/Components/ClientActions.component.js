@@ -43,22 +43,6 @@ const ClientActions = ({...props}) => {
         buttonStyle={styles.button}
         onPress={props.update} />
       <Button
-        title='Build Pricing'
-        icon={{
-          name: 'wrench',
-          type: 'font-awesome',
-          size: 20,
-          color: colors.white,
-        }}
-        buttonStyle={styles.button}
-        onPress={( ) => {
-          props.nav.navigate('Pricing', {
-            client: props.client
-          });
-          if (typeof(props.toggleModal) !== 'undefined')
-            props.toggleModal( );
-        }} />
-      <Button
         title='Attach Files'
         icon={{
           name: 'paperclip',
