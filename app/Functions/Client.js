@@ -52,12 +52,26 @@ const retrieveInfo = async(uid) => {
 }
 
 // Save Client Info
-const saveInfo = async(values, collection, clientUID) => {
+const saveInfo = async(values, collection) => {
   const clientRef = Firebase.firestore( )
     .collection(collection)
     .doc(Firebase.auth( ).currentUser.uid)
     .collection('clients')
-    .doc(clientUID);
+    .doc( );
+  values.uid = clientRef.id;
+
+  await clientRef.set(values);
+
+  return clientRef;
+}
+
+// Save Client Info
+const saveAdvancedInfo = async(values, collection, client) => {
+  const clientRef = Firebase.firestore( )
+    .collection(collection)
+    .doc(Firebase.auth( ).currentUser.uid)
+    .collection('clients')
+    .doc(client.uid);
   values.uid = clientRef.id;
 
   await clientRef.update(values);
@@ -67,13 +81,15 @@ const saveInfo = async(values, collection, clientUID) => {
 
 // Update Client Info
 const updateInfo = async(values, collection, client) => {
+  console.log(values);
+
   const clientRef = Firebase.firestore( )
     .collection(collection)
     .doc(Firebase.auth( ).currentUser.uid)
     .collection('clients')
     .doc(client.uid);
 
-  await clientRef.set(values, { merge: true });
+  await clientRef.update(values);
 }
 
 // Retrieve All Clients
@@ -99,6 +115,7 @@ export {
   deleteInfo,
   retrieveInfo,
   saveInfo,
+  saveAdvancedInfo,
   updateInfo,
   retrieveAll
 };

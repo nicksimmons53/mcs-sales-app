@@ -26,7 +26,7 @@ class UpdateClient extends Component {
     return (
       <View style={styles.background}>
         <Formik
-          initialValues={UpdateClientValues}
+          initialValues={{...this.state.client}}
           onSubmit={(values, actions) => this._updateClient(values, actions)}>
         {formikProps => (
         <View style={styles.form}>
@@ -41,58 +41,6 @@ class UpdateClient extends Component {
           </View>
 
           <Divider />
-
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Contact Name</Text>
-            <Input
-              onChangeText={formikProps.handleChange('contactName')}
-              onBlur={formikProps.handleBlur('contactName')}
-              value={formikProps.values.contactName}
-              autoCapitalize='words'
-              textContentType='name'
-              blurOnSubmit={false}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Title</Text>
-            <Input
-              onChangeText={formikProps.handleChange('contactTitle')}
-              onBlur={formikProps.handleBlur('contactTitle')}
-              value={formikProps.values.contactTitle}
-              autoCapitalize='words'
-              textContentType='jobTitle'
-              blurOnSubmit={false}
-              containerStyle={styles.smallInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Phone</Text>
-            <Input
-              onChangeText={formikProps.handleChange('contactPhone')}
-              onBlur={formikProps.handleBlur('contactPhone')}
-              value={formikProps.values.contactPhone}
-              keyboardType='phone-pad'
-              textContentType='telephoneNumber'
-              blurOnSubmit={false}
-              containerStyle={styles.smallInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Email</Text>
-            <Input
-              onChangeText={formikProps.handleChange('contactEmail')}
-              onBlur={formikProps.handleBlur('contactEmail')}
-              value={formikProps.values.contactEmail}
-              keyboardType='email-address'
-              textContentType='emailAddress'
-              blurOnSubmit={false}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
 
           <View style={styles.textRow}>
             <Text style={styles.label}>Street Address</Text>
@@ -147,7 +95,7 @@ class UpdateClient extends Component {
           <View style={styles.billingAddr}>
           <Divider />
           <View style={styles.textRow}>
-            <Text style={styles.label}>Add Billing Address</Text>
+            <Text style={styles.label}>Update Billing Address</Text>
             <Switch
               onChange={( ) => formikProps.setFieldValue('billingAddrToggle', !formikProps.values.billingAddrToggle)}
               value={formikProps.values.billingAddrToggle}
@@ -211,7 +159,7 @@ class UpdateClient extends Component {
           <View style={styles.shippingAddr}>
           <Divider />
           <View style={styles.textRow}>
-            <Text style={styles.label}>Add Shipping Address</Text>
+            <Text style={styles.label}>Update Shipping Address</Text>
             <Switch
               onChange={( ) => formikProps.setFieldValue('shippingAddrToggle', !formikProps.values.shippingAddrToggle)}
               value={formikProps.values.shippingAddrToggle}

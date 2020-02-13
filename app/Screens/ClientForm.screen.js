@@ -45,7 +45,7 @@ class ClientForm extends Component {
     let client = this.props.navigation.getParam('client');
     setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    Client.saveInfo(values, 'clients', client.uid);
+    Client.saveAdvancedInfo(values, 'clients', client);
 
     this.refs.toast.show('Client Information has been saved.');
     setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
