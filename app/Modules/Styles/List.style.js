@@ -33,15 +33,25 @@ const styles = StyleSheet.create({
   },
 
   // File Preview
+  fileModal: {
+    borderRadius: 5,
+    backgroundColor: colors.green,
+  },
   filePreview: {
     flex: 1,
-    borderRadius: 3,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
     backgroundColor: colors.light_grey
   },
-
-  // File Share Button
-  fileShare: {
-    margin: 20,
+  toolbar: {
+    flexDirection: 'row',
+    height: '7%',
+    marginHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  icon: {
+    marginHorizontal: 10
   }
 });
 

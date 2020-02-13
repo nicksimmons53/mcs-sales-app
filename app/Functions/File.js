@@ -44,6 +44,15 @@ const retrieveData = async(fileName, client) => {
 // Update File
 
 // Delete File
+const deleteData = async(fileName, client) => {
+  const user = Firebase.auth( ).currentUser;
+  const filePath = user.uid + '/' + client.uid + '/' + fileName;
+  const storageRef = Firebase.storage( ).ref(filePath);
+
+  console.log(filePath);
+
+  await storageRef.delete( );
+}
 
 // Retrieve All Files
 const retrieveAll = async(client) => {
@@ -89,6 +98,7 @@ const uriToBlob = (uri) => {
 
 export {
   saveData,
+  deleteData,
   retrieveData,
   retrieveAll,
   uriToBlob

@@ -1,8 +1,8 @@
 // Library Imports
 import React, { Component } from 'react';
-import { Text, ScrollView } from 'react-native';
+import { Text, ScrollView, View, Share } from 'react-native';
 import PropTypes from 'prop-types';
-import { Divider, ListItem, Icon, Button } from 'react-native-elements';
+import { Divider, ListItem, Icon } from 'react-native-elements';
 import  { WebView } from 'react-native-webview';
 import * as File from '../Functions/File';
 import Modal from 'react-native-modal';
@@ -15,6 +15,7 @@ class List extends Component {
     client: this.props.client,
     files: [ ],
     fileURL: '',
+    fileName: '',
     modalVisible: false
   }
 
@@ -26,8 +27,14 @@ class List extends Component {
   }
 
   displayFile = async(fileName) => {
+    this.setState({fileName: fileName});
     this.setState({fileURL: await File.retrieveData(fileName, this.state.client)});
     this.setState({modalVisible: true});
+  }
+
+  deleteFile = ( ) => {
+    File.deleteData(this.state.fileName, this.props.client);
+    this.toggleModal( );
   }
 
   renderFileList = ( ) => {
@@ -40,7 +47,7 @@ class List extends Component {
         <ListItem
           key={0}
           title='No File Attachments Found'
-          titleStyle={styles.listItemTitle}/> 
+          titleStyle={styles.listItemTitle}/>
       )
     } else {
       return (
@@ -61,10 +68,6 @@ class List extends Component {
     }
   }
 
-  fileToolbar = ( ) => (
-
-  );
-
   toggleModal = ( ) => {
     this.setState({modalVisible: !this.state.modalVisible});
   }
@@ -77,10 +80,28 @@ class List extends Component {
         {this.props.files ? this.renderFileList( ) : null}
         {this.state.modalVisible
           ?
-          <Modal isVisible={this.state.modalVisible} onBackdropPress={this.toggleModal}>
-            <WebView source={{uri: this.state.fileURL}} style={styles.filePreview}>
-            <Button style={styles.fileShare}/>
-          </WebView>
+          <Modal
+            isVisible={this.state.modalVisible}
+            onBackdropPress={this.toggleModal}
+            style={styles.fileModal}>
+            <View style={styles.toolbar}>
+              <Icon
+                name='share-square'
+                type='font-awesome'
+                size={32}
+                color={colors.light_grey}
+                containerStyle={styles.icon}
+                onPress={( ) => Share.share({url: this.state.fileURL})}/>
+              <Icon
+                name='trash'
+                type='font-awesome'
+                size={32}
+                color={colors.light_grey}
+                containerStyle={styles.icon}
+                onPress={( ) => this.deleteFile( )}/>
+            </View>
+
+            <WebView source={{uri: this.state.fileURL}} style={styles.filePreview} />
           </Modal>
           :
           null
