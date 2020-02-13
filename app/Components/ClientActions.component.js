@@ -15,16 +15,16 @@ const ClientActions = ({...props}) => {
     await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: false
     }).then((result) => {
-      if (result.type === 'cancel')
+      if (result.type === 'cancel') {
         return;
-      else
+      } else {
         return File.uriToBlob(result.uri);
+      }
     }).then((blob) => {
       if (blob !== undefined) {
+        props.showFileToast( );
         return File.saveData(blob, client.uid);
       }
-    }).then(( ) => {
-      props.showFileToast( );
     }).catch((error) => {
       throw error;
     });
