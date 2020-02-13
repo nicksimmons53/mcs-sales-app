@@ -100,6 +100,24 @@ export const signoutAlert = (navigation) => {
   )
 }
 
+export const deleteFile = (deleteFile) => {
+  Alert.alert(
+    'Delete File',
+    'This file will be deleted permanently. Are you sure?',
+    [
+      {
+        text: 'Delete',
+        onPress: ( ) => {
+          deleteFile( );
+        }
+      }, {
+        text: 'Cancel',
+        style: 'cancel'
+      }
+    ]
+  )
+}
+
 // Alert to be shown if device is not connected to network
 // Triggered on Login Screen and Profile Screen
 export const networkALert = ( ) => {

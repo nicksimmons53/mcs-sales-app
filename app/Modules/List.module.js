@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Divider, ListItem, Icon } from 'react-native-elements';
 import  { WebView } from 'react-native-webview';
 import * as File from '../Functions/File';
+import { deleteFile } from '../Components/Alert.component';
 import Modal from 'react-native-modal';
 import styles from './Styles/List.style';
 import colors from '../Library/Colors';
@@ -90,6 +91,7 @@ class List extends Component {
                 type='font-awesome'
                 size={32}
                 color={colors.light_grey}
+                underlayColor={colors.green}
                 containerStyle={styles.icon}
                 onPress={( ) => Share.share({url: this.state.fileURL})}/>
               <Icon
@@ -97,8 +99,9 @@ class List extends Component {
                 type='font-awesome'
                 size={32}
                 color={colors.light_grey}
+                underlayColor={colors.green}
                 containerStyle={styles.icon}
-                onPress={( ) => this.deleteFile( )}/>
+                onPress={( ) => deleteFile(this.deleteFile)}/>
             </View>
 
             <WebView source={{uri: this.state.fileURL}} style={styles.filePreview} />
