@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, Switch } from 'react-native';
 import PropTypes from 'prop-types';
 import { Divider, Input } from 'react-native-elements';
-import colors from '../Library/Colors';
-import styles from './Styles/Form.style';
+import { styles, colors } from './Styles/Form.style';
 
 // Class Component for Client Accounting Info
 class AcctInfo extends Component {

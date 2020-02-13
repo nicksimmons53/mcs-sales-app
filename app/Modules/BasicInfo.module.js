@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, Switch } from 'react-native';
 import PropTypes from 'prop-types';
 import { Input } from 'react-native-elements';
-import styles from './Styles/Form.style';
-import colors from '../Library/Colors';
+import { styles, colors } from './Styles/Form.style';
 
 // Class Component that will display Client Basic Info
 class BasicInfo extends Component {

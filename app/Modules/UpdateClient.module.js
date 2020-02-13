@@ -7,7 +7,7 @@ import { Formik } from 'formik';
 import { UpdateClientValues } from '../Form/Values.form';
 import * as Client from '../Functions/Client';
 import Toast from 'react-native-easy-toast';
-import styles from './Styles/Form.style';
+import { styles, colors } from './Styles/Form.style';
 
 // Class Component to show Update Client Form
 class UpdateClient extends Component {
@@ -35,6 +35,7 @@ class UpdateClient extends Component {
             <Icon
               name='download'
               type='font-awesome'
+              color={colors.green}
               size={30}
               onPress={formikProps.handleSubmit} />
           </View>
@@ -149,7 +150,8 @@ class UpdateClient extends Component {
             <Text style={styles.label}>Add Billing Address</Text>
             <Switch
               onChange={( ) => formikProps.setFieldValue('billingAddrToggle', !formikProps.values.billingAddrToggle)}
-              value={formikProps.values.billingAddrToggle} />
+              value={formikProps.values.billingAddrToggle}
+              trackColor={{true: colors.green}} />
           </View>
           </View>
 
@@ -212,7 +214,8 @@ class UpdateClient extends Component {
             <Text style={styles.label}>Add Shipping Address</Text>
             <Switch
               onChange={( ) => formikProps.setFieldValue('shippingAddrToggle', !formikProps.values.shippingAddrToggle)}
-              value={formikProps.values.shippingAddrToggle} />
+              value={formikProps.values.shippingAddrToggle}
+              trackColor={{true: colors.green}}/>
           </View>
           </View>
 
