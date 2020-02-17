@@ -1,11 +1,10 @@
 // Library Imports
 import React, { Component } from 'react';
-import { Alert, ScrollView, View, Text, KeyboardAvoidingView } from 'react-native';
+import { ScrollView, View, Text, KeyboardAvoidingView } from 'react-native';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
-import { DataTable } from 'react-native-paper';
 import Toast from 'react-native-easy-toast';
-import * as Client from '../Functions/Client';
+import ContactTable from '../Modules/ContactTable.module';
 import UpdateClient from '../Modules/UpdateClient.module';
 import ClientActions from '../Components/ClientActions.component';
 import List from './List.module';
@@ -36,17 +35,6 @@ class ClientProfile extends Component {
     this.refs.toast.show(this.props.client.clientName + ' has been inactivated.');
   }
 
-  dataTable = ( ) => (
-    <DataTable>
-      <DataTable.Header>
-        <DataTable.Title>Name</DataTable.Title>
-        <DataTable.Title>Title</DataTable.Title>
-        <DataTable.Title>Phone</DataTable.Title>
-        <DataTable.Title>Email</DataTable.Title>
-      </DataTable.Header>
-    </DataTable>
-  );
-
   render( ) {
     let headerStyle = { };
 
@@ -74,7 +62,7 @@ class ClientProfile extends Component {
                 cancel={this.toggleUpdate}/>
             :
               <View style={styles.table}>
-                {this.dataTable( )}
+                <ContactTable />
               </View>
             }
             <View style={styles.lists}>
