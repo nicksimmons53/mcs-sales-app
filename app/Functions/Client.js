@@ -19,7 +19,7 @@ const deleteInfo = async(client, loading, modal) => {
         clientRef.collection('programs').doc(doc.data( )[0].program).set(doc.data( ));
         doc.ref.delete( );
       });
-    });
+    }).catch((reason) => console.log(reason.isCanceled));
 
   // DELETE CLIENT
   Firebase.firestore( )
@@ -46,7 +46,7 @@ const retrieveInfo = async(uid) => {
     .get( )
     .then(function(doc) {
       client = doc.data( );
-    });
+    }).catch((reason) => console.log(reason.isCanceled));
 
   return client;
 }
@@ -104,7 +104,7 @@ const retrieveAll = async(collection) => {
       querySnap.forEach(function(doc) {
         clients.push(doc.data( ));
       });
-    });
+    }).catch((reason) => console.log(reason.isCanceled));
 
   return clients;
 }
