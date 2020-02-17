@@ -13,8 +13,10 @@ class ClientList extends Component {
   state = {
     refreshing: false,
     clients: [ ],
-    loading: true
+    loading: true,
   };
+
+  timeout = null;
 
   // Retrieve All Clients from the Firestore DB
   componentDidMount( ) {
@@ -25,14 +27,18 @@ class ClientList extends Component {
     this.setState({ loading: false });
   }
 
+  componentWillUnmount( ) {
+    clearTimeout(this.timeout);
+  }
+
   // Refresh List
   _refreshList( ) {
     this.setState({ refreshing: true });
     Client.retrieveAll('clients').then((res) => {
       this.setState({clients: [...res]});
     });
-    
-    setTimeout(( ) => { this.setState({ refreshing: false }); }, 2000);
+
+    this.timeout = setTimeout(( ) => { this.setState({ refreshing: false }); }, 2000);
   }
 
   render( ) {
