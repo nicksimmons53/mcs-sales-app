@@ -1,9 +1,15 @@
 import Firebase from '../../config/Firebase';
 
 // Delete Client Info
-const deleteInfo = async(client, loading, modal) => {
+const deleteInfo = async(client) => {
   // Save to New Location
-  let clientRef = saveInfo(client, 'inactiveClients');
+  const clientRef = Firebase.firestore( )
+    .collection('inactiveClients')
+    .doc(Firebase.auth( ).currentUser.uid)
+    .collection('clients')
+    .doc(client.uid);
+
+  await clientRef.set(client);
 
   // Client Programs
   // SAVE TO DIFFERENT FILE
@@ -19,19 +25,15 @@ const deleteInfo = async(client, loading, modal) => {
         clientRef.collection('programs').doc(doc.data( )[0].program).set(doc.data( ));
         doc.ref.delete( );
       });
-    }).catch((reason) => console.log(reason.isCanceled));
+    });
 
   // DELETE CLIENT
-  Firebase.firestore( )
+  await Firebase.firestore( )
     .collection('clients')
     .doc(Firebase.auth( ).currentUser.uid)
     .collection('clients')
     .doc(client.uid)
     .delete( );
-
-  // MOVE TO PARENT FOLDER
-  modal( );
-  loading( );
 }
 
 // Retrieves Client Info
