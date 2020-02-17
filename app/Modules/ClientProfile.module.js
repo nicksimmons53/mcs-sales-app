@@ -26,26 +26,6 @@ class ClientProfile extends Component {
     this.setState({ update: !this.state.update });
   };
 
-  // Toggle Inactivation Alert
-  toggleInactivate = ( ) => {
-    Alert.alert(
-      'Inactivate Client',
-      'Are you sure you want to continue? This client will be removed from view.',
-      [
-        {
-          text: 'Continue',
-          onPress: ( ) => {
-            Client.deleteInfo(this.state.client);
-            this.showInactivationToast( );
-            this.props.toggleModal( );
-          }
-        },
-        {text: 'Cancel', style: 'cancel'}
-      ],
-      {cancelable: true},
-    )
-  }
-
   // Show File Submission Toast
   showFileToast = ( ) => {
     this.refs.toast2.show('File Was Attached Successfully');
@@ -104,7 +84,8 @@ class ClientProfile extends Component {
                 nav={this.props.nav}
                 client={this.props.client}
                 loading={this.props.loading}
-                modal={this.props.toggleModal}
+                isPortrait={this.props.isPortrait}
+                toggleModal={this.props.toggleModal}
                 showFileToast={this.showFileToast}
                 showInactivationToast={this.showInactivationToast} />
             </View>

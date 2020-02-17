@@ -62,13 +62,13 @@ const ClientActions = ({...props}) => {
         }}
         buttonStyle={styles.button}
         onPress={( ) => {
+          if (props.isPortrait === true)
+            props.toggleModal( );
           props.nav.navigate('ClientForm', {
             headerText: 'Continue Client',
             client: props.client,
             createClient: false
           });
-          if (typeof(props.toggleModal) !== 'undefined')
-            props.toggleModal( );
         }} />
       <Button
         title='Rebid Client'
@@ -126,7 +126,8 @@ ClientActions.propTypes = {
   client: PropTypes.object,
   toggleModal: PropTypes.func,
   nav: PropTypes.object,
-  update: PropTypes.func
+  update: PropTypes.func,
+  isPortrait: PropTypes.bool
 }
 
 export default ClientActions;
