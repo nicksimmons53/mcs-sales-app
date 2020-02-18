@@ -68,15 +68,16 @@ const saveInfo = async(values, collection) => {
 }
 
 // Save Client Info
-const saveAdvancedInfo = async(values, collection, client) => {
+const saveAdvancedInfo = async(values, collection, client, infoType) => {
   const clientRef = Firebase.firestore( )
     .collection(collection)
     .doc(Firebase.auth( ).currentUser.uid)
     .collection('clients')
-    .doc(client.uid);
-  values.uid = clientRef.id;
+    .doc(client.uid)
+    .collection('info')
+    .doc(infoType);
 
-  await clientRef.update(values);
+  await clientRef.set(values);
 
   return clientRef;
 }

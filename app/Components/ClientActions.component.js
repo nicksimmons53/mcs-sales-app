@@ -51,7 +51,7 @@ const ClientActions = ({...props}) => {
           color: colors.white,
         }}
         buttonStyle={styles.button}
-        onPress={( ) => filePicker(props.client)} />
+        onPress={( ) => filePicker(props.client)}/>
       <Button
         title='Continue Client'
         icon={{
@@ -64,8 +64,7 @@ const ClientActions = ({...props}) => {
         onPress={( ) => {
           if (props.isPortrait === true)
             props.toggleModal( );
-          props.nav.navigate('ClientForm', {
-            headerText: 'Continue Client',
+          props.nav.navigate('AdvInfoForm', {
             client: props.client,
             createClient: false
           });

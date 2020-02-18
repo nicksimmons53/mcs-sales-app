@@ -4,13 +4,15 @@ import { createStackNavigator } from 'react-navigation-stack';
 import AuthLoading from '../Screens/AuthLoading.screen';
 import Login from '../Screens/Login.screen';
 import Profile from '../Screens/Profile.screen';
+import AdvInfoForm from '../Screens/AdvInfoForm.screen';
 import ClientForm from '../Screens/ClientForm.screen';
 
 // Stack Navigator
 const MainStack = createStackNavigator(
   {
     Profile: Profile,
-    ClientForm: ClientForm
+    ClientForm: ClientForm,
+    AdvInfoForm: AdvInfoForm
   },
   {
     headerMode: 'none'

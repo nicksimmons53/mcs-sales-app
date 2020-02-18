@@ -38,10 +38,6 @@ class List extends Component {
     this.toggleModal( );
   }
 
-  componentWillUnmount( ) {
-    this._isMounted = false;
-  }
-
   renderFileList = ( ) => {
     let moreThanOneIndex = false;
     if (this.state.files.length > 1)

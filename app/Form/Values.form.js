@@ -57,6 +57,43 @@ export const ContinueClientValues = {
   expMisc: ''
 };
 
+export const ExpInfoValues = {
+  expContactName: '',
+  expContactTitle: '',
+  expContactPhone: '',
+  expContactEmail: '',
+  modelStreetAddr: '',
+  modelCity: '',
+  modelState: '',
+  modelZip: '',
+  designStreetAddr: '',
+  designCity: '',
+  designState: '',
+  designsZip: '',
+  expMisc: ''
+};
+
+export const AcctInfoValues = {
+  acctContactName: '',
+  acctContactTitle: '',
+  acctContactPhone: '',
+  acctContactEmail: '',
+  taxID: '',
+  paymentDay: '',
+  paymentFreq: '',
+  invSubmitDeadline: '',
+  paymentType: '',
+  paymentPortal: '',
+  vendorID: '',
+  acctMisc: '',
+  autopayToggle: false,
+  checkPUToggle: false,
+  portalToggle: false,
+  vendorIDToggle: false,
+  POToggle: false,
+  approvalsToggle: false  
+}
+
 export const UpdateClientValues = {
   contactName: '',
   contactTitle: '',

@@ -45,10 +45,16 @@ class ClientForm extends Component {
     let client = this.props.navigation.getParam('client');
     setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    Client.saveAdvancedInfo(values, 'clients', client);
+    Client.saveAdvancedInfo(values, 'clients', client, 'acctInfo');
 
     this.refs.toast.show('Client Information has been saved.');
     setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
+  }
+
+  // Continue
+  continue = (values, actions) => {
+    this._saveAdvancedInfo(values, actions);
+    return <ExpInfo />
   }
 
   render( ) {
@@ -64,6 +70,14 @@ class ClientForm extends Component {
             showIssue={this.toggleIssue}
             navigation={this.props.navigation} />
 
+          <View style={styles.infoContainer}>
+            <View style={styles.header}>
+              <Text style={styles.headerText}>{this.props.navigation.getParam('headerText')}</Text>
+            </View>
+
+            <Divider />
+
+
             <Formik
               initialValues={
                 this.props.navigation.getParam('createClient') ?
@@ -75,48 +89,33 @@ class ClientForm extends Component {
                 {this.props.navigation.getParam('createClient') ?
                   this._saveBasicInfo(values, actions)
                   :
-                  this._saveAdvancedInfo(values, actions)}}
-            >
+                  this._saveAdvancedInfo(values, actions)
+                }
+              }>
+            {formikProps => (
+              <ScrollView style={styles.sv}>
+                {this.props.navigation.getParam('createClient') ?
+                  <BasicInfo formik={formikProps} />
+                  :
+                  <>
+                    <AcctInfo formik={formikProps} />
+                    <ExpInfo formik={formikProps} client={this.props.navigation.getParam('client')}/>
+                  </>
+                }
 
-              {formikProps => (
-                <View style={styles.infoContainer}>
-                  <View style={styles.header}>
-                    <Text style={styles.headerText}>{this.props.navigation.getParam('headerText')}</Text>
-                    <View style={{flexDirection: 'row'}}>
-                      <Icon
-                        name='download'
-                        type='font-awesome'
-                        size={30}
-                        onPress={formikProps.handleSubmit}
-                        color={colors.green} />
-                    </View>
-                  </View>
-
-                  <Divider />
-
-                  <ScrollView style={styles.sv}>
-                    {this.props.navigation.getParam('createClient') ?
-                    <BasicInfo formik={formikProps} />
-                    :
-                    <>
-                      <AcctInfo formik={formikProps} />
-                      <ExpInfo formik={formikProps} client={this.props.navigation.getParam('client')}/>
-                    </>
-                    }
-
-                    <View style={styles.buttonView}>
-                      <Button
-                        title='Save'
-                        buttonStyle={styles.save}
-                        containerStyle={styles.saveButtonContainer}
-                        onPress={formikProps.handleSubmit} />
-                    </View>
-                  </ScrollView>
+                <View style={styles.buttonView}>
+                  <Button
+                    title='Save'
+                    buttonStyle={styles.save}
+                    containerStyle={styles.saveButtonContainer}
+                    onPress={formikProps.handleSubmit} />
                 </View>
-              )}
+              </ScrollView>
+            )}
             </Formik>
+          </View>
 
-            <Toast ref='toast' position='center' style={styles.toast} />
+          <Toast ref='toast' position='center' style={styles.toast} />
         </View>
       </KeyboardAvoidingView>
     )
