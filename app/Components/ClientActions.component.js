@@ -70,15 +70,6 @@ const ClientActions = ({...props}) => {
           });
         }} />
       <Button
-        title='Rebid Client'
-        icon={{
-          name: 'repeat',
-          type: 'font-awesome',
-          size: 20,
-          color: colors.white,
-        }}
-        buttonStyle={styles.button} />
-      <Button
         title='Inactivate Client'
         icon={{
           name: 'window-close',
