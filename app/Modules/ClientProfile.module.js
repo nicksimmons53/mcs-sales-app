@@ -7,6 +7,7 @@ import Toast from 'react-native-easy-toast';
 import ContactTable from '../Modules/ContactTable.module';
 import UpdateClient from '../Modules/UpdateClient.module';
 import ClientActions from '../Components/ClientActions.component';
+import AddContact from './AddContact.module';
 import List from './List.module';
 import sendEmail from '../Components/Email.component';
 import styles from './Styles/ClientProfile.style';
@@ -17,13 +18,18 @@ class ClientProfile extends Component {
   state = {
     update: false,
     client: this.props.client,
-    files: [ ]
+    files: [ ],
+    addContact: false
   };
 
   // Toggle Update Feature
   toggleUpdate = ( ) => {
     this.setState({ update: !this.state.update });
-  };
+  }
+
+  toggleAddContact = ( ) => {
+    this.setState({ addContact: !this.state.addContact });
+  }
 
   // Show File Submission Toast
   showFileToast = ( ) => {
@@ -55,16 +61,27 @@ class ClientProfile extends Component {
           </View>
 
           <ScrollView style={styles.form}>
-            {this.state.update ?
-              <UpdateClient
-                client={this.props.client}
-                save={this.toggleUpdate}
-                cancel={this.toggleUpdate}/>
-            :
-              <View style={styles.table}>
-                <ContactTable />
-              </View>
+            {
+              this.state.update ?
+                <UpdateClient
+                  client={this.props.client}
+                  save={this.toggleUpdate}
+                  cancel={this.toggleUpdate}/>
+              :
+                <View style={styles.table}>
+                  <ContactTable toggleAddContact={this.toggleAddContact}/>
+                </View>
             }
+
+            {
+              this.state.addContact ?
+                <View style={styles.centerAlign}>
+                  <AddContact toggle={this.toggleAddContact}/>
+                </View>
+              :
+                null
+            }
+
             <View style={styles.lists}>
               <ClientActions
                 refs={this.refs}

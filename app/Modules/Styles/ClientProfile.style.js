@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   // ScrollView
   form: {
     height: '100%',
-    flexDirection: 'column',
+    flexDirection: 'column'
   },
 
   // Row View
@@ -110,6 +110,10 @@ const styles = StyleSheet.create({
   // Toast
   toast: {
     width: '80%',
+    alignItems: 'center'
+  },
+
+  centerAlign: {
     alignItems: 'center'
   }
 });

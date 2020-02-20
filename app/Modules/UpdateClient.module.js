@@ -4,7 +4,6 @@ import { View, Text, Switch } from 'react-native';
 import PropTypes from 'prop-types';
 import { Icon, Divider, Input, Button } from 'react-native-elements';
 import { Formik } from 'formik';
-import { UpdateClientValues } from '../Form/Values.form';
 import * as Client from '../Functions/Client';
 import Toast from 'react-native-easy-toast';
 import { styles, colors } from './Styles/Form.style';
