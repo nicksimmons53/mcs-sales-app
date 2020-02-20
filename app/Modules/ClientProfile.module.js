@@ -61,23 +61,25 @@ class ClientProfile extends Component {
           </View>
 
           <ScrollView style={styles.form}>
-            {
-              this.state.update ?
-                <UpdateClient
-                  client={this.props.client}
-                  save={this.toggleUpdate}
-                  cancel={this.toggleUpdate}/>
-              :
-                <View style={styles.table}>
-                  <ContactTable toggleAddContact={this.toggleAddContact}/>
-                </View>
-            }
+            <View style={styles.table}>
+              <ContactTable toggleAddContact={this.toggleAddContact}/>
+            </View>
 
             {
               this.state.addContact ?
                 <View style={styles.centerAlign}>
                   <AddContact toggle={this.toggleAddContact}/>
                 </View>
+              :
+                null
+            }
+
+            {
+              this.state.update ?
+                <UpdateClient
+                  client={this.props.client}
+                  save={this.toggleUpdate}
+                  cancel={this.toggleUpdate}/>
               :
                 null
             }
