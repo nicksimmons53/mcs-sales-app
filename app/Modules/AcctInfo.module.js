@@ -173,7 +173,7 @@ class AcctInfo extends Component {
               trackColor={{true: colors.green}} />
           </View>
           <View style={styles.textRow}>
-            <Text style={styles.label}>PO&aposs Required?</Text>
+            <Text style={styles.label}>{"PO's Required?"}</Text>
             <Switch
               onChange={( ) => this.props.formik.setFieldValue('POToggle', !this.props.formik.values.POToggle)}
               value={this.props.formik.values.POToggle}
