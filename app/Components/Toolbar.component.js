@@ -55,7 +55,8 @@ const ClientForm = ({...props}) => (
     containerStyle={styles.icons}
     onPress={( ) => props.navigation.navigate('ClientForm', {
       headerText: 'Create Client',
-      createClient: true
+      createClient: true,
+      addClientToState: props.addClientToState
     })} />
 );
 
@@ -66,7 +67,7 @@ const SignOut = ({...props}) => (
     color={colors.red}
     underlayColor={colors.black}
     containerStyle={styles.icons}
-    onPress={( ) => signoutAlert(props.navigation)} />
+    onPress={( ) => signoutAlert(props.navigation)}/>
 )
 
 // Props Validation
@@ -81,7 +82,9 @@ Home.propTypes = {
 }
 
 ClientForm.propTypes = {
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  refresh: PropTypes.func,
+  addClientToState: PropTypes.func
 }
 
 SignOut.propTypes = {

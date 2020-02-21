@@ -24,21 +24,13 @@ class ClientList extends Component {
       this.setState({clients: [...res]});
     });
 
+    console.log(this.props.clients[1]);
+
     this.setState({ loading: false });
   }
 
   componentWillUnmount( ) {
     clearTimeout(this.timeout);
-  }
-
-  // Refresh List
-  _refreshList( ) {
-    this.setState({ refreshing: true });
-    Client.retrieveAll('clients').then((res) => {
-      this.setState({clients: [...res]});
-    });
-
-    this.timeout = setTimeout(( ) => { this.setState({ refreshing: false }); }, 2000);
   }
 
   render( ) {
@@ -65,7 +57,7 @@ class ClientList extends Component {
             )
           }
           {
-            this.state.clients.map((client, index) => (
+            this.props.clients.map((client, index) => (
               <ListObject
                 client={client}
                 key={index}
@@ -82,7 +74,8 @@ class ClientList extends Component {
 
 // Props Valdidation
 ClientList.propTypes = {
-  setClientUID: PropTypes.func
+  setClientUID: PropTypes.func,
+  clients: PropTypes.array
 }
 
 export default ClientList;

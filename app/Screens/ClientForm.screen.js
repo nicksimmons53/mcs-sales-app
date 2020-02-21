@@ -32,12 +32,18 @@ class ClientForm extends Component {
 
   // Saving Basic Client Info
   _saveBasicInfo = async(values, actions) => {
+    let addClientToState = this.props.navigation.getParam('addClientToState');
+    let client = values;
     setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
     Client.saveInfo(values, 'clients');
+    addClientToState(client);
 
     this.refs.toast.show(values.clientName + ' has been saved.');
-    setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
+
+    setTimeout(( ) => {
+      this.props.navigation.popToTop( );
+    }, 2000);
   }
 
   // Saving Accounting/Expediting Information
@@ -124,7 +130,8 @@ class ClientForm extends Component {
 
 // Props Validation
 ClientForm.propTypes = {
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  refresh: PropTypes.func
 }
 
 export default ClientForm;

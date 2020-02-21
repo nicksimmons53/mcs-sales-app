@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { View, StatusBar, AsyncStorage, ActivityIndicator, Dimensions } from 'react-native';
+import { useFocusEffect } from 'react-navigation';
 import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
 import NetInfo from '@react-native-community/netinfo';
@@ -16,7 +17,7 @@ import colors from '../Library/Colors';
 // Profile.js
 // Purpose: This class will display the profile home page and show the list of
 // clients. It is the main navigator for the application.
-export default class Profile extends Component {
+class Profile extends Component {
   constructor( ) {
     super( );
     const isPortrait = ( ) => {
@@ -28,6 +29,7 @@ export default class Profile extends Component {
     this.state = {
       clientUID: null,
       client: null,
+      clients: [ ],
       loading: false,
       refresh: false,
       clientModal: false,
@@ -41,6 +43,17 @@ export default class Profile extends Component {
     });
   }
 
+  componentDidMount( ) {
+    Client.retrieveAll('clients').then((res) => {
+      this.setState({clients: [...res]});
+    });
+  }
+
+  addClientToState = (client) => {
+    this.setState({clients: [...this.state.clients, client]});
+    console.log(this.state.clients);
+  }
+
   // Sets the UID when a client is selected for viewing
   setClientUID = (uid) => {
     this.setState({ clientUID: uid })
@@ -50,7 +63,7 @@ export default class Profile extends Component {
       this.setState({client: res});
     });
 
-    this.setState({clientModal: true});
+    this.setState({ clientModal: true });
     this.setState({ loading: false });
   }
 
@@ -91,7 +104,7 @@ export default class Profile extends Component {
                 createClient={true}
                 signOut={true}
                 navigation={this.props.navigation}
-                signOutFunc={this._signOutAsync} />
+                signOutFunc={this._signOutAsync}/>
 
               <ClientList setClientUID={this.setClientUID} />
             </View>
@@ -106,7 +119,7 @@ export default class Profile extends Component {
                     client={this.state.client}
                     loading={this.toggleLoading}
                     portraitBool={this.state.portrait}
-                    toggleModal={this.toggleModal} />
+                    toggleModal={this.toggleModal}/>
               }
             </View>
           </View>
@@ -125,10 +138,10 @@ export default class Profile extends Component {
                 reportIssue={true}
                 signOut={true}
                 navigation={this.props.navigation}
-                showIssue={this.toggleIssue}
-                signOutFunc={this._signOutAsync} />
+                signOutFunc={this._signOutAsync}
+                addClientToState={this.addClientToState}/>
 
-              <ClientList setClientUID={this.setClientUID} />
+              <ClientList setClientUID={this.setClientUID} clients={this.state.clients}/>
             </View>
           </View>
 
@@ -158,3 +171,5 @@ export default class Profile extends Component {
 Profile.propTypes = {
   navigation: PropTypes.object
 }
+
+export default Profile;
