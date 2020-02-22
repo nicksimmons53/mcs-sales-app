@@ -20,13 +20,6 @@ class List extends Component {
     modalVisible: false
   }
 
-  // Will retrieve list of files and notifications per client
-  componentDidMount( ) {
-    File.retrieveAll(this.state.client).then((res) => {
-      this.setState({files: [...res]});
-    });
-  }
-
   displayFile = async(fileName) => {
     this.setState({fileName: fileName});
     this.setState({fileURL: await File.retrieveData(fileName, this.state.client)});
@@ -40,10 +33,10 @@ class List extends Component {
 
   renderFileList = ( ) => {
     let moreThanOneIndex = false;
-    if (this.state.files.length > 1)
+    if (this.props.files.length > 1)
       moreThanOneIndex = true;
 
-    if (this.state.files.length === 0) {
+    if (this.props.files.length === 0) {
       return (
         <ListItem
           key={0}
@@ -52,7 +45,7 @@ class List extends Component {
       )
     } else {
       return (
-        this.state.files.map((l, i) => (
+        this.props.files.map((l, i) => (
           <ListItem
             key={i}
             title={l.name}
@@ -117,7 +110,7 @@ class List extends Component {
 // Props Valdidation
 List.propTypes = {
   title: PropTypes.string,
-  files: PropTypes.bool,
+  files: PropTypes.array,
   client: PropTypes.object
 }
 

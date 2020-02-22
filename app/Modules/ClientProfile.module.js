@@ -4,6 +4,7 @@ import { ScrollView, View, Text, KeyboardAvoidingView } from 'react-native';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
+import * as File from '../Functions/File';
 import ContactTable from '../Modules/ContactTable.module';
 import UpdateClient from '../Modules/UpdateClient.module';
 import ClientActions from '../Components/ClientActions.component';
@@ -21,6 +22,17 @@ class ClientProfile extends Component {
     files: [ ],
     addContact: false
   };
+
+  componentDidMount( ) {
+    File.retrieveAll(this.props.client).then((res) => {
+      this.setState({files: [...res]});
+    });
+  }
+
+  // Update state when file is added
+  addFileToState = (file) => {
+    this.setState({files: [...this.state.files, file]});
+  }
 
   // Toggle Update Feature
   toggleUpdate = ( ) => {
@@ -94,15 +106,16 @@ class ClientProfile extends Component {
                 isPortrait={this.props.isPortrait}
                 toggleModal={this.props.toggleModal}
                 showFileToast={this.showFileToast}
-                showInactivationToast={this.showInactivationToast} />
+                showInactivationToast={this.showInactivationToast}
+                addFileToState={this.addFileToState}/>
             </View>
 
             <View style={styles.lists}>
-              <List title='Client Notifications' client={this.props.client} />
-            </View>
-
-            <View style={styles.lists}>
-              <List title='Client Files' client={this.props.client} files={true}/>
+              <List
+                title='Client Files'
+                client={this.props.client}
+                files={this.state.files}
+              />
             </View>
 
             <View style={styles.footer}>

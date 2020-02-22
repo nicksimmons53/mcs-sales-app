@@ -11,9 +11,8 @@ import colors from '../Library/Colors';
 // Class Component that will show the list of Clients
 class ClientList extends Component {
   state = {
-    refreshing: false,
     clients: [ ],
-    loading: true,
+    loading: true
   };
 
   timeout = null;
@@ -23,8 +22,6 @@ class ClientList extends Component {
     Client.retrieveAll('clients').then((res) => {
       this.setState({clients: [...res]});
     });
-
-    console.log(this.props.clients[1]);
 
     this.setState({ loading: false });
   }
@@ -48,9 +45,6 @@ class ClientList extends Component {
         <Divider />
 
         <ScrollView style={styles.sv}>
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={( ) => this._refreshList( )} />
           {
             this.state.loading && (
               <ActivityIndicator size='large' color={colors.black} style={{paddingTop: 200}} />

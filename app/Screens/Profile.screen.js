@@ -10,6 +10,7 @@ import ClientProfile from '../Modules/ClientProfile.module';
 import Toolbar from '../Components/Toolbar.component';
 import { networkALert } from '../Components/Alert.component';
 import * as Client from '../Functions/Client';
+import * as File from '../Functions/File';
 import Firebase from '../../config/Firebase';
 import styles from './Styles/Profile.style';
 import colors from '../Library/Colors';
@@ -30,6 +31,7 @@ class Profile extends Component {
       clientUID: null,
       client: null,
       clients: [ ],
+      files: [ ],
       loading: false,
       refresh: false,
       clientModal: false,
@@ -49,19 +51,15 @@ class Profile extends Component {
     });
   }
 
+  // Update state when client is added
   addClientToState = (client) => {
     this.setState({clients: [...this.state.clients, client]});
-    console.log(this.state.clients);
   }
 
   // Sets the UID when a client is selected for viewing
   setClientUID = (uid) => {
-    this.setState({ clientUID: uid })
+    this.setState({ clientUID: uid });
     this.setState({ loading: true });
-
-    Client.retrieveInfo(uid).then((res) => {
-      this.setState({client: res});
-    });
 
     this.setState({ clientModal: true });
     this.setState({ loading: false });
@@ -147,7 +145,7 @@ class Profile extends Component {
 
           <Modal
             isVisible={this.state.clientModal}
-            onBackdropPress={( ) => this.setState({clientModal: false})}
+            onBackdropPress={( ) => this.toggleModal( )}
             style={{alignItems: 'center'}}>
             {
               this.state.loading ?
