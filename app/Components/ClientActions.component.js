@@ -4,8 +4,8 @@ import { ScrollView, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
 import * as File from '../Functions/File';
-import * as Client from '../Functions/Client';
 import * as DocumentPicker from 'expo-document-picker';
+import { inactivateClient } from './Alert.component';
 import colors from '../Library/Colors';
 
 // Presentational Component of Buttons inside Client Profile
@@ -78,11 +78,7 @@ const ClientActions = ({...props}) => {
           color: colors.white,
         }}
         buttonStyle={styles.button}
-        onPress={( ) => {
-          props.removeClientFromState(props.client);
-          props.toggleModal( );
-          Client.deleteInfo(props.client);
-        }}/>
+        onPress={( ) => inactivateClient(props)}/>
     </ScrollView>
   );
 };
