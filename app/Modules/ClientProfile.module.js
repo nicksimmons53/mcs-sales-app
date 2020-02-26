@@ -18,7 +18,6 @@ class ClientProfile extends Component {
   // State
   state = {
     update: false,
-    client: this.props.client,
     files: [ ],
     addContact: false
   };
@@ -89,7 +88,7 @@ class ClientProfile extends Component {
             {
               this.state.update ?
                 <UpdateClient
-                  client={this.props.client}
+                  client={client}
                   save={this.toggleUpdate}
                   cancel={this.toggleUpdate}/>
               :
@@ -107,7 +106,8 @@ class ClientProfile extends Component {
                 toggleModal={this.props.toggleModal}
                 showFileToast={this.showFileToast}
                 showInactivationToast={this.showInactivationToast}
-                addFileToState={this.addFileToState}/>
+                addFileToState={this.addFileToState}
+                removeClientFromState={this.props.removeClientFromState}/>
             </View>
 
             <View style={styles.lists}>

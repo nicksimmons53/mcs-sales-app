@@ -14,8 +14,14 @@ class UpdateClient extends Component {
     client: this.props.client
   }
 
+  timeout = null;
+
+  componentWillUnmount( ) {
+    clearTimeout(this.timeout);
+  }
+
   _updateClient = (values, actions) => {
-    setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
+    this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
     Client.updateInfo(values, 'clients', this.state.client);
     this.props.cancel( );

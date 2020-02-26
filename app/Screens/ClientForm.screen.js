@@ -23,6 +23,10 @@ import colors from '../Library/Colors';
 
 // Class Component that will display client creation form
 class ClientForm extends Component {
+  componentWillUnmount( ) {
+    clearTimeout(this.timeout);
+  }
+
   // Signout Function
   _signOutAsync = async( ) => {
     await AsyncStorage.clear( );

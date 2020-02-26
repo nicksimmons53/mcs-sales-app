@@ -11,23 +11,12 @@ import colors from '../Library/Colors';
 // Class Component that will show the list of Clients
 class ClientList extends Component {
   state = {
-    clients: [ ],
     loading: true
   };
 
-  timeout = null;
-
   // Retrieve All Clients from the Firestore DB
   componentDidMount( ) {
-    Client.retrieveAll('clients').then((res) => {
-      this.setState({clients: [...res]});
-    });
-
     this.setState({ loading: false });
-  }
-
-  componentWillUnmount( ) {
-    clearTimeout(this.timeout);
   }
 
   render( ) {
@@ -55,7 +44,6 @@ class ClientList extends Component {
               <ListObject
                 client={client}
                 key={index}
-                index={index}
                 setClientUID={this.props.setClientUID}
               />
             ))

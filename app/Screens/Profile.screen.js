@@ -56,9 +56,22 @@ class Profile extends Component {
     this.setState({clients: [...this.state.clients, client]});
   }
 
+  removeClientFromState = (removedClient) => {
+    let clients = this.state.clients;
+    let index = null;
+
+    clients.map((client, i) => {
+      if (client.uid === removedClient.uid) 
+        clients.splice(i, 1);
+    })
+  }
+
   // Sets the UID when a client is selected for viewing
-  setClientUID = (uid) => {
-    this.setState({ clientUID: uid });
+  setClientUID = async(uid) => {
+    await Client.retrieveInfo(uid).then((res) => {
+      this.setState({client: res});
+    });
+
     this.setState({ loading: true });
 
     this.setState({ clientModal: true });
@@ -70,7 +83,7 @@ class Profile extends Component {
     Firebase.auth( ).signOut( );
     await AsyncStorage.clear( );
     this.props.navigation.navigate('Auth');
-  };
+  }
 
   // Force Update
   toggleLoading = ( ) => {
@@ -104,7 +117,7 @@ class Profile extends Component {
                 navigation={this.props.navigation}
                 signOutFunc={this._signOutAsync}/>
 
-              <ClientList setClientUID={this.setClientUID} />
+              <ClientList setClientUID={this.setClientUID} clients={this.state.clients}/>
             </View>
 
             <View style={styles.profile}>
@@ -156,7 +169,8 @@ class Profile extends Component {
                   client={this.state.client}
                   loading={this.toggleLoading}
                   isPortrait={true}
-                  toggleModal={this.toggleModal} />
+                  toggleModal={this.toggleModal}
+                  removeClientFromState={this.removeClientFromState}/>
             }
           </Modal>
         </View>

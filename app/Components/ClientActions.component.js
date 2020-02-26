@@ -79,6 +79,7 @@ const ClientActions = ({...props}) => {
         }}
         buttonStyle={styles.button}
         onPress={( ) => {
+          props.removeClientFromState(props.client);
           props.toggleModal( );
           Client.deleteInfo(props.client);
         }}/>
