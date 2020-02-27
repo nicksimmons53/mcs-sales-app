@@ -34,6 +34,21 @@ class ClientProfile extends Component {
     });
   }
 
+  // Add Contact to State
+  addContactToState = (contact) => {
+    this.setState({contacts: [...this.state.contacts, contact]});
+  }
+
+  // Remove Contact from State
+  removeContactFromState = (removedContact) => {
+    let contacts = this.state.contacts;
+
+    contacts.map((contact, i) => {
+      if (contact.title === removedContact.title) 
+        contacts.splice(i, 1);
+    });
+  }
+
   // Toggle Update Feature
   toggleUpdate = ( ) => {
     this.setState({ update: !this.state.update });
@@ -76,7 +91,9 @@ class ClientProfile extends Component {
             <View style={styles.table}>
               <ContactTable
                 toggleAddContact={this.toggleAddContact} 
-                contacts={this.state.contacts}/>
+                contacts={this.state.contacts}
+                client={this.props.client}
+                removeContactFromState={this.removeContactFromState}/>
             </View>
 
             {
@@ -84,7 +101,8 @@ class ClientProfile extends Component {
                 <View style={styles.centerAlign}>
                   <AddContact 
                     toggle={this.toggleAddContact} 
-                    client={this.props.client}/>
+                    client={this.props.client}
+                    addContactToState={this.addContactToState}/>
                 </View>
               :
                 null

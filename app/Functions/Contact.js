@@ -17,9 +17,9 @@ const saveInfo = async(contact, client) => {
   await contactRef.set(contact);
 }
 
-// Update Client
+// Update Contact
 
-// Retrieve all Clients
+// Retrieve all Contacts
 const retrieveAll = async(client) => {
   let contacts = [ ];
 
@@ -38,9 +38,22 @@ const retrieveAll = async(client) => {
   return contacts;
 }
 
-// Delete Client
+// Delete Contact
+const deleteInfo = async(client, contact) => {
+  console.log(client, contact)
+  const contactRef = Firebase.firestore( )
+    .collection('clients')
+    .doc(Firebase.auth( ).currentUser.uid)
+    .collection('clients')
+    .doc(client.uid)
+    .collection('contacts')
+    .doc(contact.title)
+
+  await contactRef.delete( );
+}
 
 export {
   saveInfo,
-  retrieveAll
+  retrieveAll,
+  deleteInfo
 }

@@ -58,11 +58,10 @@ class Profile extends Component {
 
   removeClientFromState = (removedClient) => {
     let clients = this.state.clients;
-
     clients.map((client, i) => {
       if (client.uid === removedClient.uid) 
         clients.splice(i, 1);
-    })
+    });
   }
 
   // Sets the UID when a client is selected for viewing

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Icon, Input, Text } from 'react-native-elements';
 import { DataTable } from 'react-native-paper';
+import { inactivateContact } from '../Components/Alert.component';
 import { styles, colors } from './Styles/ContactTable.style';
 
 class ContactTable extends Component {
@@ -18,7 +19,12 @@ class ContactTable extends Component {
           </DataTable.Header>
 
           {this.props.contacts.map((contact, index) => (
-            <DataTable.Row key={index}>
+            <DataTable.Row 
+              key={index}
+              onPress={( ) => {
+                console.log(contact);
+                inactivateContact(this.props, contact);
+              }}>
               <DataTable.Cell>{contact.name}</DataTable.Cell>
               <DataTable.Cell>{contact.title}</DataTable.Cell>
               <DataTable.Cell>{contact.phone}</DataTable.Cell>

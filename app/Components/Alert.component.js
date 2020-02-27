@@ -2,6 +2,7 @@
 import { Alert, AsyncStorage } from 'react-native';
 import * as Client from '../Functions/Client';
 import * as File from '../Functions/File';
+import * as Contact from '../Functions/Contact';
 import Firebase from '../../config/Firebase';
 
 // Alert to be shown for requesting access.
@@ -126,6 +127,28 @@ export const deleteFile = (deleteFile) => {
   )
 }
 
+// Alert to be shown when inactivating a client.
+// Triggered on Client Profile Page.
+export const inactivateContact = ({...props}) => {
+  console.log(props.contact)
+  Alert.alert(
+    'Delete Contact',
+    'This contact will be inactivated.',
+    [
+      {
+        text: 'Inactivate',
+        onPress: ( ) => {
+          props.removeContactFromState(props.contact);
+          Contact.deleteInfo(props.client, props.contact);
+        }
+      }, {
+        text: 'Cancel',
+        style: 'cancel',
+      }
+    ]
+  )
+};
+
 // Alert to be shown if device is not connected to network
 // Triggered on Login Screen and Profile Screen
 export const networkALert = ( ) => {
@@ -139,4 +162,4 @@ export const networkALert = ( ) => {
       }
     ]
   )
-}
+};

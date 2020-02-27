@@ -21,6 +21,7 @@ class AddContact extends Component {
     this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
     
     Contact.saveInfo(contact, this.props.client);
+    this.props.addContactToState(contact);
     this.props.toggle( ); 
   }
 
