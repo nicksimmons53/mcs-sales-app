@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import * as File from '../Functions/File';
+import * as Contact from '../Functions/Contact';
 import ContactTable from '../Modules/ContactTable.module';
 import UpdateClient from '../Modules/UpdateClient.module';
 import ClientActions from '../Components/ClientActions.component';
@@ -27,12 +28,9 @@ class ClientProfile extends Component {
     File.retrieveAll(this.props.client).then((res) => {
       this.setState({files: [...res]});
     });
-  }
 
-  addFileToState = (file) => {
-    // this.setState({files: [...this.state.files, file]});
-    File.retrieveAll(this.props.client).then((res) => {
-      this.setState({files: [...res]});
+    Contact.retrieveAll(this.props.client).then((res) => {
+      this.setState({contacts: [...res]});
     });
   }
 
@@ -76,7 +74,9 @@ class ClientProfile extends Component {
 
           <ScrollView style={styles.form}>
             <View style={styles.table}>
-              <ContactTable toggleAddContact={this.toggleAddContact}/>
+              <ContactTable
+                toggleAddContact={this.toggleAddContact} 
+                contacts={this.state.contacts}/>
             </View>
 
             {

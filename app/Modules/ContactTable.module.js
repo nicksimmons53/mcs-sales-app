@@ -3,30 +3,9 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { Icon, Input, Text } from 'react-native-elements';
 import { DataTable } from 'react-native-paper';
-import Modal from 'react-native-modal';
 import { styles, colors } from './Styles/ContactTable.style';
 
 class ContactTable extends Component {
-  state = {
-    rows: [],
-    addContact: false
-  }
-
-  componentDidMount( ) {
-
-  }
-
-  addRow = ( ) => {
-    let newRow = {
-      name: '',
-      title: '',
-      phone: '',
-      email: ''
-    }
-
-    // this.setState({rows: [...this.state.rows, newRow]});
-  }
-
   render( ) {
     return (
       <View>
@@ -38,8 +17,12 @@ class ContactTable extends Component {
             <DataTable.Title>Email</DataTable.Title>
           </DataTable.Header>
 
-          {this.state.rows.map((contact, index) => (
+          {this.props.contacts.map((contact, index) => (
             <DataTable.Row key={index}>
+              <DataTable.Cell>{contact.name}</DataTable.Cell>
+              <DataTable.Cell>{contact.title}</DataTable.Cell>
+              <DataTable.Cell>{contact.phone}</DataTable.Cell>
+              <DataTable.Cell>{contact.email}</DataTable.Cell>
             </DataTable.Row>
           ))}
 

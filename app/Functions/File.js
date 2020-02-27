@@ -54,8 +54,8 @@ const deleteData = async(fileName, client) => {
 const deleteAll = async(client) => {
   const folderPath = Firebase.auth( ).currentUser.uid + '/' + client.uid + '/';
   const storageRef = Firebase.storage( ).ref( );
-
   const folderRef = storageRef.child(folderPath);
+  
   await folderRef.listAll( ).then((res) => {
     res.items.forEach((itemRef) => {
       itemRef.delete( );
