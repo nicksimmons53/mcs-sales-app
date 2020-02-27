@@ -23,6 +23,7 @@ const ClientActions = ({...props}) => {
     }).then((blob) => {
       if (blob !== undefined) {
         props.showFileToast( );
+        props.addFileToState( );
         return File.saveData(blob, client.uid);
       }
     }).catch((error) => {
@@ -51,7 +52,9 @@ const ClientActions = ({...props}) => {
           color: colors.white,
         }}
         buttonStyle={styles.button}
-        onPress={( ) => filePicker(props.client)}/>
+        onPress={( ) => {
+          filePicker(props.client);
+        }}/>
       <Button
         title='Continue Client'
         icon={{

@@ -42,18 +42,6 @@ export const ContinueClientValues = {
   vendorIDToggle: false,
   POToggle: false,
   approvalsToggle: false,
-  expContactName: '',
-  expContactTitle: '',
-  expContactPhone: '',
-  expContactEmail: '',
-  modelStreetAddr: '',
-  modelCity: '',
-  modelState: '',
-  modelZip: '',
-  designStreetAddr: '',
-  designCity: '',
-  designState: '',
-  designsZip: '',
   expMisc: ''
 };
 
@@ -114,4 +102,11 @@ export const UpdateClientValues = {
   shippingCity: '',
   shippingState: '',
   shippingZip: ''
+}
+
+export const ContactValues = {
+  name: '',
+  title: '',
+  phone: '', 
+  email: ''
 }

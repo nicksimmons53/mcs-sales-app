@@ -1,6 +1,7 @@
 // Library Imports
 import { Alert, AsyncStorage } from 'react-native';
 import * as Client from '../Functions/Client';
+import * as File from '../Functions/File';
 import Firebase from '../../config/Firebase';
 
 // Alert to be shown for requesting access.
@@ -74,6 +75,7 @@ export const inactivateClient = ({...props}) => {
           props.removeClientFromState(props.client);
           props.toggleModal( );
           Client.deleteInfo(props.client);
+          File.deleteAll(props.client);
         }
       }, {
         text: 'Cancel',

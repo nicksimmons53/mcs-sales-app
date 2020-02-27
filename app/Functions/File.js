@@ -41,17 +41,28 @@ const retrieveData = async(fileName, client) => {
   return fileURL;
 }
 
-// Update File
-
 // Delete File
 const deleteData = async(fileName, client) => {
   const user = Firebase.auth( ).currentUser;
   const filePath = user.uid + '/' + client.uid + '/' + fileName;
   const storageRef = Firebase.storage( ).ref(filePath);
 
-  console.log(filePath);
-
   await storageRef.delete( );
+}
+
+// Delete All Files
+const deleteAll = async(client) => {
+  const folderPath = Firebase.auth( ).currentUser.uid + '/' + client.uid + '/';
+  const storageRef = Firebase.storage( ).ref( );
+
+  const folderRef = storageRef.child(folderPath);
+  await folderRef.listAll( ).then((res) => {
+    res.items.forEach((itemRef) => {
+      itemRef.delete( );
+    });
+  }).catch((err) => {
+    console.error(err);
+  });
 }
 
 // Retrieve All Files
@@ -70,6 +81,7 @@ const retrieveAll = async(client) => {
     });
   }).catch((err) => {
     console.error(err);
+
   });
 
   return files;
@@ -99,6 +111,7 @@ const uriToBlob = (uri) => {
 export {
   saveData,
   deleteData,
+  deleteAll,
   retrieveData,
   retrieveAll,
   uriToBlob

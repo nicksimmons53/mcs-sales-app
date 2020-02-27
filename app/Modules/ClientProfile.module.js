@@ -19,6 +19,7 @@ class ClientProfile extends Component {
   state = {
     update: false,
     files: [ ],
+    contacts: [ ],
     addContact: false
   };
 
@@ -28,9 +29,11 @@ class ClientProfile extends Component {
     });
   }
 
-  // Update state when file is added
   addFileToState = (file) => {
-    this.setState({files: [...this.state.files, file]});
+    // this.setState({files: [...this.state.files, file]});
+    File.retrieveAll(this.props.client).then((res) => {
+      this.setState({files: [...res]});
+    });
   }
 
   // Toggle Update Feature
@@ -79,7 +82,9 @@ class ClientProfile extends Component {
             {
               this.state.addContact ?
                 <View style={styles.centerAlign}>
-                  <AddContact toggle={this.toggleAddContact}/>
+                  <AddContact 
+                    toggle={this.toggleAddContact} 
+                    client={this.props.client}/>
                 </View>
               :
                 null
@@ -114,8 +119,7 @@ class ClientProfile extends Component {
               <List
                 title='Client Files'
                 client={this.props.client}
-                files={this.state.files}
-              />
+                files={this.state.files}/>
             </View>
 
             <View style={styles.footer}>
