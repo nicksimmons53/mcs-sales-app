@@ -56,6 +56,22 @@ const ClientActions = ({...props}) => {
           filePicker(props.client);
         }}/>
       <Button
+        title='Build Pricing'
+        icon={{
+          name: 'wrench',
+          type: 'font-awesome',
+          size: 20,
+          color: colors.white,
+        }}
+        buttonStyle={styles.button}
+        onPress={( ) => {
+          props.nav.navigate('Pricing', {
+            client: props.client
+          });
+          if (typeof(props.toggleModal) !== 'undefined')
+            props.toggleModal( );
+        }} />
+      <Button
         title='Continue Client'
         icon={{
           name: 'arrow-right',

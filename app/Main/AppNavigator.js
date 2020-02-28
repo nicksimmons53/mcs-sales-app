@@ -4,6 +4,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import AuthLoading from '../Screens/AuthLoading.screen';
 import Login from '../Screens/Login.screen';
 import Profile from '../Screens/Profile.screen';
+import Pricing from '../Screens/Pricing.screen';
 import AdvInfoForm from '../Screens/AdvInfoForm.screen';
 import ClientForm from '../Screens/ClientForm.screen';
 
@@ -12,7 +13,8 @@ const MainStack = createStackNavigator(
   {
     Profile: Profile,
     ClientForm: ClientForm,
-    AdvInfoForm: AdvInfoForm
+    AdvInfoForm: AdvInfoForm,
+    Pricing: Pricing
   },
   {
     headerMode: 'none'
