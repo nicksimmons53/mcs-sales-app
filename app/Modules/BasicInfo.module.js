@@ -93,62 +93,6 @@ class BasicInfo extends Component {
         </View>
 
         <View style={styles.form}>
-          <Text style={styles.sectionHeaderText}>Client Contact</Text>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Contact Name</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('contactName')}
-              onBlur={this.props.formik.handleBlur('contactName')}
-              autoCapitalize='words'
-              textContentType='name'
-              blurOnSubmit={false}
-              inputStyle={styles.userInput}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Title</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('contactTitle')}
-              onBlur={this.props.formik.handleBlur('contactTitle')}
-              autoCapitalize='words'
-              textContentType='jobTitle'
-              blurOnSubmit={false}
-              inputStyle={styles.userInput}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Phone</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('contactPhone')}
-              onBlur={this.props.formik.handleBlur('contactPhone')}
-              keyboardType='phone-pad'
-              textContentType='telephoneNumber'
-              blurOnSubmit={false}
-              inputStyle={styles.userInput}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Email</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('contactEmail')}
-              onBlur={this.props.formik.handleBlur('contactEmail')}
-              keyboardType='email-address'
-              textContentType='jobTitle'
-              autoCapitalize='none'
-              blurOnSubmit={false}
-              inputStyle={styles.userInput}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-        </View>
-
-        <View style={styles.form}>
           <View style={styles.textRow}>
             <Text style={styles.label}>Add Billing Address</Text>
             <Switch
