@@ -71,7 +71,7 @@ const ClientActions = ({...props}) => {
             client: props.client,
             createClient: false
           });
-        }} />
+        }}/>
       <Button
         title='Inactivate Client'
         icon={{

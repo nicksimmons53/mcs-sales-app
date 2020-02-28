@@ -129,8 +129,7 @@ export const deleteFile = (deleteFile) => {
 
 // Alert to be shown when inactivating a client.
 // Triggered on Client Profile Page.
-export const inactivateContact = ({...props}) => {
-  console.log(props.contact)
+export const inactivateContact = (contact, removeContactFromState, client) => {
   Alert.alert(
     'Delete Contact',
     'This contact will be inactivated.',
@@ -138,8 +137,8 @@ export const inactivateContact = ({...props}) => {
       {
         text: 'Inactivate',
         onPress: ( ) => {
-          props.removeContactFromState(props.contact);
-          Contact.deleteInfo(props.client, props.contact);
+          removeContactFromState(contact);
+          Contact.deleteInfo(client, contact);
         }
       }, {
         text: 'Cancel',

@@ -22,8 +22,7 @@ class ContactTable extends Component {
             <DataTable.Row 
               key={index}
               onPress={( ) => {
-                console.log(contact);
-                inactivateContact(this.props, contact);
+                inactivateContact(contact, this.props.removeContactFromState, this.props.client);
               }}>
               <DataTable.Cell>{contact.name}</DataTable.Cell>
               <DataTable.Cell>{contact.title}</DataTable.Cell>

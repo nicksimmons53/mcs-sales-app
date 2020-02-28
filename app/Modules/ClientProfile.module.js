@@ -47,6 +47,8 @@ class ClientProfile extends Component {
       if (contact.title === removedContact.title) 
         contacts.splice(i, 1);
     });
+
+    this.setState({contacts: [...contacts]});
   }
 
   // Toggle Update Feature

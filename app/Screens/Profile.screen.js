@@ -113,7 +113,8 @@ class Profile extends Component {
                 createClient={true}
                 signOut={true}
                 navigation={this.props.navigation}
-                signOutFunc={this._signOutAsync}/>
+                signOutFunc={this._signOutAsync}
+                addClientToState={this.addClientToState}/>
 
               <ClientList setClientUID={this.setClientUID} clients={this.state.clients}/>
             </View>
