@@ -25,7 +25,12 @@ class AdvInfoForm extends Component {
     buttonContinue: true
   }
 
+  timeout = null;
   scrollView = React.createRef( );
+
+  componentWillUnmount( ) {
+    clearTimeout(this.timeout);
+  }
 
   // Signout Function
   _signOutAsync = async( ) => {
@@ -37,7 +42,7 @@ class AdvInfoForm extends Component {
   // Saving Accounting/Expediting Information
   _saveAdvancedInfo = async(values, actions, infoType) => {
     let client = this.props.navigation.getParam('client');
-    setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
+    this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
     Client.saveAdvancedInfo(values, 'clients', client, infoType);
 
@@ -52,7 +57,7 @@ class AdvInfoForm extends Component {
 
   save = (values, actions) => {
     this._saveAdvancedInfo(values, actions, 'expInfo');
-    setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
+    this.timeout = setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
   }
 
   render( ) {

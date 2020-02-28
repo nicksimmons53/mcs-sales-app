@@ -26,8 +26,14 @@ class Login extends Component {
     error: false
   };
 
+  timeout = null;
+
+  componentWillUnmount( ) {
+    clearTimeout(this.timeout);
+  }
+
   _signIn = (values, actions) => {
-    setTimeout(( ) => {
+    this.timeout = setTimeout(( ) => {
       actions.setSubmitting(false);
     }, 1000);
     Firebase.auth( )

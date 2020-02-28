@@ -192,13 +192,19 @@ export default class Pricing extends Component {
     }
   };
 
+  timeout = null;
+
+  componentWillUnmount( ) {
+    clearTimeout(this.timeout);
+  }
+
   updateIndex = (selected) => {
     this.setState({selectedSpreadsheet: selected});
   }
 
   _saveTableData = async(values, actions, client, index) => {
     let docName = this.state.buttonGroup[index];
-    setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
+    this.timout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
     Program.saveTable(values, docName, 'clients', client);
 

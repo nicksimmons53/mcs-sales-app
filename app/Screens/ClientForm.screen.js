@@ -23,8 +23,12 @@ import colors from '../Library/Colors';
 
 // Class Component that will display client creation form
 class ClientForm extends Component {
+  timeout1 = null;
+  timeout2 = null;
+
   componentWillUnmount( ) {
-    clearTimeout(this.timeout);
+    clearTimeout(this.timeout1);
+    clearTimeout(this.timeout2);
   }
 
   // Signout Function
@@ -38,14 +42,14 @@ class ClientForm extends Component {
   _saveBasicInfo = async(values, actions) => {
     let addClientToState = this.props.navigation.getParam('addClientToState');
     let client = values;
-    setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
+    this.timeout1 = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
     Client.saveInfo(values, 'clients');
     addClientToState(client);
 
     this.refs.toast.show(values.clientName + ' has been saved.');
 
-    setTimeout(( ) => {
+    this.timeout2 = setTimeout(( ) => {
       this.props.navigation.popToTop( );
     }, 2000);
   }
@@ -53,12 +57,12 @@ class ClientForm extends Component {
   // Saving Accounting/Expediting Information
   _saveAdvancedInfo = async(values, actions) => {
     let client = this.props.navigation.getParam('client');
-    setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
+    this.timeout1 = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
     Client.saveAdvancedInfo(values, 'clients', client, 'acctInfo');
 
     this.refs.toast.show('Client Information has been saved.');
-    setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
+    this.timeout2 = setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
   }
 
   // Continue
