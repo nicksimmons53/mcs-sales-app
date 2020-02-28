@@ -7,7 +7,6 @@ import colors from '../Library/Colors';
 
 // Presentational Component of Client Items
 const ListObject = ({ client, setClientUID }) => {
-  console.log(client);
   return (
     <View>
       <ListItem

@@ -40,7 +40,6 @@ const retrieveAll = async(client) => {
 
 // Delete Contact
 const deleteInfo = async(client, contact) => {
-  console.log(client, contact)
   const contactRef = Firebase.firestore( )
     .collection('clients')
     .doc(Firebase.auth( ).currentUser.uid)
