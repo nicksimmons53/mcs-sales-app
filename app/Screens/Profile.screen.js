@@ -11,6 +11,7 @@ import Toolbar from '../Components/Toolbar.component';
 import { networkALert } from '../Components/Alert.component';
 import * as Client from '../Functions/Client';
 import * as File from '../Functions/File';
+import * as User from '../Functions/User';
 import Firebase from '../../config/Firebase';
 import styles from './Styles/Profile.style';
 import colors from '../Library/Colors';
@@ -28,7 +29,7 @@ class Profile extends Component {
 
     // Initial State
     this.state = {
-      clientUID: null,
+      admin: false,
       client: null,
       clients: [ ],
       files: [ ],
@@ -46,8 +47,25 @@ class Profile extends Component {
   }
 
   componentDidMount( ) {
-    Client.retrieveAll('clients').then((res) => {
-      this.setState({clients: [...res]});
+    let userUID = Firebase.auth( ).currentUser.uid;
+
+    User.retrieveAll( ).then((res) => {
+      res.map((user, index) => {
+        if (user.uid === userUID) {
+          this.setState({admin: user.userInfo.admin});
+
+          if (this.state.admin == true) {
+            console.log('made it')
+            Client.adminRetrieveAll( ).then((res) => {
+              this.setState({clients: [...res]});
+            })
+          } else {
+            Client.retrieveAll('clients').then((res) => {
+              this.setState({clients: [...res]});
+            });
+          }
+        }
+      });
     });
   }
 

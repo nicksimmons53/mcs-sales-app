@@ -110,6 +110,23 @@ const retrieveAll = async(collection) => {
   return clients;
 }
 
+// Admin Retrieval
+const adminRetrieveAll = async( ) => {
+  let clients = [ ];
+  
+  await Firebase.firestore( )
+    .collection('clients')
+    .get( )
+    .then(function(querySnap) {
+      console.log(querySnap.docs)
+    })
+    .catch((reason) => {
+      console.log(reason.isCanceled)
+    });
+  
+  return clients;
+}
+
 //
 // Export All Client Functions
 export {
@@ -118,5 +135,6 @@ export {
   saveInfo,
   saveAdvancedInfo,
   updateInfo,
-  retrieveAll
+  retrieveAll,
+  adminRetrieveAll
 };

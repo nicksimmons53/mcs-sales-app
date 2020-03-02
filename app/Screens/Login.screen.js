@@ -44,7 +44,7 @@ class Login extends Component {
         if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
           this.setState({ error: true });
         }
-      })
+      });
   }
 
   getNetworkInfo = ( ) => {
