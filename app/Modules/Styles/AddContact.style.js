@@ -56,6 +56,9 @@ const styles = StyleSheet.create({
     margin: 10,
     backgroundColor: colors.red,
   },
+  picker: {
+    height: 75
+  }
 });
 
 export {

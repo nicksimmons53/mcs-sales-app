@@ -111,20 +111,7 @@ const retrieveAll = async(collection) => {
 }
 
 // Admin Retrieval
-const adminRetrieveAll = async( ) => {
-  let clients = [ ];
-  
-  await Firebase.firestore( )
-    .collection('clients')
-    .get( )
-    .then(function(querySnap) {
-      console.log(querySnap.docs)
-    })
-    .catch((reason) => {
-      console.log(reason.isCanceled)
-    });
-  
-  return clients;
+const adminRetrieveAll = (uid) => {
 }
 
 //
