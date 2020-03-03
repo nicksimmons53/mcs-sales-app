@@ -15,7 +15,6 @@ import * as User from '../Functions/User';
 import Firebase from '../../config/Firebase';
 import styles from './Styles/Profile.style';
 import colors from '../Library/Colors';
-import { useDispatch } from 'react-redux';
 
 // Profile.js
 // Purpose: This class will display the profile home page and show the list of
@@ -48,28 +47,17 @@ class Profile extends Component {
   }
 
   componentDidMount( ) {
-    // let userUID = Firebase.auth( ).currentUser.uid;
+    let userUID = Firebase.auth( ).currentUser.uid;
+    let users = [ ];
+    User.retrieveAll( ).then((res) => {
+      res.map(async(user, index) => {
+        await users.push(user.uid);
+      })
+    })
 
-    // User.retrieveAll( ).then((res) => {
-    //   let uid = [ ];
-    //   res.map((client) => {uid.push(client.uid)});
-
-    //   res.map((user) => {
-        // if (user.uid === userUID) {
-        //   this.setState({admin: user.userInfo.admin});
-
-        //   if (this.state.admin == true) {
-          //   Client.adminRetrieveAll(uid).then((res) => {
-          //     this.setState({clients: [...res]});
-          //   })
-          // } else {
-            Client.retrieveAll('clients').then((res) => {
-              this.setState({clients: [...res]});
-            });
-    //       }
-    //     }
-    //   });
-    // });
+    Client.retrieveAll('clients').then((res) => {
+      this.setState({clients: [...res]});
+    });
   }
 
   // Update state when client is added

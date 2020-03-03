@@ -111,7 +111,8 @@ const retrieveAll = async(collection) => {
 }
 
 // Admin Retrieval
-const adminRetrieveAll = (uid) => {
+const adminRetrieveAll = (uidArr) => {
+  
 }
 
 //
