@@ -91,7 +91,7 @@ class SpreadSheet extends Component {
 // Props Valdidation
 SpreadSheet.propTypes = {
   addRow: PropTypes.func,
-  tables: PropTypes.array,
+  tables: PropTypes.object,
   formikProps: PropTypes.object
 }
 
