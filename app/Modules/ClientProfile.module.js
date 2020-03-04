@@ -6,6 +6,7 @@ import { Button } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import * as File from '../Functions/File';
 import * as Contact from '../Functions/Contact';
+import Info from '../Components/Info.component';
 import ContactTable from '../Modules/ContactTable.module';
 import UpdateClient from '../Modules/UpdateClient.module';
 import ClientActions from '../Components/ClientActions.component';
@@ -90,6 +91,9 @@ class ClientProfile extends Component {
           </View>
 
           <ScrollView style={styles.form}>
+
+            <Info client={this.props.client}/>
+            
             <View style={styles.table}>
               <ContactTable
                 toggleAddContact={this.toggleAddContact} 
