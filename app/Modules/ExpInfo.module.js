@@ -38,54 +38,6 @@ class ExpInfo extends Component {
 
           <Divider />
 
-          <Text style={styles.sectionHeaderText}>Builder Contact</Text>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Contact Name</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('expContactName')}
-              onBlur={this.props.formik.handleBlur('expContactName')}
-              autoCapitalize='words'
-              textContentType='name'
-              blurOnSubmit={false}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Title</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('expTitle')}
-              onBlur={this.props.formik.handleBlur('expTitle')}
-              autoCapitalize='words'
-              textContentType='jobTitle'
-              blurOnSubmit={false}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Phone</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('expContactPhone')}
-              onBlur={this.props.formik.handleBlur('expContactPhone')}
-              keyboardType='phone-pad'
-              textContentType='telephoneNumber'
-              blurOnSubmit={false}
-              containerStyle={styles.smallInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Email</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('expContactEmail')}
-              onBlur={this.props.formik.handleBlur('expContactEmail')}
-              keyboardType='email-address'
-              textContentType='emailAddress'
-              blurOnSubmit={false}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-
-          <Divider />
-
           <View style={styles.textRow}>
             <Text style={styles.label}>Plan Attachment</Text>
             <Button

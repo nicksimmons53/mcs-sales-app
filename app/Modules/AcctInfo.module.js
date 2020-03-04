@@ -15,55 +15,6 @@ class AcctInfo extends Component {
           <Text style={styles.headerText}>Accounting Information</Text>
           <Divider />
 
-          <Text style={styles.sectionHeaderText}>Purchasing Contact</Text>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Contact Name</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('acctContactName')}
-              onBlur={this.props.formik.handleBlur('acctContactName')}
-              autoCapitalize='words'
-              textContentType='name'
-              blurOnSubmit={false}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Title</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('acctContactTitle')}
-              onBlur={this.props.formik.handleBlur('acctContactTitle')}
-              autoCapitalize='words'
-              textContentType='jobTitle'
-              blurOnSubmit={false}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Phone</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('acctContactPhone')}
-              onBlur={this.props.formik.handleBlur('acctContactPhone')}
-              keyboardType='phone-pad'
-              textContentType='telephoneNumber'
-              blurOnSubmit={false}
-              containerStyle={styles.smallInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Email</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('acctContactEmail')}
-              onBlur={this.props.formik.handleBlur('acctContactEmail')}
-              keyboardType='email-address'
-              textContentType='emailAddress'
-              autoCapitalize='none'
-              blurOnSubmit={false}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-
-          <Divider />
-
           <View style={styles.textRow}>
             <Text style={styles.label}>Tax ID #</Text>
             <Input
@@ -108,6 +59,28 @@ class AcctInfo extends Component {
               value={this.props.formik.values.autopayToggle}
               style={styles.switch}
               trackColor={{true: colors.green}} />
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.label}>How to submit invoices?</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('howToSubmitInv')}
+              onBlur={this.props.formik.handleBlur('howToSubmitInv')}
+              keyboardType='default'
+              textContentType='none'
+              blurOnSubmit={false}
+              containerStyle={styles.smallInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.label}>Who receives invoices?</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('whoReceivesInv')}
+              onBlur={this.props.formik.handleBlur('whoReceivesInv')}
+              keyboardType='default'
+              textContentType='none'
+              blurOnSubmit={false}
+              containerStyle={styles.smallInput}
+              inputContainerStyle={styles.inputContainer} />
           </View>
           <View style={styles.textRow}>
             <Text style={styles.label}>Invoice Submit Deadline</Text>

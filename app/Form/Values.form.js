@@ -19,33 +19,7 @@ export const CreateClientValues = {
   submit: 'false'
 };
 
-export const ContinueClientValues = {
-  acctContactName: '',
-  acctContactTitle: '',
-  acctContactPhone: '',
-  acctContactEmail: '',
-  taxID: '',
-  paymentDay: '',
-  paymentFreq: '',
-  invSubmitDeadline: '',
-  paymentType: '',
-  paymentPortal: '',
-  vendorID: '',
-  acctMisc: '',
-  autopayToggle: false,
-  checkPUToggle: false,
-  portalToggle: false,
-  vendorIDToggle: false,
-  POToggle: false,
-  approvalsToggle: false,
-  expMisc: ''
-};
-
 export const ExpInfoValues = {
-  expContactName: '',
-  expContactTitle: '',
-  expContactPhone: '',
-  expContactEmail: '',
   modelStreetAddr: '',
   modelCity: '',
   modelState: '',
@@ -58,13 +32,11 @@ export const ExpInfoValues = {
 };
 
 export const AcctInfoValues = {
-  acctContactName: '',
-  acctContactTitle: '',
-  acctContactPhone: '',
-  acctContactEmail: '',
   taxID: '',
   paymentDay: '',
   paymentFreq: '',
+  howToSubmitInv: '',
+  whoReceivesInv: '',
   invSubmitDeadline: '',
   paymentType: '',
   paymentPortal: '',

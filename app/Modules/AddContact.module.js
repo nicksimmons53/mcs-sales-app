@@ -1,6 +1,6 @@
 // Library Imports
 import React, { Component } from 'react';
-import { View, Text, Picker } from 'react-native';
+import { View, Text, ActionSheetIOS } from 'react-native';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { Button, Input, Divider } from 'react-native-elements';
