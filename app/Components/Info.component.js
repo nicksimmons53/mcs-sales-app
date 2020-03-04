@@ -24,7 +24,7 @@ const Info = ({...props}) => {
       </View>      
       <View style={styles.row}>
         <Text style={styles.text}>Shipping Address:</Text>
-        <Text style={styles.text}>{props.client.shippin}</Text>
+        <Text style={styles.text}>{shippingAddr}</Text>
       </View>
     </View>
   )
