@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
     paddingHorizontal: 0,
-    paddingVertical: 5
+    paddingVertical: 5,
   },
   inputText: {
     color: colors.background

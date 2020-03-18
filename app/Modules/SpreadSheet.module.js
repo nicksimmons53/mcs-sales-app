@@ -4,9 +4,11 @@ import { View, Text, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { Divider, Icon, Input, Button } from 'react-native-elements';
 import { DataTable } from 'react-native-paper';
+import { Dropdown } from 'react-native-material-dropdown';
 import { styles, colors } from './Styles/SpreadSheet.style';
 
 class SpreadSheet extends Component {
+
   handleInputChange = (tables, tableIndex, rowIndex, targetValue, newValue) => {
     let row = tables[tableIndex].rows[rowIndex];
     row[targetValue] = newValue;
@@ -14,6 +16,23 @@ class SpreadSheet extends Component {
 
   row = (tables, tableIndex, rowObj, rowIndex) => {
     const keys = Object.keys(rowObj);
+    let data = [{
+      
+    }]
+
+    if (this.props.dropdown === true) {
+      return (
+        <DataTable.Row key={rowIndex}>
+          <View style={styles.tableRow}>
+            {keys.map((index, i) => (
+              <Dropdown
+                itemTextStyle={styles.inputText}
+                containerStyle={styles.inputContainer}/>
+            ))}
+          </View>
+        </DataTable.Row>    
+      )
+    }
 
     return (
       <DataTable.Row key={rowIndex}>

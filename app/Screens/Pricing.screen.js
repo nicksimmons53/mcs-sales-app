@@ -13,7 +13,7 @@ export default class Pricing extends Component {
   state = {
     selectedSpreadsheet: 0,
     tableName: '',
-    buttonGroup: ['Tile', 'Wood', 'Carpet', 'Vinyl'],
+    buttonGroup: ['Tile', 'Wood', 'Carpet', 'Vinyl', 'Granite'],
     Tile: {
       0: {
         program: 'Tile',
@@ -189,6 +189,64 @@ export default class Pricing extends Component {
         rows: [{item: '', total: ''}],
         newRow: {item: '', total: ''}
       }
+    },
+    Granite: {
+      0: {
+        program: 'Granite',
+        parent: 'Granite Table',
+        name: 'Level 1',
+        columnHeaders: ['Colors', 'Thickness', 'Price'],
+        rows: [{color: '', thickness: '', price: ''}],
+        newRow: {color: '', thickness: '', price: ''}
+      },
+      1: {
+        program: 'Granite',
+        parent: 'Granite Table',
+        name: 'Level 2',
+        columnHeaders: ['Colors', 'Thickness', 'Price'],
+        rows: [{color: '', thickness: '', price: ''}],
+        newRow: {color: '', thickness: '', price: ''}
+      },
+      2: {
+        program: 'Granite',
+        parent: 'Granite Table',
+        name: 'Level 3',
+        columnHeaders: ['Colors', 'Thickness', 'Price'],
+        rows: [{color: '', thickness: '', price: ''}],
+        newRow: {color: '', thickness: '', price: ''}
+      },
+      3: {
+        program: 'Granite',
+        parent: 'Granite Table',
+        name: 'Level 4',
+        columnHeaders: ['Colors', 'Thickness', 'Price'],
+        rows: [{color: '', thickness: '', price: ''}],
+        newRow: {color: '', thickness: '', price: ''}
+      },
+      4: {
+        program: 'Granite',
+        parent: 'Granite Table',
+        name: 'Level 5',
+        columnHeaders: ['Colors', 'Thickness', 'Price'],
+        rows: [{color: '', thickness: '', price: ''}],
+        newRow: {color: '', thickness: '', price: ''}
+      },
+      5: {
+        program: 'Granite',
+        parent: 'Granite Table',
+        name: 'Level 6',
+        columnHeaders: ['Colors', 'Thickness', 'Price'],
+        rows: [{color: '', thickness: '', price: ''}],
+        newRow: {color: '', thickness: '', price: ''}
+      },
+      6: {
+        program: 'Granite',
+        parent: 'Granite Table',
+        name: 'Level 7',
+        columnHeaders: ['Colors', 'Thickness', 'Price'],
+        rows: [{color: '', thickness: '', price: ''}],
+        newRow: {color: '', thickness: '', price: ''}
+      },
     }
   };
 
@@ -304,6 +362,18 @@ export default class Pricing extends Component {
                     tableName='Vinyl'
                     addRow={this.addRow}
                     tables={this.state.Vinyl}/>
+                :
+                  null
+                }
+
+                {selectedIndex === 4 ?
+                  <SpreadSheet
+                    formikProps={formikProps}
+                    client={client}
+                    tableName='Granite'
+                    addRow={this.addRow}
+                    tables={this.state.Granite}
+                    dropdown={true}/>
                 :
                   null
                 }
