@@ -121,7 +121,7 @@ class Login extends Component {
               containerStyle={styles.inputItem}
             />
             {this.state.error ?
-              <Text style={styles.error}>"Whoops, something doesn't look right."</Text>
+              <Text style={styles.error}>Whoops, something doesn't look right</Text>
               :
               null
             }

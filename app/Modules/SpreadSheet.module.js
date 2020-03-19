@@ -8,6 +8,11 @@ import { Dropdown } from 'react-native-material-dropdown';
 import { styles, colors } from './Styles/SpreadSheet.style';
 
 class SpreadSheet extends Component {
+  state = {
+    color: '',
+    thickness: '',
+    price: ''
+  }
 
   handleInputChange = (tables, tableIndex, rowIndex, targetValue, newValue) => {
     let row = tables[tableIndex].rows[rowIndex];
@@ -16,23 +21,6 @@ class SpreadSheet extends Component {
 
   row = (tables, tableIndex, rowObj, rowIndex) => {
     const keys = Object.keys(rowObj);
-    let data = [{
-      
-    }]
-
-    if (this.props.dropdown === true) {
-      return (
-        <DataTable.Row key={rowIndex}>
-          <View style={styles.tableRow}>
-            {keys.map((index, i) => (
-              <Dropdown
-                itemTextStyle={styles.inputText}
-                containerStyle={styles.inputContainer}/>
-            ))}
-          </View>
-        </DataTable.Row>    
-      )
-    }
 
     return (
       <DataTable.Row key={rowIndex}>
@@ -109,6 +97,7 @@ class SpreadSheet extends Component {
 
 // Props Valdidation
 SpreadSheet.propTypes = {
+  dropdown: PropTypes.bool,
   addRow: PropTypes.func,
   tables: PropTypes.object,
   formikProps: PropTypes.object

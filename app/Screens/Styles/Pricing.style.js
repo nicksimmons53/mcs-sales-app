@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
   // ButtonGroup
   buttonGroup: {
     height: 35,
+    alignSelf: 'center',
     width: '95%'
   },
   selected: {
