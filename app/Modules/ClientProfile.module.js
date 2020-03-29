@@ -12,8 +12,8 @@ import UpdateClient from '../Modules/UpdateClient.module';
 import ClientActions from '../Components/ClientActions.component';
 import AddContact from './AddContact.module';
 import List from './List.module';
-import sendEmail from '../Components/Email.component';
 import styles from './Styles/ClientProfile.style';
+import Axios from 'axios';
 
 // Class Component that will show the Client Profile Information
 class ClientProfile extends Component {
@@ -69,6 +69,21 @@ class ClientProfile extends Component {
   // Show Inactivated Client
   showInactivationToast = ( ) => {
     this.refs.toast.show(this.props.client.clientName + ' has been inactivated.');
+  }
+
+  // TEST AXIOS FUNCTION
+  api_postClient = async( ) => {
+    await Axios.post(
+      'https://m7j96t6oda.execute-api.us-east-2.amazonaws.com/test/client', { 
+        key1: this.props.client,
+        key2: this.state.contacts,
+        key3: this.state.files
+      }
+    ).then((res) => {
+      console.log(res.data);
+    }).catch((err) => {
+      console.error(err);
+    });
   }
 
   render( ) {
@@ -152,7 +167,7 @@ class ClientProfile extends Component {
                 raised
                 containerStyle={styles.submitButtonContainer}
                 buttonStyle={styles.submitButton}
-                onPress={( ) => sendEmail(client, true)}/>
+                onPress={this.api_postClient}/>
             </View>
           </ScrollView>
 
