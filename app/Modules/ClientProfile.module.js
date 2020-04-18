@@ -163,6 +163,7 @@ class ClientProfile extends Component {
 
             <View style={styles.footer}>
               <Button
+                disabled
                 title='Submit for Approval'
                 raised
                 containerStyle={styles.submitButtonContainer}

@@ -73,7 +73,6 @@ export const UpdateClientValues = {
 }
 
 export const ContactValues = {
-  type: '',
   name: '',
   title: '',
   phone: '', 
