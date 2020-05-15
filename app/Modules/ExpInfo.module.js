@@ -53,6 +53,37 @@ class ExpInfo extends Component {
               onPress={( ) => filePicker( )} />
           </View>
 
+          <View style={styles.textRow}>
+            <Text style={styles.label}>Vendor Portal</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('vendorPortal')}
+              onBlur={this.props.formik.handleBlur('vendorPortal')}
+              blurOnSubmit={false}
+              containerStyle={styles.mediumInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
+
+          <View style={styles.textRow}>
+            <Text style={styles.label}>Waste Factor</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('wasteFactor')}
+              onBlur={this.props.formik.handleBlur('wasteFactor')}
+              blurOnSubmit={false}
+              containerStyle={styles.smallInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
+
+
+          <View style={styles.textRow}>
+            <Text style={styles.label}>Pattern Charges</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('patternCharges')}
+              onBlur={this.props.formik.handleBlur('patternCharges')}
+              blurOnSubmit={false}
+              containerStyle={styles.mediumInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
+
           <Divider />
 
           <Text style={styles.sectionHeaderText}>Model Address</Text>

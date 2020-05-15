@@ -28,7 +28,10 @@ export const ExpInfoValues = {
   designCity: '',
   designState: '',
   designsZip: '',
-  expMisc: ''
+  expMisc: '',
+  vendorPortal: '',
+  wasteFactor: '',
+  patternCharges: ''
 };
 
 export const AcctInfoValues = {
@@ -47,6 +50,7 @@ export const AcctInfoValues = {
   portalToggle: false,
   vendorIDToggle: false,
   POToggle: false,
+  poCorrection: '',
   approvalsToggle: false  
 }
 

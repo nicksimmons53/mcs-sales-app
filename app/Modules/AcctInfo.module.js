@@ -154,6 +154,17 @@ class AcctInfo extends Component {
               trackColor={{true: colors.green}} />
           </View>
           <View style={styles.textRow}>
+            <Text style={styles.label}>PO Correction Handling</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('poCorrection')}
+              onBlur={this.props.formik.handleBlur('poCorrection')}
+              keyboardType='url'
+              textContentType='URL'
+              blurOnSubmit={false}
+              containerStyle={styles.smallInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
+          <View style={styles.textRow}>
             <Text style={styles.label}>Approvals Required?</Text>
             <Switch
               onChange={( ) => this.props.formik.setFieldValue('approvalsToggle', !this.props.formik.values.approvalsToggle)}

@@ -126,6 +126,30 @@ export default class Pricing extends Component {
         columnHeaders: ['Item', 'Total'],
         rows: [{item: '', total: ''}],
         newRow: {item: '', total: ''}
+      },
+      14: {
+        program: 'Tile',
+        parent: 'Tile Table',
+        name: 'Grout Types',
+        columnHeaders: ['Item'],
+        rows: [{item: ''}],
+        newRow: {item: ''}
+      },
+      15: {
+        program: 'Tile',
+        parent: 'Tile Table',
+        name: 'Thinset Types',
+        columnHeaders: ['Item'],
+        rows: [{item: ''}],
+        newRow: {item: ''}
+      },
+      16: {
+        program: 'Tile',
+        parent: 'Tile Table',
+        name: 'Water Proofing',
+        columnHeaders: ['Item'],
+        rows: [{item: ''}],
+        newRow: {item: ''}
       }
     },
     Wood: {
