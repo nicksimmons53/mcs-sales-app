@@ -24,8 +24,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
-      "usesIcloudStorage": true
+      "isTabletOnly": true,
+      "usesIcloudStorage": true,
+      "bundleIdentifier": "com.mcsurfaces.app",
+      "buildNumber": "1.0.0"
     },
     "description": ""
   }

@@ -1,16 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import colors from '../Library/Colors';
 
 const Info = ({...props}) => {
   let client = props.client;
   let corpAddr2 = '';
-  if (client.corpAddr2 !== '' || typeof(client.corpAddr2) !== undefined) 
-    corpAddr2 = client.corpAddr2 + ', ';
+  let billAddr2 = '';
+  let shipAddr2 = '';
+  if (client.addrs2 !== '' || typeof(client.addrs2) !== undefined) 
+    corpAddr2 = client.addrs2 + ', ';
 
-  let corpAddr = client.corpAddr + ', ' + corpAddr2 + ', ' + client.corpCity + ', ' + client.corpState + client.corpZip;
-  let billingAddr = client.billingAddr + ', ' + client.billingCity + ', ' + client.billingState + client.billingZip;
-  let shippingAddr = client.shippingAddr + ', ' + client.shippingCity + ', ' + client.shippingState + client.shippingZip;
+  if (client.bilad2 !== '' || typeof(client.bilad2) !== undefined) 
+    billAddr2 = client.bilad2 + ', ';
+
+  if (client.shpad2 !== '' || typeof(client.shpad2) !== undefined) 
+    shipAddr2 = client.shpad2 + ', ';
+
+  let corpAddr = client.addrs1 + ', ' + corpAddr2 + client.ctynme + ', ' + client.state_ + " " + client.zipcde;
+  let billingAddr = client.bilad1 + ', ' + billAddr2 + client.bilcty + ', ' + client.bilste + " " + client.bilzip;
+  let shippingAddr = client.shpad1 + ', ' + shipAddr2 + client.shpcty + ', ' + client.shpste + " " + client.shpzip;
 
   return (
     <View style={styles.background}>

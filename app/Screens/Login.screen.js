@@ -9,10 +9,10 @@ import {
   TouchableWithoutFeedback
 } from 'react-native';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { Button, CheckBox, Input, Icon } from 'react-native-elements';
 import { Formik } from 'formik';
-import { LoginSchema } from '../Form/YupSchema.form';
-import Firebase from '../../config/Firebase';
+import { User } from '../Form/Values.form';
 import NetInfo from '@react-native-community/netinfo';
 import styles from './Styles/Login.style';
 import colors from '../Library/Colors'
@@ -36,12 +36,14 @@ class Login extends Component {
     this.timeout = setTimeout(( ) => {
       actions.setSubmitting(false);
     }, 1000);
-    Firebase.auth( )
-      .signInWithEmailAndPassword(values.username, values.password)
-      .then(( ) => this.props.navigation.navigate('Profile'))
-      .catch((error) => {
-        var errorCode = error.code;
-        if (errorCode === 'auth/wrong-password' || errorCode === 'auth/user-not-found') {
+
+    axios.post('https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/login', {
+      e_mail: values.e_mail,
+      passwd: values.passwd
+      }).then((response) => {
+        if (response.data.code === 200) {
+          this.props.navigation.navigate('Profile', { user: response.data.result });
+        } else {
           this.setState({ error: true });
         }
       });
@@ -67,12 +69,7 @@ class Login extends Component {
         <StatusBar backgroundColor={colors.backgroundColor} barStyle="light-content" />
 
         <Formik
-          initialValues={{
-            username: '',
-            password: '',
-            checked: false,
-          }}
-          validationSchema={LoginSchema}
+          initialValues={ User }
           onSubmit={(values, actions) => this._signIn(values, actions)}>
 
           {formikProps => (
@@ -82,8 +79,8 @@ class Login extends Component {
             </View>
 
             <Input
-              onChangeText={formikProps.handleChange('username')}
-              onBlur={formikProps.handleBlur('username')}
+              onChangeText={formikProps.handleChange('e_mail')}
+              onBlur={formikProps.handleBlur('e_mail')}
               autoCapitalize='none'
               placeholder='Username'
               placeholderTextColor={colors.grey}
@@ -93,8 +90,8 @@ class Login extends Component {
             />
 
             <Input
-              onChangeText={formikProps.handleChange('password')}
-              onBlur={formikProps.handleBlur('password')}
+              onChangeText={formikProps.handleChange('passwd')}
+              onBlur={formikProps.handleBlur('passwd')}
               autoCapitalize='none'
               placeholder='Password'
               placeholderTextColor={colors.grey}

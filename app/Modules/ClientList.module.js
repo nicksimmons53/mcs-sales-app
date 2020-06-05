@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { ScrollView, Text, View, RefreshControl, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import { Divider, Icon } from 'react-native-elements';
-import * as Client from '../Functions/Client';
 import ListObject from '../Components/ListObject.component';
 import styles from './Styles/ClientList.style';
 import colors from '../Library/Colors';
@@ -14,7 +13,6 @@ class ClientList extends Component {
     loading: true
   };
 
-  // Retrieve All Clients from the Firestore DB
   componentDidMount( ) {
     this.setState({ loading: false });
   }
@@ -39,7 +37,7 @@ class ClientList extends Component {
               <ActivityIndicator size='large' color={colors.black} style={{paddingTop: 200}} />
             )
           }
-          {
+          { 
             this.props.clients.map((client, index) => (
               <ListObject
                 client={client}

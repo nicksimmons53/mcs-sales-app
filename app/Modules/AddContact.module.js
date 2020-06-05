@@ -1,12 +1,12 @@
 // Library Imports
 import React, { Component } from 'react';
-import { View, Text, ActionSheetIOS } from 'react-native';
+import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { Button, Input, Divider } from 'react-native-elements';
-import * as Contact from '../Functions/Contact';
-import { ContactValues } from '../Form/Values.form';
-import { styles, colors } from './Styles/AddContact.style';
+import { Contact1, Contact2, Contact3 } from '../Form/Values.form';
+import axios from 'axios';
+import { styles } from './Styles/AddContact.style';
 
 class AddContact extends Component {
   timeout = null;
@@ -16,13 +16,20 @@ class AddContact extends Component {
   }
 
   // Handle Submit
-  _saveContactInfo = async(values, actions) => {
-    let contact = values;
-    this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
-    
-    Contact.saveInfo(contact, this.props.client);
-    this.props.addContactToState(contact);
-    this.props.toggle( ); 
+  _saveContactInfo = (values, actions) => {
+    let user = this.props.user;
+    let client = this.props.client;
+
+    console.log(values);
+
+    axios.put(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/contacts`, values)
+      .then((response) => {
+        this.props.refresh( );
+        this.props.toggle( ); 
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   // Text Input Component
@@ -48,30 +55,86 @@ class AddContact extends Component {
 
           <Divider/>
 
-          <Formik
-            initialValues={ContactValues}
-            onSubmit={(values, actions) => {this._saveContactInfo(values, actions)}
-          }>
-            {formikProps => (
-              <>
-              {this.input('Name', 'name', formikProps)}
-              {this.input('Title', 'title', formikProps)}
-              {this.input('Phone', 'phone', formikProps)}
-              {this.input('Email', 'email', formikProps)}
+          {this.props.contactID === 1 ? (
+            <Formik
+              initialValues={Contact1}
+              onSubmit={(values, actions) => {this._saveContactInfo(values, actions)}
+            }>
+              {formikProps => (
+                <>
+                  {this.input('Name', 'contct', formikProps)}
+                  {this.input('Title', 'cntds1', formikProps)}
+                  {this.input('Phone', 'cllphn', formikProps)}
+                  {this.input('Email', 'e_mail', formikProps)}
 
-              <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                <Button
-                  title='Save'
-                  buttonStyle={styles.save}
-                  onPress={formikProps.handleSubmit}/>
-                <Button
-                  title='Cancel'
-                  buttonStyle={styles.cancel}
-                  onPress={( ) => this.props.toggle( )}/>
-              </View>
-              </>
-            )}
-          </Formik>
+                  <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                    <Button
+                      title='Save'
+                      buttonStyle={styles.save}
+                      onPress={formikProps.handleSubmit}/>
+                    <Button
+                      title='Cancel'
+                      buttonStyle={styles.cancel}
+                      onPress={( ) => this.props.toggle( )}/>
+                  </View> 
+                </>
+              )}
+            </Formik>
+          ) : null}
+
+          {this.props.contactID === 2 ? (
+            <Formik
+              initialValues={Contact2}
+              onSubmit={(values, actions) => {this._saveContactInfo(values, actions)}
+            }>
+              {formikProps => (
+                <>
+                  {this.input('Name', 'contc2', formikProps)}
+                  {this.input('Title', 'cntds2', formikProps)}
+                  {this.input('Phone', 'cell02', formikProps)}
+                  {this.input('Email', 'email2', formikProps)}
+
+                  <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                    <Button
+                      title='Save'
+                      buttonStyle={styles.save}
+                      onPress={formikProps.handleSubmit}/>
+                    <Button
+                      title='Cancel'
+                      buttonStyle={styles.cancel}
+                      onPress={( ) => this.props.toggle( )}/>
+                  </View> 
+                </>
+              )}
+            </Formik>
+          ) : null}
+
+          {this.props.contactID === 3 ? (
+            <Formik
+              initialValues={Contact3}
+              onSubmit={(values, actions) => {this._saveContactInfo(values, actions)}
+            }>
+              {formikProps => (
+                <>
+                  {this.input('Name', 'contc3', formikProps)}
+                  {this.input('Title', 'cntds3', formikProps)}
+                  {this.input('Phone', 'cell03', formikProps)}
+                  {this.input('Email', 'email3', formikProps)}
+
+                  <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+                    <Button
+                      title='Save'
+                      buttonStyle={styles.save}
+                      onPress={formikProps.handleSubmit}/>
+                    <Button
+                      title='Cancel'
+                      buttonStyle={styles.cancel}
+                      onPress={( ) => this.props.toggle( )}/>
+                  </View> 
+                </>
+              )}
+            </Formik>
+          ) : null}
         </View>
       </View>
     )
@@ -79,7 +142,8 @@ class AddContact extends Component {
 }
 
 AddContact.propTypes = {
-  toggle: PropTypes.func
+  toggle: PropTypes.func,
+  refresh: PropTypes.func
 }
 
 export default AddContact;

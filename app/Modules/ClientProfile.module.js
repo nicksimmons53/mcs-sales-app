@@ -4,16 +4,14 @@ import { ScrollView, View, Text, KeyboardAvoidingView } from 'react-native';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
-import * as File from '../Functions/File';
-import * as Contact from '../Functions/Contact';
 import Info from '../Components/Info.component';
 import ContactTable from '../Modules/ContactTable.module';
 import UpdateClient from '../Modules/UpdateClient.module';
 import ClientActions from '../Components/ClientActions.component';
 import AddContact from './AddContact.module';
 import List from './List.module';
+import axios from 'axios';
 import styles from './Styles/ClientProfile.style';
-import Axios from 'axios';
 
 // Class Component that will show the Client Profile Information
 class ClientProfile extends Component {
@@ -22,34 +20,22 @@ class ClientProfile extends Component {
     update: false,
     files: [ ],
     contacts: [ ],
-    addContact: false
+    addContact: false,
+    contactID: ''
   };
 
   componentDidMount( ) {
-    File.retrieveAll(this.props.client).then((res) => {
-      this.setState({files: [...res]});
-    });
+    let user = this.props.user;
+    let client = this.props.client;
 
-    Contact.retrieveAll(this.props.client).then((res) => {
-      this.setState({contacts: [...res]});
-    });
-  }
-
-  // Add Contact to State
-  addContactToState = (contact) => {
-    this.setState({contacts: [...this.state.contacts, contact]});
-  }
-
-  // Remove Contact from State
-  removeContactFromState = (removedContact) => {
-    let contacts = this.state.contacts;
-
-    contacts.map((contact, i) => {
-      if (contact.title === removedContact.title) 
-        contacts.splice(i, 1);
-    });
-
-    this.setState({contacts: [...contacts]});
+    axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/contacts`)
+      .then((response) => {
+        console.log(response.data[0])
+        this.setState({ contacts: response.data[0] });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   // Toggle Update Feature
@@ -57,7 +43,8 @@ class ClientProfile extends Component {
     this.setState({ update: !this.state.update });
   }
 
-  toggleAddContact = ( ) => {
+  toggleAddContact = (contactID) => {
+    this.setState({ contactID: contactID });
     this.setState({ addContact: !this.state.addContact });
   }
 
@@ -68,22 +55,21 @@ class ClientProfile extends Component {
 
   // Show Inactivated Client
   showInactivationToast = ( ) => {
-    this.refs.toast.show(this.props.client.clientName + ' has been inactivated.');
+    this.refs.toast.show(this.props.client.clnnme + ' has been inactivated.');
   }
+  
+  refresh = ( ) => {
+    let user = this.props.user;
+    let client = this.props.client;
 
-  // TEST AXIOS FUNCTION
-  api_postClient = async( ) => {
-    await Axios.post(
-      'https://m7j96t6oda.execute-api.us-east-2.amazonaws.com/test/client', { 
-        key1: this.props.client,
-        key2: this.state.contacts,
-        key3: this.state.files
-      }
-    ).then((res) => {
-      console.log(res.data);
-    }).catch((err) => {
-      console.error(err);
-    });
+    axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}`)
+      .then((response) => {
+        console.log(response.data[0])
+        this.setState({ client: response.data[0] });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render( ) {
@@ -102,7 +88,7 @@ class ClientProfile extends Component {
       return (
         <KeyboardAvoidingView enabled behavior='padding' style={styles.background}>
           <View style={headerStyle}>
-            <Text style={styles.headerText}>{client.clientName}</Text>
+            <Text style={styles.headerText}>{client.clnnme}</Text>
           </View>
 
           <ScrollView style={styles.form}>
@@ -113,7 +99,6 @@ class ClientProfile extends Component {
               <ContactTable
                 toggleAddContact={this.toggleAddContact} 
                 contacts={this.state.contacts}
-                client={this.props.client}
                 removeContactFromState={this.removeContactFromState}/>
             </View>
 
@@ -121,9 +106,11 @@ class ClientProfile extends Component {
               this.state.addContact ?
                 <View style={styles.centerAlign}>
                   <AddContact 
+                    contactID={this.state.contactID}
                     toggle={this.toggleAddContact} 
                     client={this.props.client}
-                    addContactToState={this.addContactToState}/>
+                    user={this.props.user}
+                    refresh={this.refresh}/>
                 </View>
               :
                 null
@@ -188,6 +175,7 @@ ClientProfile.propTypes = {
   nav: PropTypes.object,
   client: PropTypes.object,
   loading: PropTypes.func,
+  refresh: PropTypes.func,
   toggleModal: PropTypes.func,
   isPortrait: PropTypes.bool
 }

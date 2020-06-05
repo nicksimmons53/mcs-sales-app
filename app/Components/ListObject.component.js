@@ -10,14 +10,14 @@ const ListObject = ({ client, setClientUID }) => {
   return (
     <View>
       <ListItem
-        title={client.clientName}
+        title={client.clnnme}
         subtitle= {'Status: ' + client.status}
         bottomDivider
         chevron
         titleStyle={styles.title}
         subtitleStyle={styles.subtitle}
         containerStyle={styles.background}
-        onPress={( ) => setClientUID(client.uid)} />
+        onPress={ ( ) => setClientUID(client.id) } />
     </View>
   )
 };

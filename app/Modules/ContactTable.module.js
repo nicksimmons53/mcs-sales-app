@@ -1,10 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { Icon, Input, Text } from 'react-native-elements';
 import { DataTable } from 'react-native-paper';
-import { inactivateContact } from '../Components/Alert.component';
-import { styles, colors } from './Styles/ContactTable.style';
 
 class ContactTable extends Component {
   render( ) {
@@ -18,26 +15,25 @@ class ContactTable extends Component {
             <DataTable.Title>Email</DataTable.Title>
           </DataTable.Header>
 
-          {this.props.contacts.map((contact, index) => (
-            <DataTable.Row 
-              key={index}
-              onPress={( ) => {
-                inactivateContact(contact, this.props.removeContactFromState, this.props.client);
-              }}>
-              <DataTable.Cell>{contact.name}</DataTable.Cell>
-              <DataTable.Cell>{contact.title}</DataTable.Cell>
-              <DataTable.Cell>{contact.phone}</DataTable.Cell>
-              <DataTable.Cell>{contact.email}</DataTable.Cell>
-            </DataTable.Row>
-          ))}
+          <DataTable.Row onPress={( ) => this.props.toggleAddContact(1)}>
+            <DataTable.Cell>{this.props.contacts.contct}</DataTable.Cell>
+            <DataTable.Cell>{this.props.contacts.cntds1}</DataTable.Cell>
+            <DataTable.Cell>{this.props.contacts.cllphn}</DataTable.Cell>
+            <DataTable.Cell>{this.props.contacts.e_mail}</DataTable.Cell>
+          </DataTable.Row>
 
-          <DataTable.Row style={styles.addRow}>
-            <Icon
-              name='plus-square'
-              type='font-awesome'
-              size={32}
-              color={colors.green}
-              onPress={( ) => this.props.toggleAddContact( )}/>
+          <DataTable.Row onPress={( ) => this.props.toggleAddContact(2)}>
+            <DataTable.Cell>{this.props.contacts.contc2}</DataTable.Cell>
+            <DataTable.Cell>{this.props.contacts.cntds2}</DataTable.Cell>
+            <DataTable.Cell>{this.props.contacts.cell02}</DataTable.Cell>
+            <DataTable.Cell>{this.props.contacts.email2}</DataTable.Cell>
+          </DataTable.Row>
+
+          <DataTable.Row onPress={( ) => this.props.toggleAddContact(3)}>
+            <DataTable.Cell>{this.props.contacts.contc3}</DataTable.Cell>
+            <DataTable.Cell>{this.props.contacts.cntds3}</DataTable.Cell>
+            <DataTable.Cell>{this.props.contacts.cell03}</DataTable.Cell>
+            <DataTable.Cell>{this.props.contacts.email3}</DataTable.Cell>
           </DataTable.Row>
         </DataTable>
       </View>

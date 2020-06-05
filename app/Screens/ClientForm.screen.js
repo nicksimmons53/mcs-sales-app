@@ -16,10 +16,8 @@ import Toast from 'react-native-easy-toast';
 import Toolbar from '../Components/Toolbar.component';
 import BasicInfo from '../Modules/BasicInfo.module';
 import styles from './Styles/ClientForm.style';
-import Firebase from '../../config/Firebase';
 import AcctInfo from '../Modules/AcctInfo.module';
 import ExpInfo from '../Modules/ExpInfo.module';
-import colors from '../Library/Colors';
 
 // Class Component that will display client creation form
 class ClientForm extends Component {
@@ -34,7 +32,6 @@ class ClientForm extends Component {
   // Signout Function
   _signOutAsync = async( ) => {
     await AsyncStorage.clear( );
-    Firebase.auth( ).signOut( );
     this.props.navigation.navigate('Auth');
   };
 

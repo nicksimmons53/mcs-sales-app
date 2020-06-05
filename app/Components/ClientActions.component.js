@@ -88,16 +88,6 @@ const ClientActions = ({...props}) => {
             createClient: false
           });
         }}/>
-      <Button
-        title='Inactivate Client'
-        icon={{
-          name: 'window-close',
-          type: 'font-awesome',
-          size: 20,
-          color: colors.white,
-        }}
-        buttonStyle={styles.button}
-        onPress={( ) => inactivateClient(props)}/>
     </ScrollView>
   );
 };

@@ -1,7 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { View, StatusBar, AsyncStorage, ActivityIndicator, Dimensions } from 'react-native';
-import { useFocusEffect } from 'react-navigation';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
 import NetInfo from '@react-native-community/netinfo';
@@ -9,10 +9,6 @@ import ClientList from '../Modules/ClientList.module';
 import ClientProfile from '../Modules/ClientProfile.module';
 import Toolbar from '../Components/Toolbar.component';
 import { networkALert } from '../Components/Alert.component';
-import * as Client from '../Functions/Client';
-import * as File from '../Functions/File';
-import * as User from '../Functions/User';
-import Firebase from '../../config/Firebase';
 import styles from './Styles/Profile.style';
 import colors from '../Library/Colors';
 
@@ -29,13 +25,13 @@ class Profile extends Component {
 
     // Initial State
     this.state = {
-      admin: false,
       client: null,
       clients: [ ],
       files: [ ],
       loading: false,
       refresh: false,
       clientModal: false,
+      user: null,
       portrait: isPortrait( ) ? true : false
     };
 
@@ -47,17 +43,16 @@ class Profile extends Component {
   }
 
   componentDidMount( ) {
-    let userUID = Firebase.auth( ).currentUser.uid;
-    let users = [ ];
-    User.retrieveAll( ).then((res) => {
-      res.map(async(user, index) => {
-        await users.push(user.uid);
-      })
-    })
+    let user = this.props.navigation.state.params.user[0];
+    this.setState({ user: user });
 
-    Client.retrieveAll('clients').then((res) => {
-      this.setState({clients: [...res]});
-    });
+    axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients`)
+      .then((response) => {
+        this.setState({ clients: response.data });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   // Update state when client is added
@@ -75,10 +70,12 @@ class Profile extends Component {
 
   // Sets the UID when a client is selected for viewing
   setClientUID = async(uid) => {
-    await Client.retrieveInfo(uid).then((res) => {
-      this.setState({client: res});
+    this.state.clients.map((client) => {
+      if (client.id === uid) {
+        this.setState({ client: client });
+      }
     });
-
+    
     this.setState({ loading: true });
 
     this.setState({ clientModal: true });
@@ -87,7 +84,6 @@ class Profile extends Component {
 
   // User Sign Out (clears AsyncStorage and Firebase)
   _signOutAsync = async( ) => {
-    Firebase.auth( ).signOut( );
     await AsyncStorage.clear( );
     this.props.navigation.navigate('Auth');
   }
@@ -134,6 +130,7 @@ class Profile extends Component {
                   <ActivityIndicator size='large' color={colors.black} style={{paddingTop: 200}} />
                 :
                   <ClientProfile
+                    user={this.state.user}
                     nav={this.props.navigation}
                     client={this.state.client}
                     loading={this.toggleLoading}
@@ -173,6 +170,7 @@ class Profile extends Component {
                 <ActivityIndicator size='large' color={colors.black} style={{paddingTop: 200}} />
               :
                 <ClientProfile
+                  user={this.state.user}
                   nav={this.props.navigation}
                   client={this.state.client}
                   loading={this.toggleLoading}
