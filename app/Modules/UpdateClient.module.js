@@ -4,7 +4,7 @@ import { View, Text, Switch } from 'react-native';
 import PropTypes from 'prop-types';
 import { Icon, Divider, Input, Button } from 'react-native-elements';
 import { Formik } from 'formik';
-import * as Client from '../Functions/Client';
+import axios from 'axios';
 import Toast from 'react-native-easy-toast';
 import { styles, colors } from './Styles/Form.style';
 
@@ -20,19 +20,28 @@ class UpdateClient extends Component {
     clearTimeout(this.timeout);
   }
 
-  _updateClient = (values, actions) => {
-    this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
+  updateClient = (values, actions) => {
+    let user = this.props.user;
+    let client = this.props.client;
 
-    Client.updateInfo(values, 'clients', this.state.client);
-    this.props.cancel( );
+    this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
+    console.log(values)
+    axios.put(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}`, values)
+      .then((response) => {
+        this.props.refreshAddr( );
+        this.props.cancel( );
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render( ) {
     return (
       <View style={styles.background}>
         <Formik
-          initialValues={{...this.state.client}}
-          onSubmit={(values, actions) => this._updateClient(values, actions)}>
+          initialValues={{...this.props.client}}
+          onSubmit={(values, actions) => this.updateClient(values, actions)}>
         {formikProps => (
         <View style={styles.form}>
           <View style={styles.header}>
@@ -50,9 +59,9 @@ class UpdateClient extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>Street Address</Text>
             <Input
-              onChangeText={formikProps.handleChange('corpAddr')}
-              onBlur={formikProps.handleBlur('corpAddr')}
-              value={formikProps.values.corpAddr}
+              onChangeText={formikProps.handleChange('addrs1')}
+              onBlur={formikProps.handleBlur('addrs1')}
+              value={formikProps.values.addrs1}
               autoCapitalize='words'
               textContentType='streetAddressLine1'
               blurOnSubmit={false}
@@ -63,9 +72,9 @@ class UpdateClient extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>City</Text>
             <Input
-              onChangeText={formikProps.handleChange('corpCity')}
-              onBlur={formikProps.handleBlur('corpCity')}
-              value={formikProps.values.corpCity}
+              onChangeText={formikProps.handleChange('ctynme')}
+              onBlur={formikProps.handleBlur('ctynme')}
+              value={formikProps.values.ctynme}
               autoCapitalize='words'
               textContentType='addressCity'
               blurOnSubmit={false}
@@ -75,9 +84,9 @@ class UpdateClient extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>State</Text>
             <Input
-              onChangeText={formikProps.handleChange('corpState')}
-              onBlur={formikProps.handleBlur('corpState')}
-              value={formikProps.values.corpState}
+              onChangeText={formikProps.handleChange('state_')}
+              onBlur={formikProps.handleBlur('state_')}
+              value={formikProps.values.state_}
               autoCapitalize='characters'
               textContentType='addressState'
               blurOnSubmit={false}
@@ -87,9 +96,9 @@ class UpdateClient extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>Zip</Text>
             <Input
-              onChangeText={formikProps.handleChange('corpZip')}
-              onBlur={formikProps.handleBlur('corpZip')}
-              value={formikProps.values.corpZip}
+              onChangeText={formikProps.handleChange('zipcde')}
+              onBlur={formikProps.handleBlur('zipcde')}
+              value={formikProps.values.zipcde}
               keyboardType='number-pad'
               textContentType='postalCode'
               blurOnSubmit={false}
@@ -113,9 +122,9 @@ class UpdateClient extends Component {
               <View style={styles.textRow}>
                 <Text style={styles.label}>Street Address</Text>
                 <Input
-                  onChangeText={formikProps.handleChange('billingAddr')}
-                  onBlur={formikProps.handleBlur('billingAddr')}
-                  value={formikProps.values.billingAddr}
+                  onChangeText={formikProps.handleChange('bilad1')}
+                  onBlur={formikProps.handleBlur('bilad1')}
+                  value={formikProps.values.bilad1}
                   autoCapitalize='words'
                   textContentType='streetAddressLine1'
                   blurOnSubmit={false}
@@ -125,9 +134,9 @@ class UpdateClient extends Component {
               <View style={styles.textRow}>
                 <Text style={styles.label}>City</Text>
                 <Input
-                  onChangeText={formikProps.handleChange('billingCity')}
-                  onBlur={formikProps.handleBlur('billingCity')}
-                  value={formikProps.values.billingCity}
+                  onChangeText={formikProps.handleChange('bilcty')}
+                  onBlur={formikProps.handleBlur('bilcty')}
+                  value={formikProps.values.bilcty}
                   autoCapitalize='words'
                   textContentType='addressCity'
                   blurOnSubmit={false}
@@ -137,9 +146,9 @@ class UpdateClient extends Component {
               <View style={styles.textRow}>
                 <Text style={styles.label}>State</Text>
                 <Input
-                  onChangeText={formikProps.handleChange('billingState')}
-                  onBlur={formikProps.handleBlur('billingState')}
-                  value={formikProps.values.billingState}
+                  onChangeText={formikProps.handleChange('bilste')}
+                  onBlur={formikProps.handleBlur('bilste')}
+                  value={formikProps.values.bilste}
                   autoCapitalize='characters'
                   textContentType='addressState'
                   blurOnSubmit={false}
@@ -149,9 +158,9 @@ class UpdateClient extends Component {
               <View style={styles.textRow}>
                 <Text style={styles.label}>Zip</Text>
                 <Input
-                  onChangeText={formikProps.handleChange('billingZip')}
-                  onBlur={formikProps.handleBlur('billingZip')}
-                  value={formikProps.values.billingZip}
+                  onChangeText={formikProps.handleChange('bilzip')}
+                  onBlur={formikProps.handleBlur('bilzip')}
+                  value={formikProps.values.bilzip}
                   keyboardType='number-pad'
                   textContentType='postalCode'
                   blurOnSubmit={false}
@@ -177,9 +186,9 @@ class UpdateClient extends Component {
               <View style={styles.textRow}>
                 <Text style={styles.label}>Street Address</Text>
                 <Input
-                  onChangeText={formikProps.handleChange('shippingAddr')}
-                  onBlur={formikProps.handleBlur('shippingAddr')}
-                  value={formikProps.values.shippingAddr}
+                  onChangeText={formikProps.handleChange('shpad1')}
+                  onBlur={formikProps.handleBlur('shpad1')}
+                  value={formikProps.values.shpad1}
                   autoCapitalize='words'
                   textContentType='streetAddressLine1'
                   blurOnSubmit={false}
@@ -189,9 +198,9 @@ class UpdateClient extends Component {
               <View style={styles.textRow}>
                 <Text style={styles.label}>City</Text>
                 <Input
-                  onChangeText={formikProps.handleChange('shippingCity')}
-                  onBlur={formikProps.handleBlur('shippingCity')}
-                  value={formikProps.values.shippingCity}
+                  onChangeText={formikProps.handleChange('shpcty')}
+                  onBlur={formikProps.handleBlur('shpcty')}
+                  value={formikProps.values.shpcty}
                   autoCapitalize='words'
                   textContentType='addressCity'
                   blurOnSubmit={false}
@@ -201,9 +210,9 @@ class UpdateClient extends Component {
               <View style={styles.textRow}>
                 <Text style={styles.label}>State</Text>
                 <Input
-                  onChangeText={formikProps.handleChange('shippingState')}
-                  onBlur={formikProps.handleBlur('shippingState')}
-                  value={formikProps.values.shippingState}
+                  onChangeText={formikProps.handleChange('shpste')}
+                  onBlur={formikProps.handleBlur('shpste')}
+                  value={formikProps.values.shpste}
                   autoCapitalize='characters'
                   textContentType='addressState'
                   blurOnSubmit={false}
@@ -213,9 +222,9 @@ class UpdateClient extends Component {
               <View style={styles.textRow}>
                 <Text style={styles.label}>Zip</Text>
                 <Input
-                  onChangeText={formikProps.handleChange('shippingZip')}
-                  onBlur={formikProps.handleBlur('shippingZip')}
-                  value={formikProps.values.shippingZip}
+                  onChangeText={formikProps.handleChange('shpzip')}
+                  onBlur={formikProps.handleBlur('shpzip')}
+                  value={formikProps.values.shpzip}
                   keyboardType='number-pad'
                   textContentType='postalCode'
                   blurOnSubmit={false}

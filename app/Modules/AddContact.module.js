@@ -20,8 +20,6 @@ class AddContact extends Component {
     let user = this.props.user;
     let client = this.props.client;
 
-    console.log(values);
-
     axios.put(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/contacts`, values)
       .then((response) => {
         this.props.refresh( );

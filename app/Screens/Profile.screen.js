@@ -59,7 +59,7 @@ class Profile extends Component {
   addClientToState = (client) => {
     this.setState({clients: [...this.state.clients, client]});
   }
-
+  
   removeClientFromState = (removedClient) => {
     let clients = this.state.clients;
     clients.map((client, i) => {

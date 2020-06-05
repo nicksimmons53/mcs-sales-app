@@ -20,6 +20,7 @@ class ClientProfile extends Component {
     update: false,
     files: [ ],
     contacts: [ ],
+    address: [ ],
     addContact: false,
     contactID: ''
   };
@@ -30,8 +31,15 @@ class ClientProfile extends Component {
 
     axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/contacts`)
       .then((response) => {
-        console.log(response.data[0])
         this.setState({ contacts: response.data[0] });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/address`)
+      .then((response) => {
+        this.setState({ address: response.data[0] });
       })
       .catch((error) => {
         console.error(error);
@@ -64,8 +72,20 @@ class ClientProfile extends Component {
 
     axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}`)
       .then((response) => {
-        console.log(response.data[0])
         this.setState({ client: response.data[0] });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  refreshAddress = ( ) => {
+    let user = this.props.user;
+    let client = this.props.client;
+
+    axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/address`)
+      .then((response) => {
+        this.setState({ address: response.data[0] });
       })
       .catch((error) => {
         console.error(error);
@@ -93,7 +113,7 @@ class ClientProfile extends Component {
 
           <ScrollView style={styles.form}>
 
-            <Info client={this.props.client}/>
+            <Info address={this.state.address}/>
             
             <View style={styles.table}>
               <ContactTable
@@ -119,9 +139,11 @@ class ClientProfile extends Component {
             {
               this.state.update ?
                 <UpdateClient
-                  client={client}
+                  user={this.props.user}
+                  client={this.props.client}
                   save={this.toggleUpdate}
-                  cancel={this.toggleUpdate}/>
+                  cancel={this.toggleUpdate}
+                  refreshAddr={this.refreshAddress}/>
               :
                 null
             }
