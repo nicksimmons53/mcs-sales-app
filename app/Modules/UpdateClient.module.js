@@ -11,7 +11,7 @@ import { styles, colors } from './Styles/Form.style';
 // Class Component to show Update Client Form
 class UpdateClient extends Component {
   state = {
-    client: this.props.client
+    address: this.props.address
   }
 
   timeout = null;
@@ -25,7 +25,7 @@ class UpdateClient extends Component {
     let client = this.props.client;
 
     this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
-    console.log(values)
+    
     axios.put(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}`, values)
       .then((response) => {
         this.props.refreshAddr( );
@@ -40,7 +40,7 @@ class UpdateClient extends Component {
     return (
       <View style={styles.background}>
         <Formik
-          initialValues={{...this.props.client}}
+          initialValues={{...this.props.address}}
           onSubmit={(values, actions) => this.updateClient(values, actions)}>
         {formikProps => (
         <View style={styles.form}>

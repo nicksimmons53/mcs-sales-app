@@ -72,7 +72,7 @@ class ClientProfile extends Component {
 
     axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}`)
       .then((response) => {
-        this.setState({ client: response.data[0] });
+        this.setState({ contacts: response.data[0] });
       })
       .catch((error) => {
         console.error(error);
@@ -140,6 +140,7 @@ class ClientProfile extends Component {
               this.state.update ?
                 <UpdateClient
                   user={this.props.user}
+                  address={this.state.address}
                   client={this.props.client}
                   save={this.toggleUpdate}
                   cancel={this.toggleUpdate}
