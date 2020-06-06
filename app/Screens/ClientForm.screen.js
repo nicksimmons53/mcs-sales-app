@@ -8,10 +8,10 @@ import {
   AsyncStorage
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { Divider, Icon, Button } from 'react-native-elements';
+import { Divider, Button } from 'react-native-elements';
 import { Formik } from 'formik';
-import { CreateClientValues, ContinueClientValues } from '../Form/Values.form';
-import * as Client from '../Functions/Client';
+import { Client, ContinueClientValues } from '../Form/Values.form';
+import axios from 'axios';
 import Toast from 'react-native-easy-toast';
 import Toolbar from '../Components/Toolbar.component';
 import BasicInfo from '../Modules/BasicInfo.module';
@@ -37,35 +37,50 @@ class ClientForm extends Component {
 
   // Saving Basic Client Info
   _saveBasicInfo = async(values, actions) => {
-    let addClientToState = this.props.navigation.getParam('addClientToState');
-    let client = values;
+    let user = this.props.navigation.getParam('user');
+    let refresh = this.props.navigation.getParam('refresh');
+
+    // Set User Specific Values
+    values.empnum = user.recnum;
+
     this.timeout1 = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    Client.saveInfo(values, 'clients');
-    addClientToState(client);
+    axios.post(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients`, values)
+      .then((response) => {
+        refresh(user);
+        
+        this.refs.toast.show(values.clnnme + ' has been saved.');
 
-    this.refs.toast.show(values.clientName + ' has been saved.');
-
-    this.timeout2 = setTimeout(( ) => {
-      this.props.navigation.popToTop( );
-    }, 2000);
+        this.timeout2 = setTimeout(( ) => {
+          this.props.navigation.popToTop( );
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   // Saving Accounting/Expediting Information
   _saveAdvancedInfo = async(values, actions) => {
     let client = this.props.navigation.getParam('client');
+    let user = this.props.navigation.getParam('user');
+    
     this.timeout1 = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    Client.saveAdvancedInfo(values, 'clients', client, 'acctInfo');
-
-    this.refs.toast.show('Client Information has been saved.');
-    this.timeout2 = setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
+    axios.put(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}`, values)
+      .then((response) => {
+        this.refs.toast.show('Client Information has been saved.');
+        this.timeout2 = setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   // Continue
   continue = (values, actions) => {
     this._saveAdvancedInfo(values, actions);
-    return <ExpInfo />
+    return <ExpInfo />;
   }
 
   render( ) {
@@ -92,7 +107,7 @@ class ClientForm extends Component {
             <Formik
               initialValues={
                 this.props.navigation.getParam('createClient') ?
-                  CreateClientValues
+                  Client
                   :
                   ContinueClientValues
               }
@@ -109,7 +124,7 @@ class ClientForm extends Component {
                   <BasicInfo formik={formikProps} />
                   :
                   <>
-                    <AcctInfo formik={formikProps} />
+                    <AcctInfo formik={formikProps}/>
                     <ExpInfo formik={formikProps} client={this.props.navigation.getParam('client')}/>
                   </>
                 }

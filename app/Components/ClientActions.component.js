@@ -85,6 +85,7 @@ const ClientActions = ({...props}) => {
             props.toggleModal( );
           props.nav.navigate('AdvInfoForm', {
             client: props.client,
+            user: props.user,
             createClient: false
           });
         }}/>

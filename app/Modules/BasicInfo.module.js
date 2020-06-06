@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, Switch } from 'react-native';
 import PropTypes from 'prop-types';
 import { Input } from 'react-native-elements';
-import { styles, colors } from './Styles/Form.style';
+import { styles } from './Styles/Form.style';
 
 // Class Component that will display Client Basic Info
 class BasicInfo extends Component {
@@ -15,8 +15,8 @@ class BasicInfo extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>Client Name</Text>
             <Input
-              onChangeText={this.props.formik.handleChange('clientName')}
-              onBlur={this.props.formik.handleBlur('clientName')}
+              onChangeText={this.props.formik.handleChange('clnnme')}
+              onBlur={this.props.formik.handleBlur('clnnme')}
               autoCapitalize='words'
               textContentType='organizationName'
               blurOnSubmit={false}
@@ -31,8 +31,8 @@ class BasicInfo extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>Street Address</Text>
             <Input
-              onChangeText={this.props.formik.handleChange('corpAddr')}
-              onBlur={this.props.formik.handleBlur('corpAddr')}
+              onChangeText={this.props.formik.handleChange('addrs1')}
+              onBlur={this.props.formik.handleBlur('addrs1')}
               autoCapitalize='words'
               textContentType='streetAddressLine1'
               blurOnSubmit={false}
@@ -44,8 +44,8 @@ class BasicInfo extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>Street Address 2</Text>
             <Input
-              onChangeText={this.props.formik.handleChange('corpAddr2')}
-              onBlur={this.props.formik.handleBlur('corpAddr2')}
+              onChangeText={this.props.formik.handleChange('addrs2')}
+              onBlur={this.props.formik.handleBlur('addrs2')}
               autoCapitalize='words'
               textContentType='streetAddressLine2'
               blurOnSubmit={false}
@@ -57,8 +57,8 @@ class BasicInfo extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>City</Text>
             <Input
-              onChangeText={this.props.formik.handleChange('corpCity')}
-              onBlur={this.props.formik.handleBlur('corpCity')}
+              onChangeText={this.props.formik.handleChange('ctynme')}
+              onBlur={this.props.formik.handleBlur('ctynme')}
               autoCapitalize='words'
               textContentType='addressCity'
               blurOnSubmit={false}
@@ -69,8 +69,8 @@ class BasicInfo extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>State</Text>
             <Input
-              onChangeText={this.props.formik.handleChange('corpState')}
-              onBlur={this.props.formik.handleBlur('corpState')}
+              onChangeText={this.props.formik.handleChange('state_')}
+              onBlur={this.props.formik.handleBlur('state_')}
               autoCapitalize='characters'
               textContentType='addressState'
               blurOnSubmit={false}
@@ -81,8 +81,8 @@ class BasicInfo extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>Zip</Text>
             <Input
-              onChangeText={this.props.formik.handleChange('corpZip')}
-              onBlur={this.props.formik.handleBlur('corpZip')}
+              onChangeText={this.props.formik.handleChange('zipcde')}
+              onBlur={this.props.formik.handleBlur('zipcde')}
               keyboardType='number-pad'
               textContentType='postalCode'
               blurOnSubmit={false}
@@ -93,130 +93,132 @@ class BasicInfo extends Component {
         </View>
 
         <View style={styles.form}>
+          <Text style={styles.sectionHeaderText}>Billing Address</Text>
           <View style={styles.textRow}>
-            <Text style={styles.label}>Add Billing Address</Text>
-            <Switch
-              onChange={( ) => this.props.formik.setFieldValue('billingAddrToggle', !this.props.formik.values.billingAddrToggle)}
-              value={this.props.formik.values.billingAddrToggle}
-              trackColor={{true: colors.green}} />
+            <Text style={styles.label}>Street Address</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('bilad1')}
+              onBlur={this.props.formik.handleBlur('bilad1')}
+              autoCapitalize='words'
+              textContentType='streetAddressLine1'
+              blurOnSubmit={false}
+              inputStyle={styles.userInput}
+              containerStyle={styles.mediumInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.label}>Street Address 2</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('bilad2')}
+              onBlur={this.props.formik.handleBlur('bilad2')}
+              autoCapitalize='words'
+              textContentType='streetAddressLine1'
+              blurOnSubmit={false}
+              inputStyle={styles.userInput}
+              containerStyle={styles.mediumInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.label}>City</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('bilcty')}
+              onBlur={this.props.formik.handleBlur('bilcty')}
+              autoCapitalize='words'
+              textContentType='addressCity'
+              blurOnSubmit={false}
+              inputStyle={styles.userInput}
+              containerStyle={styles.mediumInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.label}>State</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('bilste')}
+              onBlur={this.props.formik.handleBlur('bilste')}
+              autoCapitalize='characters'
+              textContentType='addressState'
+              blurOnSubmit={false}
+              inputStyle={styles.userInput}
+              containerStyle={styles.xSmallInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.label}>Zip</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('bilzip')}
+              onBlur={this.props.formik.handleBlur('bilzip')}
+              keyboardType='number-pad'
+              textContentType='postalCode'
+              blurOnSubmit={false}
+              inputStyle={styles.userInput}
+              containerStyle={styles.smallInput}
+              inputContainerStyle={styles.inputContainer} />
           </View>
         </View>
-
-        {this.props.formik.values.billingAddrToggle ?
-          <View style={styles.form}>
-            <View style={styles.textRow}>
-              <Text style={styles.label}>Street Address</Text>
-              <Input
-                onChangeText={this.props.formik.handleChange('billingAddr')}
-                onBlur={this.props.formik.handleBlur('billingAddr')}
-                autoCapitalize='words'
-                textContentType='streetAddressLine1'
-                blurOnSubmit={false}
-                inputStyle={styles.userInput}
-                containerStyle={styles.mediumInput}
-                inputContainerStyle={styles.inputContainer} />
-            </View>
-            <View style={styles.textRow}>
-              <Text style={styles.label}>City</Text>
-              <Input
-                onChangeText={this.props.formik.handleChange('billingCity')}
-                onBlur={this.props.formik.handleBlur('billingCity')}
-                autoCapitalize='words'
-                textContentType='addressCity'
-                blurOnSubmit={false}
-                inputStyle={styles.userInput}
-                containerStyle={styles.mediumInput}
-                inputContainerStyle={styles.inputContainer} />
-            </View>
-            <View style={styles.textRow}>
-              <Text style={styles.label}>State</Text>
-              <Input
-                onChangeText={this.props.formik.handleChange('billingState')}
-                onBlur={this.props.formik.handleBlur('billingState')}
-                autoCapitalize='characters'
-                textContentType='addressState'
-                blurOnSubmit={false}
-                inputStyle={styles.userInput}
-                containerStyle={styles.xSmallInput}
-                inputContainerStyle={styles.inputContainer} />
-            </View>
-            <View style={styles.textRow}>
-              <Text style={styles.label}>Zip</Text>
-              <Input
-                onChangeText={this.props.formik.handleChange('billingZip')}
-                onBlur={this.props.formik.handleBlur('billingZip')}
-                keyboardType='number-pad'
-                textContentType='postalCode'
-                blurOnSubmit={false}
-                inputStyle={styles.userInput}
-                containerStyle={styles.smallInput}
-                inputContainerStyle={styles.inputContainer} />
-            </View>
-          </View>
-        : null}
 
         <View style={styles.form}>
+          <Text style={styles.sectionHeaderText}>Shipping Address</Text>
           <View style={styles.textRow}>
-            <Text style={styles.label}>Add Shipping Address</Text>
-            <Switch
-              onChange={( ) => this.props.formik.setFieldValue('shippingAddrToggle', !this.props.formik.values.shippingAddrToggle)}
-              value={this.props.formik.values.shippingAddrToggle}
-              trackColor={{true: colors.green}} />
+            <Text style={styles.label}>Street Address</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('shpad1')}
+              onBlur={this.props.formik.handleBlur('shpad1')}
+              autoCapitalize='words'
+              textContentType='streetAddressLine1'
+              blurOnSubmit={false}
+              inputStyle={styles.userInput}
+              containerStyle={styles.mediumInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.label}>Street Address 2</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('shpad2')}
+              onBlur={this.props.formik.handleBlur('shpad2')}
+              autoCapitalize='words'
+              textContentType='streetAddressLine1'
+              blurOnSubmit={false}
+              inputStyle={styles.userInput}
+              containerStyle={styles.mediumInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.label}>City</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('shpcty')}
+              onBlur={this.props.formik.handleBlur('shpcty')}
+              autoCapitalize='words'
+              textContentType='addressCity'
+              blurOnSubmit={false}
+              inputStyle={styles.userInput}
+              containerStyle={styles.mediumInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.label}>State</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('shpste')}
+              onBlur={this.props.formik.handleBlur('shpste')}
+              autoCapitalize='characters'
+              textContentType='addressState'
+              blurOnSubmit={false}
+              inputStyle={styles.userInput}
+              containerStyle={styles.xSmallInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.label}>Zip</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('shpzip')}
+              onBlur={this.props.formik.handleBlur('shpzip')}
+              keyboardType='number-pad'
+              textContentType='postalCode'
+              blurOnSubmit={false}
+              inputStyle={styles.userInput}
+              containerStyle={styles.smallInput}
+              inputContainerStyle={styles.inputContainer} />
           </View>
         </View>
-
-        {this.props.formik.values.shippingAddrToggle ?
-          <View style={styles.form}>
-            <View style={styles.textRow}>
-              <Text style={styles.label}>Street Address</Text>
-              <Input
-                onChangeText={this.props.formik.handleChange('shippingAddr')}
-                onBlur={this.props.formik.handleBlur('shippingAddr')}
-                autoCapitalize='words'
-                textContentType='streetAddressLine1'
-                blurOnSubmit={false}
-                inputStyle={styles.userInput}
-                containerStyle={styles.mediumInput}
-                inputContainerStyle={styles.inputContainer} />
-            </View>
-            <View style={styles.textRow}>
-              <Text style={styles.label}>City</Text>
-              <Input
-                onChangeText={this.props.formik.handleChange('shippingCity')}
-                onBlur={this.props.formik.handleBlur('shippingCity')}
-                autoCapitalize='words'
-                textContentType='addressCity'
-                blurOnSubmit={false}
-                inputStyle={styles.userInput}
-                containerStyle={styles.mediumInput}
-                inputContainerStyle={styles.inputContainer} />
-            </View>
-            <View style={styles.textRow}>
-              <Text style={styles.label}>State</Text>
-              <Input
-                onChangeText={this.props.formik.handleChange('shippingState')}
-                onBlur={this.props.formik.handleBlur('shippingState')}
-                autoCapitalize='characters'
-                textContentType='addressState'
-                blurOnSubmit={false}
-                inputStyle={styles.userInput}
-                containerStyle={styles.xSmallInput}
-                inputContainerStyle={styles.inputContainer} />
-            </View>
-            <View style={styles.textRow}>
-              <Text style={styles.label}>Zip</Text>
-              <Input
-                onChangeText={this.props.formik.handleChange('shippingZip')}
-                onBlur={this.props.formik.handleBlur('shippingZip')}
-                keyboardType='number-pad'
-                textContentType='postalCode'
-                blurOnSubmit={false}
-                inputStyle={styles.userInput}
-                containerStyle={styles.smallInput}
-                inputContainerStyle={styles.inputContainer} />
-            </View>
-          </View>
-        : null}
       </View>
     );
   }

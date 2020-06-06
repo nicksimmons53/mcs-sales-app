@@ -56,7 +56,8 @@ const ClientForm = ({...props}) => (
     onPress={( ) => props.navigation.navigate('ClientForm', {
       headerText: 'Create Client',
       createClient: true,
-      addClientToState: props.addClientToState
+      user: props.user,
+      refresh: props.refresh
     })} />
 );
 
@@ -84,7 +85,8 @@ Home.propTypes = {
 ClientForm.propTypes = {
   navigation: PropTypes.object,
   refresh: PropTypes.func,
-  addClientToState: PropTypes.func
+  refreshClients: PropTypes.func,
+  user: PropTypes.object
 }
 
 SignOut.propTypes = {

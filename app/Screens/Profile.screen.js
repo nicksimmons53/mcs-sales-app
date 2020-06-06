@@ -56,8 +56,15 @@ class Profile extends Component {
   }
 
   // Update state when client is added
-  addClientToState = (client) => {
-    this.setState({clients: [...this.state.clients, client]});
+  refresh = (user) => {
+    console.log(user)
+    axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients`)
+      .then((response) => {
+        this.setState({ clients: response.data });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
   
   removeClientFromState = (removedClient) => {
@@ -119,7 +126,8 @@ class Profile extends Component {
                 signOut={true}
                 navigation={this.props.navigation}
                 signOutFunc={this._signOutAsync}
-                addClientToState={this.addClientToState}/>
+                refresh={this.refresh}
+                user={this.state.user}/>
 
               <ClientList setClientUID={this.setClientUID} clients={this.state.clients}/>
             </View>
@@ -155,7 +163,8 @@ class Profile extends Component {
                 signOut={true}
                 navigation={this.props.navigation}
                 signOutFunc={this._signOutAsync}
-                addClientToState={this.addClientToState}/>
+                refresh={this.refresh}
+                user={this.state.user}/>
 
               <ClientList setClientUID={this.setClientUID} clients={this.state.clients}/>
             </View>

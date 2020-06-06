@@ -1,26 +1,3 @@
-export const CreateClientValues = {
-  clientName: "",
-  corpAddr: "",
-  corpAddr2: "",
-  corpCity: "",
-  corpState: "",
-  corpZip: "",
-  billingAddrToggle: false,
-  billingAddr: "",
-  billingCity: "",
-  billingState: "",
-  billingZip: "",
-  shippingAddrToggle: false,
-  shippingAddr: "",
-  shippingCity: "",
-  shippingState: "",
-  shippingZip: "",
-  salesPerson: null,
-  manager: 1010,
-  status: 1,
-  clientType: 1,
-};
-
 const User = {
   recnum: "",
   fstnme: "",
@@ -64,28 +41,6 @@ export const AcctInfoValues = {
   POToggle: false,
   poCorrection: "",
   approvalsToggle: false,
-};
-
-export const UpdateClientValues = {
-  contactName: "",
-  contactTitle: "",
-  contactPhone: "",
-  contactEmail: "",
-  corpAddr: "",
-  corpAddr2: "",
-  corpCity: "",
-  corpState: "",
-  corpZip: "",
-  billingAddrToggle: false,
-  billingAddr: "",
-  billingCity: "",
-  billingState: "",
-  billingZip: "",
-  shippingAddrToggle: false,
-  shippingAddr: "",
-  shippingCity: "",
-  shippingState: "",
-  shippingZip: "",
 };
 
 const Contact1 = {
@@ -174,7 +129,7 @@ const Client = {
   email2: null,
   email3: null,
   dtercv: null,
-  empnum: 9999,
+  empnum: null,
   mannum: 1010,
   taxdst: null,
   lstctc: null,

@@ -9,6 +9,8 @@ import { styles, colors } from './Styles/Form.style';
 // Class Component for Client Accounting Info
 class AcctInfo extends Component {
   render( ) {
+    console.log(this.props.formik);
+    
     return (
       <View style={styles.background}>
         <View style={styles.form}>

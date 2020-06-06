@@ -154,6 +154,7 @@ class ClientProfile extends Component {
                 refs={this.refs}
                 update={this.toggleUpdate}
                 nav={this.props.nav}
+                user={this.props.user}
                 client={this.props.client}
                 loading={this.props.loading}
                 isPortrait={this.props.isPortrait}
