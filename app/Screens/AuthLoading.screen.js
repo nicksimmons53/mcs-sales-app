@@ -7,7 +7,6 @@ import {
   View
 } from 'react-native';
 import PropTypes from 'prop-types';
-import Firebase from '../../config/Firebase';
 
 // Class Component that will display loading screen for a user who is already
 // logged in.
@@ -19,7 +18,7 @@ class AuthLoading extends Component {
   _bootstrapAsync = async( ) => {
     const userToken = await AsyncStorage.getItem('userId');
 
-    if (userToken === null || !Firebase.auth( ).uid)
+    if (userToken === null)
       this.props.navigation.navigate('Login');
     else
       this.props.navigation.navigate('Login');

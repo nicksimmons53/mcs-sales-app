@@ -9,8 +9,7 @@ import ClientList from '../Modules/ClientList.module';
 import ClientProfile from '../Modules/ClientProfile.module';
 import Toolbar from '../Components/Toolbar.component';
 import { networkALert } from '../Components/Alert.component';
-import styles from './Styles/Profile.style';
-import colors from '../Library/Colors';
+import { styles, colors } from './Styles/Profile.style';
 
 // Profile.js
 // Purpose: This class will display the profile home page and show the list of
@@ -27,7 +26,6 @@ class Profile extends Component {
     this.state = {
       client: null,
       clients: [ ],
-      files: [ ],
       loading: false,
       refresh: false,
       clientModal: false,

@@ -4,17 +4,14 @@ import { Text, ScrollView, View, Share } from 'react-native';
 import PropTypes from 'prop-types';
 import { Divider, ListItem, Icon } from 'react-native-elements';
 import  { WebView } from 'react-native-webview';
-import * as File from '../Functions/File';
 import { deleteFile } from '../Components/Alert.component';
 import Modal from 'react-native-modal';
-import styles from './Styles/List.style';
-import colors from '../Library/Colors';
+import { styles, colors } from './Styles/List.style';
 
 // Presentational Component of Lists
 class List extends Component {
   state = {
     client: this.props.client,
-    files: [ ],
     fileURL: '',
     fileName: '',
     modalVisible: false
@@ -22,12 +19,12 @@ class List extends Component {
 
   displayFile = async(fileName) => {
     this.setState({fileName: fileName});
-    this.setState({fileURL: await File.retrieveData(fileName, this.state.client)});
+    // this.setState({fileURL: await File.retrieveData(fileName, this.state.client)});
     this.setState({modalVisible: true});
   }
 
   deleteFile = ( ) => {
-    File.deleteData(this.state.fileName, this.props.client);
+    // File.deleteData(this.state.fileName, this.props.client);
     this.toggleModal( );
   }
 

@@ -1,9 +1,5 @@
 // Library Imports
 import { Alert, AsyncStorage } from 'react-native';
-import * as Client from '../Functions/Client';
-import * as File from '../Functions/File';
-import * as Contact from '../Functions/Contact';
-import Firebase from '../../config/Firebase';
 
 // Alert to be shown for requesting access.
 // Triggered on Login Page.
@@ -63,29 +59,6 @@ export const cancelClient = (navigation) => {
   )
 };
 
-// Alert to be shown when inactivating a client.
-// Triggered on Client Profile Page.
-export const inactivateClient = ({...props}) => {
-  Alert.alert(
-    'Delete Client',
-    'This client will be inactivated.',
-    [
-      {
-        text: 'Inactivate',
-        onPress: ( ) => {
-          props.removeClientFromState(props.client);
-          props.toggleModal( );
-          Client.deleteInfo(props.client);
-          File.deleteAll(props.client);
-        }
-      }, {
-        text: 'Cancel',
-        style: 'cancel',
-      }
-    ]
-  )
-};
-
 
 // Alert to be shown when signing out
 // Triggered from Toolbar Component
@@ -97,7 +70,6 @@ export const signoutAlert = (navigation) => {
       {
         text: 'Sign Out',
         onPress: ( ) => {
-          Firebase.auth( ).signOut( );
           AsyncStorage.clear( );
           navigation.navigate('Auth')
         }

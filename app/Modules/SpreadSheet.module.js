@@ -4,7 +4,6 @@ import { View, Text, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { Divider, Icon, Input, Button } from 'react-native-elements';
 import { DataTable } from 'react-native-paper';
-import { Dropdown } from 'react-native-material-dropdown';
 import { styles, colors } from './Styles/SpreadSheet.style';
 
 class SpreadSheet extends Component {

@@ -56,4 +56,7 @@ const styles = StyleSheet.create({
   }
 });
 
-export default styles;
+export {
+  styles,
+  colors
+};

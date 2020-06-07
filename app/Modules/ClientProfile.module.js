@@ -11,7 +11,7 @@ import ClientActions from '../Components/ClientActions.component';
 import AddContact from './AddContact.module';
 import List from './List.module';
 import axios from 'axios';
-import styles from './Styles/ClientProfile.style';
+import { styles } from './Styles/ClientProfile.style';
 
 // Class Component that will show the Client Profile Information
 class ClientProfile extends Component {

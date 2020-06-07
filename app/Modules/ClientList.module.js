@@ -1,11 +1,10 @@
 // Library Imports
 import React, { Component } from 'react';
-import { ScrollView, Text, View, RefreshControl, ActivityIndicator } from 'react-native';
+import { ScrollView, Text, View, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import { Divider, Icon } from 'react-native-elements';
 import ListObject from '../Components/ListObject.component';
-import styles from './Styles/ClientList.style';
-import colors from '../Library/Colors';
+import { styles, colors } from './Styles/ClientList.style';
 
 // Class Component that will show the list of Clients
 class ClientList extends Component {

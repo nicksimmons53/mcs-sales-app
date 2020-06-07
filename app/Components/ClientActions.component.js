@@ -3,13 +3,36 @@ import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
-import * as File from '../Functions/File';
 import * as DocumentPicker from 'expo-document-picker';
-import { inactivateClient } from './Alert.component';
 import colors from '../Library/Colors';
 
 // Presentational Component of Buttons inside Client Profile
 const ClientActions = ({...props}) => {
+  // Convert File
+  const uriToBlob = (uri) => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest( );
+
+      xhr.onload = function( ) {
+        resolve(xhr.response);
+      };
+
+      xhr.onerror = function( ) {
+        reject(new Error('uriToBlob failed'));
+      };
+
+      xhr.responseType = 'blob';
+
+      xhr.open('GET', uri, true);
+
+      xhr.send(null);
+    });
+  }
+
+  const saveFile = ( ) => {
+    
+  }
+
   // Expo Cli Document Picker Component
   const filePicker = async(client) => {
     await DocumentPicker.getDocumentAsync({
@@ -18,13 +41,14 @@ const ClientActions = ({...props}) => {
       if (result.type === 'cancel') {
         return;
       } else {
-        return File.uriToBlob(result.uri);
+        return uriToBlob(result.uri);
       }
     }).then((blob) => {
       if (blob !== undefined) {
         props.showFileToast( );
         props.addFileToState( );
-        return File.saveData(blob, client.uid);
+        
+        // return File.saveData(blob, client.id);
       }
     }).catch((error) => {
       throw error;

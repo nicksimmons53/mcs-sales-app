@@ -1,8 +1,8 @@
 // Library Imports
 import React, { Component } from 'react';
-import { View, Text, Switch } from 'react-native';
+import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
-import { Input } from 'react-native-elements';
+import { Input, Divider } from 'react-native-elements';
 import { styles } from './Styles/Form.style';
 
 // Class Component that will display Client Basic Info
@@ -28,6 +28,7 @@ class BasicInfo extends Component {
 
         <View style={styles.form}>
           <Text style={styles.sectionHeaderText}>Corporate Address</Text>
+          <Divider/>
           <View style={styles.textRow}>
             <Text style={styles.label}>Street Address</Text>
             <Input
@@ -94,6 +95,7 @@ class BasicInfo extends Component {
 
         <View style={styles.form}>
           <Text style={styles.sectionHeaderText}>Billing Address</Text>
+          <Divider/>
           <View style={styles.textRow}>
             <Text style={styles.label}>Street Address</Text>
             <Input
@@ -158,6 +160,7 @@ class BasicInfo extends Component {
 
         <View style={styles.form}>
           <Text style={styles.sectionHeaderText}>Shipping Address</Text>
+          <Divider/>
           <View style={styles.textRow}>
             <Text style={styles.label}>Street Address</Text>
             <Input

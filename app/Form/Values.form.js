@@ -43,39 +43,6 @@ export const AcctInfoValues = {
   approvalsToggle: false,
 };
 
-const Contact1 = {
-  contct: "",
-  cntds1: "",
-  phnnum: "",
-  phnext: "",
-  faxnum: "",
-  cllphn: "",
-  pagnum: "",
-  e_mail: ""
-};
-
-const Contact2 = {
-  contc2: "",
-  cntds2: "",
-  phn002: "",
-  phext2: "",
-  fax002: "",
-  cell02: "",
-  pagr02: "",
-  email2: ""
-};
-
-const Contact3 = {
-  contc3: "",
-  cntds3: "",
-  phn003: "",
-  phext3: "",
-  fax003: "",
-  cell03: "",
-  pagr03: "",
-  email3: ""
-};
-
 const Client = {
   shtnme: "",
   clnnme: "",
@@ -167,6 +134,39 @@ const Client = {
   pstexm: null,
   inactv: null,
   stmeml: null,
+};
+
+const Contact1 = {
+  contct: "",
+  cntds1: "",
+  phnnum: "",
+  phnext: "",
+  faxnum: "",
+  cllphn: "",
+  pagnum: "",
+  e_mail: ""
+};
+
+const Contact2 = {
+  contc2: "",
+  cntds2: "",
+  phn002: "",
+  phext2: "",
+  fax002: "",
+  cell02: "",
+  pagr02: "",
+  email2: ""
+};
+
+const Contact3 = {
+  contc3: "",
+  cntds3: "",
+  phn003: "",
+  phext3: "",
+  fax003: "",
+  cell03: "",
+  pagr03: "",
+  email3: ""
 };
 
 export { 

@@ -8,14 +8,12 @@ import {
   AsyncStorage
 } from 'react-native';
 import PropTypes from 'prop-types';
-import { Divider, Icon, Button } from 'react-native-elements';
+import { Divider, Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import { AcctInfoValues, ExpInfoValues } from '../Form/Values.form';
-import * as Client from '../Functions/Client';
 import Toast from 'react-native-easy-toast';
 import Toolbar from '../Components/Toolbar.component';
-import styles from './Styles/ClientForm.style';
-import Firebase from '../../config/Firebase';
+import { styles } from './Styles/ClientForm.style';
 import AcctInfo from '../Modules/AcctInfo.module';
 import ExpInfo from '../Modules/ExpInfo.module';
 
@@ -35,18 +33,17 @@ class AdvInfoForm extends Component {
   // Signout Function
   _signOutAsync = async( ) => {
     await AsyncStorage.clear( );
-    Firebase.auth( ).signOut( );
     this.props.navigation.navigate('Auth');
   };
 
   // Saving Accounting/Expediting Information
   _saveAdvancedInfo = async(values, actions, infoType) => {
-    let client = this.props.navigation.getParam('client');
-    this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
+    // let client = this.props.navigation.getParam('client');
+    // this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    Client.saveAdvancedInfo(values, 'clients', client, infoType);
+    // Client.saveAdvancedInfo(values, 'clients', client, infoType);
 
-    this.refs.toast.show('Client Information has been saved.');
+    // this.refs.toast.show('Client Information has been saved.');
   }
 
   continue = (values, actions) => {
