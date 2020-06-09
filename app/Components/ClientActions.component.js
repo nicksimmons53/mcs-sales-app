@@ -79,12 +79,17 @@ const ClientActions = ({...props}) => {
         }}
         buttonStyle={styles.button}
         onPress={( ) => {
-          props.nav.navigate('Pricing', {
-            client: props.client,
-            user: props.user
-          });
+          let timeout = null;
+
           if (typeof(props.toggleModal) !== 'undefined')
             props.toggleModal( );
+
+          timeout = setTimeout(( ) => {
+            props.nav.navigate('Pricing', {
+              client: props.client,
+              user: props.user
+            });
+          }, 2000);
         }} />
       <Button
         title='Continue Client'
