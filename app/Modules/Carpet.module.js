@@ -1,6 +1,6 @@
 // Library Imports
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { Part } from '../Form/Values.form';
@@ -11,7 +11,8 @@ import { styles, colors } from './Styles/SpreadSheet.style';
 
 class Carpet extends Component {
   state = {
-    parts: [ ]
+    parts: [ ],
+    indicator: false,
   }
 
   componentDidMount( ) {
@@ -103,7 +104,10 @@ class Carpet extends Component {
   
     render( ) {
       if (this.state.parts.length === 0) {
-        return <View></View>;
+        return (
+          <View>
+          </View>
+        );
       }
       
       return (
