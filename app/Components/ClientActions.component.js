@@ -2,53 +2,43 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { Button } from 'react-native-elements';
 import * as DocumentPicker from 'expo-document-picker';
 import colors from '../Library/Colors';
 
 // Presentational Component of Buttons inside Client Profile
 const ClientActions = ({...props}) => {
-  // Convert File
-  const uriToBlob = (uri) => {
-    return new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest( );
+  const saveFile = (file, client) => {
+    const user = props.user;
+    const body = new FormData( );
 
-      xhr.onload = function( ) {
-        resolve(xhr.response);
-      };
+    body.append('file', file);
 
-      xhr.onerror = function( ) {
-        reject(new Error('uriToBlob failed'));
-      };
-
-      xhr.responseType = 'blob';
-
-      xhr.open('GET', uri, true);
-
-      xhr.send(null);
-    });
-  }
-
-  const saveFile = ( ) => {
-    
+    axios.post(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/files`, body)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   // Expo Cli Document Picker Component
-  const filePicker = async(client) => {
+  const filePicker = async( ) => {
     await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: false
     }).then((result) => {
       if (result.type === 'cancel') {
         return;
       } else {
-        return uriToBlob(result.uri);
-      }
-    }).then((blob) => {
-      if (blob !== undefined) {
-        props.showFileToast( );
-        props.addFileToState( );
-        
-        // return File.saveData(blob, client.id);
+        let file = {
+          name: result.name,
+          type: "*",
+          uri: result.uri
+        };
+
+        return saveFile(file, props.client);
       }
     }).catch((error) => {
       throw error;
@@ -90,7 +80,8 @@ const ClientActions = ({...props}) => {
         buttonStyle={styles.button}
         onPress={( ) => {
           props.nav.navigate('Pricing', {
-            client: props.client
+            client: props.client,
+            user: props.user
           });
           if (typeof(props.toggleModal) !== 'undefined')
             props.toggleModal( );

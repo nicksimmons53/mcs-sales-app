@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
   tableRow: {
     flexDirection: 'row',
     width: '100%',
+    alignItems: 'center',
     paddingHorizontal: 0
   },
   inputContainer: {
@@ -65,9 +66,9 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   saveButtonContainer: {
-    width: 350,
-    margin: 40,
-    marginTop: 20,
+    width: '20%',
+    height: 75,
+    justifyContent: 'center'
   },
   save: {
     backgroundColor: colors.green,

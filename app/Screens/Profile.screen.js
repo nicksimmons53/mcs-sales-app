@@ -55,7 +55,6 @@ class Profile extends Component {
 
   // Update state when client is added
   refresh = (user) => {
-    console.log(user)
     axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients`)
       .then((response) => {
         this.setState({ clients: response.data });

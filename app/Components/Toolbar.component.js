@@ -85,7 +85,6 @@ Home.propTypes = {
 ClientForm.propTypes = {
   navigation: PropTypes.object,
   refresh: PropTypes.func,
-  refreshClients: PropTypes.func,
   user: PropTypes.object
 }
 

@@ -1,7 +1,6 @@
 // Library Imports
 import React, { Component } from 'react';
 import { View, Text, Switch } from 'react-native';
-import { Formik } from 'formik';
 import PropTypes from 'prop-types';
 import { Divider, Input } from 'react-native-elements';
 import { styles, colors } from './Styles/Form.style';

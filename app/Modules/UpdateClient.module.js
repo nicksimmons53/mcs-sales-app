@@ -40,7 +40,7 @@ class UpdateClient extends Component {
     return (
       <View style={styles.background}>
         <Formik
-          initialValues={{...this.props.address}}
+          initialValues={{...this.prop.address}}
           onSubmit={(values, actions) => this.updateClient(values, actions)}>
         {formikProps => (
         <View style={styles.form}>

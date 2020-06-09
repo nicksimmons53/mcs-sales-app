@@ -161,7 +161,6 @@ class ClientProfile extends Component {
                 toggleModal={this.props.toggleModal}
                 showFileToast={this.showFileToast}
                 showInactivationToast={this.showInactivationToast}
-                addFileToState={this.addFileToState}
                 removeClientFromState={this.props.removeClientFromState}/>
             </View>
 

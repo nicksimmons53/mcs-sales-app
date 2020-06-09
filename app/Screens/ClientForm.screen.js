@@ -15,7 +15,7 @@ import axios from 'axios';
 import Toast from 'react-native-easy-toast';
 import Toolbar from '../Components/Toolbar.component';
 import BasicInfo from '../Modules/BasicInfo.module';
-import styles from './Styles/ClientForm.style';
+import { styles } from './Styles/ClientForm.style';
 import AcctInfo from '../Modules/AcctInfo.module';
 import ExpInfo from '../Modules/ExpInfo.module';
 
@@ -89,8 +89,6 @@ class ClientForm extends Component {
         <View style={styles.row}>
           <Toolbar
             home={true}
-            calendar={true}
-            reportIssue={true}
             signOut={true}
             signOutFunc={this._signOutAsync}
             showIssue={this.toggleIssue}
@@ -105,8 +103,8 @@ class ClientForm extends Component {
 
 
             <Formik
-              initialValues={
-                this.props.navigation.getParam('createClient') ?
+              initialValues=
+              {this.props.navigation.getParam('createClient') ?
                   Client
                   :
                   ContinueClientValues

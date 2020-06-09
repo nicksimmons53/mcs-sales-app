@@ -5,7 +5,7 @@ const User = {
   e_mail: "",
   cllphn: "",
   usrnme: "",
-  passwd: "",
+  passwd: ""
 };
 
 export const ExpInfoValues = {
@@ -133,7 +133,50 @@ const Client = {
   catxex: null,
   pstexm: null,
   inactv: null,
-  stmeml: null,
+  stmeml: null
+};
+
+const Part = {
+  id: null,
+  prtnme: "",
+  prtunt: "SQFT",
+  binnum: "",
+  alpnum: "",
+  msdsnm: "",
+  mannme: "",
+  mannum: "",
+  usrdf1: "",
+  usrdf2: "",
+  cstcde: null,
+  csttyp: null,
+  prttsk: null,
+  prtcls: null,
+  dftloc: null,
+  lstupd: null,
+  reordr: null,
+  minord: null,
+  pkgqty: null,
+  prtwgt: null,
+  avgcst: null,
+  prtcst: null,
+  labunt: null,
+  prtbil: null,
+  qtyohn: null,
+  stkitm: 1,
+  serinv: null,
+  mrkupr: null,
+  labnum: null,
+  ntetxt: "",
+  prtspc: "",
+  imgfle: "",
+  srvprt: null,
+  oemdur: null,
+  reqivt: null,
+  sbjpst: null,
+  inactv: null,
+  clntid: null,
+  tblnme: "",
+  prgrm_: null
 };
 
 const Contact1 = {
@@ -174,5 +217,6 @@ export {
   Client,
   Contact1,
   Contact2,
-  Contact3
+  Contact3,
+  Part
 };
