@@ -8,41 +8,6 @@ const User = {
   passwd: ""
 };
 
-export const ExpInfoValues = {
-  modelStreetAddr: "",
-  modelCity: "",
-  modelState: "",
-  modelZip: "",
-  designStreetAddr: "",
-  designCity: "",
-  designState: "",
-  designsZip: "",
-  expMisc: "",
-  vendorPortal: "",
-  wasteFactor: "",
-  patternCharges: "",
-};
-
-export const AcctInfoValues = {
-  taxID: "",
-  paymentDay: "",
-  paymentFreq: "",
-  howToSubmitInv: "",
-  whoReceivesInv: "",
-  invSubmitDeadline: "",
-  paymentType: "",
-  paymentPortal: "",
-  vendorID: "",
-  acctMisc: "",
-  autopayToggle: false,
-  checkPUToggle: false,
-  portalToggle: false,
-  vendorIDToggle: false,
-  POToggle: false,
-  poCorrection: "",
-  approvalsToggle: false,
-};
-
 const Client = {
   shtnme: "",
   clnnme: "",
@@ -133,7 +98,22 @@ const Client = {
   catxex: null,
   pstexm: null,
   inactv: null,
-  stmeml: null
+  stmeml: null,
+  // FROM HERE ON NEED TO BE CREATED
+  pmtday: null, // STRING
+  pmtfrq: null, // STRING
+  atopay: null, // BOOL
+  invsbm: null, // STRING
+  invddl: null, // STRING
+  pmttyp: null, // STRING
+  chkpup: false, // BOOL
+  pmtprt: null, // STRING
+  vndreq: null, // BOOL
+  posreq: null, // BOOL
+  pohndl: null, // STRING
+  aprvls: null, // BOOL
+  vndprt: null, // STRING
+  wstfct: null // STRING
 };
 
 const Part = {

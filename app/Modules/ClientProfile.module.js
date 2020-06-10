@@ -22,7 +22,8 @@ class ClientProfile extends Component {
     contacts: [ ],
     address: [ ],
     addContact: false,
-    contactID: ''
+    contactID: '',
+    info: [ ]
   };
 
   componentDidMount( ) {
@@ -40,6 +41,14 @@ class ClientProfile extends Component {
     axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/address`)
       .then((response) => {
         this.setState({ address: response.data[0] });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/advInfo`)
+      .then((response) => {
+        this.setState({ info: response.data[0] });
       })
       .catch((error) => {
         console.error(error);
@@ -86,6 +95,19 @@ class ClientProfile extends Component {
     axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/address`)
       .then((response) => {
         this.setState({ address: response.data[0] });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  refreshInfo = ( ) => {
+    let user = this.props.user;
+    let client = this.props.client;
+
+    axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/advInfo`)
+      .then((response) => {
+        this.setState({ info: response.data[0] });
       })
       .catch((error) => {
         console.error(error);
@@ -156,6 +178,8 @@ class ClientProfile extends Component {
                 nav={this.props.nav}
                 user={this.props.user}
                 client={this.props.client}
+                info={this.state.info}
+                refreshInfo={this.refreshInfo}
                 loading={this.props.loading}
                 isPortrait={this.props.isPortrait}
                 toggleModal={this.props.toggleModal}

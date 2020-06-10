@@ -10,14 +10,12 @@ import {
 import PropTypes from 'prop-types';
 import { Divider, Button } from 'react-native-elements';
 import { Formik } from 'formik';
-import { Client, ContinueClientValues } from '../Form/Values.form';
+import { Client } from '../Form/Values.form';
 import axios from 'axios';
 import Toast from 'react-native-easy-toast';
 import Toolbar from '../Components/Toolbar.component';
 import BasicInfo from '../Modules/BasicInfo.module';
 import { styles } from './Styles/ClientForm.style';
-import AcctInfo from '../Modules/AcctInfo.module';
-import ExpInfo from '../Modules/ExpInfo.module';
 
 // Class Component that will display client creation form
 class ClientForm extends Component {
@@ -42,6 +40,7 @@ class ClientForm extends Component {
 
     // Set User Specific Values
     values.empnum = user.recnum;
+    values.shtnme = values.clnnme;
 
     this.timeout1 = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
@@ -60,29 +59,6 @@ class ClientForm extends Component {
       });
   }
 
-  // Saving Accounting/Expediting Information
-  _saveAdvancedInfo = async(values, actions) => {
-    let client = this.props.navigation.getParam('client');
-    let user = this.props.navigation.getParam('user');
-    
-    this.timeout1 = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
-
-    axios.put(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}`, values)
-      .then((response) => {
-        this.refs.toast.show('Client Information has been saved.');
-        this.timeout2 = setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  // Continue
-  continue = (values, actions) => {
-    this._saveAdvancedInfo(values, actions);
-    return <ExpInfo />;
-  }
-
   render( ) {
     return (
       <KeyboardAvoidingView behavior='padding' enabled style={styles.background}>
@@ -92,7 +68,7 @@ class ClientForm extends Component {
             signOut={true}
             signOutFunc={this._signOutAsync}
             showIssue={this.toggleIssue}
-            navigation={this.props.navigation} />
+            navigation={this.props.navigation}/>
 
           <View style={styles.infoContainer}>
             <View style={styles.header}>
@@ -103,39 +79,21 @@ class ClientForm extends Component {
 
 
             <Formik
-              initialValues=
-              {this.props.navigation.getParam('createClient') ?
-                  Client
-                  :
-                  ContinueClientValues
-              }
-              onSubmit={(values, actions) =>
-                {this.props.navigation.getParam('createClient') ?
-                  this._saveBasicInfo(values, actions)
-                  :
-                  this._saveAdvancedInfo(values, actions)
-                }
-              }>
-            {formikProps => (
-              <ScrollView style={styles.sv}>
-                {this.props.navigation.getParam('createClient') ?
+              initialValues={Client}
+              onSubmit={(values, actions) => this._saveBasicInfo(values, actions) }>
+              {formikProps => (
+                <ScrollView style={styles.sv}>
                   <BasicInfo formik={formikProps} />
-                  :
-                  <>
-                    <AcctInfo formik={formikProps}/>
-                    <ExpInfo formik={formikProps} client={this.props.navigation.getParam('client')}/>
-                  </>
-                }
 
-                <View style={styles.buttonView}>
-                  <Button
-                    title='Save'
-                    buttonStyle={styles.save}
-                    containerStyle={styles.saveButtonContainer}
-                    onPress={formikProps.handleSubmit} />
-                </View>
-              </ScrollView>
-            )}
+                  <View style={styles.buttonView}>
+                    <Button
+                      title='Save'
+                      buttonStyle={styles.save}
+                      containerStyle={styles.saveButtonContainer}
+                      onPress={formikProps.handleSubmit} />
+                  </View>
+                </ScrollView>
+              )}
             </Formik>
           </View>
 

@@ -106,7 +106,8 @@ const ClientActions = ({...props}) => {
           props.nav.navigate('AdvInfoForm', {
             client: props.client,
             user: props.user,
-            createClient: false
+            info: props.info,
+            refreshInfo: props.refreshInfo
           });
         }}/>
     </ScrollView>

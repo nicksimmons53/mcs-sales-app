@@ -10,21 +10,29 @@ import {
 import PropTypes from 'prop-types';
 import { Divider, Button } from 'react-native-elements';
 import { Formik } from 'formik';
-import { AcctInfoValues, ExpInfoValues } from '../Form/Values.form';
 import Toast from 'react-native-easy-toast';
 import Toolbar from '../Components/Toolbar.component';
 import { styles } from './Styles/ClientForm.style';
-import AcctInfo from '../Modules/AcctInfo.module';
-import ExpInfo from '../Modules/ExpInfo.module';
+import AdvInfo from '../Modules/AdvInfo.module';
+import axios from 'axios';
 
 // Class Component that will display client creation form
 class AdvInfoForm extends Component {
   state = {
-    buttonContinue: true
+    client: null,
+    user: null
   }
 
   timeout = null;
   scrollView = React.createRef( );
+
+  componentDidMount( ) {
+    let client = this.props.navigation.getParam('client');
+    let user = this.props.navigation.getParam('user');
+
+    this.setState({ client: client });
+    this.setState({ user: user });
+  }
 
   componentWillUnmount( ) {
     clearTimeout(this.timeout);
@@ -37,37 +45,36 @@ class AdvInfoForm extends Component {
   };
 
   // Saving Accounting/Expediting Information
-  _saveAdvancedInfo = async(values, actions, infoType) => {
-    // let client = this.props.navigation.getParam('client');
-    // this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
+  save = async(values, actions) => {
+    let client = this.props.navigation.getParam('client');
+    let user = this.props.navigation.getParam('user');
 
-    // Client.saveAdvancedInfo(values, 'clients', client, infoType);
+    this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
+    
+    axios.put(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}`, values)
+      .then((response) => {
+        this.props.refreshInfo( );
 
-    // this.refs.toast.show('Client Information has been saved.');
-  }
+        this.refs.toast.show('Client Information has been saved.');
 
-  continue = (values, actions) => {
-    this._saveAdvancedInfo(values, actions, 'acctInfo');
-    this.setState({buttonContinue: false});
-    this.scrollView.scrollTo({x: 0, y: 0, animated: true});
-  }
+        this.timeout = setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
 
-  save = (values, actions) => {
-    this._saveAdvancedInfo(values, actions, 'expInfo');
-    this.timeout = setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
+        this.props.navigation.popToTop( );
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render( ) {
+    console.log(this.props)
     return (
       <KeyboardAvoidingView behavior='padding' enabled style={styles.background}>
         <View style={styles.row}>
           <Toolbar
             home={true}
-            calendar={true}
-            reportIssue={true}
             signOut={true}
             signOutFunc={this._signOutAsync}
-            showIssue={this.toggleIssue}
             navigation={this.props.navigation} />
 
           <View style={styles.infoContainer}>
@@ -77,34 +84,12 @@ class AdvInfoForm extends Component {
 
             <Divider/>
 
-            {this.state.buttonContinue ? (
-              <Formik
-                initialValues={AcctInfoValues}
-                onSubmit={(values, actions) => { this.continue(values, actions) }}>
+            <Formik
+              initialValues={{...this.props.navigation.getParam('info')}}
+              onSubmit={(values, actions) => { this.save(values, actions) }}>
               {formikProps => (
-                <ScrollView ref={(ref) => { this.scrollView = ref }} style={styles.sv}>
-                  <AcctInfo formik={formikProps} />
-
-                  <View style={styles.buttonView}>
-                    <Button
-                      title='Save & Continue'
-                      buttonStyle={styles.save}
-                      containerStyle={styles.saveButtonContainer}
-                      onPress={formikProps.handleSubmit} />
-                  </View>
-                </ScrollView>
-              )}
-              </Formik>
-            ) : (
-              <Formik
-                initialValues={ExpInfoValues}
-                onSubmit={(values, actions) => {
-                    this.save(values, actions);
-                  }
-                }>
-              {formikProps => (
-                <ScrollView ref={(ref) => { this.scrollView = ref }} style={styles.sv}>
-                  <ExpInfo formik={formikProps} client={this.props.navigation.getParam('client')}/>
+                <ScrollView style={styles.sv}>
+                  <AdvInfo formik={formikProps} />
 
                   <View style={styles.buttonView}>
                     <Button
@@ -115,9 +100,7 @@ class AdvInfoForm extends Component {
                   </View>
                 </ScrollView>
               )}
-              </Formik>
-            )}
-
+            </Formik>
           </View>
 
           <Toast ref='toast' position='center' style={styles.toast} />
