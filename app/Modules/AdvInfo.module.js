@@ -58,6 +58,7 @@ class AcctInfo extends Component {
             <Input
               onChangeText={this.props.formik.handleChange('pmtday')}
               onBlur={this.props.formik.handleBlur('pmtday')}
+              value={values.pmtday}
               keyboardType='default'
               textContentType='none'
               blurOnSubmit={false}
@@ -69,6 +70,7 @@ class AcctInfo extends Component {
             <Input
               onChangeText={this.props.formik.handleChange('pmtfrq')}
               onBlur={this.props.formik.handleBlur('pmtfrq')}
+              value={values.pmtfrq}
               keyboardType='default'
               textContentType='none'
               blurOnSubmit={false}
@@ -88,6 +90,7 @@ class AcctInfo extends Component {
             <Input
               onChangeText={this.props.formik.handleChange('invsbm')}
               onBlur={this.props.formik.handleBlur('invsbm')}
+              value={values.invsbm}
               keyboardType='default'
               textContentType='none'
               blurOnSubmit={false}
@@ -99,6 +102,7 @@ class AcctInfo extends Component {
             <Input
               onChangeText={this.props.formik.handleChange('invddl')}
               onBlur={this.props.formik.handleBlur('invddl')}
+              value={values.invddl}
               keyboardType='default'
               textContentType='none'
               blurOnSubmit={false}
@@ -110,6 +114,7 @@ class AcctInfo extends Component {
             <Input
               onChangeText={this.props.formik.handleChange('pmttyp')}
               onBlur={this.props.formik.handleBlur('pmttyp')}
+              value={values.pmttyp}
               keyboardType='default'
               textContentType='none'
               blurOnSubmit={false}
@@ -129,6 +134,7 @@ class AcctInfo extends Component {
             <Input
               onChangeText={this.props.formik.handleChange('pmtprt')}
               onBlur={this.props.formik.handleBlur('pmtprt')}
+              value={values.pmtprt}
               keyboardType='url'
               textContentType='URL'
               blurOnSubmit={false}
@@ -160,6 +166,7 @@ class AcctInfo extends Component {
             <Input
               onChangeText={this.props.formik.handleChange('pohndl')}
               onBlur={this.props.formik.handleBlur('pohndl')}
+              value={values.pohndl}
               keyboardType='url'
               textContentType='URL'
               blurOnSubmit={false}
@@ -201,6 +208,7 @@ class AcctInfo extends Component {
             <Input
               onChangeText={this.props.formik.handleChange('vndprt')}
               onBlur={this.props.formik.handleBlur('vndprt')}
+              value={values.vndprt}
               blurOnSubmit={false}
               containerStyle={styles.mediumInput}
               inputContainerStyle={styles.inputContainer} />
@@ -211,6 +219,7 @@ class AcctInfo extends Component {
             <Input
               onChangeText={this.props.formik.handleChange('wstfct')}
               onBlur={this.props.formik.handleBlur('wstfct')}
+              value={values.wstfct}
               blurOnSubmit={false}
               containerStyle={styles.smallInput}
               inputContainerStyle={styles.inputContainer} />
