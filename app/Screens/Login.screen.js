@@ -8,6 +8,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback
 } from 'react-native';
+import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Button, CheckBox, Input, Icon } from 'react-native-elements';
@@ -37,7 +38,7 @@ class Login extends Component {
       actions.setSubmitting(false);
     }, 1000);
 
-    axios.post('https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/login', {
+    axios.post(`${API_URL}employee/login`, {
       e_mail: values.e_mail,
       passwd: values.passwd
       }).then((response) => {

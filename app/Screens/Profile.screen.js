@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { View, StatusBar, AsyncStorage, ActivityIndicator, Dimensions } from 'react-native';
 import axios from 'axios';
+import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
 import NetInfo from '@react-native-community/netinfo';
@@ -44,7 +45,7 @@ class Profile extends Component {
     let user = this.props.navigation.state.params.user[0];
     this.setState({ user: user });
 
-    axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients`)
+    axios.get(`${API_URL}employee/${user.recnum}/clients`)
       .then((response) => {
         this.setState({ clients: response.data });
       })
@@ -55,7 +56,7 @@ class Profile extends Component {
 
   // Update state when client is added
   refresh = (user) => {
-    axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients`)
+    axios.get(`${API_URL}employee/${user.recnum}/clients`)
       .then((response) => {
         this.setState({ clients: response.data });
       })

@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
+import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { Button, Input, Divider } from 'react-native-elements';
@@ -20,7 +21,7 @@ class AddContact extends Component {
     let user = this.props.user;
     let client = this.props.client;
 
-    axios.put(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/contacts`, values)
+    axios.put(`${API_URL}employee/${user.recnum}/clients/${client.id}/contacts`, values)
       .then((response) => {
         this.props.refresh( );
         this.props.toggle( ); 

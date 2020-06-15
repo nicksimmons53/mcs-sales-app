@@ -7,6 +7,7 @@ import {
   Text,
   AsyncStorage
 } from 'react-native';
+import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import { Divider, Button } from 'react-native-elements';
 import { Formik } from 'formik';
@@ -51,7 +52,7 @@ class AdvInfoForm extends Component {
 
     this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
     
-    axios.put(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}`, values)
+    axios.put(`${API_URL}/employee/${user.recnum}/clients/${client.id}`, values)
       .then((response) => {
         this.props.refreshInfo( );
 

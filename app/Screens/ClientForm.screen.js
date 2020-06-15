@@ -7,6 +7,7 @@ import {
   Text,
   AsyncStorage
 } from 'react-native';
+import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import { Divider, Button } from 'react-native-elements';
 import { Formik } from 'formik';
@@ -44,7 +45,7 @@ class ClientForm extends Component {
 
     this.timeout1 = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    axios.post(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients`, values)
+    axios.post(`${API_URL}employee/${user.recnum}/clients`, values)
       .then((response) => {
         refresh(user);
         

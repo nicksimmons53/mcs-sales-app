@@ -1,6 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
+import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { Part } from '../Form/Values.form';
@@ -19,7 +20,7 @@ class Carpet extends Component {
     const client = this.props.client;
     const user = this.props.user;
 
-    axios.get(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/parts/3`)
+    axios.get(`${API_URL}employee/${user.recnum}/clients/${client.id}/parts/3`)
         .then((response) => {
           let parts = Array(50).fill(Part);
           response.data.map((part, index) => {
@@ -41,7 +42,7 @@ class Carpet extends Component {
       values.clntid = client.id;
       values.prgrm_ = 3;
 
-      axios.post(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/parts/`, values)
+      axios.post(`${API_URL}employee/${user.recnum}/clients/${client.id}/parts/`, values)
         .then((response) => {
           console.log(response.status);
         })
