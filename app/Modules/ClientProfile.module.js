@@ -24,7 +24,11 @@ class ClientProfile extends Component {
     address: [ ],
     addContact: false,
     contactID: '',
-    info: [ ]
+    info: [ ],
+    carpet: [ ],
+    granite: [ ],
+    tile: [ ],
+    wood: [ ]
   };
 
   componentDidMount( ) {
@@ -115,8 +119,69 @@ class ClientProfile extends Component {
       });
   }
 
-  submitClient = ( ) => {
-    axios.post(`${API_URL}/submit`)
+  submitClient = async( ) => {
+    let user = this.props.user;
+    let client = this.props.client;
+    let parts = [ ];
+    let values = { };
+
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/1`)
+      .then((response) => {
+        response.data.map((object, index) => {
+          parts.push(object);
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/2`)
+      .then((response) => {
+        response.data.map((object, index) => {
+          parts.push(object);
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/3`)
+      .then((response) => {
+        response.data.map((object, index) => {
+          parts.push(object);
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/4`)
+      .then((response) => {
+        response.data.map((object, index) => {
+          parts.push(object);
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/5`)
+      .then((response) => {
+        response.data.map((object, index) => {
+          parts.push(object);
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    axios.post(`${API_URL}/submit-client`, { client: this.props.client, parts: parts})
+      .then((response) => {
+        console.log(response.status);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render( ) {
