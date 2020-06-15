@@ -31,7 +31,7 @@ class ClientProfile extends Component {
     let user = this.props.user;
     let client = this.props.client;
 
-    axios.get(`${API_URL}employee/${user.recnum}/clients/${client.id}/contacts`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/contacts`)
       .then((response) => {
         this.setState({ contacts: response.data[0] });
       })
@@ -39,7 +39,7 @@ class ClientProfile extends Component {
         console.error(error);
       });
 
-    axios.get(`${API_URL}employee/${user.recnum}/clients/${client.id}/address`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/address`)
       .then((response) => {
         this.setState({ address: response.data[0] });
       })
@@ -47,7 +47,7 @@ class ClientProfile extends Component {
         console.error(error);
       });
 
-    axios.get(`${API_URL}employee/${user.recnum}/clients/${client.id}/advInfo`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advInfo`)
       .then((response) => {
         this.setState({ info: response.data[0] });
       })
@@ -80,7 +80,7 @@ class ClientProfile extends Component {
     let user = this.props.user;
     let client = this.props.client;
 
-    axios.get(`${API_URL}employee/${user.recnum}/clients/${client.id}`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}`)
       .then((response) => {
         this.setState({ contacts: response.data[0] });
       })
@@ -93,7 +93,7 @@ class ClientProfile extends Component {
     let user = this.props.user;
     let client = this.props.client;
 
-    axios.get(`${API_URL}employee/${user.recnum}/clients/${client.id}/address`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/address`)
       .then((response) => {
         this.setState({ address: response.data[0] });
       })
@@ -106,7 +106,7 @@ class ClientProfile extends Component {
     let user = this.props.user;
     let client = this.props.client;
 
-    axios.get(`${API_URL}employee/${user.recnum}/clients/${client.id}/advInfo`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advInfo`)
       .then((response) => {
         this.setState({ info: response.data[0] });
       })
@@ -116,7 +116,7 @@ class ClientProfile extends Component {
   }
 
   submitClient = ( ) => {
-
+    axios.post(`${API_URL}/submit`)
   }
 
   render( ) {

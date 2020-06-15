@@ -38,7 +38,7 @@ class Login extends Component {
       actions.setSubmitting(false);
     }, 1000);
 
-    axios.post(`${API_URL}employee/login`, {
+    axios.post(`${API_URL}/employee/login`, {
       e_mail: values.e_mail,
       passwd: values.passwd
       }).then((response) => {

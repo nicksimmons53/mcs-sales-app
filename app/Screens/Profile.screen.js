@@ -45,7 +45,7 @@ class Profile extends Component {
     let user = this.props.navigation.state.params.user[0];
     this.setState({ user: user });
 
-    axios.get(`${API_URL}employee/${user.recnum}/clients`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients`)
       .then((response) => {
         this.setState({ clients: response.data });
       })
@@ -56,7 +56,7 @@ class Profile extends Component {
 
   // Update state when client is added
   refresh = (user) => {
-    axios.get(`${API_URL}employee/${user.recnum}/clients`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients`)
       .then((response) => {
         this.setState({ clients: response.data });
       })

@@ -45,7 +45,7 @@ class ClientForm extends Component {
 
     this.timeout1 = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    axios.post(`${API_URL}employee/${user.recnum}/clients`, values)
+    axios.post(`${API_URL}/employee/${user.recnum}/clients`, values)
       .then((response) => {
         refresh(user);
         

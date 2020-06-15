@@ -21,7 +21,7 @@ class AddContact extends Component {
     let user = this.props.user;
     let client = this.props.client;
 
-    axios.put(`${API_URL}employee/${user.recnum}/clients/${client.id}/contacts`, values)
+    axios.put(`${API_URL}/employee/${user.recnum}/clients/${client.id}/contacts`, values)
       .then((response) => {
         this.props.refresh( );
         this.props.toggle( ); 
