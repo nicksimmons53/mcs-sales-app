@@ -1,6 +1,8 @@
 // Library Imports
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import { API_URL } from 'react-native-dotenv';
+import * as FileSystem from 'expo-file-system';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Button } from 'react-native-elements';
@@ -9,13 +11,14 @@ import colors from '../Library/Colors';
 
 // Presentational Component of Buttons inside Client Profile
 const ClientActions = ({...props}) => {
-  const saveFile = (file, client) => {
-    const user = props.user;
-    const body = new FormData( );
+  const saveFile = (base64, client, fileName) => {
+    const clientName = client.clnnme.replace(/\s/g, "_");
+    let reqBody = {
+      clientName: clientName,
+      base64String: base64
+    };
 
-    body.append('file', file);
-
-    axios.post(`https://ga3xyasima.execute-api.us-east-1.amazonaws.com/dev/employee/${user.recnum}/clients/${client.id}/files`, body)
+    axios.post(`${API_URL}/create-file/${fileName}`, reqBody)
       .then((response) => {
         console.log(response);
       })
@@ -28,7 +31,7 @@ const ClientActions = ({...props}) => {
   const filePicker = async( ) => {
     await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: false
-    }).then((result) => {
+    }).then(async(result) => {
       if (result.type === 'cancel') {
         return;
       } else {
@@ -38,7 +41,13 @@ const ClientActions = ({...props}) => {
           uri: result.uri
         };
 
-        return saveFile(file, props.client);
+        const base64 = await FileSystem.readAsStringAsync(file.uri, { encoding: 'base64' });
+
+        props.showFileToast( );
+
+        props.refreshFiles( );
+
+        return saveFile(base64, props.client, file.name);
       }
     }).catch((error) => {
       throw error;

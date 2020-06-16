@@ -1,10 +1,10 @@
 // Library Imports
 import React, { Component } from 'react';
-import { Text, ScrollView, View, Share } from 'react-native';
+import { Text, ScrollView, Image } from 'react-native';
+import { S3_BUCKET } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import { Divider, ListItem, Icon } from 'react-native-elements';
 import  { WebView } from 'react-native-webview';
-import { deleteFile } from '../Components/Alert.component';
 import Modal from 'react-native-modal';
 import { styles, colors } from './Styles/List.style';
 
@@ -18,14 +18,14 @@ class List extends Component {
   }
 
   displayFile = async(fileName) => {
-    this.setState({fileName: fileName});
-    // this.setState({fileURL: await File.retrieveData(fileName, this.state.client)});
-    this.setState({modalVisible: true});
-  }
+    let fileURL = S3_BUCKET + "/" + fileName;
 
-  deleteFile = ( ) => {
-    // File.deleteData(this.state.fileName, this.props.client);
-    this.toggleModal( );
+    if (/\.pdf$/.test(fileURL)) {
+      fileURL = `https://drive.google.com/viewerng/viewer?embedded=true&url=${fileURL}`;
+    }
+    
+    this.setState({ fileURL: fileURL });
+    this.setState({ modalVisible: true });
   }
 
   renderFileList = ( ) => {
@@ -45,7 +45,7 @@ class List extends Component {
         this.props.files.map((l, i) => (
           <ListItem
             key={i}
-            title={l.name}
+            title={l.Key.split("/")[1]}
             rightIcon={
               <Icon
                 name='external-link-square'
@@ -53,7 +53,7 @@ class List extends Component {
                 color={colors.green}/>}
             topDivider={moreThanOneIndex}
             titleStyle={styles.listItemTitle}
-            onPress={( ) => this.displayFile(l.name)}/>
+            onPress={( ) => this.displayFile(l.Key)}/>
         ))
       );
     }
@@ -75,24 +75,6 @@ class List extends Component {
             isVisible={this.state.modalVisible}
             onBackdropPress={this.toggleModal}
             style={styles.fileModal}>
-            <View style={styles.toolbar}>
-              <Icon
-                name='share-square'
-                type='font-awesome'
-                size={32}
-                color={colors.light_grey}
-                underlayColor={colors.green}
-                containerStyle={styles.icon}
-                onPress={( ) => Share.share({url: this.state.fileURL})}/>
-              <Icon
-                name='trash'
-                type='font-awesome'
-                size={32}
-                color={colors.light_grey}
-                underlayColor={colors.green}
-                containerStyle={styles.icon}
-                onPress={( ) => deleteFile(this.deleteFile)}/>
-            </View>
 
             <WebView source={{uri: this.state.fileURL}} style={styles.filePreview} />
           </Modal>

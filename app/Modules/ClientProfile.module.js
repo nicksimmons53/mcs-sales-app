@@ -34,6 +34,7 @@ class ClientProfile extends Component {
   componentDidMount( ) {
     let user = this.props.user;
     let client = this.props.client;
+    let clientName = client.clnnme.replace(/\s/g, "_");
 
     axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/contacts`)
       .then((response) => {
@@ -54,6 +55,14 @@ class ClientProfile extends Component {
     axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advInfo`)
       .then((response) => {
         this.setState({ info: response.data[0] });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    axios.get(`${API_URL}/list-files/${clientName}`)
+      .then((response) => {
+        this.setState({ files: response.data.file.Contents });
       })
       .catch((error) => {
         console.error(error);
@@ -119,11 +128,23 @@ class ClientProfile extends Component {
       });
   }
 
+  refreshFiles = ( ) => {
+    let client = this.props.client;
+    let clientName = client.clnnme.replace(/\s/g, "_");
+
+    axios.get(`${API_URL}/list-files/${clientName}`)
+      .then((response) => {
+        this.setState({ files: response.data.file.Contents });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   submitClient = async( ) => {
     let user = this.props.user;
     let client = this.props.client;
     let parts = [ ];
-    let values = { };
 
     await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/1`)
       .then((response) => {
@@ -185,6 +206,7 @@ class ClientProfile extends Component {
   }
 
   render( ) {
+    console.log(this.state.files)
     let headerStyle = { };
 
     if (this.props.isPortrait === true) {
@@ -250,6 +272,7 @@ class ClientProfile extends Component {
                 client={this.props.client}
                 info={this.state.info}
                 refreshInfo={this.refreshInfo}
+                refreshFiles={this.refreshFiles}
                 loading={this.props.loading}
                 isPortrait={this.props.isPortrait}
                 toggleModal={this.props.toggleModal}
