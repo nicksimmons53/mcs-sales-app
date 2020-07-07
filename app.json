@@ -29,6 +29,9 @@
       "bundleIdentifier": "com.mcsurfaces.app",
       "buildNumber": "1.0.0"
     },
-    "description": ""
-  }
+    "description": "",
+    "entryPoint": "node_modules/expo/AppEntry.js"
+  },
+  "displayName": "MC Surfaces",
+  "name": "salesapp"
 }
