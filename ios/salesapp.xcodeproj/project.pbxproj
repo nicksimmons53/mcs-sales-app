@@ -315,7 +315,7 @@
 			baseConfigurationReference = 3B47C5AFCB8BDE514B7D1AC6 /* Pods-salesapp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 4XKQU77DH7;
 				INFOPLIST_FILE = salesapp/Info.plist;
@@ -340,7 +340,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 6;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 4XKQU77DH7;
 				INFOPLIST_FILE = salesapp/Info.plist;
