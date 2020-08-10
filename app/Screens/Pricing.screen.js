@@ -2,19 +2,19 @@
 import React, { Component } from 'react';
 import { View, StatusBar, KeyboardAvoidingView, Text } from 'react-native';
 import PropTypes from 'prop-types';
-import { Divider, ButtonGroup } from 'react-native-elements';
+import { Divider, ButtonGroup, Button } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import Wood from '../Modules/Wood.module';
 import Tile from '../Modules/Tile.module';
 import Carpet from '../Modules/Carpet.module';
 import Vinyl from '../Modules/Vinyl.module';
-import Granite from '../Modules/Granite.module';
+import Countertops from '../Modules/Countertops.module';
 import { styles, colors } from './Styles/Pricing.style';
 
 export default class Pricing extends Component {
   state = {
     selectedSpreadsheet: 0,
-    buttonGroup: ['Tile', 'Wood', 'Carpet', 'Vinyl', 'Granite']
+    buttonGroup: ['Tile', 'Wood', 'Carpet', 'Vinyl', 'Countertops']
   };
 
   timeout = null;
@@ -39,6 +39,9 @@ export default class Pricing extends Component {
           <View style={styles.infoContainer}>
             <View style={styles.header}>
               <Text style={styles.text}>Level Builder</Text>
+              <Button
+                title="Export Program"
+                buttonStyle={styles.button}/>
             </View>
 
             <Divider />
@@ -58,7 +61,7 @@ export default class Pricing extends Component {
 
             { selectedIndex === 3 ? <Vinyl client={client} user={user}/> : null } 
 
-            { selectedIndex === 4 ? <Granite client={client} user={user}/> : null }
+            { selectedIndex === 4 ? <Countertops client={client} user={user}/> : null }
 
           </View>
         <Toast ref='toast' position='center' style={styles.toast} />

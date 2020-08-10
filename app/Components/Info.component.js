@@ -7,14 +7,21 @@ const Info = ({...props}) => {
   let corpAddr2 = '';
   let billAddr2 = '';
   let shipAddr2 = '';
+  
   if (address.addrs2 !== '' || typeof(address.addrs2) !== undefined) 
     corpAddr2 = address.addrs2 + ' ';
+  else
+    address.addrs2 = '';
 
   if (address.bilad2 !== '' || typeof(address.bilad2) !== undefined) 
     billAddr2 = address.bilad2 + ' ';
+  else 
+    address.bilad2 = '';
 
   if (address.shpad2 !== '' || typeof(address.shpad2) !== undefined) 
     shipAddr2 = address.shpad2 + ' ';
+  else
+    address.shpad2 = '';
 
   let corpAddr = address.addrs1 + ' ' + corpAddr2 + address.ctynme + ' ' + address.state_ + " " + address.zipcde;
   let billingAddr = address.bilad1 + ' ' + billAddr2 + address.bilcty + ' ' + address.bilste + " " + address.bilzip;

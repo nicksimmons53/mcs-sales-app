@@ -31,6 +31,7 @@ class Profile extends Component {
       refresh: false,
       clientModal: false,
       user: null,
+      admin: false,
       portrait: isPortrait( ) ? true : false
     };
 
@@ -44,14 +45,24 @@ class Profile extends Component {
   componentDidMount( ) {
     let user = this.props.navigation.state.params.user[0];
     this.setState({ user: user });
-
-    axios.get(`${API_URL}/employee/${user.recnum}/clients`)
-      .then((response) => {
-        this.setState({ clients: response.data });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    if (user.admin == 1) {
+      this.setState({ admin: true });
+      axios.get(`${API_URL}/admin/clients/`)
+        .then((response) => {
+          this.setState({ clients: response.data });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      axios.get(`${API_URL}/employee/${user.recnum}/clients`)
+        .then((response) => {
+          this.setState({ clients: response.data });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   }
 
   // Update state when client is added
@@ -132,7 +143,7 @@ class Profile extends Component {
 
             <View style={styles.profile}>
               {
-                this.state.loading ?
+                this.state.client === null ?
                   <ActivityIndicator size='large' color={colors.black} style={{paddingTop: 200}} />
                 :
                   <ClientProfile
@@ -173,7 +184,7 @@ class Profile extends Component {
             onBackdropPress={( ) => this.toggleModal( )}
             style={{alignItems: 'center'}}>
             {
-              this.state.loading ?
+              this.state.client === null ?
                 <ActivityIndicator size='large' color={colors.black} style={{paddingTop: 200}} />
               :
                 <ClientProfile

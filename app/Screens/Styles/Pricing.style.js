@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
     width: '95%'
   },
   selected: {
+    backgroundColor: colors.black
+  },
+  button: {
     backgroundColor: colors.green
   },
 

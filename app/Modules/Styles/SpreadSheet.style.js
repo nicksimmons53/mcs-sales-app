@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   // Table
   table: {
     width: '90%',
-    margin: 20,
+    margin: 10,
     borderWidth: 1,
     borderRadius: 3,
     borderColor: colors.grey,
@@ -67,6 +67,11 @@ const styles = StyleSheet.create({
   },
   saveButtonContainer: {
     width: '20%',
+    height: 75,
+    justifyContent: 'center'
+  },
+  inHouseProgramButton: {
+    width: '30%',
     height: 75,
     justifyContent: 'center'
   },

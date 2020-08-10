@@ -9,6 +9,7 @@ import Info from '../Components/Info.component';
 import ContactTable from '../Modules/ContactTable.module';
 import UpdateClient from '../Modules/UpdateClient.module';
 import ClientActions from '../Components/ClientActions.component';
+import Email from '../Components/Email.component';
 import AddContact from './AddContact.module';
 import List from './List.module';
 import axios from 'axios';
@@ -28,7 +29,8 @@ class ClientProfile extends Component {
     carpet: [ ],
     granite: [ ],
     tile: [ ],
-    wood: [ ]
+    wood: [ ],
+    emailOverlay: false
   };
 
   componentDidMount( ) {
@@ -88,6 +90,11 @@ class ClientProfile extends Component {
   showInactivationToast = ( ) => {
     this.refs.toast.show(this.props.client.clnnme + ' has been inactivated.');
   }
+
+  // Show Inactivated Client
+  showSubmitToast = ( ) => {
+    this.refs.toast3.show(this.props.client.clnnme + ' has been submitted for review.');
+  }
   
   refresh = ( ) => {
     let user = this.props.user;
@@ -139,6 +146,10 @@ class ClientProfile extends Component {
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  toggleEmailOverlay = ( ) => {
+    this.setState({ emailOverlay: !this.state.emailOverlay });
   }
 
   submitClient = async( ) => {
@@ -199,6 +210,7 @@ class ClientProfile extends Component {
     axios.post(`${API_URL}/submit-client`, { client: this.props.client, parts: parts})
       .then((response) => {
         console.log(response.status);
+        this.showSubmitToast( );
       })
       .catch((error) => {
         console.error(error);
@@ -206,7 +218,6 @@ class ClientProfile extends Component {
   }
 
   render( ) {
-    console.log(this.state.files)
     let headerStyle = { };
 
     if (this.props.isPortrait === true) {
@@ -263,6 +274,19 @@ class ClientProfile extends Component {
                 null
             }
 
+            {
+              this.state.emailOverlay ?
+                <Email 
+                  client={this.props.client}
+                  user={this.props.user}
+                  to="lisak@mcsurfacesinc.com"
+                  subject="COI Request"
+                  isVisible={this.state.emailOverlay}
+                  toggleEmailOverlay={this.toggleEmailOverlay}/>
+              :
+                null
+            }
+
             <View style={styles.lists}>
               <ClientActions
                 refs={this.refs}
@@ -277,6 +301,7 @@ class ClientProfile extends Component {
                 isPortrait={this.props.isPortrait}
                 toggleModal={this.props.toggleModal}
                 showFileToast={this.showFileToast}
+                toggleEmailOverlay={this.toggleEmailOverlay}
                 showInactivationToast={this.showInactivationToast}
                 removeClientFromState={this.props.removeClientFromState}/>
             </View>
@@ -300,6 +325,7 @@ class ClientProfile extends Component {
 
           <Toast ref='toast' position='bottom' style={styles.toast} />
           <Toast ref='toast2' position='bottom' style={styles.toast} />
+          <Toast ref='toast3' position='bottom' style={styles.toast} />
 
         </KeyboardAvoidingView>
       );

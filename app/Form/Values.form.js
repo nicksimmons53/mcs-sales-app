@@ -100,20 +100,25 @@ const Client = {
   inactv: null,
   stmeml: null,
   // FROM HERE ON NEED TO BE CREATED
-  pmtday: null, // STRING
-  pmtfrq: null, // STRING
-  atopay: null, // BOOL
-  invsbm: null, // STRING
-  invddl: null, // STRING
-  pmttyp: null, // STRING
-  chkpup: false, // BOOL
-  pmtprt: null, // STRING
-  vndreq: null, // BOOL
-  posreq: null, // BOOL
-  pohndl: null, // STRING
-  aprvls: null, // BOOL
-  vndprt: null, // STRING
-  wstfct: null // STRING
+  pmtfrq: null, // STRING - PAYMENT FREQUENCY
+  atopay: null, // BOOL   - AUTO PAY
+  invsbm: null, // STRING - HOW TO SUBMIT INVOICES
+  pmttyp: null, // STRING - PAYMENT TYPE
+  pmtprt: null, // STRING - PAYMENT PORTAL
+  pmturl: null, // STRING - PAYMENT PORTAL URL
+  posreq: null, // BOOL   - POS 
+  invpos: null, // BOOL   - POs REQUIRED FOR INVOICE SUBMITTAL
+  pohndl: null, // STRING - PO ERROR HANDLING
+  aprvls: null, // BOOL   - APPROVALS REQUIRED
+  vndprt: null, // STRING - VENDOR PORTAL
+  completed: 0, // INT    - COMPLETED
+  done: 0,      // INT    - DONE
+  strtdt: null, // STRING - EXPECTED START DATE
+  invema: null, // STRING - INVOICE SUBMIT EMAIL ADDRESS
+  invadr: null, // STRING - INVOICE ADDRESS
+  invcty: null, // STRING - INVOICE CITY
+  invste: null, // STRING - INVOICE STATE
+  invzip: null, // STRING - INVOICE ZIP
 };
 
 const Part = {
@@ -192,11 +197,19 @@ const Contact3 = {
   email3: ""
 };
 
+const email = {
+  to: "",
+  from: "",
+  subject: "",
+  message: ""
+};
+
 export { 
   User, 
   Client,
   Contact1,
   Contact2,
   Contact3,
-  Part
+  Part,
+  email
 };

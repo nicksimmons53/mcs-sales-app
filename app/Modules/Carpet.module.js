@@ -51,7 +51,9 @@ class Carpet extends Component {
         })
     }
 
-    addRow = (table, index, targetValue, newValue) => {
+    addRow = ( ) => {
+      let part = Part;
+      this.setState({ parts: [...this.state.parts, part] });
     }
   
     row = (rowObj, rowIndex, formikProps) => {
@@ -114,6 +116,10 @@ class Carpet extends Component {
       return (
         <ScrollView style={styles.sv}>
           <View style={styles.spreadsheet}>
+            <Button
+              title='Use In-House Program'
+              buttonStyle={styles.save}
+              containerStyle={styles.inHouseProgramButton}/>
             <View style={styles.table}>
               <View style={styles.tableHeader}>
                 <Text style={styles.tableHeaderText}>Carpet Program</Text>
@@ -137,7 +143,7 @@ class Carpet extends Component {
                     )}
                   </Formik>
                 ))}
-  
+                  
                 <DataTable.Row style={styles.addRow}>
                   <Icon
                     name='plus-square'

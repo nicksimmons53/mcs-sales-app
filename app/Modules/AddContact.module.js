@@ -37,10 +37,10 @@ class AddContact extends Component {
       <Text style={styles.label}>{label}</Text>
       <Input
         onChangeText={formik.handleChange(value)}
-        autoCapitalize='words'
+        autoCapitalize='none'
         blurOnSubmit={false}
         containerStyle={styles.mediumInput}
-        inputContainerStyle={styles.inputContainer} />
+        inputContainerStyle={styles.inputContainer}/>
     </View>
   )
 

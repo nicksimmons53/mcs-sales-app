@@ -5,9 +5,12 @@ import colors from '../../Library/Colors';
 const styles = StyleSheet.create({
   // Background
   background: {
+    width: '100%',
     paddingTop: 15,
     paddingLeft: 15,
+    paddingRight: 15,
     alignItems: 'center',
+    justifyContent: 'center'
   },
 
   // Form
@@ -47,6 +50,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     margin: 10,
+    zIndex: 20
   },
   label: {
     fontFamily: 'opensans-reg',
@@ -58,6 +62,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex: 3,
     paddingLeft: 5,
+    marginRight: 10,
     borderWidth: 1,
     borderRadius: 3,
     borderColor: colors.light_grey,
@@ -71,6 +76,20 @@ const styles = StyleSheet.create({
   xSmallInput: {
     width: '20%',
   },
+  dropdown: {
+    width: '37%',
+    marginRight: 20
+  },
+  dropdownMenu: {
+    backgroundColor: colors.white,
+  },
+  dropdownLabel: {
+    fontFamily: 'opensans-reg',
+    justifyContent: 'flex-start'
+  },
+  dropdownItem: {
+    justifyContent: 'flex-start'
+  },
 
   // Button
   attachButtonContainer: {
@@ -80,16 +99,18 @@ const styles = StyleSheet.create({
   attach: {
     backgroundColor: colors.black,
   },
-  cancel: {
+  submit: {
     width: '40%',
     alignSelf: 'center',
     margin: 10,
-    backgroundColor: colors.red,
+    backgroundColor: colors.green,
   },
 
   // Switch
-  switch: {
+  checkbox: {
     marginRight: 10,
+    paddingRight: 5,
+    paddingVertical: 0
   },
 
   // File Attachments

@@ -41,21 +41,34 @@ class UpdateClient extends Component {
     return (
       <View style={styles.background}>
         <Formik
-          initialValues={{...this.props.address}}
+          initialValues={{...this.props.address, ...this.props.client}}
           onSubmit={(values, actions) => this.updateClient(values, actions)}>
         {formikProps => (
         <View style={styles.form}>
           <View style={styles.header}>
             <Text style={styles.label}>Update Client Information</Text>
             <Icon
-              name='download'
-              type='font-awesome'
-              color={colors.green}
-              size={30}
-              onPress={formikProps.handleSubmit} />
+                name="times"
+                type="font-awesome"
+                size={36}
+                color={colors.red}
+                iconStyle={styles.icon}
+                onPress={this.props.cancel}/>
           </View>
 
           <Divider />
+
+          <View style={styles.textRow}>
+            <Text style={styles.label}>Client Name</Text>
+            <Input
+              onChangeText={formikProps.handleChange('clnnme')}
+              onBlur={formikProps.handleBlur('clnnme')}
+              value={formikProps.values.clnnme}
+              autoCapitalize='words'
+              blurOnSubmit={false}
+              containerStyle={styles.mediumInput}
+              inputContainerStyle={styles.inputContainer} />
+          </View>
 
           <View style={styles.textRow}>
             <Text style={styles.label}>Street Address</Text>
@@ -236,9 +249,9 @@ class UpdateClient extends Component {
           : null}
 
           <Button
-            title='Cancel'
-            buttonStyle={styles.cancel}
-            onPress={this.props.cancel} />
+            title='Save'
+            buttonStyle={styles.submit}
+            onPress={formikProps.handleSubmit} />
       </View>
       )}
       </Formik>

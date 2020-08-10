@@ -10,7 +10,7 @@ import { Divider, Icon, Input, Button } from 'react-native-elements';
 import { DataTable } from 'react-native-paper';
 import { styles, colors } from './Styles/SpreadSheet.style';
 
-class Granite extends Component {
+class Countertops extends Component {
   state = {
     parts: [ ]
   }
@@ -50,7 +50,9 @@ class Granite extends Component {
         })
     }
 
-    addRow = (table, index, targetValue, newValue) => {
+    addRow = ( ) => {
+      let part = Part;
+      this.setState({ parts: [...this.state.parts, part] });
     }
   
     row = (rowObj, rowIndex, formikProps) => {
@@ -110,9 +112,13 @@ class Granite extends Component {
       return (
         <ScrollView style={styles.sv}>
           <View style={styles.spreadsheet}>
+            <Button
+              title='Use In-House Program'
+              buttonStyle={styles.save}
+              containerStyle={styles.inHouseProgramButton}/>
             <View style={styles.table}>
               <View style={styles.tableHeader}>
-                <Text style={styles.tableHeaderText}>Vinyl Program</Text>
+                <Text style={styles.tableHeaderText}>Countertops Program</Text>
               </View>
               <Divider />
               <DataTable>
@@ -151,10 +157,10 @@ class Granite extends Component {
   }
   
   // Props Valdidation
-  Granite.propTypes = {
+  Countertops.propTypes = {
     dropdown: PropTypes.bool,
     addRow: PropTypes.func,
     tables: PropTypes.object
   }
   
-  export default Granite;
+  export default Countertops;

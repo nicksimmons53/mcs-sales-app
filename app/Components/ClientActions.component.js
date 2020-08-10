@@ -57,26 +57,24 @@ const ClientActions = ({...props}) => {
   return (
     <ScrollView horizontal={true} style={styles.background}>
       <Button
-        title='Update Client'
+        title='Advanced Info'
         icon={{
-          name: 'pencil',
+          name: 'arrow-right',
           type: 'font-awesome',
           size: 20,
           color: colors.white,
         }}
         buttonStyle={styles.button}
-        onPress={props.update} />
-      <Button
-        title='Attach Files'
-        icon={{
-          name: 'paperclip',
-          type: 'font-awesome',
-          size: 20,
-          color: colors.white,
-        }}
-        buttonStyle={styles.button}
+        iconContainerStyle={styles.icon}
         onPress={( ) => {
-          filePicker(props.client);
+          if (props.isPortrait === true)
+            props.toggleModal( );
+            props.nav.navigate('AdvInfoForm', {
+              client: props.client,
+              user: props.user,
+              info: props.info,
+              refreshInfo: props.refreshInfo
+          });
         }}/>
       <Button
         title='Build Pricing'
@@ -87,6 +85,7 @@ const ClientActions = ({...props}) => {
           color: colors.white,
         }}
         buttonStyle={styles.button}
+        iconContainerStyle={styles.icon}
         onPress={( ) => {
           let timeout = null;
 
@@ -99,25 +98,41 @@ const ClientActions = ({...props}) => {
               user: props.user
             });
           }, 2000);
-        }} />
+        }}/>
       <Button
-        title='Continue Client'
+        title='Request COI'
         icon={{
-          name: 'arrow-right',
+          name: 'envelope',
           type: 'font-awesome',
           size: 20,
           color: colors.white,
         }}
         buttonStyle={styles.button}
+        iconContainerStyle={styles.icon}
+        onPress={props.toggleEmailOverlay}/>
+      <Button
+        title='Update Client'
+        icon={{
+          name: 'pencil',
+          type: 'font-awesome',
+          size: 20,
+          color: colors.white,
+        }}
+        buttonStyle={styles.button}
+        iconContainerStyle={styles.icon}
+        onPress={props.update}/>
+      <Button
+        title='Attach Files'
+        icon={{
+          name: 'paperclip',
+          type: 'font-awesome',
+          size: 20,
+          color: colors.white,
+        }}
+        buttonStyle={styles.button}
+        iconContainerStyle={styles.icon}
         onPress={( ) => {
-          if (props.isPortrait === true)
-            props.toggleModal( );
-          props.nav.navigate('AdvInfoForm', {
-            client: props.client,
-            user: props.user,
-            info: props.info,
-            refreshInfo: props.refreshInfo
-          });
+          filePicker(props.client);
         }}/>
     </ScrollView>
   );
@@ -146,6 +161,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.background,
   },
+
+  // Icon
+  icon: {
+    paddingRight: 15
+  }
 });
 
 // Props Validation

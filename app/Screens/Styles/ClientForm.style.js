@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
 
   // ScrollView
   sv: {
-    flex: 1,
     backgroundColor: colors.light_grey
   },
 

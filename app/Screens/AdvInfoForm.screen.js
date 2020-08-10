@@ -49,13 +49,12 @@ class AdvInfoForm extends Component {
   save = async(values, actions) => {
     let client = this.props.navigation.getParam('client');
     let user = this.props.navigation.getParam('user');
+    let refreshInfo = this.props.navigation.getParam('refreshInfo');
 
     this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
     
     axios.put(`${API_URL}/employee/${user.recnum}/clients/${client.id}`, values)
       .then((response) => {
-        this.props.refreshInfo( );
-
         this.refs.toast.show('Client Information has been saved.');
 
         this.timeout = setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
@@ -68,7 +67,6 @@ class AdvInfoForm extends Component {
   }
 
   render( ) {
-    console.log(this.props)
     return (
       <KeyboardAvoidingView behavior='padding' enabled style={styles.background}>
         <View style={styles.row}>
@@ -89,7 +87,7 @@ class AdvInfoForm extends Component {
               initialValues={{...this.props.navigation.getParam('info')}}
               onSubmit={(values, actions) => { this.save(values, actions) }}>
               {formikProps => (
-                <ScrollView style={styles.sv}>
+                <ScrollView style={styles.sv} contentContainerStyle={styles.svContentContainer}>
                   <AdvInfo formik={formikProps} />
 
                   <View style={styles.buttonView}>

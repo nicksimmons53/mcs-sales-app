@@ -49,6 +49,11 @@ class Wood extends Component {
           console.log(error);
         })
     }
+
+    addRow = ( ) => {
+      let part = Part;
+      this.setState({ parts: [...this.state.parts, part] });
+    }
   
     row = (rowObj, rowIndex, formikProps) => {
       let billingCost = "";
@@ -107,6 +112,10 @@ class Wood extends Component {
       return (
         <ScrollView style={styles.sv}>
           <View style={styles.spreadsheet}>
+            <Button
+              title='Use In-House Program'
+              buttonStyle={styles.save}
+              containerStyle={styles.inHouseProgramButton}/>
             <View style={styles.table}>
               <View style={styles.tableHeader}>
                 <Text style={styles.tableHeaderText}>Wood Program</Text>

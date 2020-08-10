@@ -50,7 +50,9 @@ class Vinyl extends Component {
         })
     }
 
-    addRow = (table, index, targetValue, newValue) => {
+    addRow = ( ) => {
+      let part = Part;
+      this.setState({ parts: [...this.state.parts, part] });
     }
   
     row = (rowObj, rowIndex, formikProps) => {
@@ -110,6 +112,10 @@ class Vinyl extends Component {
       return (
         <ScrollView style={styles.sv}>
           <View style={styles.spreadsheet}>
+            <Button
+              title='Use In-House Program'
+              buttonStyle={styles.save}
+              containerStyle={styles.inHouseProgramButton}/>
             <View style={styles.table}>
               <View style={styles.tableHeader}>
                 <Text style={styles.tableHeaderText}>Vinyl Program</Text>

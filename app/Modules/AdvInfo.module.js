@@ -1,14 +1,36 @@
 // Library Imports
 import React, { Component } from 'react';
-import { View, Text, Switch } from 'react-native';
+import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
-import { Divider, Input, Button } from 'react-native-elements';
+import { Divider, Input, Button, Icon, CheckBox } from 'react-native-elements';
 import * as DocumentPicker from 'expo-document-picker';
+import DropDownPicker from 'react-native-dropdown-picker';
 import Toast from 'react-native-easy-toast';
 import { styles, colors } from './Styles/Form.style';
 
 // Class Component for Client Accounting Info
 class AcctInfo extends Component {
+  state = {
+    frequencyOptions: [
+      { label: "Weekly", value: "Weekly" },
+      { label: "Bi-Weekly", value: "Bi-Weekly" },
+      { label: "Monthly", value: "Monthly" }
+    ],
+    paymentOptions: [
+      { label: "Credit-Card", value: "Credit-Card" },
+      { label: "Direct Deposit", value: "Direct Deposit" },
+      { label: "Check", value: "Check" }
+    ],
+    submitOptions: [
+      { label: "Email", value: "Email" },
+      { label: "Mail", value: "Mail" },
+      { label: "Drop-Off", value: "Drop-Off" }
+    ],
+    emailSubmit: false,
+    mailSubmit: false,
+    dropOffSubmit: false
+  };
+
   filePicker = async( ) => {
     await DocumentPicker.getDocumentAsync({
       copyToCacheDirectory: false
@@ -30,156 +52,234 @@ class AcctInfo extends Component {
 
   render( ) {
     let values = this.props.formik.values;
-    console.log(values.exmnum)
+    
     return (
       <View style={styles.background}>
         <View style={styles.form}>
           <Text style={styles.headerText}>Accounting Information</Text>
           <Divider />
 
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Tax ID #</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('exmnum')}
-              onBlur={this.props.formik.handleBlur('exmnum')}
-              value={values.exmnum}
-              keyboardType='number-pad'
-              textContentType='none'
-              blurOnSubmit={false}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-
-          <Divider />
-
           <Text style={styles.sectionHeaderText}>Payment Information</Text>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Payment Day</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('pmtday')}
-              onBlur={this.props.formik.handleBlur('pmtday')}
-              value={values.pmtday}
-              keyboardType='default'
-              textContentType='none'
-              blurOnSubmit={false}
-              containerStyle={styles.smallInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-          <View style={styles.textRow}>
+          <View style={styles.textRow} zIndex={3}>
             <Text style={styles.label}>Payment Frequency</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('pmtfrq')}
-              onBlur={this.props.formik.handleBlur('pmtfrq')}
-              value={values.pmtfrq}
-              keyboardType='default'
-              textContentType='none'
-              blurOnSubmit={false}
-              containerStyle={styles.smallInput}
-              inputContainerStyle={styles.inputContainer} />
+            <DropDownPicker
+              placeholder="Choose..."
+              items={this.state.frequencyOptions}
+              defaultValue={values.pmtfrq}
+              containerStyle={styles.dropdown}
+              dropDownStyle={styles.dropdownMenu}
+              labelStyle={styles.dropdownItem}
+              itemStyle={styles.dropdownItem}
+              onChangeItem={item => this.props.formik.setFieldValue('pmtfrq', item.value)}/>
+            <Icon name="info-circle" type="font-awesome" color={colors.black}/>
           </View>
-          <View style={styles.textRow}>
+          <View style={styles.textRow} zIndex={0}>
             <Text style={styles.label}>Autopay</Text>
-            <Switch
-              onChange={( ) => this.props.formik.setFieldValue('atopay', !this.props.formik.values.atopay)}
-              value={this.props.formik.values.atopay}
-              style={styles.switch}
-              trackColor={{true: colors.green}} />
+            <CheckBox 
+              checked={!values.atopay}
+              onPress={( ) => this.props.formik.setFieldValue('atopay', !values.atopay)}
+              size={36}
+              containerStyle={styles.checkbox}
+              checkedColor={colors.green}/>
+            <Icon name="info-circle" type="font-awesome" color={colors.black}/>
           </View>
-          <View style={styles.textRow}>
+          <View style={styles.textRow} zIndex={2}>
             <Text style={styles.label}>How to submit invoices?</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('invsbm')}
-              onBlur={this.props.formik.handleBlur('invsbm')}
-              value={values.invsbm}
-              keyboardType='default'
-              textContentType='none'
-              blurOnSubmit={false}
-              containerStyle={styles.smallInput}
-              inputContainerStyle={styles.inputContainer} />
+            <DropDownPicker
+              placeholder="Choose..."
+              items={this.state.submitOptions}
+              defaultValue={values.invsbm}
+              containerStyle={styles.dropdown}
+              dropDownStyle={styles.dropdownMenu}
+              labelStyle={styles.dropdownItem}
+              itemStyle={styles.dropdownItem}
+              onChangeItem={item => this.props.formik.setFieldValue('invsbm', item.value)}/>
+            <Icon name="info-circle" type="font-awesome" color={colors.black}/>
           </View>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Invoice Submit Deadline</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('invddl')}
-              onBlur={this.props.formik.handleBlur('invddl')}
-              value={values.invddl}
-              keyboardType='default'
-              textContentType='none'
-              blurOnSubmit={false}
-              containerStyle={styles.smallInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-          <View style={styles.textRow}>
+
+          { 
+            (values.invsbm === "Email") ? 
+              <View style={styles.textRow} zIndex={0}>
+                <Text style={styles.label}></Text>
+                <Input
+                  onChangeText={this.props.formik.handleChange('invema')}
+                  onBlur={this.props.formik.handleBlur('invema')}
+                  value={values.invema}
+                  placeholder="Email"
+                  blurOnSubmit={false}
+                  containerStyle={styles.smallInput}
+                  inputContainerStyle={styles.inputContainer}/>
+                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
+              </View>
+            :
+              null
+          }
+
+          {    
+            (values.invsbm === "Mail" || values.invsbm === "Drop-Off") ?
+              <>
+                <View style={styles.textRow} zIndex={0}>
+                  <Text style={styles.label}></Text>
+                  <Input
+                    onChangeText={this.props.formik.handleChange('invadr')}
+                    onBlur={this.props.formik.handleBlur('invadr')}
+                    value={values.invadr}
+                    placeholder="Street Address"
+                    blurOnSubmit={false}
+                    containerStyle={styles.smallInput}
+                    inputContainerStyle={styles.inputContainer}/>
+                  <Icon name="info-circle" type="font-awesome" color={colors.white}/>
+                </View>
+                <View style={styles.textRow} zIndex={0}>
+                  <Text style={styles.label}></Text>
+                  <Input
+                    onChangeText={this.props.formik.handleChange('invcty')}
+                    onBlur={this.props.formik.handleBlur('invcty')}
+                    value={values.invcty}
+                    placeholder="City"
+                    blurOnSubmit={false}
+                    containerStyle={styles.smallInput}
+                    inputContainerStyle={styles.inputContainer}/>
+                  <Icon name="info-circle" type="font-awesome" color={colors.white}/>
+                </View>
+                <View style={styles.textRow} zIndex={0}>
+                  <Text style={styles.label}></Text>
+                  <Input
+                    onChangeText={this.props.formik.handleChange('invste')}
+                    onBlur={this.props.formik.handleBlur('invste')}
+                    value={values.invste}
+                    placeholder="State"
+                    blurOnSubmit={false}
+                    containerStyle={styles.smallInput}
+                    inputContainerStyle={styles.inputContainer}/>
+                  <Icon name="info-circle" type="font-awesome" color={colors.white}/>
+                </View>
+                <View style={styles.textRow} zIndex={0}>
+                  <Text style={styles.label}></Text>
+                  <Input
+                    onChangeText={this.props.formik.handleChange('invzip')}
+                    onBlur={this.props.formik.handleBlur('invzip')}
+                    value={values.invzip}
+                    placeholder="Zip Code"
+                    blurOnSubmit={false}
+                    containerStyle={styles.smallInput}
+                    inputContainerStyle={styles.inputContainer}/>
+                  <Icon name="info-circle" type="font-awesome" color={colors.white}/>
+                </View>
+              </>
+            :
+              null
+          }
+
+          <View style={styles.textRow} zIndex={1}>
             <Text style={styles.label}>Payment Type</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('pmttyp')}
-              onBlur={this.props.formik.handleBlur('pmttyp')}
-              value={values.pmttyp}
-              keyboardType='default'
-              textContentType='none'
-              blurOnSubmit={false}
-              containerStyle={styles.smallInput}
-              inputContainerStyle={styles.inputContainer} />
+            <DropDownPicker
+              placeholder="Choose..."
+              items={this.state.paymentOptions}
+              defaultValue={values.pmttyp}
+              containerStyle={styles.dropdown}
+              dropDownStyle={styles.dropdownMenu}
+              zIndex={1}
+              itemStyle={styles.dropdownItem}
+              onChangeItem={item => this.props.formik.setFieldValue('pmttyp', item.value)}/>
+            <Icon name="info-circle" type="font-awesome" color={colors.black}/>
           </View>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Check Pick Up?</Text>
-            <Switch
-              onChange={( ) => this.props.formik.setFieldValue('chkpup', !this.props.formik.values.chkpup)}
-              value={this.props.formik.values.chkpup}
-              style={styles.switch}
-              trackColor={{true: colors.green}} />
-          </View>
-          <View style={styles.textRow}>
+          <View style={styles.textRow} zIndex={0}>
             <Text style={styles.label}>Payment Portal</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('pmtprt')}
-              onBlur={this.props.formik.handleBlur('pmtprt')}
-              value={values.pmtprt}
-              keyboardType='url'
-              textContentType='URL'
-              blurOnSubmit={false}
-              containerStyle={styles.smallInput}
-              inputContainerStyle={styles.inputContainer} />
+            <CheckBox 
+              checked={!values.pmtprt}
+              onPress={( ) => this.props.formik.setFieldValue('pmtprt', !values.pmtprt)}
+              size={36}
+              containerStyle={styles.checkbox}
+              checkedColor={colors.green}/>
+            <Icon name="info-circle" type="font-awesome" color={colors.white}/>
           </View>
+
+          { 
+            values.pmtprt ? 
+              null
+            :
+              <View style={styles.textRow} zIndex={0}>
+                <Text style={styles.label}></Text>
+                <Input
+                  onChangeText={this.props.formik.handleChange('pmturl')}
+                  onBlur={this.props.formik.handleBlur('pmturl')}
+                  value={values.pmturl}
+                  keyboardType='url'
+                  textContentType='URL'
+                  blurOnSubmit={false}
+                  containerStyle={styles.mediumInput}
+                  inputContainerStyle={styles.inputContainer}/>
+                <Icon name="info-circle" type="font-awesome" color={colors.black}/>
+              </View>
+          }
 
           <Divider />
 
           <Text style={styles.sectionHeaderText}>General Information</Text>
           <View style={styles.textRow}>
-            <Text style={styles.label}>Vendor ID Required?</Text>
-            <Switch
-              onChange={( ) => this.props.formik.setFieldValue('vndreq', !this.props.formik.values.vndreq)}
-              value={this.props.formik.values.vndreq}
-              style={styles.switch}
-              trackColor={{true: colors.green}} />
-          </View>
-          <View style={styles.textRow}>
             <Text style={styles.label}>{"PO's Required?"}</Text>
-            <Switch
-              onChange={( ) => this.props.formik.setFieldValue('posreq', !this.props.formik.values.posreq)}
-              value={this.props.formik.values.posreq}
-              style={styles.switch}
-              trackColor={{true: colors.green}} />
+            <CheckBox 
+              checked={!values.posreq}
+              onPress={( ) => this.props.formik.setFieldValue('posreq', !values.posreq)}
+              size={36}
+              containerStyle={styles.checkbox}
+              checkedColor={colors.green}/>
+            <Icon name="info-circle" type="font-awesome" color={colors.black}/>
           </View>
           <View style={styles.textRow}>
-            <Text style={styles.label}>PO Correction Handling</Text>
-            <Input
-              onChangeText={this.props.formik.handleChange('pohndl')}
-              onBlur={this.props.formik.handleBlur('pohndl')}
-              value={values.pohndl}
-              keyboardType='url'
-              textContentType='URL'
-              blurOnSubmit={false}
-              containerStyle={styles.smallInput}
-              inputContainerStyle={styles.inputContainer} />
+            <Text style={styles.label}>Are PO's Required for Invoice Submittal?</Text>
+            <CheckBox 
+              checked={!values.invpos}
+              onPress={( ) => this.props.formik.setFieldValue('invpos', !values.invpos)}
+              size={36}
+              containerStyle={styles.checkbox}
+              checkedColor={colors.green}/>
+            <Icon name="info-circle" type="font-awesome" color={colors.black}/>
           </View>
           <View style={styles.textRow}>
             <Text style={styles.label}>Approvals Required?</Text>
-            <Switch
-              onChange={( ) => this.props.formik.setFieldValue('aprvls', !this.props.formik.values.aprvls)}
-              value={this.props.formik.values.aprvls}
-              style={styles.switch}
-              trackColor={{true: colors.green}} />
+            <CheckBox 
+              checked={!values.aprvls}
+              onPress={( ) => this.props.formik.setFieldValue('aprvls', !values.aprvls)}
+              size={36}
+              containerStyle={styles.checkbox}
+              checkedColor={colors.green}/>
+            <Icon name="info-circle" type="font-awesome" color={colors.black}/>
+          </View>
+
+          <Divider/>
+
+          <Text style={styles.sectionHeaderText}>Contact Information</Text>
+          <View style={styles.textRow}>
+            <Text style={styles.label}>Full Name</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('')}
+              autoCapitalize='none'
+              blurOnSubmit={false}
+              containerStyle={styles.smallInput}
+              inputContainerStyle={styles.inputContainer}/>
+            <Icon name="info-circle" type="font-awesome" color={colors.white}/>
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.label}>Phone #</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('')}
+              autoCapitalize='none'
+              blurOnSubmit={false}
+              containerStyle={styles.smallInput}
+              inputContainerStyle={styles.inputContainer}/>
+            <Icon name="info-circle" type="font-awesome" color={colors.white}/>
+          </View>
+          <View style={styles.textRow}>
+            <Text style={styles.label}>Email Address</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('')}
+              autoCapitalize='none'
+              blurOnSubmit={false}
+              containerStyle={styles.mediumInput}
+              inputContainerStyle={styles.inputContainer}/>
+            <Icon name="info-circle" type="font-awesome" color={colors.white}/>
           </View>
         </View>
 
@@ -189,9 +289,9 @@ class AcctInfo extends Component {
           <Divider />
 
           <View style={styles.textRow}>
-            <Text style={styles.label}>Plan Attachment</Text>
+            <Text style={styles.label}>File Attachment</Text>
             <Button
-              title='Attach Plan'
+              title='Attach Files'
               icon={{
                 name: 'paperclip',
                 type: 'font-awesome',
@@ -201,6 +301,7 @@ class AcctInfo extends Component {
               buttonStyle={styles.attach}
               containerStyle={styles.attachButtonContainer}
               onPress={( ) => this.filePicker( )} />
+            <Icon name="info-circle" type="font-awesome" color={colors.white}/>
           </View>
 
           <View style={styles.textRow}>
@@ -212,17 +313,33 @@ class AcctInfo extends Component {
               blurOnSubmit={false}
               containerStyle={styles.mediumInput}
               inputContainerStyle={styles.inputContainer} />
+            <Icon name="info-circle" type="font-awesome" color={colors.black}/>
           </View>
 
           <View style={styles.textRow}>
-            <Text style={styles.label}>Waste Factor</Text>
+            <Text style={styles.label}>PO Correction Handling</Text>
             <Input
-              onChangeText={this.props.formik.handleChange('wstfct')}
-              onBlur={this.props.formik.handleBlur('wstfct')}
-              value={values.wstfct}
+              onChangeText={this.props.formik.handleChange('pohndl')}
+              onBlur={this.props.formik.handleBlur('pohndl')}
+              value={values.pohndl}
+              keyboardType='url'
+              textContentType='URL'
               blurOnSubmit={false}
               containerStyle={styles.smallInput}
               inputContainerStyle={styles.inputContainer} />
+            <Icon name="info-circle" type="font-awesome" color={colors.black}/>
+          </View>
+
+          <View style={styles.textRow}>
+            <Text style={styles.label}>Expected Start Date</Text>
+            <Input
+              onChangeText={this.props.formik.handleChange('strtdt')}
+              onBlur={this.props.formik.handleBlur('strtdt')}
+              value={values.strtdt}
+              blurOnSubmit={false}
+              containerStyle={styles.smallInput}
+              inputContainerStyle={styles.inputContainer} />
+            <Icon name="info-circle" type="font-awesome" color={colors.black}/>
           </View>
 
           <Toast ref='toast' position='bottom' style={styles.toast} />
