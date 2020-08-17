@@ -116,10 +116,6 @@ class Carpet extends Component {
       return (
         <ScrollView style={styles.sv}>
           <View style={styles.spreadsheet}>
-            <Button
-              title='Use In-House Program'
-              buttonStyle={styles.save}
-              containerStyle={styles.inHouseProgramButton}/>
             <View style={styles.table}>
               <View style={styles.tableHeader}>
                 <Text style={styles.tableHeaderText}>Carpet Program</Text>

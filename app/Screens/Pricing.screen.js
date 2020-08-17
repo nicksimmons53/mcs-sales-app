@@ -39,9 +39,6 @@ export default class Pricing extends Component {
           <View style={styles.infoContainer}>
             <View style={styles.header}>
               <Text style={styles.text}>Level Builder</Text>
-              <Button
-                title="Export Program"
-                buttonStyle={styles.button}/>
             </View>
 
             <Divider />

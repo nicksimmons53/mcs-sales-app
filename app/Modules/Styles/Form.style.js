@@ -88,13 +88,16 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   },
   dropdownItem: {
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    fontSize: 16,
+    fontFamily: 'quicksand-reg'
   },
 
   // Button
   attachButtonContainer: {
     width: 200,
-    margin: 10
+    margin: 10,
+    marginRight: 20
   },
   attach: {
     backgroundColor: colors.black,
@@ -104,6 +107,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     margin: 10,
     backgroundColor: colors.green,
+  },
+  program: {
+    backgroundColor: colors.orange
   },
 
   // Switch
@@ -123,6 +129,11 @@ const styles = StyleSheet.create({
   toast: {
     width: '60%',
     alignItems: 'center'
+  },
+  promptText: {
+    color: colors.white,
+    fontSize: 18,
+    fontFamily: 'quicksand-reg'
   }
 });
 

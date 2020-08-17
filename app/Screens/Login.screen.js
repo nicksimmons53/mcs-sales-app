@@ -44,9 +44,10 @@ class Login extends Component {
       }).then((response) => {
         if (response.data.code === 200) {
           this.props.navigation.navigate('Profile', { user: response.data.result });
-        } else {
-          this.setState({ error: true });
+          return;
         }
+        
+        this.setState({ error: true });
       });
   }
 
