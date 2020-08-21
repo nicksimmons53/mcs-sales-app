@@ -122,43 +122,6 @@ class Profile extends Component {
   }
 
   render( ) {
-    if (this.state.portrait === false) {
-      return (
-        <View style={styles.background}>
-          <StatusBar barStyle='light-content' />
-
-          <View style={styles.content}>
-            <View style={styles.list}>
-              <Toolbar
-                home={true}
-                createClient={true}
-                signOut={true}
-                navigation={this.props.navigation}
-                signOutFunc={this._signOutAsync}
-                refresh={this.refresh}
-                user={this.state.user}/>
-
-              <ClientList setClientUID={this.setClientUID} clients={this.state.clients}/>
-            </View>
-
-            <View style={styles.profile}>
-              {
-                this.state.client === null ?
-                  <ActivityIndicator size='large' color={colors.black} style={{paddingTop: 200}} />
-                :
-                  <ClientProfile
-                    user={this.state.user}
-                    nav={this.props.navigation}
-                    client={this.state.client}
-                    loading={this.toggleLoading}
-                    portraitBool={this.state.portrait}
-                    toggleModal={this.toggleModal}/>
-              }
-            </View>
-          </View>
-        </View>
-      )
-    } else {
       return (
         <View style={styles.background}>
           <StatusBar barStyle='light-content' />
@@ -194,13 +157,13 @@ class Profile extends Component {
                   loading={this.toggleLoading}
                   isPortrait={true}
                   toggleModal={this.toggleModal}
+                  refresh={this.refresh}
                   removeClientFromState={this.removeClientFromState}/>
             }
           </Modal>
         </View>
       )
     }
-  }
 }
 
 // Prop Validation

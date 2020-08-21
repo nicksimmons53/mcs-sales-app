@@ -67,6 +67,8 @@ class AdvInfoForm extends Component {
   }
 
   render( ) {
+    let client = this.props.navigation.getParam('client');
+
     return (
       <KeyboardAvoidingView behavior='padding' enabled style={styles.background}>
         <View style={styles.row}>
@@ -88,7 +90,10 @@ class AdvInfoForm extends Component {
               onSubmit={(values, actions) => { this.save(values, actions) }}>
               {formikProps => (
                 <ScrollView style={styles.sv} contentContainerStyle={styles.svContentContainer}>
-                  <AdvInfo formik={formikProps} />
+                  <AdvInfo 
+                    formik={formikProps} 
+                    client={client} 
+                    tileProgram={this.props.tileProgram}/>
 
                   <View style={styles.buttonView}>
                     <Button

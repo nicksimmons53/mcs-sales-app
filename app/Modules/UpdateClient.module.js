@@ -25,11 +25,13 @@ class UpdateClient extends Component {
     let user = this.props.user;
     let client = this.props.client;
 
+    values.shtnme = values.clnnme;
+
     this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
     
     axios.put(`${API_URL}/employee/${user.recnum}/clients/${client.id}`, values)
       .then((response) => {
-        this.props.refreshAddr( );
+        this.props.refreshInfo( );
         this.props.cancel( );
       })
       .catch((error) => {

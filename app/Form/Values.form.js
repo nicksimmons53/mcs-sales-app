@@ -206,6 +206,15 @@ const Contact3 = {
     email3: ""
 };
 
+const Contact = {
+    id: "",
+    clientId: "",
+    name: "",
+    title: "",
+    phone: "",
+    email: ""
+};
+
 const email = {
     to: "",
     from: "",
@@ -213,21 +222,26 @@ const email = {
     message: ""
 };
 
-const tileProgram = {
-    settingMaterial: null,
-    waterproofMethod: null,
-    backerboardInstaller: null,
-    silicon: null,
-    showerNiches: null,
-    cornerSoapDish: null,
-    showerSeats: null,
-    schulterPref: null,
-    groutJointSizing: null,
-    grout: null,
-    subfloor: null,
-    takeoffs: null,
-    waste: null,
-    wallTileHeight: null,
+const TileProgram = {
+    setting_material: null,
+    waterproof_method: null,
+    waterproof_sova_constr: false,
+    backboard_installer: false,
+    silicon_pref: null,
+    colored_caulk: null,
+    shower_niche_pref: null,
+    corner_soap_dish: false,
+    shower_seat_pref: null,
+    schulter_pref: false,
+    grout_joint_size_pref: null,
+    grout_pref: null,
+    grout_brand: null,
+    subfloor_pref: null,
+    subfloor_other: null,
+    takeoff_resp: null,
+    waste_pct: null,
+    wall_tile_height: null,
+    tile_return_walls: false,
     notes: null
 };
 
@@ -241,7 +255,8 @@ const FieldInfo = {
     poInvoice: "Is it required for PO’s to be submitted with invoices for payment?",
     approvalsReq: "Are approvals required to be submitted with the invoices for payment if there is not a PO?",
     jobsReleased: "How do expeditors receive job requests?",
-    poCorrection: "Does the client allow for PO Corrections? If yes, please enter the email for correction submittal."
+    poCorrection: "Does the client allow for PO Corrections? If yes, please enter the email for correction submittal.",
+    expFiles: "Attach Community Standards or Building Forms. No Plans."
 };
 
 export { 
@@ -252,5 +267,6 @@ export {
     Contact3,
     Part,
     email,
-    FieldInfo
+    FieldInfo,
+    TileProgram
 };

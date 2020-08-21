@@ -22,10 +22,14 @@ class Carpet extends Component {
 
     axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/3`)
         .then((response) => {
-          let parts = Array(50).fill(Part);
-          response.data.map((part, index) => {
-            parts.unshift(response.data[index]);
-          });
+          let parts = response.data;
+          
+          if (parts.length === 0) {
+            let part = Part;
+            this.setState({ parts: [...this.state.parts, part] });
+            return;
+          }
+          
           this.setState({ parts: [...parts] });
         })
         .catch((error) => {

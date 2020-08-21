@@ -11,7 +11,6 @@ const ListObject = ({ client, setClientUID }) => {
     <View>
       <ListItem
         title={client.clnnme}
-        subtitle= {'Status: ' + client.status}
         bottomDivider
         chevron
         titleStyle={styles.title}

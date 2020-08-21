@@ -6,7 +6,7 @@ import * as FileSystem from 'expo-file-system';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Button } from 'react-native-elements';
-import * as DocumentPicker from 'expo-document-picker';
+import DocumentPicker from 'react-native-document-picker';
 import colors from '../Library/Colors';
 
 // Presentational Component of Buttons inside Client Profile
@@ -29,29 +29,31 @@ const ClientActions = ({...props}) => {
 
   // Expo Cli Document Picker Component
   const filePicker = async( ) => {
-    await DocumentPicker.getDocumentAsync({
-      copyToCacheDirectory: false
-    }).then(async(result) => {
-      if (result.type === 'cancel') {
-        return;
+    try {
+      const result = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles]
+      });
+
+      let file = {
+        name: result.name,
+        type: "*",
+        uri: result.uri
+      };
+
+      const base64 = await FileSystem.readAsStringAsync(file.uri, { encoding: 'base64' });
+
+      props.showFileToast( );
+
+      props.refreshFiles( );
+
+      return saveFile(base64, props.client, file.name);
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+
       } else {
-        let file = {
-          name: result.name,
-          type: "*",
-          uri: result.uri
-        };
-
-        const base64 = await FileSystem.readAsStringAsync(file.uri, { encoding: 'base64' });
-
-        props.showFileToast( );
-
-        props.refreshFiles( );
-
-        return saveFile(base64, props.client, file.name);
+        throw err;
       }
-    }).catch((error) => {
-      throw error;
-    });
+    }
   };
 
   return (
@@ -73,6 +75,7 @@ const ClientActions = ({...props}) => {
               client: props.client,
               user: props.user,
               info: props.info,
+              tileProgram: props.tileProgram,
               refreshInfo: props.refreshInfo
           });
         }}/>

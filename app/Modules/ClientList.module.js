@@ -21,11 +21,6 @@ class ClientList extends Component {
       <View style={styles.background}>
         <View style={styles.row}>
           <Text style={styles.text}>Client List</Text>
-          <Icon
-            name='search'
-            type='font-awesome'
-            color={colors.background}
-            iconStyle={{paddingRight: 10}} />
         </View>
 
         <Divider />

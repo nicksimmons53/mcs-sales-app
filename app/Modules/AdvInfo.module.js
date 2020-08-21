@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { Divider, Input, Button, Icon, CheckBox, Tooltip } from 'react-native-elements';
-import * as DocumentPicker from 'expo-document-picker';
+import * as FileSystem from 'expo-file-system';
+import DocumentPicker from 'react-native-document-picker';
 import DropDownPicker from 'react-native-dropdown-picker';
 import Toast from 'react-native-easy-toast';
 import { FieldInfo } from '../Form/Values.form';
@@ -37,25 +38,51 @@ class AcctInfo extends Component {
     dropOffSubmit: false,
     emailRelease: false
   };
+  
+  saveFile = (base64, client, fileName) => {
+    const clientName = client.clnnme.replace(/\s/g, "_");
+    let reqBody = {
+      clientName: clientName,
+      base64String: base64
+    };
 
-  filePicker = async( ) => {
-    await DocumentPicker.getDocumentAsync({
-      copyToCacheDirectory: false
-    }).then((result) => {
-		if (result.type === 'cancel')
-			return;
-		else
-			return File.uriToBlob(result.uri);
-    }).then((blob) => {
-		if (blob !== undefined) {
-			return File.saveFile(blob, this.props.client);
-		}
-    }).then(( ) => {
-      	this.refs.toast.show('File Was Attached Successfully');
-    }).catch((error) => {
-      	throw error;	
-    });
+    axios.post(`${API_URL}/create-file/${fileName}`, reqBody)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
+
+  // Expo Cli Document Picker Component
+  filePicker = async( ) => {
+    try {
+      const result = await DocumentPicker.pick({
+        type: [DocumentPicker.types.allFiles]
+      });
+
+      let file = {
+        name: result.name,
+        type: "*",
+        uri: result.uri
+      };
+
+      const base64 = await FileSystem.readAsStringAsync(file.uri, { encoding: 'base64' });
+
+      props.showFileToast( );
+
+      props.refreshFiles( );
+
+      return saveFile(base64, props.client, file.name);
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+
+      } else {
+        throw err;
+      }
+    }
+  };
 
   disableSubmitInvoice = ( ) => {
     if (this.props.formik.values.atopay === true) {
@@ -67,8 +94,6 @@ class AcctInfo extends Component {
 
   render( ) {
     let values = this.props.formik.values;
-
-    console.log(values)
     
     return (
       <View style={styles.background}>
@@ -378,8 +403,14 @@ class AcctInfo extends Component {
               }}
               buttonStyle={styles.attach}
               containerStyle={styles.attachButtonContainer}
-              onPress={( ) => this.filePicker( )} />
-            <Icon name="info-circle" type="font-awesome" color={colors.white}/>
+              onPress={( ) => this.filePicker(this.props.client)} />
+            <Tooltip 
+              popover={<Text style={styles.promptText}>{FieldInfo.expFiles}</Text>} 
+              width={450}
+              height={75}
+              backgroundColor={colors.black}>
+              <Icon name="info-circle" type="font-awesome" color={colors.black}/>
+            </Tooltip>
           </View>
 
           <View style={styles.textRow}>

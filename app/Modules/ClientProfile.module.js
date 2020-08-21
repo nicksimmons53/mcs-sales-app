@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { ScrollView, View, Text, KeyboardAvoidingView } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
-import { Button } from 'react-native-elements';
+import { Button, Switch } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import Info from '../Components/Info.component';
 import ContactTable from '../Modules/ContactTable.module';
@@ -20,16 +20,17 @@ class ClientProfile extends Component {
   // State
   state = {
     update: false,
-    files: [ ],
-    contacts: [ ],
-    address: [ ],
+    files: [ ],               // REDUX
+    contacts: [ ],            // REDUX
+    address: [ ],             // REDUX
     addContact: false,
-    contactID: '',
-    info: [ ],
-    carpet: [ ],
-    granite: [ ],
-    tile: [ ],
-    wood: [ ],
+    contactID: '',      
+    info: [ ],                // REDUX
+    carpet: [ ],              // REDUX
+    granite: [ ],             // REDUX
+    tile: [ ],                // REDUX
+    wood: [ ],                // REDUX
+    tileProgram: null,        // REDUX
     emailOverlay: false
   };
 
@@ -69,6 +70,14 @@ class ClientProfile extends Component {
       .catch((error) => {
         console.error(error);
       });
+    
+      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/tileProgram`)
+        .then((response) => {
+          this.setState({ tileProgram: response.data[0] })
+        })
+        .catch((error) => {
+          console.error(error)
+        });
   }
 
   // Toggle Update Feature
@@ -103,19 +112,6 @@ class ClientProfile extends Component {
     axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}`)
       .then((response) => {
         this.setState({ contacts: response.data[0] });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  refreshAddress = ( ) => {
-    let user = this.props.user;
-    let client = this.props.client;
-
-    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/address`)
-      .then((response) => {
-        this.setState({ address: response.data[0] });
       })
       .catch((error) => {
         console.error(error);
@@ -269,7 +265,7 @@ class ClientProfile extends Component {
                   client={this.props.client}
                   save={this.toggleUpdate}
                   cancel={this.toggleUpdate}
-                  refreshAddr={this.refreshAddress}/>
+                  refreshInfo={this.refreshInfo}/>
               :
                 null
             }
@@ -295,6 +291,7 @@ class ClientProfile extends Component {
                 user={this.props.user}
                 client={this.props.client}
                 info={this.state.info}
+                tileProgram={this.state.tileProgram}
                 refreshInfo={this.refreshInfo}
                 refreshFiles={this.refreshFiles}
                 loading={this.props.loading}
@@ -321,12 +318,11 @@ class ClientProfile extends Component {
                 buttonStyle={styles.submitButton}
                 onPress={this.submitClient}/>
             </View>
+
+            <Toast ref='toast' position='bottom' style={styles.toast} />
+            <Toast ref='toast2' position='bottom' style={styles.toast} />
+            <Toast ref='toast3' position='bottom' style={styles.toast} />
           </ScrollView>
-
-          <Toast ref='toast' position='bottom' style={styles.toast} />
-          <Toast ref='toast2' position='bottom' style={styles.toast} />
-          <Toast ref='toast3' position='bottom' style={styles.toast} />
-
         </KeyboardAvoidingView>
       );
     } else {
