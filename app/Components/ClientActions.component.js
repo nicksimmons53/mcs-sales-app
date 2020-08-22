@@ -74,7 +74,7 @@ const ClientActions = ({...props}) => {
             props.nav.navigate('AdvInfoForm', {
               client: props.client,
               user: props.user,
-              info: props.info,
+              clientInfo: props.info,
               tileProgram: props.tileProgram,
               refreshInfo: props.refreshInfo
           });

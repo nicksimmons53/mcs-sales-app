@@ -245,6 +245,35 @@ const TileProgram = {
     notes: null
 };
 
+const ClientInfo = {
+    payment_freq: null,
+    autopay: false,
+    invoice_submit: null,
+    invoice_email: null,
+    invoice_addr: null,
+    invoice_city: null,
+    invoice_state: null,
+    invoice_zip: null,
+    payment_type: null,
+    payment_portal: false,
+    payment_url: null,
+    po_required: false,
+    invoice_req_pos: false,
+    approvals_req: false,
+    acc_cont_name: null,
+    acc_cont_phn: null,
+    acc_cont_ema: null,
+    vendor_portal: null,
+    vnd_portal_user: null,
+    vnd_portal_pswd: null,
+    job_release: null,
+    job_email: null,
+    po_handling: false,
+    po_hndl_email: null,
+    exp_start_date: null,
+    est_num_homes: null
+};
+
 const FieldInfo = {
     paymentFrequency: "Please indicate how often payment is expected by selecting, weekly, bi-weekly, or monthly.",
     autopay: "Please mark if payment is automatically sent when PO/Work is submitted/complete. If yes, then \"How to submit invoices?\", \"Are PO's Required for Invoice Submittal?\", and \"Approvals Required?\" do not need to be answered.",
@@ -268,5 +297,6 @@ export {
     Part,
     email,
     FieldInfo,
-    TileProgram
+    TileProgram,
+    ClientInfo
 };

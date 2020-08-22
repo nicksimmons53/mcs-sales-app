@@ -14,6 +14,7 @@ import AddContact from './AddContact.module';
 import List from './List.module';
 import axios from 'axios';
 import { styles } from './Styles/ClientProfile.style';
+import { ClientInfo } from '../Form/Values.form';
 
 // Class Component that will show the Client Profile Information
 class ClientProfile extends Component {
@@ -25,7 +26,7 @@ class ClientProfile extends Component {
     address: [ ],             // REDUX
     addContact: false,
     contactID: '',      
-    info: [ ],                // REDUX
+    info: null,                // REDUX
     carpet: [ ],              // REDUX
     granite: [ ],             // REDUX
     tile: [ ],                // REDUX
@@ -55,8 +56,9 @@ class ClientProfile extends Component {
         console.error(error);
       });
 
-    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advInfo`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advanced-info`)
       .then((response) => {
+        console.log(response.data[0])
         this.setState({ info: response.data[0] });
       })
       .catch((error) => {
@@ -122,7 +124,7 @@ class ClientProfile extends Component {
     let user = this.props.user;
     let client = this.props.client;
 
-    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advInfo`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advanced-info`)
       .then((response) => {
         this.setState({ info: response.data[0] });
       })
@@ -203,14 +205,23 @@ class ClientProfile extends Component {
         console.error(error);
       });
 
-    axios.post(`${API_URL}/submit-client`, { client: this.props.client, parts: parts})
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advanced-info`)
       .then((response) => {
-        console.log(response.status);
-        this.showSubmitToast( );
+        client = {...client, ...response.data[0]};
+        console.log(client);
       })
       .catch((error) => {
         console.error(error);
       });
+
+    // axios.post(`${API_URL}/submit-client`, { client: this.props.client, parts: parts})
+    //   .then((response) => {
+    //     console.log(response.status);
+    //     this.showSubmitToast( );
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
   }
 
   render( ) {

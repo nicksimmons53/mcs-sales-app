@@ -15,13 +15,16 @@ import Toast from 'react-native-easy-toast';
 import Toolbar from '../Components/Toolbar.component';
 import { styles } from './Styles/ClientForm.style';
 import AdvInfo from '../Modules/AdvInfo.module';
+import TileProgram from '../Modules/TileProgram.module';
 import axios from 'axios';
+import TileProgramForm from '../Modules/TileProgram.module';
 
 // Class Component that will display client creation form
 class AdvInfoForm extends Component {
   state = {
     client: null,
-    user: null
+    user: null,
+    info: null
   }
 
   timeout = null;
@@ -30,6 +33,9 @@ class AdvInfoForm extends Component {
   componentDidMount( ) {
     let client = this.props.navigation.getParam('client');
     let user = this.props.navigation.getParam('user');
+    let clientInfo = this.props.navigation.getParam('clientInfo');
+
+    console.log(clientInfo)
 
     this.setState({ client: client });
     this.setState({ user: user });
@@ -49,11 +55,10 @@ class AdvInfoForm extends Component {
   save = async(values, actions) => {
     let client = this.props.navigation.getParam('client');
     let user = this.props.navigation.getParam('user');
-    let refreshInfo = this.props.navigation.getParam('refreshInfo');
 
     this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
     
-    axios.put(`${API_URL}/employee/${user.recnum}/clients/${client.id}`, values)
+    axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advanced-info`, values)
       .then((response) => {
         this.refs.toast.show('Client Information has been saved.');
 
@@ -67,8 +72,6 @@ class AdvInfoForm extends Component {
   }
 
   render( ) {
-    let client = this.props.navigation.getParam('client');
-
     return (
       <KeyboardAvoidingView behavior='padding' enabled style={styles.background}>
         <View style={styles.row}>
@@ -86,15 +89,14 @@ class AdvInfoForm extends Component {
             <Divider/>
 
             <Formik
-              initialValues={{...this.props.navigation.getParam('info')}}
+              initialValues={{...this.props.navigation.getParam('clientInfo')}}
               onSubmit={(values, actions) => { this.save(values, actions) }}>
               {formikProps => (
                 <ScrollView style={styles.sv} contentContainerStyle={styles.svContentContainer}>
                   <AdvInfo 
                     formik={formikProps} 
-                    client={client} 
                     tileProgram={this.props.tileProgram}/>
-
+                    
                   <View style={styles.buttonView}>
                     <Button
                       title='Save'

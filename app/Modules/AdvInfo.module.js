@@ -85,10 +85,10 @@ class AcctInfo extends Component {
   };
 
   disableSubmitInvoice = ( ) => {
-    if (this.props.formik.values.atopay === true) {
-      this.props.formik.setFieldValue('invsbm', null);
-      this.props.formik.setFieldValue('invpos', 1);
-      this.props.formik.setFieldValue('aprvls', 1);
+    if (this.props.formik.values.autopay === true) {
+      this.props.formik.setFieldValue('invoice_submit', null);
+      this.props.formik.setFieldValue('invoice_req_pos', 1);
+      this.props.formik.setFieldValue('approvals_req', 1);
     }
   }
 
@@ -107,12 +107,12 @@ class AcctInfo extends Component {
 				<DropDownPicker
 					placeholder="Choose..."
 					items={this.state.frequencyOptions}
-					defaultValue={values.pmtfrq}
+					defaultValue={values.payment_freq}
 					containerStyle={styles.dropdown}
 					dropDownStyle={styles.dropdownMenu}
 					labelStyle={styles.dropdownItem}
 					itemStyle={styles.dropdownItem}
-					onChangeItem={item => this.props.formik.setFieldValue('pmtfrq', item.value)}/>
+					onChangeItem={item => this.props.formik.setFieldValue('payment_freq', item.value)}/>
 				<Tooltip 
 					popover={<Text style={styles.promptText}>{FieldInfo.paymentFrequency}</Text>} 
 					width={450}
@@ -124,9 +124,9 @@ class AcctInfo extends Component {
           <View style={styles.textRow} zIndex={0}>
 				<Text style={styles.label}>Autopay</Text>
 				<CheckBox 
-					checked={values.atopay}
+					checked={values.autopay}
 					onPress={( ) => {
-						this.props.formik.setFieldValue('atopay', !values.atopay);
+						this.props.formik.setFieldValue('autopay', !values.autopay);
 						this.disableSubmitInvoice( );
 					}}
 					size={36}
@@ -141,16 +141,16 @@ class AcctInfo extends Component {
 					</Tooltip>
           </View>
           <View style={styles.textRow} zIndex={2}>
-            <Text style={styles.label}>How to submit invoices?</Text>
+            <Text style={styles.label}>How are Invoices Submmited?</Text>
             <DropDownPicker
-				placeholder="Choose..."
-				items={this.state.submitOptions}
-				defaultValue={values.invsbm}
-				containerStyle={styles.dropdown}
-				dropDownStyle={styles.dropdownMenu}
-				labelStyle={styles.dropdownItem}
-				itemStyle={styles.dropdownItem}
-				onChangeItem={item => this.props.formik.setFieldValue('invsbm', item.value)}/>
+              placeholder="Choose..."
+              items={this.state.submitOptions}
+              defaultValue={values.invoice_submit}
+              containerStyle={styles.dropdown}
+              dropDownStyle={styles.dropdownMenu}
+              labelStyle={styles.dropdownItem}
+              itemStyle={styles.dropdownItem}
+              onChangeItem={item => this.props.formik.setFieldValue('invoice_submit', item.value)}/>
 				<Tooltip 
 					popover={<Text style={styles.promptText}>{FieldInfo.invoiceSubmit}</Text>} 
 					width={450}
@@ -161,13 +161,13 @@ class AcctInfo extends Component {
           </View>
 
           { 
-            (values.invsbm === "Email") ? 
+            (values.invoice_submit === "Email") ? 
               <View style={styles.textRow} zIndex={0}>
 					<Text style={styles.label}></Text>
 					<Input
-						onChangeText={this.props.formik.handleChange('invema')}
-						onBlur={this.props.formik.handleBlur('invema')}
-						value={values.invema}
+						onChangeText={this.props.formik.handleChange('invoice_email')}
+						onBlur={this.props.formik.handleBlur('invoice_email')}
+						value={values.invoice_email}
 						placeholder="Email"
 						blurOnSubmit={false}
 						inputStyle={styles.label}
@@ -180,14 +180,14 @@ class AcctInfo extends Component {
           }
 
           {    
-            (values.invsbm === "Mail" || values.invsbm === "Drop-Off") ?
+            (values.invoice_submit === "Mail" || values.invoice_submit === "Drop-Off") ?
               <>
                 <View style={styles.textRow} zIndex={0}>
                   <Text style={styles.label}></Text>
                   <Input
-                    onChangeText={this.props.formik.handleChange('invadr')}
-                    onBlur={this.props.formik.handleBlur('invadr')}
-                    value={values.invadr}
+                    onChangeText={this.props.formik.handleChange('invoice_addr')}
+                    onBlur={this.props.formik.handleBlur('invoice_addr')}
+                    value={values.invoice_addr}
                     placeholder="Street Address"
                     inputStyle={styles.label}
                     blurOnSubmit={false}
@@ -198,9 +198,9 @@ class AcctInfo extends Component {
                 <View style={styles.textRow} zIndex={0}>
                   <Text style={styles.label}></Text>
                   <Input
-                    onChangeText={this.props.formik.handleChange('invcty')}
-                    onBlur={this.props.formik.handleBlur('invcty')}
-                    value={values.invcty}
+                    onChangeText={this.props.formik.handleChange('invoice_city')}
+                    onBlur={this.props.formik.handleBlur('invoice_city')}
+                    value={values.invoice_city}
                     placeholder="City"
                     inputStyle={styles.label}
                     blurOnSubmit={false}
@@ -211,9 +211,9 @@ class AcctInfo extends Component {
                 <View style={styles.textRow} zIndex={0}>
                   <Text style={styles.label}></Text>
                   <Input
-                    onChangeText={this.props.formik.handleChange('invste')}
-                    onBlur={this.props.formik.handleBlur('invste')}
-                    value={values.invste}
+                    onChangeText={this.props.formik.handleChange('invoice_state')}
+                    onBlur={this.props.formik.handleBlur('invoice_state')}
+                    value={values.invoice_state}
                     placeholder="State"
                     inputStyle={styles.label}
                     blurOnSubmit={false}
@@ -224,9 +224,9 @@ class AcctInfo extends Component {
                 <View style={styles.textRow} zIndex={0}>
                   <Text style={styles.label}></Text>
                   <Input
-                    onChangeText={this.props.formik.handleChange('invzip')}
-                    onBlur={this.props.formik.handleBlur('invzip')}
-                    value={values.invzip}
+                    onChangeText={this.props.formik.handleChange('invoice_zip')}
+                    onBlur={this.props.formik.handleBlur('invoice_zip')}
+                    value={values.invoice_zip}
                     placeholder="Zip Code"
                     inputStyle={styles.label}
                     blurOnSubmit={false}
@@ -244,13 +244,13 @@ class AcctInfo extends Component {
             <DropDownPicker
               placeholder="Choose..."
               items={this.state.paymentOptions}
-              defaultValue={values.pmttyp}
+              defaultValue={values.payment_type}
               containerStyle={styles.dropdown}
               dropDownStyle={styles.dropdownMenu}
               labelStyle={styles.dropdownItem}
               zIndex={1}
               itemStyle={styles.dropdownItem}
-              onChangeItem={item => this.props.formik.setFieldValue('pmttyp', item.value)}/>
+              onChangeItem={item => this.props.formik.setFieldValue('payment_type', item.value)}/>
 			  <Tooltip 
 				  popover={<Text style={styles.promptText}>{FieldInfo.paymentType}</Text>} 
 				  width={450}
@@ -262,8 +262,8 @@ class AcctInfo extends Component {
           <View style={styles.textRow} zIndex={0}>
             <Text style={styles.label}>Payment Portal</Text>
             <CheckBox 
-              checked={values.pmtprt}
-              onPress={( ) => this.props.formik.setFieldValue('pmtprt', !values.pmtprt)}
+              checked={values.payment_portal}
+              onPress={( ) => this.props.formik.setFieldValue('payment_portal', !values.payment_portal)}
               size={36}
               containerStyle={styles.checkbox}
               checkedColor={colors.green}/>
@@ -271,13 +271,13 @@ class AcctInfo extends Component {
           </View>
 
           { 
-            values.pmtprt ? 
+            values.payment_portal ? 
               <View style={styles.textRow} zIndex={0}>
                 <Text style={styles.label}></Text>
                 <Input
-                  onChangeText={this.props.formik.handleChange('pmturl')}
-                  onBlur={this.props.formik.handleBlur('pmturl')}
-                  value={values.pmturl}
+                  onChangeText={this.props.formik.handleChange('payment_url')}
+                  onBlur={this.props.formik.handleBlur('payment_url')}
+                  value={values.payment_url}
                   keyboardType='url'
                   textContentType='URL'
                   inputStyle={styles.label}
@@ -302,8 +302,8 @@ class AcctInfo extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>{"PO's Required?"}</Text>
             <CheckBox 
-              checked={values.posreq}
-              onPress={( ) => this.props.formik.setFieldValue('posreq', !values.posreq)}
+              checked={values.po_required}
+              onPress={( ) => this.props.formik.setFieldValue('po_required', !values.po_required)}
               size={36}
               containerStyle={styles.checkbox}
               checkedColor={colors.green}/>
@@ -318,8 +318,8 @@ class AcctInfo extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>Are PO's Required for Invoice Submittal?</Text>
             <CheckBox 
-              checked={values.invpos}
-              onPress={( ) => this.props.formik.setFieldValue('invpos', !values.invpos)}
+              checked={values.invoice_req_pos}
+              onPress={( ) => this.props.formik.setFieldValue('invoice_req_pos', !values.invoice_req_pos)}
               size={36}
               containerStyle={styles.checkbox}
               checkedColor={colors.green}/>
@@ -334,8 +334,8 @@ class AcctInfo extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>Approvals Required?</Text>
             <CheckBox 
-              checked={values.aprvls}
-              onPress={( ) => this.props.formik.setFieldValue('aprvls', !values.aprvls)}
+              checked={values.approvals_req}
+              onPress={( ) => this.props.formik.setFieldValue('approvals_req', !values.approvals_req)}
               size={36}
               containerStyle={styles.checkbox}
               checkedColor={colors.green}/>
@@ -354,7 +354,7 @@ class AcctInfo extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>Full Name</Text>
             <Input
-              onChangeText={this.props.formik.handleChange('accnam')}
+              onChangeText={this.props.formik.handleChange('acc_cont_name')}
               autoCapitalize='none'
               blurOnSubmit={false}
               inputStyle={styles.label}
@@ -365,7 +365,7 @@ class AcctInfo extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>Phone #</Text>
             <Input
-              onChangeText={this.props.formik.handleChange('accphn')}
+              onChangeText={this.props.formik.handleChange('acc_cont_phn')}
               autoCapitalize='none'
               blurOnSubmit={false}
               inputStyle={styles.label}
@@ -376,7 +376,7 @@ class AcctInfo extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>Email Address</Text>
             <Input
-              onChangeText={this.props.formik.handleChange('accema')}
+              onChangeText={this.props.formik.handleChange('acc_cont_ema')}
               autoCapitalize='none'
               blurOnSubmit={false}
               inputStyle={styles.label}
@@ -416,9 +416,9 @@ class AcctInfo extends Component {
           <View style={styles.textRow}>
             <Text style={styles.label}>Vendor Portal</Text>
             <Input
-              onChangeText={this.props.formik.handleChange('vndprt')}
-              onBlur={this.props.formik.handleBlur('vndprt')}
-              value={values.vndprt}
+              onChangeText={this.props.formik.handleChange('vendor_portal')}
+              onBlur={this.props.formik.handleBlur('vendor_portal')}
+              value={values.vendor_portal}
               autoCapitalize='none'
               keyboardType='url'
               textContentType='URL'
@@ -432,9 +432,9 @@ class AcctInfo extends Component {
           <View style={styles.textRow} zIndex={0}>
             <Text style={styles.label}></Text>
             <Input
-              onChangeText={this.props.formik.handleChange('vndusr')}
-              onBlur={this.props.formik.handleBlur('vndusr')}
-              value={values.vndusr}
+              onChangeText={this.props.formik.handleChange('vnd_portal_user')}
+              onBlur={this.props.formik.handleBlur('vnd_portal_user')}
+              value={values.vnd_portal_user}
               placeholder="Portal Username"
               inputStyle={styles.label}
               blurOnSubmit={false}
@@ -445,9 +445,9 @@ class AcctInfo extends Component {
           <View style={styles.textRow} zIndex={0}>
             <Text style={styles.label}></Text>
             <Input
-              onChangeText={this.props.formik.handleChange('vndpss')}
-              onBlur={this.props.formik.handleBlur('vndpss')}
-              value={values.vndpss}
+              onChangeText={this.props.formik.handleChange('vnd_portal_pswd')}
+              onBlur={this.props.formik.handleBlur('vnd_portal_pswd')}
+              value={values.vnd_portal_pswd}
               placeholder="Portal Password"
               inputStyle={styles.label}
               blurOnSubmit={false}
@@ -461,13 +461,13 @@ class AcctInfo extends Component {
             <DropDownPicker
               placeholder="Choose..."
               items={this.state.releasedOptions}
-              defaultValue={values.jobrls}
+              defaultValue={values.job_release}
               containerStyle={styles.dropdown}
               dropDownStyle={styles.dropdownMenu}
               labelStyle={styles.dropdownItem}
               zIndex={1}
               itemStyle={styles.dropdownItem}
-              onChangeItem={item => this.props.formik.setFieldValue('jobrls', item.value)}/>
+              onChangeItem={item => this.props.formik.setFieldValue('job_release', item.value)}/>
 			  <Tooltip 
 				  popover={<Text style={styles.promptText}>{FieldInfo.jobsReleased}</Text>} 
 				  width={450}
@@ -478,13 +478,13 @@ class AcctInfo extends Component {
           </View>
 
           { 
-            (values.jobrls === "Email") ? 
+            (values.job_release === "Email") ? 
               <View style={styles.textRow} zIndex={0}>
                 <Text style={styles.label}></Text>
                 <Input
-                  onChangeText={this.props.formik.handleChange('jobema')}
-                  onBlur={this.props.formik.handleBlur('jobema')}
-                  value={values.jobema}
+                  onChangeText={this.props.formik.handleChange('job_email')}
+                  onBlur={this.props.formik.handleBlur('job_email')}
+                  value={values.job_email}
                   placeholder="Email"
                   blurOnSubmit={false}
                   inputStyle={styles.label}
@@ -500,8 +500,8 @@ class AcctInfo extends Component {
           <View style={styles.textRow} zIndex={0}>
             <Text style={styles.label}>PO Correction Handling?</Text>
             <CheckBox 
-              checked={values.pohndl}
-              onPress={( ) => this.props.formik.setFieldValue('pohndl', !values.pohndl)}
+              checked={values.po_handling}
+              onPress={( ) => this.props.formik.setFieldValue('po_handling', !values.po_handling)}
               size={36}
               containerStyle={styles.checkbox}
               checkedColor={colors.green}/>
@@ -515,13 +515,13 @@ class AcctInfo extends Component {
           </View>
 
           { 
-            values.pohndl ?
+            values.po_handling ?
               <View style={styles.textRow} zIndex={0}>
                 <Text style={styles.label}></Text>
                 <Input
-                  onChangeText={this.props.formik.handleChange('pohnem')}
-                  onBlur={this.props.formik.handleBlur('pohnem')}
-                  value={values.pohnem}
+                  onChangeText={this.props.formik.handleChange('po_hndl_email')}
+                  onBlur={this.props.formik.handleBlur('po_hndl_email')}
+                  value={values.po_hndl_email}
                   placeholder="Email"
                   blurOnSubmit={false}
                   inputStyle={styles.label}
@@ -536,9 +536,9 @@ class AcctInfo extends Component {
           <View style={styles.textRow} zIndex={0}>
             <Text style={styles.label}>Expected Start Date</Text>
             <Input
-              onChangeText={this.props.formik.handleChange('strtdt')}
-              onBlur={this.props.formik.handleBlur('strtdt')}
-              value={values.strtdt}
+              onChangeText={this.props.formik.handleChange('exp_start_date')}
+              onBlur={this.props.formik.handleBlur('exp_start_date')}
+              value={values.exp_start_date}
               inputStyle={styles.label}
               blurOnSubmit={false}
               zIndex={0}
@@ -550,9 +550,9 @@ class AcctInfo extends Component {
           <View style={styles.textRow} zIndex={0}>
             <Text style={styles.label}>Estimated Number of Homes?</Text>
             <Input
-              onChangeText={this.props.formik.handleChange('homest')}
-              onBlur={this.props.formik.handleBlur('homest')}
-              value={values.homest}
+              onChangeText={this.props.formik.handleChange('est_num_homes')}
+              onBlur={this.props.formik.handleBlur('est_num_homes')}
+              value={values.est_num_homes}
               inputStyle={styles.label}
               blurOnSubmit={false}
               zIndex={0}
