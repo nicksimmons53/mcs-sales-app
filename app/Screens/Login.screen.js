@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
+import SplashScreen from 'react-native-splash-screen';
 import axios from 'axios';
 import { Button, CheckBox, Input, Icon } from 'react-native-elements';
 import { Formik } from 'formik';
@@ -31,6 +32,10 @@ class Login extends Component {
 
   componentWillUnmount( ) {
     clearTimeout(this.timeout);
+  }
+
+  componentDidMount( ) {
+      SplashScreen.hide( );
   }
 
   _signIn = (values, actions) => {

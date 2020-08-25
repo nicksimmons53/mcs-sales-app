@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     margin: 10,
   },
   label: {
@@ -46,16 +47,12 @@ const styles = StyleSheet.create({
   mediumInput: {
     width: '65%',
   },
-  save: {
-    width: '60%',
-    margin: 10,
-    backgroundColor: colors.green,
-  },
-  cancel: {
-    width: '60%',
-    margin: 10,
-    backgroundColor: colors.red,
-  },
+    save: {
+        alignSelf: 'center',
+        width: '60%',
+        marginVertical: 20,
+        backgroundColor: colors.green,
+    },
   picker: {
     height: 75
   }

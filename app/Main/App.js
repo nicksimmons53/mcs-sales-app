@@ -21,6 +21,7 @@ export default class App extends Component {
       'quicksand-bold': require('../../assets/Fonts/Quicksand-Bold.ttf'),
       'opensans-reg'  : require('../../assets/Fonts/OpenSans-Regular.ttf'),
       'opensans-bold' : require('../../assets/Fonts/OpenSans-Bold.ttf'),
+      'sourceserifpro-bold': require('../../assets/Fonts/SourceSerifPro-Bold.ttf')
     });
 
     this.setState({ fontLoaded: true });
@@ -29,13 +30,13 @@ export default class App extends Component {
   render( ) {
     return (
       <PaperProvider>
-      <View flex={1}>
-        {this.state.fontLoaded ?
-          <ThemeProvider theme={theme}>
-            <AppContainer />
-          </ThemeProvider>
-        : null}
-      </View>
+        <View flex={1}>
+            {this.state.fontLoaded ?
+            <ThemeProvider theme={theme}>
+                <AppContainer />
+            </ThemeProvider>
+            : null}
+        </View>
       </PaperProvider>
     );
   }

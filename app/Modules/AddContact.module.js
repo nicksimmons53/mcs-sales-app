@@ -4,24 +4,21 @@ import { View, Text } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
-import { Button, Input, Divider } from 'react-native-elements';
-import { Contact1, Contact2, Contact3 } from '../Form/Values.form';
+import { Button, Input, Divider, Icon } from 'react-native-elements';
+import { Contact } from '../Form/Values.form';
 import axios from 'axios';
-import { styles } from './Styles/AddContact.style';
+import { styles, colors } from './Styles/AddContact.style';
 
 class AddContact extends Component {
-  timeout = null;
-
-  componentWillUnmount( ) {
-    clearTimeout(this.timeout);
-  }
 
   // Handle Submit
   _saveContactInfo = (values, actions) => {
     let user = this.props.user;
     let client = this.props.client;
 
-    axios.put(`${API_URL}/employee/${user.recnum}/clients/${client.id}/contacts`, values)
+    values.clientId = client.id;
+
+    axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/client-contacts`, values)
       .then((response) => {
         this.props.refresh( );
         this.props.toggle( ); 
@@ -46,96 +43,42 @@ class AddContact extends Component {
 
   render( ) {
     return (
-      <View style={styles.background}>
-        <View style={styles.form}>
-          <View style={styles.header}>
-            <Text style={styles.label}>Add Client Contact</Text>
-          </View>
+        <View style={styles.background}>
+            <View style={styles.form}>
+                <View style={styles.header}>
+                    <Text style={styles.label}>Add Client Contact</Text>
+                    <Icon
+                        name="times"
+                        type="font-awesome"
+                        size={36}
+                        color={colors.red}
+                        iconStyle={styles.icon}
+                        onPress={this.props.toggle}/>
+                </View>
 
-          <Divider/>
+                <Divider/>
 
-          {this.props.contactID === 1 ? (
-            <Formik
-              initialValues={Contact1}
-              onSubmit={(values, actions) => {this._saveContactInfo(values, actions)}
-            }>
-              {formikProps => (
-                <>
-                  {this.input('Name', 'contct', formikProps)}
-                  {this.input('Title', 'cntds1', formikProps)}
-                  {this.input('Phone', 'cllphn', formikProps)}
-                  {this.input('Email', 'e_mail', formikProps)}
+                <Formik
+                    initialValues={Contact}
+                    onSubmit={(values, actions) => {this._saveContactInfo(values, actions)}}>
+                    {formikProps => (
+                        <>
+                            {this.input('Name', 'name', formikProps)}
+                            {this.input('Title', 'title', formikProps)}
+                            {this.input('Phone', 'phone', formikProps)}
+                            {this.input('Email', 'email', formikProps)}
 
-                  <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                    <Button
-                      title='Save'
-                      buttonStyle={styles.save}
-                      onPress={formikProps.handleSubmit}/>
-                    <Button
-                      title='Cancel'
-                      buttonStyle={styles.cancel}
-                      onPress={( ) => this.props.toggle( )}/>
-                  </View> 
-                </>
-              )}
-            </Formik>
-          ) : null}
+                            <Divider/>
 
-          {this.props.contactID === 2 ? (
-            <Formik
-              initialValues={Contact2}
-              onSubmit={(values, actions) => {this._saveContactInfo(values, actions)}
-            }>
-              {formikProps => (
-                <>
-                  {this.input('Name', 'contc2', formikProps)}
-                  {this.input('Title', 'cntds2', formikProps)}
-                  {this.input('Phone', 'cell02', formikProps)}
-                  {this.input('Email', 'email2', formikProps)}
-
-                  <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                    <Button
-                      title='Save'
-                      buttonStyle={styles.save}
-                      onPress={formikProps.handleSubmit}/>
-                    <Button
-                      title='Cancel'
-                      buttonStyle={styles.cancel}
-                      onPress={( ) => this.props.toggle( )}/>
-                  </View> 
-                </>
-              )}
-            </Formik>
-          ) : null}
-
-          {this.props.contactID === 3 ? (
-            <Formik
-              initialValues={Contact3}
-              onSubmit={(values, actions) => {this._saveContactInfo(values, actions)}
-            }>
-              {formikProps => (
-                <>
-                  {this.input('Name', 'contc3', formikProps)}
-                  {this.input('Title', 'cntds3', formikProps)}
-                  {this.input('Phone', 'cell03', formikProps)}
-                  {this.input('Email', 'email3', formikProps)}
-
-                  <View style={{width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
-                    <Button
-                      title='Save'
-                      buttonStyle={styles.save}
-                      onPress={formikProps.handleSubmit}/>
-                    <Button
-                      title='Cancel'
-                      buttonStyle={styles.cancel}
-                      onPress={( ) => this.props.toggle( )}/>
-                  </View> 
-                </>
-              )}
-            </Formik>
-          ) : null}
+                            <Button
+                                title='Save'
+                                buttonStyle={styles.save}
+                                onPress={formikProps.handleSubmit}/>
+                        </>
+                    )}
+                </Formik>
+            </View>
         </View>
-      </View>
     )
   }
 }

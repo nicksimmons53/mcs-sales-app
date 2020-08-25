@@ -40,9 +40,9 @@ class ClientProfile extends Component {
     let client = this.props.client;
     let clientName = client.clnnme.replace(/\s/g, "_");
 
-    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/contacts`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/client-contacts`)
       .then((response) => {
-        this.setState({ contacts: response.data[0] });
+        this.setState({ contacts: response.data });
       })
       .catch((error) => {
         console.error(error);
@@ -87,8 +87,7 @@ class ClientProfile extends Component {
     this.setState({ update: !this.state.update });
   }
 
-  toggleAddContact = (contactID) => {
-    this.setState({ contactID: contactID });
+  toggleAddContact = ( ) => {
     this.setState({ addContact: !this.state.addContact });
   }
 
@@ -111,9 +110,9 @@ class ClientProfile extends Component {
     let user = this.props.user;
     let client = this.props.client;
 
-    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/client-contacts`)
       .then((response) => {
-        this.setState({ contacts: response.data[0] });
+        this.setState({ contacts: response.data });
       })
       .catch((error) => {
         console.error(error);
