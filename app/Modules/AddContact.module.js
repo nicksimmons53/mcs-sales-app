@@ -7,6 +7,7 @@ import { Formik } from 'formik';
 import { Button, Input, Divider, Icon } from 'react-native-elements';
 import { Contact } from '../Form/Values.form';
 import axios from 'axios';
+import { deleteContact } from '../Components/Alert.component';
 import { styles, colors } from './Styles/AddContact.style';
 
 class AddContact extends Component {

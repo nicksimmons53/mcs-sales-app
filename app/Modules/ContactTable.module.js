@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { DataTable } from 'react-native-paper';
+import { deleteContact } from '../Components/Alert.component';
 import colors from '../Library/Colors';
 
 class ContactTable extends Component {
@@ -10,7 +11,6 @@ class ContactTable extends Component {
         return (
             <View>
                 <DataTable>
-
                     <DataTable.Header>
                         <DataTable.Title>Name</DataTable.Title>
                         <DataTable.Title>Title</DataTable.Title>
@@ -19,7 +19,7 @@ class ContactTable extends Component {
                     </DataTable.Header>
 
                     {this.props.contacts.map((contact, index) => (
-                        <DataTable.Row key={index}>
+                        <DataTable.Row key={index} onPress={( ) => deleteContact(contact.id, this.props.deleteContact)}>
                             <DataTable.Cell>{contact.name}</DataTable.Cell>
                             <DataTable.Cell>{contact.title}</DataTable.Cell>
                             <DataTable.Cell>{contact.phone}</DataTable.Cell>

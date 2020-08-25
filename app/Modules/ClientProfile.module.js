@@ -149,6 +149,20 @@ class ClientProfile extends Component {
     this.setState({ emailOverlay: !this.state.emailOverlay });
   }
 
+  deleteContact = (contactID) => {
+    let client = this.props.client;
+    let user = this.props.user;
+
+    axios.delete(`${API_URL}/employee/${user.recnum}/clients/${client.id}/client-contacts/${contactID}`)
+        .then((response) => {
+            console.log(response);
+            this.refresh( );
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+  }
+
   submitClient = async( ) => {
     let user = this.props.user;
     let client = this.props.client;
@@ -248,9 +262,9 @@ class ClientProfile extends Component {
             
             <View style={styles.table}>
               <ContactTable
-                toggleAddContact={this.toggleAddContact} 
                 contacts={this.state.contacts}
-                removeContactFromState={this.removeContactFromState}/>
+                deleteContact={this.deleteContact}
+                toggleAddContact={this.toggleAddContact} />
             </View>
 
             {
