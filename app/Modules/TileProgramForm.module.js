@@ -564,7 +564,17 @@ class TileProgramForm extends Component {
                                     backgroundColor={colors.black}>
                                     <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                                 </Tooltip>
-                            </View>                      
+                            </View>   
+
+                            <Divider/>
+                                            
+                            <View style={styles.buttonView}>
+                                <Button
+                                    title='Save'
+                                    buttonStyle={styles.save}
+                                    containerStyle={styles.saveButtonContainer}
+                                    onPress={this.props.formik.handleSubmit}/>
+                            </View>                   
                         </>
                     : 
                         null 

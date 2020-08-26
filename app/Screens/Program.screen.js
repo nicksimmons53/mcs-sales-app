@@ -16,6 +16,7 @@ import Toolbar from '../Components/Toolbar.component';
 import { styles } from './Styles/ClientForm.style';
 import axios from 'axios';
 import TileProgramForm from '../Modules/TileProgramForm.module';
+import WoodProgramForm from '../Modules/WoodProgramForm.module';
 
 // Class Component that will display client creation form
 class Program extends Component {
@@ -89,17 +90,16 @@ class Program extends Component {
                                     this.save(values, actions, "tileProgram");
                                 }}>
                                 {formikProps => (
-                                    <>
-                                        <TileProgramForm formik={formikProps}/>
-                                            
-                                        <View style={styles.buttonView}>
-                                            <Button
-                                                title='Save'
-                                                buttonStyle={styles.save}
-                                                containerStyle={styles.saveButtonContainer}
-                                                onPress={formikProps.handleSubmit}/>
-                                        </View>
-                                    </>
+                                    <TileProgramForm formik={formikProps}/>
+                                )}
+                            </Formik>
+                            <Formik
+                                initialValues={{...this.props.navigation.getParam('tileProgram')}}
+                                onSubmit={(values, actions) => { 
+                                    this.save(values, actions, "tileProgram");
+                                }}>
+                                {formikProps => (
+                                    <WoodProgramForm formik={formikProps}/>
                                 )}
                             </Formik>
 						</ScrollView>

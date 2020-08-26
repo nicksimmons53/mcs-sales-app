@@ -112,6 +112,21 @@ const styles = StyleSheet.create({
     backgroundColor: colors.orange
   },
 
+  buttonView: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  saveButtonContainer: {
+    width: 500,
+    marginTop: 20,
+  },
+  save: {
+    backgroundColor: colors.green,
+  },
+
   // Switch
   checkbox: {
     marginRight: 10,
