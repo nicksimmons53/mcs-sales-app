@@ -17,6 +17,8 @@ import { styles } from './Styles/ClientForm.style';
 import axios from 'axios';
 import TileProgramForm from '../Modules/TileProgramForm.module';
 import WoodProgramForm from '../Modules/WoodProgramForm.module';
+import CarpetProgramForm from '../Modules/CarpetProgramForm.module';
+import CountertopProgramForm from '../Modules/CountertopProgramForm.module';
 
 // Class Component that will display client creation form
 class Program extends Component {
@@ -100,6 +102,24 @@ class Program extends Component {
                                 }}>
                                 {formikProps => (
                                     <WoodProgramForm formik={formikProps}/>
+                                )}
+                            </Formik>
+                            <Formik
+                                initialValues={{...this.props.navigation.getParam('tileProgram')}}
+                                onSubmit={(values, actions) => { 
+                                    this.save(values, actions, "tileProgram");
+                                }}>
+                                {formikProps => (
+                                    <CarpetProgramForm formik={formikProps}/>
+                                )}
+                            </Formik>
+                            <Formik
+                                initialValues={{...this.props.navigation.getParam('tileProgram')}}
+                                onSubmit={(values, actions) => { 
+                                    this.save(values, actions, "tileProgram");
+                                }}>
+                                {formikProps => (
+                                    <CountertopProgramForm formik={formikProps}/>
                                 )}
                             </Formik>
 						</ScrollView>
