@@ -82,25 +82,27 @@ class Program extends Component {
 
 						<Divider/>
 
-						<Formik
-							initialValues={{...this.props.navigation.getParam('tileProgram')}}
-							onSubmit={(values, actions) => { 
-								this.save(values, actions, "tileProgram");
-							}}>
-							{formikProps => (
-								<ScrollView style={styles.sv} contentContainerStyle={styles.svContentContainer}>
-									<TileProgramForm formik={formikProps}/>
-										
-									<View style={styles.buttonView}>
-										<Button
-											title='Save'
-											buttonStyle={styles.save}
-											containerStyle={styles.saveButtonContainer}
-											onPress={formikProps.handleSubmit}/>
-									</View>
-								</ScrollView>
-							)}
-						</Formik>
+						<ScrollView style={styles.sv} contentContainerStyle={styles.svContentContainer}>
+                            <Formik
+                                initialValues={{...this.props.navigation.getParam('tileProgram')}}
+                                onSubmit={(values, actions) => { 
+                                    this.save(values, actions, "tileProgram");
+                                }}>
+                                {formikProps => (
+                                    <>
+                                        <TileProgramForm formik={formikProps}/>
+                                            
+                                        <View style={styles.buttonView}>
+                                            <Button
+                                                title='Save'
+                                                buttonStyle={styles.save}
+                                                containerStyle={styles.saveButtonContainer}
+                                                onPress={formikProps.handleSubmit}/>
+                                        </View>
+                                    </>
+                                )}
+                            </Formik>
+						</ScrollView>
 					</View>
 
 					<Toast ref='toast' position='center' style={styles.toast}/>
