@@ -171,6 +171,8 @@ class ClientProfile extends Component {
     let user = this.props.user;
     let client = this.props.client;
     let parts = [ ];
+    let advancedInfo = null;
+    let tileProgramInfo = null;
 
     await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/1`)
       .then((response) => {
@@ -224,19 +226,27 @@ class ClientProfile extends Component {
 
     await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advanced-info`)
       .then((response) => {
-        client = {...client, ...response.data[0]};
+        advancedInfo = response.data[0];
       })
       .catch((error) => {
         console.error(error);
       });
+    
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/tileProgram`)
+      .then((response) => {
+        tileProgramInfo = response.data[0];
+      })
+      .catch((error) => {
+        console.error(error)
+      });
 
-    // axios.post(`${API_URL}/submit-client`, { client: this.props.client, parts: parts})
-    //   .then((response) => {
-    //     this.showSubmitToast( );
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
+    axios.post(`${API_URL}/submit-client`, { client: this.props.client, parts: parts, tileProgramInfo: tileProgramInfo, advancedInfo: advancedInfo})
+      .then((response) => {
+        this.showSubmitToast( );
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render( ) {
