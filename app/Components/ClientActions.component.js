@@ -75,10 +75,33 @@ const ClientActions = ({...props}) => {
               client: props.client,
               user: props.user,
               clientInfo: props.info,
-              tileProgram: props.tileProgram,
               refreshInfo: props.refreshInfo
           });
         }}/>
+        <Button
+          title='Program Info'
+          icon={{
+            name: 'folder',
+            type: 'font-awesome',
+            size: 20,
+            color: colors.white,
+          }}
+          buttonStyle={styles.button}
+          iconContainerStyle={styles.icon}
+          onPress={( ) => {
+            let timeout = null;
+  
+            if (typeof(props.toggleModal) !== 'undefined')
+              props.toggleModal( );
+  
+            timeout = setTimeout(( ) => {
+              props.nav.navigate('Program', {
+                client: props.client,
+                user: props.user,
+                tileProgram: props.tileProgram
+              });
+            }, 2000);
+          }}/>
       <Button
         title='Build Pricing'
         icon={{

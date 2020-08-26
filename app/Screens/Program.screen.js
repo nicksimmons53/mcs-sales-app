@@ -14,20 +14,19 @@ import { Formik } from 'formik';
 import Toast from 'react-native-easy-toast';
 import Toolbar from '../Components/Toolbar.component';
 import { styles } from './Styles/ClientForm.style';
-import AdvInfo from '../Modules/AdvInfo.module';
 import axios from 'axios';
+import TileProgramForm from '../Modules/TileProgram.module';
 
 // Class Component that will display client creation form
-class AdvInfoForm extends Component {
-	state = {
-		client: null,
-		user: null,
-		info: null,
-		tileProgram: false
-	}
+class Program extends Component {
+    state = {
+        client: null,
+        user: null,
+        tileProgram: false
+    }
 
-	timeout = null;
-	scrollView = React.createRef( );
+    timeout = null;
+    scrollView = React.createRef( );
 
 	componentDidMount( ) {
 		let client = this.props.navigation.getParam('client');
@@ -48,31 +47,24 @@ class AdvInfoForm extends Component {
 		this.props.navigation.navigate('Auth');
 	};
 
-	// Saving Accounting/Expediting Information
-	save = async(values, actions) => {
-		let client = this.props.navigation.getParam('client');
-		let user = this.props.navigation.getParam('user');
-
-		this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
-
-		values.client_id = client.id;
-
+	saveProgram = async(values, actions, program) => {
 		console.log(values)
-		
-		axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advanced-info`, values)
-			.then((response) => {
-				this.refs.toast.show('Client Information has been saved.');
+		// axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/${program}`, values)
+		// 	.then((response) => {
+		// 		console.log(response);
+		// 	})
+		// 	.catch((error) => {
+		// 		console.error(error);
+		// 	});
+	}
 
-				this.timeout = setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
-
-				this.props.navigation.popToTop( );
-			})
-			.catch((error) => {
-				console.error(error);
-			});
+	toggleTile = ( ) => {
+		this.setState({ tileProgram: true });
 	}
 
 	render( ) {
+		let tileProgram = {...this.props.navigation.getParam('tileProgram')};
+
 		return (
 			<KeyboardAvoidingView behavior='padding' enabled style={styles.background}>
 				<View style={styles.row}>
@@ -84,19 +76,19 @@ class AdvInfoForm extends Component {
 
 					<View style={styles.infoContainer}>
 						<View style={styles.header}>
-							<Text style={styles.headerText}>Continue Client</Text>
+							<Text style={styles.headerText}>Program Information</Text>
 						</View>
 
 						<Divider/>
 
 						<Formik
-							initialValues={{...this.props.navigation.getParam('clientInfo')}}
+							initialValues={{...tileProgram}}
 							onSubmit={(values, actions) => { 
-								this.save(values, actions);
+								this.saveProgram(values, actions);
 							}}>
 							{formikProps => (
 								<ScrollView style={styles.sv} contentContainerStyle={styles.svContentContainer}>
-									<AdvInfo formik={formikProps}/>
+									<TileProgramForm formik={formikProps}/>
 										
 									<View style={styles.buttonView}>
 										<Button
@@ -118,8 +110,8 @@ class AdvInfoForm extends Component {
 }
 
 // Props Validation
-AdvInfoForm.propTypes = {
+Program.propTypes = {
   navigation: PropTypes.object
 }
 
-export default AdvInfoForm;
+export default Program;

@@ -7,6 +7,7 @@ import Profile from '../Screens/Profile.screen';
 import Pricing from '../Screens/Pricing.screen';
 import AdvInfoForm from '../Screens/AdvInfoForm.screen';
 import ClientForm from '../Screens/ClientForm.screen';
+import Program from '../Screens/Program.screen';
 
 // Stack Navigator
 const MainStack = createStackNavigator(
@@ -14,7 +15,8 @@ const MainStack = createStackNavigator(
     Profile: Profile,
     ClientForm: ClientForm,
     AdvInfoForm: AdvInfoForm,
-    Pricing: Pricing
+    Pricing: Pricing,
+    Program: Program
   },
   {
     headerMode: 'none'

@@ -14,7 +14,7 @@ import AddContact from './AddContact.module';
 import List from './List.module';
 import axios from 'axios';
 import { styles } from './Styles/ClientProfile.style';
-import { ClientInfo } from '../Form/Values.form';
+import { ClientInfo, TileProgram } from '../Form/Values.form';
 
 // Class Component that will show the Client Profile Information
 class ClientProfile extends Component {
@@ -58,8 +58,12 @@ class ClientProfile extends Component {
 
     axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advanced-info`)
       .then((response) => {
-        console.log(response.data[0])
-        this.setState({ info: response.data[0] });
+        if (response.data.length === 0) 
+            this.setState({ info: ClientInfo });
+        else    
+            this.setState({ info: response.data[0] });
+
+        console.log(response.data)
       })
       .catch((error) => {
         console.error(error);
@@ -75,7 +79,10 @@ class ClientProfile extends Component {
     
       axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/tileProgram`)
         .then((response) => {
-          this.setState({ tileProgram: response.data[0] })
+            if (response.data.length === 0)
+                this.setState({ tileProgram: TileProgram});
+            else 
+                this.setState({ tileProgram: response.data[0] });
         })
         .catch((error) => {
           console.error(error)

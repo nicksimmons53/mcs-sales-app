@@ -11,7 +11,6 @@ const User = {
 const Client = {
     shtnme: "",
     clnnme: "",
-    grting: null,
     addrs1: "",
     addrs2: "",
     ctynme: "",
@@ -145,12 +144,15 @@ const email = {
 };
 
 const TileProgram = {
-    setting_material: null,
+    setting_material_walls: null,
+    setting_material_floors: null,
+    setting_material_walls_cust: null,      //
+    setting_material_floors_cust: null,     //
     waterproof_method: null,
-    waterproof_sova_constr: false,
-    backboard_installer: false,
-    silicon_pref: null,
-    colored_caulk: null,
+    waterproof_sova_constr: false,          //
+    backboard_installer: false,             
+    silicon_pref: null,                     
+    colored_caulk: null,                    //
     shower_niche_pref: null,
     corner_soap_dish: false,
     shower_seat_pref: null,
@@ -168,6 +170,7 @@ const TileProgram = {
 };
 
 const ClientInfo = {
+    client_id: null,
     payment_freq: null,
     autopay: false,
     invoice_submit: null,
