@@ -62,8 +62,6 @@ class ClientProfile extends Component {
             this.setState({ info: ClientInfo });
         else    
             this.setState({ info: response.data[0] });
-
-        console.log(response.data)
       })
       .catch((error) => {
         console.error(error);
@@ -162,7 +160,6 @@ class ClientProfile extends Component {
 
     axios.delete(`${API_URL}/employee/${user.recnum}/clients/${client.id}/client-contacts/${contactID}`)
         .then((response) => {
-            console.log(response);
             this.refresh( );
         })
         .catch((error) => {
@@ -228,7 +225,6 @@ class ClientProfile extends Component {
     await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advanced-info`)
       .then((response) => {
         client = {...client, ...response.data[0]};
-        console.log(client);
       })
       .catch((error) => {
         console.error(error);
@@ -236,7 +232,6 @@ class ClientProfile extends Component {
 
     // axios.post(`${API_URL}/submit-client`, { client: this.props.client, parts: parts})
     //   .then((response) => {
-    //     console.log(response.status);
     //     this.showSubmitToast( );
     //   })
     //   .catch((error) => {

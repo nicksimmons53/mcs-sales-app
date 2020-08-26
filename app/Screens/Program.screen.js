@@ -15,7 +15,7 @@ import Toast from 'react-native-easy-toast';
 import Toolbar from '../Components/Toolbar.component';
 import { styles } from './Styles/ClientForm.style';
 import axios from 'axios';
-import TileProgramForm from '../Modules/TileProgram.module';
+import TileProgramForm from '../Modules/TileProgramForm.module';
 
 // Class Component that will display client creation form
 class Program extends Component {
@@ -31,7 +31,6 @@ class Program extends Component {
 	componentDidMount( ) {
 		let client = this.props.navigation.getParam('client');
 		let user = this.props.navigation.getParam('user');
-		let clientInfo = this.props.navigation.getParam('clientInfo');
 
 		this.setState({ client: client });
 		this.setState({ user: user });
@@ -47,24 +46,26 @@ class Program extends Component {
 		this.props.navigation.navigate('Auth');
 	};
 
-	saveProgram = async(values, actions, program) => {
-		console.log(values)
-		// axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/${program}`, values)
-		// 	.then((response) => {
-		// 		console.log(response);
-		// 	})
-		// 	.catch((error) => {
-		// 		console.error(error);
-		// 	});
-	}
+	save = async(values, actions, program) => {
+		let client = this.props.navigation.getParam('client');
+        let user = this.props.navigation.getParam('user');
 
-	toggleTile = ( ) => {
-		this.setState({ tileProgram: true });
-	}
+        values.client_id = client.id;
+        
+		axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/${program}`, values)
+			.then((response) => {
+				this.refs.toast.show('Client Information has been saved.');
 
+				this.timeout = setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
+
+				this.props.navigation.popToTop( );
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+    }
+    
 	render( ) {
-		let tileProgram = {...this.props.navigation.getParam('tileProgram')};
-
 		return (
 			<KeyboardAvoidingView behavior='padding' enabled style={styles.background}>
 				<View style={styles.row}>
@@ -82,9 +83,9 @@ class Program extends Component {
 						<Divider/>
 
 						<Formik
-							initialValues={{...tileProgram}}
+							initialValues={{...this.props.navigation.getParam('tileProgram')}}
 							onSubmit={(values, actions) => { 
-								this.saveProgram(values, actions);
+								this.save(values, actions, "tileProgram");
 							}}>
 							{formikProps => (
 								<ScrollView style={styles.sv} contentContainerStyle={styles.svContentContainer}>
@@ -102,7 +103,7 @@ class Program extends Component {
 						</Formik>
 					</View>
 
-					<Toast ref='toast' position='center' style={styles.toast} />
+					<Toast ref='toast' position='center' style={styles.toast}/>
 				</View>
 			</KeyboardAvoidingView>
 		)

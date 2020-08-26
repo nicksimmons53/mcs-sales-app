@@ -144,28 +144,32 @@ const email = {
 };
 
 const TileProgram = {
+    client_id: null,
     setting_material_walls: null,
     setting_material_floors: null,
     setting_material_walls_cust: null,      //
     setting_material_floors_cust: null,     //
     waterproof_method: null,
     waterproof_sova_constr: false,          //
-    backboard_installer: false,             
+    backerboard_installer: false,             
     silicon_pref: null,                     
     colored_caulk: null,                    //
     shower_niche_pref: null,
+    shower_niche_brand: null,
+    shower_niche_std_size: null,
     corner_soap_dish: false,
     shower_seat_pref: null,
+    shower_seat_constr: null,
     schulter_pref: false,
     grout_joint_size_pref: null,
     grout_pref: null,
     grout_brand: null,
     subfloor_pref: null,
     subfloor_other: null,
+    tile_return_walls: false,
     takeoff_resp: null,
     waste_pct: null,
     wall_tile_height: null,
-    tile_return_walls: false,
     notes: null
 };
 
@@ -213,6 +217,13 @@ const FieldInfo = {
     expFiles: "Attach Community Standards or Building Forms. No Plans."
 };
 
+const TileFieldInfo = {
+    settingMaterial: "Texrite preferred for floors. Custom preferred for walls.",
+    sovaConstruction: "Does Sova need to be contacted for installation?",
+    showerNiche: "If using preformed/preframed niches, please specify brand & standard size.",
+    groutJoint: "3/16\" is typical, especially for longer tile."
+};
+
 export { 
     User, 
     Client,
@@ -221,5 +232,6 @@ export {
     email,
     FieldInfo,
     TileProgram,
-    ClientInfo
+    ClientInfo,
+    TileFieldInfo
 };

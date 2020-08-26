@@ -32,7 +32,6 @@ class AdvInfoForm extends Component {
 	componentDidMount( ) {
 		let client = this.props.navigation.getParam('client');
 		let user = this.props.navigation.getParam('user');
-		let clientInfo = this.props.navigation.getParam('clientInfo');
 
 		this.setState({ client: client });
 		this.setState({ user: user });

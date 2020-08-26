@@ -12,32 +12,32 @@ import { styles, colors } from './Styles/Form.style';
 
 // Class Component for Client Accounting Info
 class AcctInfo extends Component {
-  state = {
-    frequencyOptions: [
-		{ label: "Weekly", value: "Weekly" },
-		{ label: "Bi-Weekly", value: "Bi-Weekly" },
-		{ label: "Monthly", value: "Monthly" }
-    ],
-    paymentOptions: [
-		{ label: "Credit-Card", value: "Credit-Card" },
-		{ label: "Direct Deposit", value: "Direct Deposit" },
-		{ label: "Check", value: "Check" }
-    ],
-    submitOptions: [
-		{ label: "", value: null },
-		{ label: "Email", value: "Email" },
-		{ label: "Mail", value: "Mail" },
-		{ label: "Drop-Off", value: "Drop-Off" }
-    ],
-    releasedOptions: [
-		{ label: "Email", value: "Email" },
-		{ label: "Vendor Portal", value: "Vendor Portal" }
-    ],
-    emailSubmit: false,
-    mailSubmit: false,
-    dropOffSubmit: false,
-    emailRelease: false
-  };
+    state = {
+        frequencyOptions: [
+            { label: "Weekly", value: "Weekly" },
+            { label: "Bi-Weekly", value: "Bi-Weekly" },
+            { label: "Monthly", value: "Monthly" }
+        ],
+        paymentOptions: [
+            { label: "Credit-Card", value: "Credit-Card" },
+            { label: "Direct Deposit", value: "Direct Deposit" },
+            { label: "Check", value: "Check" }
+        ],
+        submitOptions: [
+            { label: "", value: null },
+            { label: "Email", value: "Email" },
+            { label: "Mail", value: "Mail" },
+            { label: "Drop-Off", value: "Drop-Off" }
+        ],
+        releasedOptions: [
+            { label: "Email", value: "Email" },
+            { label: "Vendor Portal", value: "Vendor Portal" }
+        ],
+        emailSubmit: false,
+        mailSubmit: false,
+        dropOffSubmit: false,
+        emailRelease: false
+    };
   
   saveFile = (base64, client, fileName) => {
     const clientName = client.clnnme.replace(/\s/g, "_");
