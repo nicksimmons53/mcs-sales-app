@@ -171,6 +171,7 @@ class ClientProfile extends Component {
     let user = this.props.user;
     let client = this.props.client;
     let parts = [ ];
+    let contacts = [ ];
     let advancedInfo = null;
     let tileProgramInfo = null;
 
@@ -240,7 +241,15 @@ class ClientProfile extends Component {
         console.error(error)
       });
 
-    axios.post(`${API_URL}/submit-client`, { client: this.props.client, parts: parts, tileProgramInfo: tileProgramInfo, advancedInfo: advancedInfo})
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/client-contacts`)
+      .then((response) => {
+        contacts = [...response.data];
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    axios.post(`${API_URL}/submit-client`, { client: this.props.client, parts: parts, tileProgramInfo: tileProgramInfo, advancedInfo: advancedInfo, contacts: contacts })
       .then((response) => {
         this.showSubmitToast( );
       })
