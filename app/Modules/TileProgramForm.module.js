@@ -124,12 +124,7 @@ class TileProgramForm extends Component {
                                             blurOnSubmit={false}
                                             containerStyle={styles.mediumInput}
                                             inputContainerStyle={styles.inputContainer}/>
-                                        <Tooltip 
-                                            width={450}
-                                            height={75}
-                                            backgroundColor={colors.black}>
-                                            <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                        </Tooltip>
+                                        <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                                     </View>
                                 :
                                 null
@@ -167,12 +162,7 @@ class TileProgramForm extends Component {
                                             blurOnSubmit={false}
                                             containerStyle={styles.mediumInput}
                                             inputContainerStyle={styles.inputContainer}/>
-                                        <Tooltip 
-                                            width={450}
-                                            height={75}
-                                            backgroundColor={colors.black}>
-                                            <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                        </Tooltip>
+                                        <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                                     </View>
                                 :
                                 null
@@ -189,12 +179,7 @@ class TileProgramForm extends Component {
                                     labelStyle={styles.dropdownItem}
                                     itemStyle={styles.dropdownItem}
                                     onChangeItem={item => this.props.formik.setFieldValue('waterproof_method', item.value)}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                             {
@@ -228,12 +213,7 @@ class TileProgramForm extends Component {
                                     size={36}
                                     containerStyle={styles.checkbox}
                                     checkedColor={colors.green}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={60}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                             <View style={styles.textRow} zIndex={7}>
@@ -247,12 +227,7 @@ class TileProgramForm extends Component {
                                     labelStyle={styles.dropdownItem}
                                     itemStyle={styles.dropdownItem}
                                     onChangeItem={item => this.props.formik.setFieldValue('silicon_pref', item.value)}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                             <View style={styles.textRow} zIndex={6}>
@@ -288,12 +263,7 @@ class TileProgramForm extends Component {
                                             blurOnSubmit={false}
                                             containerStyle={styles.mediumInput}
                                             inputContainerStyle={styles.inputContainer}/>
-                                        <Tooltip 
-                                            width={450}
-                                            height={75}
-                                            backgroundColor={colors.black}>
-                                            <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                        </Tooltip>
+                                        <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                                     </View>  
                                                                                                                                                        
                                     <View style={styles.textRow} zIndex={0}>
@@ -306,12 +276,7 @@ class TileProgramForm extends Component {
                                             blurOnSubmit={false}
                                             containerStyle={styles.smallInput}
                                             inputContainerStyle={styles.inputContainer}/>
-                                        <Tooltip 
-                                            width={450}
-                                            height={75}
-                                            backgroundColor={colors.black}>
-                                            <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                        </Tooltip>
+                                        <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                                     </View> 
                                 </>
                                 :
@@ -326,12 +291,7 @@ class TileProgramForm extends Component {
                                     size={36}
                                     containerStyle={styles.checkbox}
                                     checkedColor={colors.green}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={60}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                             <View style={styles.textRow} zIndex={5}>
@@ -345,12 +305,7 @@ class TileProgramForm extends Component {
                                     labelStyle={styles.dropdownItem}
                                     itemStyle={styles.dropdownItem}
                                     onChangeItem={item => this.props.formik.setFieldValue('shower_seat_pref', item.value)}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                             {
@@ -366,12 +321,7 @@ class TileProgramForm extends Component {
                                         blurOnSubmit={false}
                                         containerStyle={styles.mediumInput}
                                         inputContainerStyle={styles.inputContainer}/>
-                                    <Tooltip 
-                                        width={450}
-                                        height={75}
-                                        backgroundColor={colors.black}>
-                                        <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                    </Tooltip>
+                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                                 </View> 
                                 :
                                 null
@@ -385,12 +335,7 @@ class TileProgramForm extends Component {
                                     size={36}
                                     containerStyle={styles.checkbox}
                                     checkedColor={colors.green}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={60}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                             <View style={styles.textRow} zIndex={4}>
@@ -424,12 +369,7 @@ class TileProgramForm extends Component {
                                     labelStyle={styles.dropdownItem}
                                     itemStyle={styles.dropdownItem}
                                     onChangeItem={item => this.props.formik.setFieldValue('grout_pref', item.value)}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
                                     <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
                             </View>      
                                   
                             <View style={styles.textRow} zIndex={2}>
@@ -443,12 +383,7 @@ class TileProgramForm extends Component {
                                     labelStyle={styles.dropdownItem}
                                     itemStyle={styles.dropdownItem}
                                     onChangeItem={item => this.props.formik.setFieldValue('subfloor_pref', item.value)}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                             {
@@ -463,12 +398,7 @@ class TileProgramForm extends Component {
                                         blurOnSubmit={false}
                                         containerStyle={styles.mediumInput}
                                         inputContainerStyle={styles.inputContainer}/>
-                                    <Tooltip 
-                                        width={450}
-                                        height={75}
-                                        backgroundColor={colors.black}>
-                                        <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                    </Tooltip>
+                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                                 </View>  
                                 :
                                 null
@@ -482,12 +412,7 @@ class TileProgramForm extends Component {
                                     size={36}
                                     containerStyle={styles.checkbox}
                                     checkedColor={colors.green}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={60}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
                                                               
                             <View style={styles.textRow} zIndex={1}>
@@ -501,12 +426,7 @@ class TileProgramForm extends Component {
                                     labelStyle={styles.dropdownItem}
                                     itemStyle={styles.dropdownItem}
                                     onChangeItem={item => this.props.formik.setFieldValue('takeoff_resp', item.value)}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View> 
                                                                                           
                             <View style={styles.textRow} zIndex={0}>
@@ -520,12 +440,7 @@ class TileProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.xSmallInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>    
                                                                                                                       
                             <View style={styles.textRow} zIndex={0}>
@@ -539,12 +454,7 @@ class TileProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.xSmallInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>  
                                                                                                        
                             <View style={styles.textRow} zIndex={0}>
@@ -558,12 +468,7 @@ class TileProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.mediumInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>   
 
                             <Divider/>

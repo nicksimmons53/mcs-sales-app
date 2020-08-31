@@ -109,12 +109,7 @@ class WoodProgramForm extends Component {
                                     labelStyle={styles.dropdownItem}
                                     itemStyle={styles.dropdownItem}
                                     onChangeItem={item => this.props.formik.setFieldValue('floor_trim_pref', item.value)}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                             <View style={styles.textRow} zIndex={4}>
@@ -128,12 +123,7 @@ class WoodProgramForm extends Component {
                                     labelStyle={styles.dropdownItem}
                                     itemStyle={styles.dropdownItem}
                                     onChangeItem={item => this.props.formik.setFieldValue('floor_trim_style', item.value)}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                             <View style={styles.textRow} zIndex={3}>
@@ -201,12 +191,7 @@ class WoodProgramForm extends Component {
                                     labelStyle={styles.dropdownItem}
                                     itemStyle={styles.dropdownItem}
                                     onChangeItem={item => this.props.formik.setFieldValue('takeoff_resp', item.value)}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
                                                                                                                                                
                             <View style={styles.textRow} zIndex={0}>
@@ -219,12 +204,7 @@ class WoodProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.smallInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View> 
                                                                                                                                    
                             <View style={styles.textRow} zIndex={0}>
@@ -238,12 +218,7 @@ class WoodProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.mediumInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>  
 
                             <Divider/>

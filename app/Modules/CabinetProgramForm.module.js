@@ -78,12 +78,7 @@ class CabinetProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.mediumInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View> 
 
                             <View style={styles.textRow} zIndex={0}>
@@ -94,12 +89,7 @@ class CabinetProgramForm extends Component {
                                     size={36}
                                     containerStyle={styles.checkbox}
                                     checkedColor={colors.green}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
                                                                                                                                                
                             <View style={styles.textRow} zIndex={0}>
@@ -112,12 +102,7 @@ class CabinetProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.mediumInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View> 
                                                                                                                                                                            
                             <View style={styles.textRow} zIndex={0}>
@@ -130,12 +115,7 @@ class CabinetProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.mediumInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
                                                                                                                                                                                                        
                             <View style={styles.textRow} zIndex={0}>
@@ -148,12 +128,7 @@ class CabinetProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.mediumInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
                                                                                                                                                                                                                                    
                             <View style={styles.textRow} zIndex={0}>
@@ -166,12 +141,7 @@ class CabinetProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.mediumInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                             <View style={styles.textRow} zIndex={2}>
@@ -185,12 +155,7 @@ class CabinetProgramForm extends Component {
                                     labelStyle={styles.dropdownItem}
                                     itemStyle={styles.dropdownItem}
                                     onChangeItem={item => this.props.formik.setFieldValue('bid_type_pref', item.value)}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
                                                                                                                                                
                             <View style={styles.textRow} zIndex={0}>
@@ -203,12 +168,7 @@ class CabinetProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.smallInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View> 
                                                                                                                                    
                             <View style={styles.textRow} zIndex={0}>
@@ -222,12 +182,7 @@ class CabinetProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.mediumInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>           
 
                             <Divider/>

@@ -74,12 +74,7 @@ class CountertopProgramForm extends Component {
                                     labelStyle={styles.dropdownItem}
                                     itemStyle={styles.dropdownItem}
                                     onChangeItem={item => this.props.formik.setFieldValue('material_thickness_pref', item.value)}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                             {values.material_thickness_pref === "Other" ?                                                                                                                                                                           
@@ -94,12 +89,7 @@ class CountertopProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.mediumInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View> 
                             : null}
 
@@ -114,12 +104,7 @@ class CountertopProgramForm extends Component {
                                     labelStyle={styles.dropdownItem}
                                     itemStyle={styles.dropdownItem}
                                     onChangeItem={item => this.props.formik.setFieldValue('edge_pref', item.value)}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                             {values.edge_pref === "Other" ?                                                                                                                                                                           
@@ -134,12 +119,7 @@ class CountertopProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.mediumInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View> 
                             : null}
 
@@ -151,12 +131,7 @@ class CountertopProgramForm extends Component {
                                     size={36}
                                     containerStyle={styles.checkbox}
                                     checkedColor={colors.green}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                             <View style={styles.textRow} zIndex={0}>
@@ -167,12 +142,7 @@ class CountertopProgramForm extends Component {
                                     size={36}
                                     containerStyle={styles.checkbox}
                                     checkedColor={colors.green}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={120}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
 
                                                                                                                                                
@@ -186,12 +156,7 @@ class CountertopProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.mediumInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View> 
 
                             <View style={styles.textRow} zIndex={2}>
@@ -205,12 +170,7 @@ class CountertopProgramForm extends Component {
                                     labelStyle={styles.dropdownItem}
                                     itemStyle={styles.dropdownItem}
                                     onChangeItem={item => this.props.formik.setFieldValue('takeoff_resp', item.value)}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>
                                                                                                                                                
                             <View style={styles.textRow} zIndex={0}>
@@ -223,12 +183,7 @@ class CountertopProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.smallInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View> 
                                                                                                                                    
                             <View style={styles.textRow} zIndex={0}>
@@ -242,12 +197,7 @@ class CountertopProgramForm extends Component {
                                     blurOnSubmit={false}
                                     containerStyle={styles.mediumInput}
                                     inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
+                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
                             </View>  
                                         
                             <Divider/>
