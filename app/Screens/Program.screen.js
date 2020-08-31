@@ -25,8 +25,7 @@ import CabinetProgramForm from '../Modules/CabinetProgramForm.module';
 class Program extends Component {
     state = {
         client: null,
-        user: null,
-        tileProgram: false
+        user: null
     }
 
     timeout = null;
@@ -59,10 +58,6 @@ class Program extends Component {
 		axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/${program}`, values)
 			.then((response) => {
 				this.refs.toast.show('Client Information has been saved.');
-
-				this.timeout = setTimeout(( ) => { this.props.navigation.popToTop( ); }, 2000);
-
-				this.props.navigation.popToTop( );
 			})
 			.catch((error) => {
 				console.error(error);
@@ -97,36 +92,36 @@ class Program extends Component {
                                 )}
                             </Formik>
                             <Formik
-                                initialValues={{...this.props.navigation.getParam('tileProgram')}}
+                                initialValues={{...this.props.navigation.getParam('woodProgram')}}
                                 onSubmit={(values, actions) => { 
-                                    this.save(values, actions, "tileProgram");
+                                    this.save(values, actions, "woodProgram");
                                 }}>
                                 {formikProps => (
                                     <WoodProgramForm formik={formikProps}/>
                                 )}
                             </Formik>
                             <Formik
-                                initialValues={{...this.props.navigation.getParam('tileProgram')}}
+                                initialValues={{...this.props.navigation.getParam('carpetProgram')}}
                                 onSubmit={(values, actions) => { 
-                                    this.save(values, actions, "tileProgram");
+                                    this.save(values, actions, "carpetProgram");
                                 }}>
                                 {formikProps => (
                                     <CarpetProgramForm formik={formikProps}/>
                                 )}
                             </Formik>
                             <Formik
-                                initialValues={{...this.props.navigation.getParam('tileProgram')}}
+                                initialValues={{...this.props.navigation.getParam('countertopProgram')}}
                                 onSubmit={(values, actions) => { 
-                                    this.save(values, actions, "tileProgram");
+                                    this.save(values, actions, "countertopProgram");
                                 }}>
                                 {formikProps => (
                                     <CountertopProgramForm formik={formikProps}/>
                                 )}
                             </Formik>
                             <Formik
-                                initialValues={{...this.props.navigation.getParam('tileProgram')}}
+                                initialValues={{...this.props.navigation.getParam('cabinetProgram')}}
                                 onSubmit={(values, actions) => { 
-                                    this.save(values, actions, "tileProgram");
+                                    this.save(values, actions, "cabinetProgram");
                                 }}>
                                 {formikProps => (
                                     <CabinetProgramForm formik={formikProps}/>

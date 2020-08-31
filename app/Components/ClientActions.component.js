@@ -98,7 +98,11 @@ const ClientActions = ({...props}) => {
               props.nav.navigate('Program', {
                 client: props.client,
                 user: props.user,
-                tileProgram: props.tileProgram
+                tileProgram: props.tileProgram,
+                woodProgram: props.woodProgram,
+                carpetProgram: props.carpetProgram,
+                countertopProgram: props.countertopProgram,
+                cabinetProgram: props.cabinetProgram
               });
             }, 2000);
           }}/>

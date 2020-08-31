@@ -14,7 +14,7 @@ import AddContact from './AddContact.module';
 import List from './List.module';
 import axios from 'axios';
 import { styles } from './Styles/ClientProfile.style';
-import { ClientInfo, TileProgram } from '../Form/Values.form';
+import { ClientInfo, TileProgram, WoodProgram, CarpetProgram, CountertopProgram, CabinetProgram } from '../Form/Values.form';
 
 // Class Component that will show the Client Profile Information
 class ClientProfile extends Component {
@@ -32,6 +32,10 @@ class ClientProfile extends Component {
     tile: [ ],                // REDUX
     wood: [ ],                // REDUX
     tileProgram: null,        // REDUX
+    woodProgram: null,
+    carpetProgram: null,
+    countertopProgram: null,
+    cabinetProgram: null,
     emailOverlay: false
   };
 
@@ -81,6 +85,53 @@ class ClientProfile extends Component {
                 this.setState({ tileProgram: TileProgram});
             else 
                 this.setState({ tileProgram: response.data[0] });
+        })
+        .catch((error) => {
+          console.error(error)
+        });
+
+      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/woodProgram`)
+        .then((response) => {
+            if (response.data.length === 0)
+                this.setState({ woodProgram: WoodProgram});
+            else 
+                this.setState({ woodProgram: response.data[0] });
+        })
+        .catch((error) => {
+          console.error(error)
+        });
+      
+      
+      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/carpetProgram`)
+        .then((response) => {
+            if (response.data.length === 0)
+                this.setState({ carpetProgram: CarpetProgram});
+            else 
+                this.setState({ carpetProgram: response.data[0] });
+        })
+        .catch((error) => {
+          console.error(error)
+        });
+
+            
+      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/countertopProgram`)
+        .then((response) => {
+            if (response.data.length === 0)
+                this.setState({ countertopProgram: CountertopProgram});
+            else 
+                this.setState({ countertopProgram: response.data[0] });
+        })
+        .catch((error) => {
+          console.error(error)
+        });
+      
+            
+      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/cabinetProgram`)
+        .then((response) => {
+            if (response.data.length === 0)
+                this.setState({ cabinetProgram: CabinetProgram});
+            else 
+                this.setState({ cabinetProgram: response.data[0] });
         })
         .catch((error) => {
           console.error(error)
@@ -174,6 +225,10 @@ class ClientProfile extends Component {
     let contacts = [ ];
     let advancedInfo = null;
     let tileProgramInfo = null;
+    let woodProgramInfo = null;
+    let carpetProgramInfo = null;
+    let countertopProgramInfo = null;
+    let cabinetProgramInfo = null;
 
     await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/1`)
       .then((response) => {
@@ -240,6 +295,39 @@ class ClientProfile extends Component {
       .catch((error) => {
         console.error(error)
       });
+    
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/woodProgram`)
+      .then((response) => {
+        woodProgramInfo = response.data[0];
+      })
+      .catch((error) => {
+        console.error(error)
+      });
+         
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/carpetProgram`)
+      .then((response) => {
+        carpetProgramInfo = response.data[0];
+      })
+      .catch((error) => {
+        console.error(error)
+      });
+             
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/countertopProgram`)
+      .then((response) => {
+        countertopProgramInfo = response.data[0];
+      })
+      .catch((error) => {
+        console.error(error)
+      });
+    
+          
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/cabinetProgram`)
+      .then((response) => {
+        cabinetProgramInfo = response.data[0];
+      })
+      .catch((error) => {
+        console.error(error)
+      });
 
     await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/client-contacts`)
       .then((response) => {
@@ -249,7 +337,17 @@ class ClientProfile extends Component {
         console.error(error);
       });
 
-    axios.post(`${API_URL}/submit-client`, { client: this.props.client, parts: parts, tileProgramInfo: tileProgramInfo, advancedInfo: advancedInfo, contacts: contacts })
+    axios.post(`${API_URL}/submit-client`, { 
+      client: this.props.client, 
+      parts: parts, 
+      tileProgramInfo: tileProgramInfo, 
+      woodProgramInfo: woodProgramInfo,
+      carpetProgramInfo: carpetProgramInfo,
+      countertopProgramInfo: countertopProgramInfo,
+      cabinetProgramInfo: cabinetProgramInfo,
+      advancedInfo: advancedInfo, 
+      contacts: contacts 
+    })
       .then((response) => {
         this.showSubmitToast( );
       })
@@ -337,6 +435,10 @@ class ClientProfile extends Component {
                 client={this.props.client}
                 info={this.state.info}
                 tileProgram={this.state.tileProgram}
+                woodProgram={this.state.woodProgram}
+                carpetProgram={this.state.carpetProgram}
+                countertopProgram={this.state.countertopProgram}
+                cabinetProgram={this.state.cabinetProgram}
                 refreshInfo={this.refreshInfo}
                 refreshFiles={this.refreshFiles}
                 loading={this.props.loading}

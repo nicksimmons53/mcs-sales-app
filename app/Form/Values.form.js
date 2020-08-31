@@ -26,24 +26,24 @@ const Client = {
     shpcty: "",
     shpste: "",
     shpzip: "",
-    contct: null,
-    contc2: null,
-    contc3: null,
-    cntds1: null,
-    cntds2: null,
-    cntds3: null,
-    phnnum: null,
-    phn002: null,
-    phn003: null,
-    phnext: null,
-    phext2: null,
-    phext3: null,
-    cllphn: null,
-    cell02: null,
-    cell03: null,
-    e_mail: null,
-    email2: null,
-    email3: null,
+    // contct: null,
+    // contc2: null,
+    // contc3: null,
+    // cntds1: null,
+    // cntds2: null,
+    // cntds3: null,
+    // phnnum: null,
+    // phn002: null,
+    // phn003: null,
+    // phnext: null,
+    // phext2: null,
+    // phext3: null,
+    // cllphn: null,
+    // cell02: null,
+    // cell03: null,
+    // e_mail: null,
+    // email2: null,
+    // email3: null,
     dtercv: null,
     empnum: null,
     mannum: 1010,
@@ -55,34 +55,34 @@ const Client = {
     ntetxt: null,
     inactv: null,
     // FROM HERE ON NEED TO BE CREATED
-    pmtfrq: null, // STRING - PAYMENT FREQUENCY
-    atopay: false, // BOOL   - AUTO PAY
-    invsbm: null, // STRING - HOW TO SUBMIT INVOICES
-    pmttyp: null, // STRING - PAYMENT TYPE
-    pmtprt: false, // BOOLEAN - PAYMENT PORTAL
-    pmturl: null, // STRING - PAYMENT PORTAL URL
-    posreq: false, // BOOL   - POS 
-    invpos: false, // BOOL   - POs REQUIRED FOR INVOICE SUBMITTAL
-    pohndl: false, // STRING - PO CORRECTION HANDLING
-    pohnem: null, // STRING - PO CORRECTION HANDLING EMAIL
-    aprvls: false, // BOOL   - APPROVALS REQUIRED
-    vndprt: null, // STRING - VENDOR PORTAL
+    // pmtfrq: null, // STRING - PAYMENT FREQUENCY
+    // atopay: false, // BOOL   - AUTO PAY
+    // invsbm: null, // STRING - HOW TO SUBMIT INVOICES
+    // pmttyp: null, // STRING - PAYMENT TYPE
+    // pmtprt: false, // BOOLEAN - PAYMENT PORTAL
+    // pmturl: null, // STRING - PAYMENT PORTAL URL
+    // posreq: false, // BOOL   - POS 
+    // invpos: false, // BOOL   - POs REQUIRED FOR INVOICE SUBMITTAL
+    // pohndl: false, // STRING - PO CORRECTION HANDLING
+    // pohnem: null, // STRING - PO CORRECTION HANDLING EMAIL
+    // aprvls: false, // BOOL   - APPROVALS REQUIRED
+    // vndprt: null, // STRING - VENDOR PORTAL
     completed: 0, // INT    - COMPLETED
     done: 0,      // INT    - DONE
-    strtdt: null, // STRING - EXPECTED START DATE
-    invema: null, // STRING - INVOICE SUBMIT EMAIL ADDRESS
-    invadr: null, // STRING - INVOICE ADDRESS
-    invcty: null, // STRING - INVOICE CITY
-    invste: null, // STRING - INVOICE STATE
-    invzip: null, // STRING - INVOICE ZIP
-    jobrls: null, // STRING - HOW ARE JOBS RELEASED
-    jobema: null, // STRING - EMAIL ADDRESS FOR JOB RELEASE ADDRESS
-    vndusr: null, // STRING - VENDOR PORTAL USERNAME
-    vndpss: null, // STRING - VENDOR PORTAL PASSWORD
-    homest: null, // STRING - ESTIMATED NUMBER OF HOMES
-    accema: null, // STRING - ACCOUNTING CONTACT EMAIL
-    accphn: null, // STRING - ACCOUNTING CONTACT PHONE
-    accnam: null, // STRING - ACCOUNTING CONTACT NAME
+    // strtdt: null, // STRING - EXPECTED START DATE
+    // invema: null, // STRING - INVOICE SUBMIT EMAIL ADDRESS
+    // invadr: null, // STRING - INVOICE ADDRESS
+    // invcty: null, // STRING - INVOICE CITY
+    // invste: null, // STRING - INVOICE STATE
+    // invzip: null, // STRING - INVOICE ZIP
+    // jobrls: null, // STRING - HOW ARE JOBS RELEASED
+    // jobema: null, // STRING - EMAIL ADDRESS FOR JOB RELEASE ADDRESS
+    // vndusr: null, // STRING - VENDOR PORTAL USERNAME
+    // vndpss: null, // STRING - VENDOR PORTAL PASSWORD
+    // homest: null, // STRING - ESTIMATED NUMBER OF HOMES
+    // accema: null, // STRING - ACCOUNTING CONTACT EMAIL
+    // accphn: null, // STRING - ACCOUNTING CONTACT PHONE
+    // accnam: null, // STRING - ACCOUNTING CONTACT NAME
 };
 
 const Part = {
@@ -163,18 +163,71 @@ const TileProgram = {
     schulter_pref: false,
     grout_joint_size_pref: null,
     grout_pref: null,
-    grout_brand: null,
     subfloor_pref: null,
     subfloor_other: null,
-    tile_return_walls: false,
     takeoff_resp: null,
+    tile_return_walls: false,
     waste_pct: null,
     wall_tile_height: null,
     notes: null
 };
 
+const WoodProgram = {
+    client_id: null,
+    glue_pref: null,
+    floor_trim_installer: false,
+    floor_trim_pref: null,
+    floor_trim_style: null,
+    second_story_hardie: false,
+    transition_strips_std: false,
+    hvac_req: false,
+    takeoff_resp: null,
+    waste_factor: null
+}
+
+const CarpetProgram = {
+    client_id: null,
+    padding_brand_pref: null,
+    carpet_brand_pref: null,
+    floor_trim_style: null,
+    floor_trim_installer: false,
+    takeoff_resp: null,
+    waste_factor: null,
+    notes: null
+};
+
+const CountertopProgram = {
+    client_id: null,
+    material_thickness_pref: null,
+    material_thickness_other: null,
+    edge_pref: null,
+    edge_pref_other: null,
+    waterfall_sides_std: false,
+    faucet_holes: false,
+    stove_range_specs: null,
+    takeoff_resp: null,
+    waste_factor: null,
+    notes: null
+};
+
+const CabinetProgram = {
+    client_id: null,
+    color_pref: null,
+    style_pref: null,
+    soft_close_std: false,
+    hinges_pref: null,
+    overlay: null,
+    crown_pref: null,
+    upper_cabinet_spec: null,
+    vanity_height_spec: null,
+    bid_type_pref: null,
+    optioned_area_out: null,
+    notes: null
+};
+
 const ClientInfo = {
     client_id: null,
+    client_status: null,
     payment_freq: null,
     autopay: false,
     invoice_submit: null,
@@ -224,6 +277,18 @@ const TileFieldInfo = {
     groutJoint: "3/16\" is typical, especially for longer tile."
 };
 
+const WoodFieldInfo = {
+    preferredGlue: "Mapei 9-80 is our standard; Contains moisture barrier and a warranty program",
+    floorTrimInstaller: "Ideally 1/4\" round or Shoe Mold will not need to be installed, the floor will be fitted directly under the floorboards. However, it may be the builders standard practice to include 1/4\" round or shoe molding.",
+    secondStorySubfloor: "Hardie is optional, technically wood flooring can be glued down to sub floor but might be standard practice for different builders.",
+    transitionStrips: "We typically do not include T-Molding but can be standard practice for some builders.",
+    hvacRequirement: "It is best standard practice for HVAC to be installed and running properly before wood flooring is delivered to the property. If the builder does not require HVAC they sign release."
+};
+
+const CarpetProgramInfo = {
+    floorTrimInstaller: "Ideally 1/4\" round or Shoe Mold will not need to be installed, the floor will be fitted directly under the floorboards. However, it may be the builders standard practice to include 1/4\" round or shoe molding."
+};
+
 export { 
     User, 
     Client,
@@ -232,6 +297,12 @@ export {
     email,
     FieldInfo,
     TileProgram,
+    WoodProgram,
+    CarpetProgram,
+    CountertopProgram,
+    CabinetProgram,
     ClientInfo,
-    TileFieldInfo
+    TileFieldInfo,
+    WoodFieldInfo,
+    CarpetProgramInfo
 };
