@@ -55,7 +55,7 @@ class Program extends Component {
 
         values.client_id = client.id;
         
-		axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/${program}`, values)
+		axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/${program}`, values)
 			.then((response) => {
 				this.refs.toast.show('Client Information has been saved.');
 			})

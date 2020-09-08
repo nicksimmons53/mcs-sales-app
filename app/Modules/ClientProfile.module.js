@@ -44,7 +44,7 @@ class ClientProfile extends Component {
     let client = this.props.client;
     let clientName = client.clnnme.replace(/\s/g, "_");
 
-    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/client-contacts`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/contacts`)
       .then((response) => {
         this.setState({ contacts: response.data });
       })
@@ -70,7 +70,7 @@ class ClientProfile extends Component {
       .catch((error) => {
         console.error(error);
       });
-
+    
     axios.get(`${API_URL}/list-files/${clientName}`)
       .then((response) => {
         this.setState({ files: response.data.file.Contents });
@@ -79,7 +79,7 @@ class ClientProfile extends Component {
         console.error(error);
       });
     
-      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/tileProgram`)
+      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/tileProgram`)
         .then((response) => {
             if (response.data.length === 0)
                 this.setState({ tileProgram: TileProgram});
@@ -90,7 +90,7 @@ class ClientProfile extends Component {
           console.error(error)
         });
 
-      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/woodProgram`)
+      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/woodProgram`)
         .then((response) => {
             if (response.data.length === 0)
                 this.setState({ woodProgram: WoodProgram});
@@ -102,7 +102,7 @@ class ClientProfile extends Component {
         });
       
       
-      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/carpetProgram`)
+      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/carpetProgram`)
         .then((response) => {
             if (response.data.length === 0)
                 this.setState({ carpetProgram: CarpetProgram});
@@ -114,7 +114,7 @@ class ClientProfile extends Component {
         });
 
             
-      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/countertopProgram`)
+      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/countertopProgram`)
         .then((response) => {
             if (response.data.length === 0)
                 this.setState({ countertopProgram: CountertopProgram});
@@ -126,7 +126,7 @@ class ClientProfile extends Component {
         });
       
             
-      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/cabinetProgram`)
+      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/cabinetProgram`)
         .then((response) => {
             if (response.data.length === 0)
                 this.setState({ cabinetProgram: CabinetProgram});
@@ -166,7 +166,7 @@ class ClientProfile extends Component {
     let user = this.props.user;
     let client = this.props.client;
 
-    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/client-contacts`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/contacts`)
       .then((response) => {
         this.setState({ contacts: response.data });
       })
@@ -209,7 +209,7 @@ class ClientProfile extends Component {
     let client = this.props.client;
     let user = this.props.user;
 
-    axios.delete(`${API_URL}/employee/${user.recnum}/clients/${client.id}/client-contacts/${contactID}`)
+    axios.delete(`${API_URL}/employee/${user.recnum}/clients/${client.id}/contacts/${contactID}`)
         .then((response) => {
             this.refresh( );
         })
@@ -288,7 +288,7 @@ class ClientProfile extends Component {
         console.error(error);
       });
     
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/tileProgram`)
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/tileProgram`)
       .then((response) => {
         tileProgramInfo = response.data[0];
       })
@@ -296,7 +296,7 @@ class ClientProfile extends Component {
         console.error(error)
       });
     
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/woodProgram`)
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/woodProgram`)
       .then((response) => {
         woodProgramInfo = response.data[0];
       })
@@ -304,7 +304,7 @@ class ClientProfile extends Component {
         console.error(error)
       });
          
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/carpetProgram`)
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/carpetProgram`)
       .then((response) => {
         carpetProgramInfo = response.data[0];
       })
@@ -312,7 +312,7 @@ class ClientProfile extends Component {
         console.error(error)
       });
              
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/countertopProgram`)
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/countertopProgram`)
       .then((response) => {
         countertopProgramInfo = response.data[0];
       })
@@ -321,7 +321,7 @@ class ClientProfile extends Component {
       });
     
           
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/cabinetProgram`)
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/cabinetProgram`)
       .then((response) => {
         cabinetProgramInfo = response.data[0];
       })
@@ -329,7 +329,7 @@ class ClientProfile extends Component {
         console.error(error)
       });
 
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/client-contacts`)
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/contacts`)
       .then((response) => {
         contacts = [...response.data];
       })

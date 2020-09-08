@@ -17,7 +17,7 @@ import { styles, colors } from './Styles/Form.style';
 // Class Component for Client Accounting Info
 class CabinetProgramForm extends Component {
     state = {
-        fieldsVisible: true,
+        fieldsVisible: false,
         bidTypeOptions: [
             { label: "Whole House", value: "Whole House" },
             { label: "Specific Rooms", value: "Specific Rooms" }
