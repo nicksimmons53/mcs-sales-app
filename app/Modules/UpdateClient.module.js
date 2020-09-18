@@ -4,6 +4,7 @@ import { View, Text, Switch } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import { Icon, Divider, Input, Button } from 'react-native-elements';
+import { TinyInputRow, MediumInputRow, SmallInputRow } from '../Components/InputRow';
 import { Formik } from 'formik';
 import axios from 'axios';
 import Toast from 'react-native-easy-toast';
@@ -60,67 +61,43 @@ class UpdateClient extends Component {
 
           <Divider />
 
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Client Name</Text>
-            <Input
-              onChangeText={formikProps.handleChange('clnnme')}
-              onBlur={formikProps.handleBlur('clnnme')}
-              value={formikProps.values.clnnme}
-              autoCapitalize='words'
-              blurOnSubmit={false}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
+          <MediumInputRow
+            fieldName="clnnme"
+            label="Client Name"
+            tooltip={false}
+            formik={formikProps}/>
+          
+          <Divider/>
 
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Street Address</Text>
-            <Input
-              onChangeText={formikProps.handleChange('addrs1')}
-              onBlur={formikProps.handleBlur('addrs1')}
-              value={formikProps.values.addrs1}
-              autoCapitalize='words'
-              textContentType='streetAddressLine1'
-              blurOnSubmit={false}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
+          <MediumInputRow
+            fieldName="addrs1"
+            label="Street Address"
+            tooltip={false}
+            formik={formikProps}/>
 
-          <View style={styles.textRow}>
-            <Text style={styles.label}>City</Text>
-            <Input
-              onChangeText={formikProps.handleChange('ctynme')}
-              onBlur={formikProps.handleBlur('ctynme')}
-              value={formikProps.values.ctynme}
-              autoCapitalize='words'
-              textContentType='addressCity'
-              blurOnSubmit={false}
-              containerStyle={styles.mediumInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>State</Text>
-            <Input
-              onChangeText={formikProps.handleChange('state_')}
-              onBlur={formikProps.handleBlur('state_')}
-              value={formikProps.values.state_}
-              autoCapitalize='characters'
-              textContentType='addressState'
-              blurOnSubmit={false}
-              containerStyle={styles.xSmallInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
-          <View style={styles.textRow}>
-            <Text style={styles.label}>Zip</Text>
-            <Input
-              onChangeText={formikProps.handleChange('zipcde')}
-              onBlur={formikProps.handleBlur('zipcde')}
-              value={formikProps.values.zipcde}
-              keyboardType='number-pad'
-              textContentType='postalCode'
-              blurOnSubmit={false}
-              containerStyle={styles.smallInput}
-              inputContainerStyle={styles.inputContainer} />
-          </View>
+          <MediumInputRow
+            fieldName="addrs2"
+            label="Street Address 2"
+            tooltip={false}
+            formik={formikProps}/>
+
+          <MediumInputRow
+            fieldName="ctynme"
+            label="City"
+            tooltip={false}
+            formik={formikProps}/>
+          
+          <TinyInputRow
+            fieldName="state"
+            label="State"
+            tooltip={false}
+            formik={formikProps}/>
+
+          <SmallInputRow
+            fieldName="zipcde"
+            label="Zip"
+            tooltip={false}
+            formik={formikProps}/>
 
           <View style={styles.billingAddr}>
           <Divider />
@@ -135,54 +112,35 @@ class UpdateClient extends Component {
 
           {formikProps.values.billingAddrToggle ?
             <View>
-              <View style={styles.textRow}>
-                <Text style={styles.label}>Street Address</Text>
-                <Input
-                  onChangeText={formikProps.handleChange('bilad1')}
-                  onBlur={formikProps.handleBlur('bilad1')}
-                  value={formikProps.values.bilad1}
-                  autoCapitalize='words'
-                  textContentType='streetAddressLine1'
-                  blurOnSubmit={false}
-                  containerStyle={styles.mediumInput}
-                  inputContainerStyle={styles.inputContainer} />
-              </View>
-              <View style={styles.textRow}>
-                <Text style={styles.label}>City</Text>
-                <Input
-                  onChangeText={formikProps.handleChange('bilcty')}
-                  onBlur={formikProps.handleBlur('bilcty')}
-                  value={formikProps.values.bilcty}
-                  autoCapitalize='words'
-                  textContentType='addressCity'
-                  blurOnSubmit={false}
-                  containerStyle={styles.mediumInput}
-                  inputContainerStyle={styles.inputContainer} />
-              </View>
-              <View style={styles.textRow}>
-                <Text style={styles.label}>State</Text>
-                <Input
-                  onChangeText={formikProps.handleChange('bilste')}
-                  onBlur={formikProps.handleBlur('bilste')}
-                  value={formikProps.values.bilste}
-                  autoCapitalize='characters'
-                  textContentType='addressState'
-                  blurOnSubmit={false}
-                  containerStyle={styles.xSmallInput}
-                  inputContainerStyle={styles.inputContainer} />
-              </View>
-              <View style={styles.textRow}>
-                <Text style={styles.label}>Zip</Text>
-                <Input
-                  onChangeText={formikProps.handleChange('bilzip')}
-                  onBlur={formikProps.handleBlur('bilzip')}
-                  value={formikProps.values.bilzip}
-                  keyboardType='number-pad'
-                  textContentType='postalCode'
-                  blurOnSubmit={false}
-                  containerStyle={styles.smallInput}
-                  inputContainerStyle={styles.inputContainer} />
-              </View>
+              <MediumInputRow
+                fieldName="bilad1"
+                label="Street Address"
+                tooltip={false}
+                formik={formikProps}/>
+    
+              <MediumInputRow
+                fieldName="bilad2"
+                label="Street Address 2"
+                tooltip={false}
+                formik={formikProps}/>
+    
+              <MediumInputRow
+                fieldName="bilcty"
+                label="City"
+                tooltip={false}
+                formik={formikProps}/>
+    
+              <TinyInputRow
+                fieldName="bilste"
+                label="State"
+                tooltip={false}
+                formik={formikProps}/>
+    
+              <SmallInputRow
+                fieldName="bilzip"
+                label="Zip"
+                tooltip={false}
+                formik={formikProps}/>
             </View>
           : null }
 
@@ -199,56 +157,39 @@ class UpdateClient extends Component {
 
           {formikProps.values.shippingAddrToggle ?
             <View>
-              <View style={styles.textRow}>
-                <Text style={styles.label}>Street Address</Text>
-                <Input
-                  onChangeText={formikProps.handleChange('shpad1')}
-                  onBlur={formikProps.handleBlur('shpad1')}
-                  value={formikProps.values.shpad1}
-                  autoCapitalize='words'
-                  textContentType='streetAddressLine1'
-                  blurOnSubmit={false}
-                  containerStyle={styles.mediumInput}
-                  inputContainerStyle={styles.inputContainer} />
-              </View>
-              <View style={styles.textRow}>
-                <Text style={styles.label}>City</Text>
-                <Input
-                  onChangeText={formikProps.handleChange('shpcty')}
-                  onBlur={formikProps.handleBlur('shpcty')}
-                  value={formikProps.values.shpcty}
-                  autoCapitalize='words'
-                  textContentType='addressCity'
-                  blurOnSubmit={false}
-                  containerStyle={styles.mediumInput}
-                  inputContainerStyle={styles.inputContainer} />
-              </View>
-              <View style={styles.textRow}>
-                <Text style={styles.label}>State</Text>
-                <Input
-                  onChangeText={formikProps.handleChange('shpste')}
-                  onBlur={formikProps.handleBlur('shpste')}
-                  value={formikProps.values.shpste}
-                  autoCapitalize='characters'
-                  textContentType='addressState'
-                  blurOnSubmit={false}
-                  containerStyle={styles.xSmallInput}
-                  inputContainerStyle={styles.inputContainer} />
-              </View>
-              <View style={styles.textRow}>
-                <Text style={styles.label}>Zip</Text>
-                <Input
-                  onChangeText={formikProps.handleChange('shpzip')}
-                  onBlur={formikProps.handleBlur('shpzip')}
-                  value={formikProps.values.shpzip}
-                  keyboardType='number-pad'
-                  textContentType='postalCode'
-                  blurOnSubmit={false}
-                  containerStyle={styles.smallInput}
-                  inputContainerStyle={styles.inputContainer} />
-              </View>
+              <MediumInputRow
+                fieldName="shpad1"
+                label="Street Address"
+                tooltip={false}
+                formik={formikProps}/>
+    
+              <MediumInputRow
+                fieldName="shpad2"
+                label="Street Address 2"
+                tooltip={false}
+                formik={formikProps}/>
+    
+              <MediumInputRow
+                fieldName="shpcty"
+                label="City"
+                tooltip={false}
+                formik={formikProps}/>
+              
+              <TinyInputRow
+                fieldName="shpste"
+                label="State"
+                tooltip={false}
+                formik={formikProps}/>
+    
+              <SmallInputRow
+                fieldName="shpzip"
+                label="Zip"
+                tooltip={false}
+                formik={formikProps}/>
             </View>
           : null}
+
+          <Divider/>
 
           <Button
             title='Save'

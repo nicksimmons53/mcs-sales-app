@@ -45,17 +45,7 @@ class Profile extends Component {
   componentDidMount( ) {
     let user = this.props.navigation.state.params.user[0];
     this.setState({ user: user });
-    if (user.admin == 1) {
-      this.setState({ admin: true });
-      axios.get(`${API_URL}/admin/clients/`)
-        .then((response) => {
-          this.setState({ clients: response.data });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    } else {
-      axios.get(`${API_URL}/employee/${user.recnum}/clients`)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients`)
         .then((response) => {
           this.setState({ clients: response.data });
           console.log(response.data)
@@ -63,7 +53,6 @@ class Profile extends Component {
         .catch((error) => {
           console.error(error);
         });
-    }
   }
 
   // Update state when client is added

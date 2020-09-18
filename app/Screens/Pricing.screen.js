@@ -9,6 +9,7 @@ import Tile from '../Modules/Tile.module';
 import Carpet from '../Modules/Carpet.module';
 import Vinyl from '../Modules/Vinyl.module';
 import Countertops from '../Modules/Countertops.module';
+import Header from '../Components/Header';
 import { styles, colors } from './Styles/Pricing.style';
 
 export default class Pricing extends Component {
@@ -37,9 +38,7 @@ export default class Pricing extends Component {
         <StatusBar barStyle='light-content' />
         <View style={styles.row}>
           <View style={styles.infoContainer}>
-            <View style={styles.header}>
-              <Text style={styles.text}>Level Builder</Text>
-            </View>
+            <Header title="Level Builder"/>
 
             <Divider />
 

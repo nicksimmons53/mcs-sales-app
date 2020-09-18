@@ -2,15 +2,10 @@
 import React, { Component } from 'react';
 import { View, Text, Switch } from 'react-native';
 import PropTypes from 'prop-types';
-import { 
-    Divider, 
-    Input, 
-    Button, 
-    Icon, 
-    CheckBox, 
-    Tooltip
-} from 'react-native-elements';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { Divider, Button } from 'react-native-elements';
+import CheckboxRow from '../Components/CheckboxRow';
+import { SmallInputRow, MediumInputRow } from '../Components/InputRow';
+import DropdownRow from '../Components/DropdownRow';
 import { TileFieldInfo } from '../Form/Values.form';
 import { styles, colors } from './Styles/Form.style';
 
@@ -92,384 +87,237 @@ class TileProgramForm extends Component {
                         <>
                             <Divider/>
                             
-                            <View style={styles.textRow} zIndex={10}>
-                                <Text style={styles.label}>Floor Setting Material</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.settingMaterialOptions}
-                                    defaultValue={values.setting_material_floors}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('setting_material_floors', item.value)}/>
-                                <Tooltip 
-                                    popover={<Text style={styles.promptText}>{TileFieldInfo.settingMaterial}</Text>}
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.black}/>
-                                </Tooltip>
-                            </View>
+                            <DropdownRow
+                                title="Floor Setting Material"
+                                choices={this.state.settingMaterialOptions}
+                                formik={this.props.formik}
+                                fieldName="setting_material_floors"
+                                zIndex={10}
+                                tooltip={true}
+                                tooltipHeight={75}
+                                popover={TileFieldInfo.settingMaterial}/>
 
                             {
                                 (values.setting_material_floors === "Custom") ?
-                                    <View style={styles.textRow} zIndex={0}>
-                                        <Text style={styles.label}></Text>
-                                        <Input
-                                            onChangeText={this.props.formik.handleChange('setting_material_floors_cust')}
-                                            onBlur={this.props.formik.handleBlur('setting_material_floors_cust')}
-                                            value={values.setting_material_floors_cust}
-                                            inputStyle={styles.label}
-                                            blurOnSubmit={false}
-                                            containerStyle={styles.mediumInput}
-                                            inputContainerStyle={styles.inputContainer}/>
-                                        <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                    </View>
+                                    <MediumInputRow
+                                        zIndex={0}
+                                        fieldName="setting_material_floors_cust"
+                                        formik={this.props.formik}
+                                        tooltip={false}/>
                                 :
-                                null
+                                    null
                             }
-                                                        
-                            <View style={styles.textRow} zIndex={9}>
-                                <Text style={styles.label}>Wall Setting Material</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.settingMaterialOptions2}
-                                    defaultValue={values.setting_material_walls}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('setting_material_walls', item.value)}/>
-                                <Tooltip 
-                                    popover={<Text style={styles.promptText}>{TileFieldInfo.settingMaterial}</Text>}
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.black}/>
-                                </Tooltip>
-                            </View>
+                    
+                            <DropdownRow
+                                title="Wall Setting Material"
+                                choices={this.state.settingMaterialOptions2}
+                                formik={this.props.formik}
+                                fieldName="setting_material_walls"
+                                zIndex={9}
+                                tooltip={true}
+                                tooltipHeight={75}
+                                popover={TileFieldInfo.settingMaterial}/>
 
                             {
                                 (values.setting_material_walls === "Custom") ?
-                                    <View style={styles.textRow} zIndex={0}>
-                                        <Text style={styles.label}></Text>
-                                        <Input
-                                            onChangeText={this.props.formik.handleChange('setting_material_walls_cust')}
-                                            onBlur={this.props.formik.handleBlur('setting_material_walls_cust')}
-                                            value={values.setting_material_walls_cust}
-                                            inputStyle={styles.label}
-                                            blurOnSubmit={false}
-                                            containerStyle={styles.mediumInput}
-                                            inputContainerStyle={styles.inputContainer}/>
-                                        <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                    </View>
+
+                                    <MediumInputRow
+                                        zIndex={0}
+                                        fieldName="setting_material_walls_cust"
+                                        formik={this.props.formik}
+                                        tooltip={false}/>
                                 :
-                                null
+                                    null
                             }
-                                                        
-                            <View style={styles.textRow} zIndex={8}>
-                                <Text style={styles.label}>Waterproofing Method</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.waterpoofingOptions}
-                                    defaultValue={values.waterproof_method}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('waterproof_method', item.value)}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
+                                            
+                            <DropdownRow
+                                title="Waterproofing Method"
+                                choices={this.state.waterpoofingOptions}
+                                formik={this.props.formik}
+                                fieldName="waterproof_method"
+                                zIndex={8}
+                                tooltip={false}/>
 
                             {
                                 (values.waterproof_method === "Fiberglass") ? 
-                                    <View style={styles.textRow} zIndex={0}>
-                                    <Text style={styles.label}>Sova Construction?</Text>
-                                    <CheckBox 
-                                        checked={values.waterproof_sova_constr}
-                                        onPress={( ) => this.props.formik.setFieldValue('waterproof_sova_constr', !values.waterproof_sova_constr)}
-                                        size={36}
-                                        containerStyle={styles.checkbox}
-                                        checkedColor={colors.green}/>
-                                    <Tooltip 
-                                        popover={<Text style={styles.promptText}>{TileFieldInfo.sovaConstruction}</Text>}
-                                        width={450}
-                                        height={60}
-                                        backgroundColor={colors.black}>
-                                        <Icon name="info-circle" type="font-awesome" color={colors.black}/>
-                                    </Tooltip>
-                                </View>
+                                    <CheckboxRow
+                                        zIndex={0}
+                                        label="Sova Construction?"
+                                        fieldName="waterproof_sova_constr"
+                                        formik={this.props.formik}
+                                        defaultValue={values.waterproof_sova_constr}
+                                        tooltip={true}
+                                        popover={TileFieldInfo.sovaConstruction}
+                                        tooltipHeight={60}/>
                                 :
-                                null
+                                    null
                             }
 
+                            <CheckboxRow
+                                zIndex={0}
+                                label="Will We Be Installing Backerboard?"
+                                fieldName="backerboard_installer"
+                                formik={this.props.formik}
+                                defaultValue={values.backerboard_installer}
+                                tooltip={false}/>
 
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Will We Be Installing Backerboard?</Text>
-                                <CheckBox 
-                                    checked={values.backerboard_installer}
-                                    onPress={( ) => this.props.formik.setFieldValue('backerboard_installer', !values.backerboard_installer)}
-                                    size={36}
-                                    containerStyle={styles.checkbox}
-                                    checkedColor={colors.green}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
+                            <DropdownRow
+                                title="Preferred Silicon"
+                                choices={this.state.siliconOptions}
+                                formik={this.props.formik}
+                                fieldName="silicon_pref"
+                                zIndex={7}
+                                tooltip={false}/>
 
-                            <View style={styles.textRow} zIndex={7}>
-                                <Text style={styles.label}>Preferred Silicon</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.siliconOptions}
-                                    defaultValue={values.silicon_pref}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('silicon_pref', item.value)}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
-
-                            <View style={styles.textRow} zIndex={6}>
-                                <Text style={styles.label}>Shower Niche Construction</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.showerNicheOptions}
-                                    defaultValue={values.shower_niche_pref}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('shower_niche_pref', item.value)}/>
-                                <Tooltip 
-                                    popover={<Text style={styles.promptText}>{TileFieldInfo.showerNiche}</Text>}
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.black}/>
-                                </Tooltip>
-                            </View>
+                            <DropdownRow
+                                title="Shower Niche Construction"
+                                choices={this.state.showerNicheOptions}
+                                formik={this.props.formik}
+                                fieldName="shower_niche_pref"
+                                zIndex={6}
+                                tooltip={true}
+                                tooltipHeight={75}
+                                popover={TileFieldInfo.showerNiche}/>
 
                             {
                                 (values.shower_niche_pref !== null) ?    
-                                <>                                                                                                                   
-                                    <View style={styles.textRow} zIndex={0}>
-                                        <Text style={styles.label}>Shower Niche Brand</Text>
-                                        <Input
-                                            onChangeText={this.props.formik.handleChange('shower_niche_brand')}
-                                            onBlur={this.props.formik.handleBlur('shower_niche_brand')}
-                                            value={values.shower_niche_brand}
-                                            inputStyle={styles.label}
-                                            blurOnSubmit={false}
-                                            containerStyle={styles.mediumInput}
-                                            inputContainerStyle={styles.inputContainer}/>
-                                        <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                    </View>  
-                                                                                                                                                       
-                                    <View style={styles.textRow} zIndex={0}>
-                                        <Text style={styles.label}>Shower Niche Standard Size</Text>
-                                        <Input
-                                            onChangeText={this.props.formik.handleChange('shower_niche_std_size')}
-                                            onBlur={this.props.formik.handleBlur('shower_niche_std_size')}
-                                            value={values.shower_niche_std_size}
-                                            inputStyle={styles.label}
-                                            blurOnSubmit={false}
-                                            containerStyle={styles.smallInput}
-                                            inputContainerStyle={styles.inputContainer}/>
-                                        <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                    </View> 
+                                <>                                    
+                                    <MediumInputRow
+                                        zIndex={0}
+                                        label="Shower Niche Brand"
+                                        fieldName="shower_niche_brand"
+                                        formik={this.props.formik}
+                                        tooltip={false}/>  
+
+                                    <SmallInputRow  
+                                        zIndex={0}
+                                        label="Shower Niche Standard Size"
+                                        fieldName="shower_niche_std_size"
+                                        formik={this.props.formik}
+                                        tooltip={false}/>
                                 </>
                                 :
                                 null
                             }
 
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Are Corner Soap Dishes Standard?</Text>
-                                <CheckBox 
-                                    checked={values.corner_soap_dish}
-                                    onPress={( ) => this.props.formik.setFieldValue('corner_soap_dish', !values.corner_soap_dish)}
-                                    size={36}
-                                    containerStyle={styles.checkbox}
-                                    checkedColor={colors.green}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
-
-                            <View style={styles.textRow} zIndex={5}>
-                                <Text style={styles.label}>Preferred Construction of Shower Seats</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.showerSeatOptions}
-                                    defaultValue={values.shower_seat_pref}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('shower_seat_pref', item.value)}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
+                            <CheckboxRow
+                                zIndex={0}
+                                label="Are Corner Soap Dishes Standard?"
+                                fieldName="corner_soap_dish"
+                                formik={this.props.formik}
+                                defaultValue={values.corner_soap_dish}
+                                tooltip={false}/>
+                            
+                            <DropdownRow
+                                title="Preferred Construction of Shower Seats"
+                                choices={this.state.showerSeatOptions}
+                                formik={this.props.formik}
+                                fieldName="shower_seat_pref"
+                                zIndex={5}
+                                tooltip={false}/>
 
                             {
                                 (values.shower_seat_pref === "Other") ?
-                                                                                                                                                                                       
-                                <View style={styles.textRow} zIndex={0}>
-                                    <Text style={styles.label}></Text>
-                                    <Input
-                                        onChangeText={this.props.formik.handleChange('shower_seat_constr')}
-                                        onBlur={this.props.formik.handleBlur('shower_seat_constr')}
-                                        value={values.shower_seat_constr}
-                                        inputStyle={styles.label}
-                                        blurOnSubmit={false}
-                                        containerStyle={styles.mediumInput}
-                                        inputContainerStyle={styles.inputContainer}/>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </View> 
+                                <MediumInputRow
+                                    zIndex={0}
+                                    fieldName="shower_seat_constr"
+                                    formik={this.props.formik}
+                                    tooltip={false}/>
                                 :
                                 null
                             }
 
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Does the Builder Prefer Schulter?</Text>
-                                <CheckBox 
-                                    checked={values.schulter_pref}
-                                    onPress={( ) => this.props.formik.setFieldValue('schulter_pref', !values.schulter_pref)}
-                                    size={36}
-                                    containerStyle={styles.checkbox}
-                                    checkedColor={colors.green}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
+                            <CheckboxRow
+                                zIndex={0}
+                                label="Does the Builder Prefer Schulter?"
+                                fieldName="schulter_pref"
+                                formik={this.props.formik}
+                                defaultValue={values.schulter_pref}
+                                tooltip={false}/>
 
-                            <View style={styles.textRow} zIndex={4}>
-                                <Text style={styles.label}>Preferred Grout Joint and Sizing</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.groutSizeOptions}
-                                    defaultValue={values.grout_joint_size_pref}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('grout_joint_size_pref', item.value)}/>
-                                <Tooltip 
-                                    popover={<Text style={styles.promptText}>{TileFieldInfo.groutJoint}</Text>}
-                                    width={450}
-                                    height={60}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.black}/>
-                                </Tooltip>
-                            </View>
-      
-                            <View style={styles.textRow} zIndex={3}>
-                                <Text style={styles.label}>Preferred Grout Brand</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.groutBrandOptions}
-                                    defaultValue={values.grout_pref}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('grout_pref', item.value)}/>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>      
-                                  
-                            <View style={styles.textRow} zIndex={2}>
-                                <Text style={styles.label}>Preferred Standard Practice for Subfloor</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.subfloorOptions}
-                                    defaultValue={values.subfloor_pref}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('subfloor_pref', item.value)}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
+                            <DropdownRow
+                                title="Shower Niche Construction"
+                                choices={this.state.showerNicheOptions}
+                                formik={this.props.formik}
+                                fieldName="shower_niche_pref"
+                                zIndex={6}
+                                tooltip={true}
+                                tooltipHeight={75}
+                                popover={TileFieldInfo.showerNiche}/>
+
+                            <DropdownRow
+                                title="Preferred Grout Joint and Sizing"
+                                choices={this.state.groutSizeOptions}
+                                formik={this.props.formik}
+                                fieldName="grout_joint_size_pref"
+                                zIndex={4}
+                                tooltip={true}
+                                tooltipHeight={75}
+                                popover={TileFieldInfo.groutJoint}/>
+                            
+                            <DropdownRow
+                                title="Preferred Grout Brand"
+                                choices={this.state.groutBrandOptions}
+                                formik={this.props.formik}
+                                fieldName="grout_pref"
+                                zIndex={3}
+                                tooltip={false}/>   
+
+                            <DropdownRow
+                                title="Preferred Standard Practice for Subfloor"
+                                choices={this.state.subfloorOptions}
+                                formik={this.props.formik}
+                                fieldName="subfloor_pref"
+                                zIndex={2}
+                                tooltip={false}/>
 
                             {
-                                (values.subfloor_pref === "Other") ?                                                                                                                                                                          
-                                <View style={styles.textRow} zIndex={0}>
-                                    <Text style={styles.label}></Text>
-                                    <Input
-                                        onChangeText={this.props.formik.handleChange('subfloor_other')}
-                                        onBlur={this.props.formik.handleBlur('subfloor_other')}
-                                        value={values.subfloor_other}
-                                        inputStyle={styles.label}
-                                        blurOnSubmit={false}
-                                        containerStyle={styles.mediumInput}
-                                        inputContainerStyle={styles.inputContainer}/>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </View>  
+                                (values.subfloor_pref === "Other") ?  
+                                <MediumInputRow
+                                    zIndex={0}
+                                    fieldName="subfloor_other"
+                                    formik={this.props.formik}
+                                    tooltip={false}/>
                                 :
                                 null
                             }
 
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Tile Return Walls at Backsplash?</Text>
-                                <CheckBox 
-                                    checked={values.tile_return_walls}
-                                    onPress={( ) => this.props.formik.setFieldValue('tile_return_walls', !values.tile_return_walls)}
-                                    size={36}
-                                    containerStyle={styles.checkbox}
-                                    checkedColor={colors.green}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
-                                                              
-                            <View style={styles.textRow} zIndex={1}>
-                                <Text style={styles.label}>Who Does Takeoffs?</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.takeoffOptions}
-                                    defaultValue={values.takeoff_resp}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('takeoff_resp', item.value)}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View> 
-                                                                                          
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Waste Factor Percentage</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('waste_pct')}
-                                    onBlur={this.props.formik.handleBlur('waste_pct')}
-                                    value={values.waste_pct}
-                                    keyboardType='numbers-and-punctuation'
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.xSmallInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>    
-                                                                                                                      
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Wall Tile Height</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('wall_tile_height')}
-                                    onBlur={this.props.formik.handleBlur('wall_tile_height')}
-                                    value={values.wall_tile_height}
-                                    keyboardType='numbers-and-punctuation'
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.xSmallInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>  
-                                                                                                       
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Notes</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('notes')}
-                                    onBlur={this.props.formik.handleBlur('notes')}
-                                    value={values.notes}
-                                    keyboardType='numbers-and-punctuation'
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.mediumInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>   
+                            <CheckboxRow
+                                zIndex={0}
+                                label="Tile Return Walls at Backsplash?"
+                                fieldName="tile_return_walls"
+                                formik={this.props.formik}
+                                defaultValue={values.tile_return_walls}
+                                tooltip={false}/>
+  
+                            <DropdownRow
+                                title="Who Does Takeoffs?"
+                                choices={this.state.takeoffOptions}
+                                formik={this.props.formik}
+                                fieldName="takeoff_resp"
+                                zIndex={1}
+                                tooltip={false}/>
+                                       
+                            <MediumInputRow
+                                zIndex={0}
+                                label="Waste Factor Percentage"
+                                fieldName="waste_pct"
+                                formik={this.props.formik}
+                                tooltip={false}/>  
+
+                            <MediumInputRow
+                                zIndex={0}
+                                fieldName="wall_tile_height"
+                                label="Wall Tile Height"
+                                formik={this.props.formik}
+                                tooltip={false}/>
+                            
+                            <MediumInputRow
+                                zIndex={0}
+                                label="Notes"
+                                fieldName="notes"
+                                formik={this.props.formik}
+                                tooltip={false}/>  
 
                             <Divider/>
                                             

@@ -2,15 +2,10 @@
 import React, { Component } from 'react';
 import { View, Text, Switch } from 'react-native';
 import PropTypes from 'prop-types';
-import { 
-    Divider, 
-    Input, 
-    Button, 
-    Icon, 
-    CheckBox, 
-    Tooltip
-} from 'react-native-elements';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { Divider, Button } from 'react-native-elements';
+import { SmallInputRow, MediumInputRow } from '../Components/InputRow';
+import CheckboxRow from '../Components/CheckboxRow';
+import DropdownRow from '../Components/DropdownRow';
 import { WoodFieldInfo } from '../Form/Values.form';
 import { styles, colors } from './Styles/Form.style';
 
@@ -61,165 +56,92 @@ class WoodProgramForm extends Component {
                     {this.state.fieldsVisible ?
                         <>
                             <Divider/>
-                                                                                                                                                       
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Preferred Glue Products</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('glue_pref')}
-                                    onBlur={this.props.formik.handleBlur('glue_pref')}
-                                    value={values.glue_pref}
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.smallInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    popover={<Text style={styles.promptText}>{WoodFieldInfo.preferredGlue}</Text>}
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.black}/>
-                                </Tooltip>
-                            </View> 
 
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Will We Be Installing Floor Trim?</Text>
-                                <CheckBox 
-                                    checked={values.floor_trim_installer}
-                                    onPress={( ) => this.props.formik.setFieldValue('floor_trim_installer', !values.floor_trim_installer)}
-                                    size={36}
-                                    containerStyle={styles.checkbox}
-                                    checkedColor={colors.green}/>
-                                <Tooltip 
-                                    popover={<Text style={styles.promptText}>{WoodFieldInfo.floorTrimInstaller}</Text>}
-                                    width={450}
-                                    height={135}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.black}/>
-                                </Tooltip>
-                            </View>
+                            <SmallInputRow
+                                zIndex={0}
+                                label="Preferred Glue Products"
+                                fieldName="glue_pref"
+                                formik={this.props.formik}
+                                tooltip={true}
+                                popover={WoodFieldInfo.preferredGlue}
+                                tooltipHeight={75}/>
 
-                            <View style={styles.textRow} zIndex={5}>
-                                <Text style={styles.label}>Preferred Floor Trim</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.floorTrimOptions}
-                                    defaultValue={values.floor_trim_pref}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('floor_trim_pref', item.value)}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
+                            <CheckboxRow
+                                zIndex={0}
+                                label="Will We Be Installing Floor Trim?"
+                                fieldName="floor_trim_installer"
+                                formik={this.props.formik}
+                                defaultValue={values.floor_trim_installer}
+                                tooltip={true}
+                                tooltipHeight={135}
+                                popover={WoodFieldInfo.floorTrimInstaller}/>
 
-                            <View style={styles.textRow} zIndex={4}>
-                                <Text style={styles.label}>Will Floor Trim Be...</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.floorTrimStyleOptions}
-                                    defaultValue={values.floor_trim_style}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('floor_trim_style', item.value)}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
+                            <DropdownRow
+                                title="Preferred Floor Trim"
+                                choices={this.state.floorTrimOptions}
+                                formik={this.props.formik}
+                                fieldName="floor_trim_pref"
+                                zIndex={5}
+                                tooltip={false}/>
 
-                            <View style={styles.textRow} zIndex={3}>
-                                <Text style={styles.label}>Preferred Construction of 2nd Story Subfloor</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.secondStoryOptions}
-                                    defaultValue={values.second_story_hardie}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('second_story_hardie', item.value)}/>
-                                <Tooltip 
-                                    popover={<Text style={styles.promptText}>{WoodFieldInfo.secondStorySubfloor}</Text>}
-                                    width={450}
-                                    height={90}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.black}/>
-                                </Tooltip>
-                            </View>
+                            <DropdownRow
+                                title="Will Floor Trim Be..."
+                                choices={this.state.floorTrimStyleOptions}
+                                formik={this.props.formik}
+                                fieldName="floor_trim_style"
+                                zIndex={4}
+                                tooltip={false}/>
 
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Are Transition Strips Standard Practice?</Text>
-                                <CheckBox 
-                                    checked={values.transition_strips_std}
-                                    onPress={( ) => this.props.formik.setFieldValue('transition_strips_std', !values.transition_strips_std)}
-                                    size={36}
-                                    containerStyle={styles.checkbox}
-                                    checkedColor={colors.green}/>
-                                <Tooltip 
-                                    popover={<Text style={styles.promptText}>{WoodFieldInfo.transitionStrips}</Text>}
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.black}/>
-                                </Tooltip>
-                            </View>
+                            <DropdownRow
+                                title="Preferred Construction of 2nd Story Subfloor"
+                                choices={this.state.secondStoryOptions}
+                                formik={this.props.formik}
+                                fieldName="second_story_hardie"
+                                zIndex={3}
+                                tooltip={true}
+                                tooltipHeight={90}
+                                popover={WoodFieldInfo.secondStorySubfloor}/>
 
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>HVAC Requirement?</Text>
-                                <CheckBox 
-                                    checked={values.hvac_req}
-                                    onPress={( ) => this.props.formik.setFieldValue('hvac_req', !values.hvac_req)}
-                                    size={36}
-                                    containerStyle={styles.checkbox}
-                                    checkedColor={colors.green}/>
-                                <Tooltip 
-                                    popover={<Text style={styles.promptText}>{WoodFieldInfo.hvacRequirement}</Text>}
-                                    width={450}
-                                    height={120}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.black}/>
-                                </Tooltip>
-                            </View>
+                            <CheckboxRow
+                                zIndex={0}
+                                label="Are Transition Strips Standard Practice?"
+                                fieldName="transition_strips_std"
+                                formik={this.props.formik}
+                                defaultValue={values.transition_strips_std}
+                                tooltip={true}
+                                tooltipHeight={75}
+                                popover={WoodFieldInfo.transitionStrips}/>
 
-                            <View style={styles.textRow} zIndex={2}>
-                                <Text style={styles.label}>Who Will be Doing Takeoffs?</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.takeoffOptions}
-                                    defaultValue={values.takeoff_resp}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('takeoff_resp', item.value)}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
-                                                                                                                                               
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Waste Factor Percentage</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('waste_factor')}
-                                    onBlur={this.props.formik.handleBlur('waste_factor')}
-                                    value={values.waste_factor}
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.smallInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View> 
-                                                                                                                                   
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Notes</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('notes')}
-                                    onBlur={this.props.formik.handleBlur('notes')}
-                                    value={values.notes}
-                                    keyboardType='numbers-and-punctuation'
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.mediumInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>  
+                            <CheckboxRow
+                                zIndex={0}
+                                label="HVAC Requirement?"
+                                fieldName="hvac_req"
+                                formik={this.props.formik}
+                                defaultValue={values.hvac_req}
+                                tooltip={true}
+                                tooltipHeight={120}
+                                popover={WoodFieldInfo.hvacRequirement}/>
+
+                            <DropdownRow
+                                title="Who Will be Doing Takeoffs?"
+                                choices={this.state.takeoffOptions}
+                                formik={this.props.formik}
+                                fieldName="takeoff_resp"
+                                zIndex={2}
+                                tooltip={false}/>
+
+                            <SmallInputRow
+                                zIndex={0}
+                                label="Waste Factor Percentage"
+                                fieldName="waste_factor"
+                                formik={this.props.formik}/>
+
+                            <MediumInputRow
+                                zIndex={0}
+                                label="Notes"
+                                fieldName="notes"
+                                formik={this.props.formik}
+                                tooltip={false}/>
 
                             <Divider/>
                                                 

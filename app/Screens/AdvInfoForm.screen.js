@@ -13,6 +13,7 @@ import { Divider, Button } from 'react-native-elements';
 import { Formik } from 'formik';
 import Toast from 'react-native-easy-toast';
 import Toolbar from '../Components/Toolbar.component';
+import Header from '../Components/Header';
 import { styles } from './Styles/ClientForm.style';
 import AdvInfo from '../Modules/AdvInfo.module';
 import axios from 'axios';
@@ -82,9 +83,7 @@ class AdvInfoForm extends Component {
 						navigation={this.props.navigation} />
 
 					<View style={styles.infoContainer}>
-						<View style={styles.header}>
-							<Text style={styles.headerText}>Continue Client</Text>
-						</View>
+						<Header title="Continue Client"/>
 
 						<Divider/>
 

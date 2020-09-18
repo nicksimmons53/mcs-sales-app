@@ -15,6 +15,7 @@ import Toast from 'react-native-easy-toast';
 import Toolbar from '../Components/Toolbar.component';
 import { styles } from './Styles/ClientForm.style';
 import axios from 'axios';
+import Header from '../Components/Header';
 import TileProgramForm from '../Modules/TileProgramForm.module';
 import WoodProgramForm from '../Modules/WoodProgramForm.module';
 import CarpetProgramForm from '../Modules/CarpetProgramForm.module';
@@ -75,9 +76,7 @@ class Program extends Component {
 						navigation={this.props.navigation} />
 
 					<View style={styles.infoContainer}>
-						<View style={styles.header}>
-							<Text style={styles.headerText}>Program Information</Text>
-						</View>
+						<Header title="Program Information"/>
 
 						<Divider/>
 

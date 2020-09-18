@@ -2,16 +2,10 @@
 import React, { Component } from 'react';
 import { View, Text, Switch } from 'react-native';
 import PropTypes from 'prop-types';
-import { 
-    Divider, 
-    Input, 
-    Button, 
-    Icon, 
-    CheckBox, 
-    Tooltip
-} from 'react-native-elements';
-import DropDownPicker from 'react-native-dropdown-picker';
-// import { TileFieldInfo } from '../Form/Values.form';
+import { Divider, Button } from 'react-native-elements';
+import { SmallInputRow, MediumInputRow } from '../Components/InputRow';
+import CheckboxRow from '../Components/CheckboxRow';
+import DropdownRow from '../Components/DropdownRow';
 import { styles, colors } from './Styles/Form.style';
 
 // Class Component for Client Accounting Info
@@ -50,140 +44,77 @@ class CabinetProgramForm extends Component {
                         <>
                             <Divider/>
 
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Preferred Colors</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('color_pref')}
-                                    onBlur={this.props.formik.handleBlur('color_pref')}
-                                    value={values.color_pref}
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.mediumInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Tooltip 
-                                    width={450}
-                                    height={75}
-                                    backgroundColor={colors.black}>
-                                    <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                                </Tooltip>
-                            </View> 
+                            <MediumInputRow
+                                zIndex={0}
+                                fieldName="color_pref"
+                                label="Preferred Colors"
+                                tooltip={false}
+                                formik={this.props.formik}/>
 
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Preferred Styles</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('style_pref')}
-                                    onBlur={this.props.formik.handleBlur('style_pref')}
-                                    value={values.style_pref}
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.mediumInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View> 
+                            <MediumInputRow
+                                zIndex={0}
+                                fieldName="style_pref"
+                                label="Preferred Styles"
+                                tooltip={false}
+                                formik={this.props.formik}/>
+                            
+                            <CheckboxRow
+                                zIndex={0}
+                                label="Preferences on Soft Close (Are They Standard?)"
+                                fieldName="soft_close_std"
+                                formik={this.props.formik}
+                                defaultValue={values.soft_close_std}
+                                tooltip={false}/>
+                            
+                            <MediumInputRow
+                                zIndex={0}
+                                fieldName="overlay"
+                                label="Overylay"
+                                tooltip={false}
+                                formik={this.props.formik}/>
 
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Preferences on Soft Close (Are They Standard?)</Text>
-                                <CheckBox 
-                                    checked={values.soft_close_std}
-                                    onPress={( ) => this.props.formik.setFieldValue('soft_close_std', !values.soft_close_std)}
-                                    size={36}
-                                    containerStyle={styles.checkbox}
-                                    checkedColor={colors.green}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
-                                                                                                                                               
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Overlay</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('overlay')}
-                                    onBlur={this.props.formik.handleBlur('overlay')}
-                                    value={values.overlay}
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.mediumInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View> 
-                                                                                                                                                                           
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Preferences and Sizes of Crown</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('crown_pref')}
-                                    onBlur={this.props.formik.handleBlur('crown_pref')}
-                                    value={values.crown_pref}
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.mediumInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
-                                                                                                                                                                                                       
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Standard Specifications for Upper Cabinets</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('upper_cabinet_spec')}
-                                    onBlur={this.props.formik.handleBlur('upper_cabinet_spec')}
-                                    value={values.upper_cabinet_spec}
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.mediumInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
-                                                                                                                                                                                                                                   
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Standard Specifications for Vanity Height</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('vanity_height_spec')}
-                                    onBlur={this.props.formik.handleBlur('vanity_height_spec')}
-                                    value={values.vanity_height_spec}
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.mediumInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
+                            <MediumInputRow
+                                zIndex={0}
+                                fieldName="crown_pref"
+                                label="Preferences and Sizes of Crown"
+                                tooltip={false}
+                                formik={this.props.formik}/>
+                             
+                            <MediumInputRow
+                                zIndex={0}
+                                fieldName="upper_cabinet_spec"
+                                label="Standard Specifications for Upper Cabinets"
+                                tooltip={false}
+                                formik={this.props.formik}/>   
+                                                             
+                            <MediumInputRow
+                                zIndex={0}
+                                fieldName="vanity_height_spec"
+                                label="Standard Specifications for Vanity Height"
+                                tooltip={false}
+                                formik={this.props.formik}/>
 
-                            <View style={styles.textRow} zIndex={2}>
-                                <Text style={styles.label}>Preferences on Bid Types</Text>
-                                <DropDownPicker
-                                    placeholder="Choose..."
-                                    items={this.state.bidTypeOptions}
-                                    defaultValue={values.bid_type_pref}
-                                    containerStyle={styles.dropdown}
-                                    dropDownStyle={styles.dropdownMenu}
-                                    labelStyle={styles.dropdownItem}
-                                    itemStyle={styles.dropdownItem}
-                                    onChangeItem={item => this.props.formik.setFieldValue('bid_type_pref', item.value)}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>
-                                                                                                                                               
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Any Areas Optioned Out?</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('optioned_area_out')}
-                                    onBlur={this.props.formik.handleBlur('optioned_area_out')}
-                                    value={values.optioned_area_out}
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.smallInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View> 
-                                                                                                                                   
-                            <View style={styles.textRow} zIndex={0}>
-                                <Text style={styles.label}>Notes</Text>
-                                <Input
-                                    onChangeText={this.props.formik.handleChange('notes')}
-                                    onBlur={this.props.formik.handleBlur('notes')}
-                                    value={values.notes}
-                                    keyboardType='numbers-and-punctuation'
-                                    inputStyle={styles.label}
-                                    blurOnSubmit={false}
-                                    containerStyle={styles.mediumInput}
-                                    inputContainerStyle={styles.inputContainer}/>
-                                <Icon name="info-circle" type="font-awesome" color={colors.white}/>
-                            </View>           
+                            <DropdownRow
+                                title="Preferences on Bid Types"
+                                choices={this.state.bidTypeOptions}
+                                formik={this.props.formik}
+                                fieldName="bid_type_pref"
+                                zIndex={2}
+                                tooltip={false}/>
+
+                            <SmallInputRow
+                                zIndex={0}
+                                fieldName="optioned_area_out"
+                                label="Any Areas Optioned Out?"
+                                formik={this.props.formik}
+                                tooltip={false}/>
+                                                                                        
+                            <MediumInputRow
+                                zIndex={0}
+                                fieldName="notes"
+                                label="Notes"
+                                tooltip={false}
+                                formik={this.props.formik}/>            
 
                             <Divider/>
                                                 

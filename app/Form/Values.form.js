@@ -164,7 +164,8 @@ const WoodProgram = {
     transition_strips_std: false,
     hvac_req: false,
     takeoff_resp: null,
-    waste_factor: null
+    waste_factor: null,
+    notes: null
 }
 
 const CarpetProgram = {
