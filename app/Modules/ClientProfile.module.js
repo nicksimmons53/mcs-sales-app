@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { ScrollView, View, Text, KeyboardAvoidingView } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
-import { Button, Switch } from 'react-native-elements';
+import { Button } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import Info from '../Components/Info.component';
 import ContactTable from '../Modules/ContactTable.module';
@@ -36,7 +36,8 @@ class ClientProfile extends Component {
     carpetProgram: null,
     countertopProgram: null,
     cabinetProgram: null,
-    emailOverlay: false
+    emailOverlay: false,
+    loading: false
   };
 
   componentDidMount( ) {
@@ -218,6 +219,10 @@ class ClientProfile extends Component {
         });
   }
 
+  loading = ( ) => {
+    this.setState({ loading: !this.state.loading });
+  }
+
   submitClient = async( ) => {
     let user = this.props.user;
     let client = this.props.client;
@@ -229,6 +234,8 @@ class ClientProfile extends Component {
     let carpetProgramInfo = null;
     let countertopProgramInfo = null;
     let cabinetProgramInfo = null;
+
+    this.loading( );
 
     await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/1`)
       .then((response) => {
@@ -354,6 +361,8 @@ class ClientProfile extends Component {
       .catch((error) => {
         console.error(error);
       });
+    
+    this.loading( );
   }
 
   render( ) {
