@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { View, StatusBar, KeyboardAvoidingView, Text } from 'react-native';
 import PropTypes from 'prop-types';
-import { Divider, ButtonGroup, Button } from 'react-native-elements';
+import { Divider, ButtonGroup } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import Wood from '../Modules/Wood.module';
 import Tile from '../Modules/Tile.module';
@@ -47,7 +47,7 @@ export default class Pricing extends Component {
               selectedIndex={selectedIndex}
               buttons={this.state.buttonGroup}
               selectedButtonStyle={styles.selected}
-              containerStyle={styles.buttonGroup} />
+              containerStyle={styles.buttonGroup}/>
 
             { selectedIndex === 0 ? <Tile client={client} user={user}/> : null }
 

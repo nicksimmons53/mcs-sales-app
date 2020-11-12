@@ -295,13 +295,7 @@ class ClientProfile extends Component {
         console.error(error);
       });
     
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/tileProgram`)
-      .then((response) => {
-        tileProgramInfo = response.data[0];
-      })
-      .catch((error) => {
-        console.error(error)
-      });
+    c
     
     await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/woodProgram`)
       .then((response) => {

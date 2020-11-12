@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
 
   // Table
   table: {
-    width: '90%',
+    width: '95%',
     margin: 10,
     borderWidth: 1,
     borderRadius: 3,
@@ -32,29 +32,28 @@ const styles = StyleSheet.create({
     padding: 10,
     color: colors.black
   },
-  columnTitle: {
-    marginLeft: 5
-  },
-  addRow: {
+
+  columnHeader: {
+    fontFamily: 'opensans-reg',
+    fontSize: 16,
     padding: 10,
-    justifyContent: 'center'
+    color: colors.black
   },
-  tableRow: {
-    flexDirection: 'row',
-    width: '100%',
-    alignItems: 'center',
-    paddingHorizontal: 0
-  },
-  inputContainer: {
+
+  cell: {
     flex: 1,
-    paddingHorizontal: 0,
-    paddingVertical: 5,
-  },
-  inputText: {
-    color: colors.background
-  },
-  noBottomBorder: {
-    borderBottomWidth: 0
+    marginLeft: 0,
+    paddingLeft: 0,
+    marginRight: 0,
+    paddingRight: 0,
+  },  
+  cellContainer: {
+    height: '100%',
+    borderWidth: 1,
+    borderRightWidth: 0.5,
+    borderLeftWidth: 0.5,
+    marginRight: 0,
+    paddingRight: 0,
   },
 
   // Buttons
@@ -68,7 +67,8 @@ const styles = StyleSheet.create({
   saveButtonContainer: {
     width: '20%',
     height: 75,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    margin: 10,
   },
   inHouseProgramButton: {
     width: '30%',
@@ -78,10 +78,16 @@ const styles = StyleSheet.create({
   save: {
     backgroundColor: colors.green,
   },
+  addRow: {
+    backgroundColor: colors.orange,
+  },
 
   // Misc
   row: {
-    flexDirection: 'row'
+    height: 48, 
+    width: '100%', 
+    flexDirection: 'row', 
+    alignItems:'center'
   },
   spreadsheet: {
     flex: 1,
