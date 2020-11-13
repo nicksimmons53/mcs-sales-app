@@ -25,7 +25,7 @@
     "react": "16.13.1",
     "react-dom": "16.9.0",
     "react-geocode": "^0.2.2",
-    "react-native": "0.63.3",
+    "react-native": "^0.63.3",
     "react-native-document-picker": "^3.5.4",
     "react-native-dotenv": "^0.2.0",
     "react-native-dropdown-picker": "^3.7.0",
@@ -73,7 +73,7 @@
     "schedule": "^0.5.0"
   },
   "private": true,
-  "name": "salesapp",
+  "name": "sageSalesApp",
   "version": "1.0.0",
   "repository": {
     "type": "git",
