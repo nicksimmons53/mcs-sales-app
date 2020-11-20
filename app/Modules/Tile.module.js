@@ -1,6 +1,6 @@
 // Library Imports
 import React, { Component } from 'react';
-import { View, ScrollView, Pressable } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import axios from 'axios';
@@ -314,8 +314,7 @@ class Tile extends Component {
             key={index} 
             index={index}
             user={this.props.user}
-            client={this.props.client}
-            levels={( ) => this.levels}/>
+            client={this.props.client}/>
         ))}
         </View>
       </ScrollView>
@@ -323,12 +322,12 @@ class Tile extends Component {
   }
 }
   
-  // Props Valdidation
-  Tile.propTypes = {
-    dropdown: PropTypes.bool,
-    addRow: PropTypes.func,
-    tables: PropTypes.object
-  }
-  
-  export default Tile;
+// Props Valdidation
+Tile.propTypes = {
+  dropdown: PropTypes.bool,
+  addRow: PropTypes.func,
+  tables: PropTypes.object
+}
+
+export default Tile;
   

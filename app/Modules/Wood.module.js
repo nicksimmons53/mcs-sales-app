@@ -13,15 +13,23 @@ class Wood extends Component {
     tables: [
       {
         name: "Wood Flooring",
-        headers: ["Level", "Retail per SqFt"],
+        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
         rows: {
           1: {
-              level: "",
-              total: ""
+            level: "",
+            unit: "",
+            material: "",
+            materialTax: "",
+            labor: "",
+            total: ""
           }
         },
         part: {
           level: "",
+          unit: "",
+          material: "",
+          materialTax: "",
+          labor: "",
           total: ""
         }
       }

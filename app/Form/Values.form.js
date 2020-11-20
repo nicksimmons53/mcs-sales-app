@@ -36,49 +36,6 @@ const Client = {
     done: 0,      // INT    - DONE
 };
 
-// const Part = {
-//     id: null,
-//     prtnme: "",
-//     prtunt: "SQFT",
-//     binnum: "",
-//     alpnum: "",
-//     msdsnm: "",
-//     mannme: "",
-//     mannum: "",
-//     usrdf1: "",
-//     usrdf2: "",
-//     cstcde: null,
-//     csttyp: null,
-//     prttsk: null,
-//     prtcls: null,
-//     dftloc: null,
-//     lstupd: null,
-//     reordr: null,
-//     minord: null,
-//     pkgqty: null,
-//     prtwgt: null,
-//     avgcst: null,
-//     prtcst: null,
-//     labunt: null,
-//     prtbil: null,
-//     qtyohn: null,
-//     stkitm: 1,
-//     serinv: null,
-//     mrkupr: null,
-//     labnum: null,
-//     ntetxt: "",
-//     prtspc: "",
-//     imgfle: "",
-//     srvprt: null,
-//     oemdur: null,
-//     reqivt: null,
-//     sbjpst: null,
-//     inactv: null,
-//     clntid: null,
-//     tblnme: "",
-//     prgrm_: null
-// };
-
 const Part = {
     description: "",
     unit: "",
@@ -349,6 +306,65 @@ let levels = [
     { label: "Z", value: "Z"},
 ];
 
+let countertopColors = [
+    { label: "Absolute Black", value: "Absolute Black" },
+    { label: "Allure", value: "Allure" },
+    { label: "Antarctica", value: "Antarctica" },
+    { label: "Atlantico", value: "Atlantico" },
+    { label: "Black Forest", value: "Black Forest" },
+    { label: "Black Pearl", value: "Black Pearl" },
+    { label: "Blanco Galia", value: "Blanco Galia" },
+    { label: "Blanco Perla", value: "Blanco Perla" },
+    { label: "Butterfly Beige", value: "Butterfly Beige" },
+    { label: "Calacatta Gyotto", value: "Calacatta Gyotto" },
+    { label: "Carmel Cream", value: "Carmel Cream" },
+    { label: "Cartier", value: "Cartier" },
+    { label: "Classic Cream", value: "Classic Cream" },
+    { label: "Colonial White", value: "Colonial White" },
+    { label: "Copper Canyon", value: "Copper Canyon" },
+    { label: "Crema Bordeaux", value: "Crema Bordeaux" },
+    { label: "Crema Marfil", value: "Crema Marfil" },
+    { label: "Delicatus White", value: "Delicatus White" },
+    { label: "Diamond Bianco", value: "Diamond Bianco" },
+    { label: "Giallo Arctic", value: "Giallo Arctic" },
+    { label: "Golden Paradise", value: "Golden Paradise" },
+    { label: "Himalaya White", value: "Himalaya White" },
+    { label: "Key West Gold", value: "Key West Gold" },
+    { label: "Mauloa Grey", value: "Mauloa Grey" },
+    { label: "New Caledonia", value: "New Caledonia" },
+    { label: "New Venetian Gold", value: "New Venetian Gold" },
+    { label: "Original Treasure", value: "Original Treasure" },
+    { label: "Rocky Mountain", value: "Rocky Mountain" },
+    { label: "Splendid", value: "Splendid" },
+    { label: "Summit White", value: "Summit White" },
+    { label: "Taj Mahal", value: "Taj Mahal" },
+    { label: "Tan Brown", value: "Tan Brown" },
+    { label: "Thunder White", value: "Thunder White" },
+    { label: "Tibet White", value: "Tibet White" },
+    { label: "Tulum", value: "Tulum" },
+    { label: "Typhoon Bordeaux", value: "Typhoon Bordeaux" },
+    { label: "Tropical Brown", value: "Tropical Brown" },
+    { label: "Uba Tuba", value: "Uba Tuba" },
+    { label: "Valle Nevado", value: "Valle Nevado" },
+    { label: "Verde Butterfly", value: "Verde Butterfly" },
+    { label: "Viscont White", value: "Viscont White" },
+];
+
+let countertopTypes = [
+    { label: "Granite 3cm", value: "Granite 3cm" },
+    { label: "Quartz 2cm", value: "Quartz 2cm" },
+    { label: "Quartz 3cm", value: "Quartz 3cm" },
+    { label: "Porcelain 1.2cm", value: "Porcelain 1.2cm" }
+];
+
+let units = [
+    { label: "", value: "" },
+    { label: "SqFt", value: "sqft" },
+    { label: "Each", value: "each" },
+    { label: "Linear Foot", value: "linear" },
+    { label: "SqYd", value: "sqyd" }
+];
+
 export { 
     User, 
     Client,
@@ -366,5 +382,8 @@ export {
     WoodFieldInfo,
     CarpetProgramInfo,
     TilePricing,
-    levels
+    levels,
+    units,
+    countertopTypes,
+    countertopColors
 };

@@ -13,26 +13,40 @@ class Carpet extends Component {
     tables: [
       {
         name: "Carpet Flooring",
-        headers: ["Level", "Division", "Style #", "Style Name", "Cut Price", "Retail Cut Price", "Turnkey w/ Level 1 Pad"],
+        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
         rows: {
           1: {
-              level: "",
-              division: "",
-              styleNum: "",
-              styleName: "",
-              cutPrice: "",
-              retailCutPrice: "",
-              turnkey: ""
+            level: "",
+            unit: "",
+            material: "",
+            materialTax: "",
+            labor: "",
+            total: ""
           }
         },
         part: {
           level: "",
-          division: "",
-          styleNum: "",
-          styleName: "",
-          cutPrice: "",
-          retailCutPrice: "",
-          turnkey: ""
+          unit: "",
+          material: "",
+          materialTax: "",
+          labor: "",
+          total: ""
+        }
+      },
+      {
+        name: "Carpet Pad",
+        headers: ["Level", "Unit", "Total"],
+        rows: {
+          1: {
+            level: "",
+            unit: "",
+            total: ""
+          }
+        },
+        part: {
+          level: "",
+          unit: "",
+          total: ""
         }
       },
     ]

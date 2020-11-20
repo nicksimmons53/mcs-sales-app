@@ -48,7 +48,6 @@ class Profile extends Component {
     axios.get(`${API_URL}/employee/${user.recnum}/clients`)
         .then((response) => {
           this.setState({ clients: response.data });
-          console.log(response.data)
         })
         .catch((error) => {
           console.error(error);

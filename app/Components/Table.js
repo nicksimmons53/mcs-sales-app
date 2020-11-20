@@ -5,21 +5,17 @@ import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import axios from 'axios';
-import { Divider, Input, Button } from 'react-native-elements';
-import { levels } from '../Form/Values.form';
+import { Divider, Input, Icon, Button } from 'react-native-elements';
+import { levels, units, countertopTypes, countertopColors } from '../Form/Values.form';
 import DropDownPicker from 'react-native-dropdown-picker';
 import colors from '../Library/Colors';
-import { Pressable } from 'react-native';
 
 class Table extends Component {
   state = {
-    units: [
-      { label: "", value: "" },
-      { label: "SqFt", value: "sqft" },
-      { label: "Each", value: "each" },
-      { label: "Linear Foot", value: "linear" }
-    ],
+    units: units,
     levels: levels,
+    countertopTypes: countertopTypes,
+    countertopColors: countertopColors,
     table: this.props.tableObj
   }
 
@@ -62,12 +58,17 @@ class Table extends Component {
           <Text style={styles.columnHeader}>{header}</Text>
         </View>
       ))}
+      <View style={{...styles.deleteCell, alignItems: 'center'}}>
+        <Text style={styles.columnHeader}></Text>
+      </View>
     </View>
   );
 
   attrCheck = (attr) => {
     switch (attr) {
       case "total":
+        if (this.props.product === "ctops")
+          return false;
         return true;
       
       case "materialTax":
@@ -77,34 +78,109 @@ class Table extends Component {
         return false;
     }
   }
+
+  columnOptions = (attr) => {
+    switch (attr) {
+      case "unit":
+        return { placeholder: "Unit...", choices: this.state.units};
+
+      case "level":
+        return { placeholder: "Level...", choices: this.state.levels};
+      
+      case "type":
+        return { placeholder: "Type...", choices: this.state.countertopTypes};
+      
+      case "color":
+        return { placeholder: "Color...", choices: this.state.countertopColors};
+    }
+  }
+
+  autofill = (formik) => {
+    let values = formik.values;
+
+    if (this.props.product === "ctops") {
+      let total = parseFloat(values[1].total).toFixed(3);
+
+      formik.setFieldValue(`1.total`, total);
+
+      Object.keys(values).map((index) => {
+        formik.setFieldValue(`${index}.total`, total);
+      });
+
+      return;
+    }
+
+    Object.keys(values).map((index) => {
+      let materialWithTax = values[index].material * 1.0825;
+      let total = parseFloat(materialWithTax) + parseFloat(values[index].labor).toFixed(3);
+
+      formik.setFieldValue(`${index}.materialTax`, materialWithTax);
+      formik.setFieldValue(`${index}.total`, total);
+    });
+  }
+
+  dropdown = (formik, attr, attrIndex) => {
+    let column = this.columnOptions(attr);
+
+    return (
+      <DropDownPicker
+        placeholder={column.placeholder}
+        defaultValue={""}
+        items={column.choices}
+        key={attrIndex}
+        containerStyle={styles.cell}
+        labelStyle={styles.dropdownItem}
+        itemStyle={styles.dropdownItem}
+        dropDownStyle={styles.dropdownMenu}/>
+    );
+  }
+
+  input = (formik, attr, row, attrIndex) => (
+    <Input
+      onChangeText={ formik.handleChange(`${row}.${attr}`) }
+      key={attrIndex}
+      defaultValue={formik.values[row][attr].toString( ) === null ? "" : formik.values[row][attr].toString( )}
+      disabled={this.attrCheck(attr)}
+      containerStyle={styles.cell}
+      inputContainerStyle={styles.cellContainer}/>
+  )
+
+  cell = (formik, attr, attrIndex, row) => {
+    switch (attr) {
+      case "unit":
+        return this.dropdown(formik, attr, attrIndex);
+      
+      case "level":
+        return this.dropdown(formik, attr, attrIndex);
+      
+      case "type":
+        return this.dropdown(formik, attr, attrIndex);
+      
+      case "color":
+        return this.dropdown(formik, attr, attrIndex);
+    
+      default:
+        return this.input(formik, attr, row, attrIndex);
+    }
+  }
   
   tableRow = (formik, row) => {
     let inverseIndex = Object.keys(formik.initialValues).length;
 
     return ( 
-        <View key={row} style={styles.row} zIndex={inverseIndex - row}>
-          {Object.keys(formik.initialValues[row]).map((attr, attrIndex) => 
-            (
-              attr == "unit" || attr == "level" ?
-                <DropDownPicker
-                  placeholder={attr == "unit" ? "Unit..." : "Level..."}
-                  items={attr == "unit" ? this.state.units : this.state.levels}
-                  defaultValue={""}
-                  key={attrIndex}
-                  containerStyle={styles.cell}
-                  labelStyle={styles.dropdownItem}
-                  itemStyle={styles.dropdownItem}
-                  dropDownStyle={styles.dropdownMenu}/>
-                :
-                <Input
-                  onChangeText={ formik.handleChange(`${row}.${attr}`) }
-                  key={attrIndex}
-                  disabled={this.attrCheck(attr)}
-                  containerStyle={styles.cell}
-                  inputContainerStyle={styles.cellContainer}/>
-            )
-          )}
-        </View>
+      <View style={styles.row} zIndex={inverseIndex - row}>
+        {Object.keys(formik.initialValues[row]).map((attr, attrIndex) => 
+          (
+            this.cell(formik, attr, attrIndex, row)
+          )
+        )}
+        <Icon 
+          name='minus-square' 
+          type='font-awesome' 
+          color={colors.red}
+          containerStyle={styles.deleteCell}
+          onPress ={( ) => this.deleteRow(row)}/>
+      </View>
     )
   }
     
@@ -120,27 +196,33 @@ class Table extends Component {
                 <Text style={styles.tableHeaderText}>{this.state.table.name}</Text>
                 <Divider/>
               </View>
-                {this.tableHeader( )}
 
-                {Object.keys(this.state.table.rows).map((row) => (
-                  this.tableRow(formikProps, row)
-                ))}
+              {this.tableHeader( )}
 
-                <View style={{...styles.row, justifyContent: 'flex-end'}}>
-                  <Button
-                    title='Save'
-                    buttonStyle={styles.save}
-                    containerStyle={styles.saveButtonContainer}
-                    onPress={formikProps.handleSubmit}/>
-                  <Button
-                    title='Add Row'
-                    buttonStyle={styles.addRow}
-                    containerStyle={styles.saveButtonContainer}
-                    onPress={( ) => this.addRow(this.props.index)}/>
-                </View>
-              </>
-            )}
-          </Formik>
+              {Object.keys(this.state.table.rows).map((row) => (
+                this.tableRow(formikProps, row)
+              ))}
+
+              <View style={{...styles.row, justifyContent: 'flex-start'}} zIndex={-1}>
+                <Button
+                  title='Save'
+                  buttonStyle={styles.save}
+                  containerStyle={styles.saveButtonContainer}
+                  onPress={formikProps.handleSubmit}/>
+                <Button
+                  title='Add Row'
+                  buttonStyle={styles.addRow}
+                  containerStyle={styles.saveButtonContainer}
+                  onPress={( ) => this.addRow(this.props.index)}/>
+                <Button
+                  title='Autofill'
+                  buttonStyle={styles.autofill}
+                  containerStyle={styles.saveButtonContainer}
+                  onPress={( ) => this.autofill(formikProps)}/>
+              </View>
+            </>
+          )}
+        </Formik>
       </View>
     )
   }
@@ -186,12 +268,19 @@ const styles = StyleSheet.create({
     },
   
     cell: {
-      flex: 1,
+      flex: 5,
       marginLeft: 0,
       paddingLeft: 0,
       marginRight: 0,
       paddingRight: 0,
-    },  
+    }, 
+    deleteCell: {
+      flex: 1,
+      marginLeft: 0,
+      marginRight: 0,
+      paddingLeft: 0,
+      paddingRight: 0
+    },
     cellContainer: {
       height: '100%',
       borderWidth: 1,
@@ -246,7 +335,10 @@ const styles = StyleSheet.create({
       backgroundColor: colors.green,
     },
     addRow: {
-      backgroundColor: colors.orange,
+      backgroundColor: colors.blue,
+    },
+    autofill: {
+      backgroundColor: colors.black
     },
   
     // Misc

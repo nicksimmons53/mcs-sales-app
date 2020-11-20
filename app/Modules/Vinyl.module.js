@@ -13,31 +13,47 @@ class Vinyl extends Component {
     tables: [
       {
         name: "Vinyl Plank",
-        headers: ["Level"],
+        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
         rows: {
           1: {
-              level: "",
+            level: "",
+            unit: "",
+            material: "",
+            materialTax: "",
+            labor: "",
+            total: ""
           }
         },
         part: {
           level: "",
-          styleNum: "",
-          styleName: "",
-          product: "",
-          total: "",
-          turnkey: ""
+          unit: "",
+          material: "",
+          materialTax: "",
+          labor: "",
+          total: ""
         }
       },
       {
         name: "Vinyl Sheet",
         headers: ["Level"],
+        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
         rows: {
           1: {
-              level: "",
+            level: "",
+            unit: "",
+            material: "",
+            materialTax: "",
+            labor: "",
+            total: ""
           }
         },
         part: {
           level: "",
+          unit: "",
+          material: "",
+          materialTax: "",
+          labor: "",
+          total: ""
         }
       },
     ]

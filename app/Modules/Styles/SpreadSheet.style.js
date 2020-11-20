@@ -39,6 +39,12 @@ const styles = StyleSheet.create({
     padding: 10,
     color: colors.black
   },
+  subtext: {
+    fontFamily: 'quicksand-reg',
+    fontSize: 16,
+    paddingTop: 20,
+    color: colors.grey
+  },
 
   cell: {
     flex: 1,
@@ -64,12 +70,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 30,
   },
-  saveButtonContainer: {
-    width: '20%',
-    height: 75,
-    justifyContent: 'center',
-    margin: 10,
-  },
   inHouseProgramButton: {
     width: '30%',
     height: 75,
@@ -80,6 +80,16 @@ const styles = StyleSheet.create({
   },
   addRow: {
     backgroundColor: colors.orange,
+  },
+  buttonContainer: {
+    width: '20%',
+    height: 75,
+    justifyContent: 'center',
+    marginTop: -50,
+    marginBottom: 50
+  },
+  addTable: {
+    backgroundColor: colors.orange
   },
 
   // Misc
