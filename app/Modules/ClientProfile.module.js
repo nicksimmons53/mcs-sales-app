@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { ScrollView, View, Text, KeyboardAvoidingView } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
-import { Button } from 'react-native-elements';
+import { Button, Icon } from 'react-native-elements';
 import Toast from 'react-native-easy-toast';
 import Info from '../Components/Info.component';
 import ContactTable from '../Modules/ContactTable.module';
@@ -13,7 +13,7 @@ import Email from '../Components/Email.component';
 import AddContact from './AddContact.module';
 import List from './List.module';
 import axios from 'axios';
-import { styles } from './Styles/ClientProfile.style';
+import { styles, colors } from './Styles/ClientProfile.style';
 import { ClientInfo, TileProgram, WoodProgram, CarpetProgram, CountertopProgram, CabinetProgram } from '../Form/Values.form';
 
 // Class Component that will show the Client Profile Information

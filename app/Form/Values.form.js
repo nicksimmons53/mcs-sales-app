@@ -227,7 +227,6 @@ const TilePricing = {
 };
 
 let levels = [
-    { label: "", value: ""},
     { label: "1", value: "1"},
     { label: "2", value: "2"},
     { label: "3", value: "3"},
@@ -358,7 +357,6 @@ let countertopTypes = [
 ];
 
 let units = [
-    { label: "", value: "" },
     { label: "SqFt", value: "sqft" },
     { label: "Each", value: "each" },
     { label: "Linear Foot", value: "linear" },

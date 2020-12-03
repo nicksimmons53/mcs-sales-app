@@ -41,6 +41,8 @@ class Table extends Component {
     table.rows[lastIndex + 1] = table.part;
 
     this.setState({ table: table });
+
+    console.log(table)
   }
 
   deleteRow = (index) => {
@@ -69,6 +71,9 @@ class Table extends Component {
       case "total":
         if (this.props.product === "ctops")
           return false;
+        if (this.props.tableObj.name === "Carpet Pad")
+          return false;
+
         return true;
       
       case "materialTax":
@@ -98,7 +103,7 @@ class Table extends Component {
   autofill = (formik) => {
     let values = formik.values;
 
-    if (this.props.product === "ctops") {
+    if (this.props.tableObj.name.match(/Level.*$/)) {
       let total = parseFloat(values[1].total).toFixed(3);
 
       formik.setFieldValue(`1.total`, total);
@@ -110,16 +115,30 @@ class Table extends Component {
       return;
     }
 
+    if (this.props.tableObj.name === "Sinks/Shape" && this.props.product === "ctops") {
+
+      Object.keys(values).map((index) => {
+        let total = parseFloat(values[index].price) + parseFloat(values[index].install);
+  
+        formik.setFieldValue(`${index}.install`, parseFloat(values[index].install).toFixed(3));
+        formik.setFieldValue(`${index}.total`, total.toFixed(3));
+
+        console.log(values)
+      });
+
+      return;
+    }
+
     Object.keys(values).map((index) => {
       let materialWithTax = values[index].material * 1.0825;
       let total = parseFloat(materialWithTax) + parseFloat(values[index].labor).toFixed(3);
 
-      formik.setFieldValue(`${index}.materialTax`, materialWithTax);
+      formik.setFieldValue(`${index}.materialTax`, materialWithTax.toFixed(3));
       formik.setFieldValue(`${index}.total`, total);
     });
   }
 
-  dropdown = (formik, attr, attrIndex) => {
+  dropdown = (formik, attr, attrIndex, cellStyle) => {
     let column = this.columnOptions(attr);
 
     return (
@@ -128,50 +147,65 @@ class Table extends Component {
         defaultValue={""}
         items={column.choices}
         key={attrIndex}
-        containerStyle={styles.cell}
+        containerStyle={cellStyle}
         labelStyle={styles.dropdownItem}
         itemStyle={styles.dropdownItem}
         dropDownStyle={styles.dropdownMenu}/>
     );
   }
 
-  input = (formik, attr, row, attrIndex) => (
-    <Input
-      onChangeText={ formik.handleChange(`${row}.${attr}`) }
-      key={attrIndex}
-      defaultValue={formik.values[row][attr].toString( ) === null ? "" : formik.values[row][attr].toString( )}
-      disabled={this.attrCheck(attr)}
-      containerStyle={styles.cell}
-      inputContainerStyle={styles.cellContainer}/>
-  )
+  input = (formik, attr, row, attrIndex, cellStyle) => {
+    const altered = ( ) => {
+      if (this.props.tableObj.name === "Sinks/Shape")
+        formik.setFieldValue(`${row}.altered`, true);
+    };
+    
+    return (
+      <Input
+        onChangeText={ formik.handleChange(`${row}.${attr}`) }
+        key={attrIndex}
+        onBlur={( ) => altered( )}
+        defaultValue={formik.values[row][attr].toString( ) === null ? "" : formik.values[row][attr].toString( )}
+        disabled={this.attrCheck(attr)}
+        containerStyle={cellStyle}
+        inputContainerStyle={styles.cellContainer}/>
+    );
+  }
 
-  cell = (formik, attr, attrIndex, row) => {
+  cell = (formik, attr, attrIndex, row, cellStyle) => {
     switch (attr) {
+      case "altered":
+        return;
+
       case "unit":
-        return this.dropdown(formik, attr, attrIndex);
+        return this.dropdown(formik, attr, attrIndex, cellStyle);
       
       case "level":
-        return this.dropdown(formik, attr, attrIndex);
+        return this.dropdown(formik, attr, attrIndex, cellStyle);
       
       case "type":
-        return this.dropdown(formik, attr, attrIndex);
+        return this.dropdown(formik, attr, attrIndex, cellStyle);
       
       case "color":
-        return this.dropdown(formik, attr, attrIndex);
+        return this.dropdown(formik, attr, attrIndex, cellStyle);
     
       default:
-        return this.input(formik, attr, row, attrIndex);
+        return this.input(formik, attr, row, attrIndex, cellStyle);
     }
   }
   
   tableRow = (formik, row) => {
     let inverseIndex = Object.keys(formik.initialValues).length;
+    let cellStyle = styles.cell;
+
+    if ("altered" in formik.values[row] && formik.values[row]["altered"] === true)
+      cellStyle = {...cellStyle, backgroundColor: colors.red}
 
     return ( 
       <View style={styles.row} zIndex={inverseIndex - row}>
         {Object.keys(formik.initialValues[row]).map((attr, attrIndex) => 
           (
-            this.cell(formik, attr, attrIndex, row)
+            this.cell(formik, attr, attrIndex, row, cellStyle)
           )
         )}
         <Icon 
@@ -189,7 +223,7 @@ class Table extends Component {
       <View style={styles.table}>
         <Formik
           initialValues={this.state.table.rows}
-          onSubmit={(values, actions) => this._saveTableData(values, actions)}>
+          onSubmit={(values, actions) => this.props.save(values, actions)}>
           {formikProps => (
             <>
               <View style={{height: 48, width: '100%'}}>
@@ -218,7 +252,7 @@ class Table extends Component {
                   title='Autofill'
                   buttonStyle={styles.autofill}
                   containerStyle={styles.saveButtonContainer}
-                  onPress={( ) => this.autofill(formikProps)}/>
+                  onPress={( ) => this.props.autofill(formikProps, this.props.tableObj)}/>
               </View>
             </>
           )}

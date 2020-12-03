@@ -28,18 +28,90 @@ class Countertops extends Component {
       },
       {
         name: "Sinks/Shape",
-        headers: ["SKU", "Description", "Installed Price"],
+        headers: ["Description", "Price", "Install", "Total"],
         rows: {
           1: {
-              sku: "",
-              description: "",
+              sku: "TMC 011 50/50 ",
+							price: "344.000",
+              install: "",
               total: "",
               altered: false
-          }
+          },
+          2: {
+              sku: "TMC 022 60/40 ",
+							price: "344.000",
+							install: "",
+              total: "",
+              altered: false
+          },
+          3: {
+              sku: "TMC 044 SINGLE BOWL",
+							price: "344.000",
+							install: "",
+              total: "",
+              altered: false
+          },
+          4: {
+              sku: "TMC 133 OVAL WHITE ",
+							price: "186.000",
+							install: "",
+              total: "",
+              altered: false
+          },
+          5: {
+              sku: "TMC 144 BISQUE OVAL",
+							price: "206.000",
+							install: "",
+              total: "",
+              altered: false
+          },
+          6: {
+              sku: "TMC 221 W RECTANGLE",
+							price: "206.000",
+							install: "",
+              total: "",
+              altered: false
+          },
+          7: {
+              sku: "TMC 222 B RECTANGLE",
+							price: "219.000",
+							install: "",
+              total: "",
+              altered: false
+          },
+          8: {
+              sku: "TMC 188 - Bar",
+							price: "473.000",
+							install: "",
+              total: "",
+              altered: false
+          },
+          9: {
+              sku: "TMC 177 - Bar",
+							price: "301.000",
+							install: "",
+              total: "",
+              altered: false
+          },
+          10: {
+              sku: "TMC 166 - Bar",
+							price: "224.000",
+							install: "",
+              total: "",
+              altered: false
+          },
+          11: {
+              sku: "TMCP 3321 - Single",
+							price: "824.000",
+							install: "",
+              total: "",
+              altered: false
+          },
         },
         part: {
           sku: "",
-          description: "",
+          price: "",
+          install: "",
           total: ""
         }
       },
@@ -87,18 +159,20 @@ class Countertops extends Component {
     let user = this.props.user;
     let client = this.props.client;
 
-    this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
+    // this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    values.clntid = client.id;
-    values.prgrm_ = 5;
+    // values.clntid = client.id;
+    // values.prgrm_ = 5;
 
-    axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/`, values)
-      .then((response) => {
-        console.log(response.status);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+    // axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/`, values)
+    //   .then((response) => {
+    //     console.log(response.status);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   })
+
+    console.log(values)
   }
 
   addTable = ( ) => {
@@ -125,20 +199,59 @@ class Countertops extends Component {
     this.setState({ tables: tables });
   }
   
+  autofill = (formik, table) => {
+    let values = formik.values;
+
+    if (table.name.match(/Level.*$/)) {
+      let total = parseFloat(values[1].total).toFixed(3);
+
+      formik.setFieldValue(`1.total`, total);
+
+      Object.keys(values).map((index) => {
+        formik.setFieldValue(`${index}.total`, total);
+      });
+
+      return;
+    }
+
+    if (table.name === "Edges") {
+      Object.keys(values).map((index) => {
+        let totalWithTax = values[index].total * 1.0825;
+  
+        formik.setFieldValue(`${index}.total`, totalWithTax.toFixed(3));
+      });
+
+      return;
+    }
+
+    if (table.name === "Sinks/Shape") {
+      Object.keys(values).map((index) => {
+        let totalWithTax = values[index].price * 1.0825;
+
+        formik.setFieldValue(`${index}.total`, totalWithTax.toFixed(3));
+      });
+
+      return;
+    }
+  }
+  
   render( ) {
     return (
       <ScrollView style={styles.sv}>
         <View style={styles.spreadsheet}>
           <Text style={styles.subtext}>Samples of countertops should be shown due to variance.</Text>
+          <Text style={styles.subtext}>Sink price includes installation/hole cut.</Text>
 
           {this.state.tables.map((tableObj, index) => (
             <Table 
               tableObj={tableObj} 
+              save={this._saveTableData}
               product="ctops"
               key={index} 
               index={index}
               user={this.props.user}
-              client={this.props.client}/>
+              client={this.props.client}
+              autofill={this.autofill}/>
           ))}
 
           <Button

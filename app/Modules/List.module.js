@@ -37,7 +37,7 @@ class List extends Component {
       return (
         <ListItem
           key={0}
-          title='No File Attachments Found'
+          title='No Files Found. Attach Files Here (Inventory Part Sheet, Original Price Sheet, etc...)'
           titleStyle={styles.listItemTitle}/>
       )
     } else {
@@ -67,6 +67,7 @@ class List extends Component {
     return (
       <ScrollView style={styles.background}>
         <Text style={styles.header}>{this.props.title}</Text>
+
         <Divider />
         {this.props.files ? this.renderFileList( ) : null}
         {this.state.modalVisible

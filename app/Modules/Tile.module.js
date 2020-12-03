@@ -287,21 +287,35 @@ class Tile extends Component {
   }
 
   _saveTableData = async(values, actions) => {
-    let user = this.props.user;
-    let client = this.props.client;
+    // let user = this.props.user;
+    // let client = this.props.client;
 
-    this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
+    // this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    values.clntid = client.id;
-    values.prgrm_ = 1;
+    // values.clntid = client.id;
+    // values.prgrm_ = 1;
 
-    axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/`, values)
-      .then((response) => {
-        console.log(response.status);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+    // axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/`, values)
+    //   .then((response) => {
+    //     console.log(response.status);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   })
+
+    console.log(values);
+  }
+
+  autofill = (formik) => {
+    let values = formik.values;
+
+    Object.keys(values).map((index) => {
+      let materialWithTax = values[index].material * 1.0825;
+      let total = parseFloat(materialWithTax) + parseFloat(values[index].labor);
+
+      formik.setFieldValue(`${index}.materialTax`, materialWithTax.toFixed(3));
+      formik.setFieldValue(`${index}.total`, total.toFixed(3));
+    }); 
   }
 
   render( ) { 
@@ -312,9 +326,11 @@ class Tile extends Component {
           <Table 
             tableObj={tableObj} 
             key={index} 
+            save={this._saveTableData}
             index={index}
             user={this.props.user}
-            client={this.props.client}/>
+            client={this.props.client}
+            autofill={this.autofill}/>
         ))}
         </View>
       </ScrollView>
