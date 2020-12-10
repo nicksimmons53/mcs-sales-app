@@ -265,45 +265,59 @@ class Tile extends Component {
     const client = this.props.client;
     const user = this.props.user;
 
-    /*
-    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/1`)
-        .then((response) => {
-          let parts = response.data;
-          
-          if (parts.length === 0) {
-            let part = Part;
-            this.setState({ parts: [...this.state.parts, part] });
-            return;
-          }
+    // this.state.tables.map((table, index) => {
+    //   let query = `?client=${client.id}&program=tile&table=${table.name}`;
+    //   let tables = this.state.tables;
 
-          this.setState({ parts: [...parts] });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-        */
+    //   axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/${query}`)
+    //     .then((response) => {
+    //       response.data.map((row) => {
+    //         Object.keys(row).map((key) => {
+    //           delete row[key];
+    //         });
+    //       });
+
+    //       // tables[index].rows = response.data;
+
+    //       // this.setState({ tables: tables });
+
+    //       // let parts = response.data;
+          
+    //       // if (parts.length === 0) {
+    //       //   let part = Part;
+    //       //   this.setState({ parts: [...this.state.parts, part] });
+    //       //   return;
+    //       // }
+
+    //       // this.setState({ parts: [...parts] });
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // });
 
     // this.setState({ tables: TilePricing.tables });
   }
 
-  _saveTableData = async(values, actions) => {
-    // let user = this.props.user;
-    // let client = this.props.client;
+  _saveTableData = async(table, values, actions) => {
+    let user = this.props.user;
+    let client = this.props.client;
+    
+    this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    // this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
+    // Object.keys(values).map((index) => {
+    //   values[index].client_id = client.id;
+    //   values[index].program = "tile";
+    //   values[index].programTable = table.name;
 
-    // values.clntid = client.id;
-    // values.prgrm_ = 1;
-
-    // axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/`, values)
-    //   .then((response) => {
-    //     console.log(response.status);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   })
-
-    console.log(values);
+    //   axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts`, values[index])
+    //     .then((response) => {
+    //       console.log(response);
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     })
+    // });
   }
 
   autofill = (formik) => {

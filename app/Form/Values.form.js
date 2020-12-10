@@ -95,7 +95,7 @@ const WoodProgram = {
     floor_trim_installer: false,
     floor_trim_pref: null,
     floor_trim_style: null,
-    second_story_hardie: false,
+    second_story_hardie: null,
     transition_strips_std: false,
     hvac_req: false,
     takeoff_resp: null,
@@ -350,6 +350,7 @@ let countertopColors = [
 ];
 
 let countertopTypes = [
+    { label: "Granite 2cm", value: "Granite 2cm" },
     { label: "Granite 3cm", value: "Granite 3cm" },
     { label: "Quartz 2cm", value: "Quartz 2cm" },
     { label: "Quartz 3cm", value: "Quartz 3cm" },

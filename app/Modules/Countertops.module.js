@@ -112,7 +112,8 @@ class Countertops extends Component {
           sku: "",
           price: "",
           install: "",
-          total: ""
+          total: "",
+          altered: ""
         }
       },
       {

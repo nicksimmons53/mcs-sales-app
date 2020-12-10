@@ -96,7 +96,7 @@ class CountertopProgramForm extends Component {
                                 zIndex={0}
                                 label="Are Waterfall Sides Standard (or Option)?"
                                 fieldName="waterfall_sides_std"
-                                formik={formik}
+                                formik={this.props.formik}
                                 defaultValue={values.waterfall_sides_std}
                                 tooltip={false}/>
                             
@@ -104,7 +104,7 @@ class CountertopProgramForm extends Component {
                                 zIndex={0}
                                 label="Faucet Holes (Are We Providing Sinks?)"
                                 fieldName="faucet_holes"
-                                formik={formik}
+                                formik={this.props.formik}
                                 defaultValue={values.faucet_holes}
                                 tooltip={false}/>
                             

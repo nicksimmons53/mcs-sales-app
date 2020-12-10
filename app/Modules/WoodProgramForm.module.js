@@ -37,6 +37,8 @@ class WoodProgramForm extends Component {
 
     render( ) {
         let values = this.props.formik.values;
+        
+        console.log(values)
 
         return (
             <View style={styles.background}>

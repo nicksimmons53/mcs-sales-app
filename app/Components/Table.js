@@ -19,21 +19,6 @@ class Table extends Component {
     table: this.props.tableObj
   }
 
-  _saveTableData = async(values, actions) => {
-    let user = this.props.user;
-    let client = this.props.client;
-
-    this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
-
-    axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/`, values)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }
-
   addRow = ( ) => {
     let table = this.state.table;
     let lastIndex = Object.keys(table.rows).length;
@@ -73,6 +58,10 @@ class Table extends Component {
           return false;
         if (this.props.tableObj.name === "Carpet Pad")
           return false;
+        if (this.props.tableObj.name === "Pattern Charges")
+          return false;
+        if (this.props.tableObj.name === "Shower Pans - Stone")
+          return false;
 
         return true;
       
@@ -100,47 +89,9 @@ class Table extends Component {
     }
   }
 
-  autofill = (formik) => {
-    let values = formik.values;
-
-    if (this.props.tableObj.name.match(/Level.*$/)) {
-      let total = parseFloat(values[1].total).toFixed(3);
-
-      formik.setFieldValue(`1.total`, total);
-
-      Object.keys(values).map((index) => {
-        formik.setFieldValue(`${index}.total`, total);
-      });
-
-      return;
-    }
-
-    if (this.props.tableObj.name === "Sinks/Shape" && this.props.product === "ctops") {
-
-      Object.keys(values).map((index) => {
-        let total = parseFloat(values[index].price) + parseFloat(values[index].install);
-  
-        formik.setFieldValue(`${index}.install`, parseFloat(values[index].install).toFixed(3));
-        formik.setFieldValue(`${index}.total`, total.toFixed(3));
-
-        console.log(values)
-      });
-
-      return;
-    }
-
-    Object.keys(values).map((index) => {
-      let materialWithTax = values[index].material * 1.0825;
-      let total = parseFloat(materialWithTax) + parseFloat(values[index].labor).toFixed(3);
-
-      formik.setFieldValue(`${index}.materialTax`, materialWithTax.toFixed(3));
-      formik.setFieldValue(`${index}.total`, total);
-    });
-  }
-
-  dropdown = (formik, attr, attrIndex, cellStyle) => {
+  dropdown = (formik, row, attr, attrIndex, cellStyle) => {
     let column = this.columnOptions(attr);
-
+    
     return (
       <DropDownPicker
         placeholder={column.placeholder}
@@ -150,7 +101,8 @@ class Table extends Component {
         containerStyle={cellStyle}
         labelStyle={styles.dropdownItem}
         itemStyle={styles.dropdownItem}
-        dropDownStyle={styles.dropdownMenu}/>
+        dropDownStyle={styles.dropdownMenu}
+        onChangeItem={item => formik.setFieldValue(`${row}.${attr}`, item)}/>
     );
   }
 
@@ -178,16 +130,16 @@ class Table extends Component {
         return;
 
       case "unit":
-        return this.dropdown(formik, attr, attrIndex, cellStyle);
+        return this.dropdown(formik, row, attr, attrIndex, cellStyle);
       
       case "level":
-        return this.dropdown(formik, attr, attrIndex, cellStyle);
+        return this.dropdown(formik, row, attr, attrIndex, cellStyle);
       
       case "type":
-        return this.dropdown(formik, attr, attrIndex, cellStyle);
+        return this.dropdown(formik, row, attr, attrIndex, cellStyle);
       
       case "color":
-        return this.dropdown(formik, attr, attrIndex, cellStyle);
+        return this.dropdown(formik, row, attr, attrIndex, cellStyle);
     
       default:
         return this.input(formik, attr, row, attrIndex, cellStyle);
@@ -223,7 +175,7 @@ class Table extends Component {
       <View style={styles.table}>
         <Formik
           initialValues={this.state.table.rows}
-          onSubmit={(values, actions) => this.props.save(values, actions)}>
+          onSubmit={(values, actions) => this.props.save(this.props.tableObj, values, actions)}>
           {formikProps => (
             <>
               <View style={{height: 48, width: '100%'}}>
