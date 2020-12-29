@@ -226,7 +226,6 @@ class ClientProfile extends Component {
   submitClient = async( ) => {
     let user = this.props.user;
     let client = this.props.client;
-    let parts = [ ];
     let contacts = [ ];
     let advancedInfo = null;
     let tileProgramInfo = null;
@@ -237,56 +236,6 @@ class ClientProfile extends Component {
 
     this.loading( );
 
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/1`)
-      .then((response) => {
-        response.data.map((object, index) => {
-          parts.push(object);
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/2`)
-      .then((response) => {
-        response.data.map((object, index) => {
-          parts.push(object);
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/3`)
-      .then((response) => {
-        response.data.map((object, index) => {
-          parts.push(object);
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/4`)
-      .then((response) => {
-        response.data.map((object, index) => {
-          parts.push(object);
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/5`)
-      .then((response) => {
-        response.data.map((object, index) => {
-          parts.push(object);
-        });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
     await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advanced-info`)
       .then((response) => {
         advancedInfo = response.data[0];
@@ -294,8 +243,6 @@ class ClientProfile extends Component {
       .catch((error) => {
         console.error(error);
       });
-    
-    c
     
     await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/woodProgram`)
       .then((response) => {
@@ -337,25 +284,24 @@ class ClientProfile extends Component {
       .catch((error) => {
         console.error(error);
       });
-
+    
     axios.post(`${API_URL}/submit-client`, { 
-      client: this.props.client, 
-      parts: parts, 
-      tileProgramInfo: tileProgramInfo, 
-      woodProgramInfo: woodProgramInfo,
-      carpetProgramInfo: carpetProgramInfo,
-      countertopProgramInfo: countertopProgramInfo,
-      cabinetProgramInfo: cabinetProgramInfo,
-      advancedInfo: advancedInfo, 
-      contacts: contacts 
-    })
+        client: this.props.client, 
+        tileProgramInfo: tileProgramInfo, 
+        woodProgramInfo: woodProgramInfo,
+        carpetProgramInfo: carpetProgramInfo,
+        countertopProgramInfo: countertopProgramInfo,
+        cabinetProgramInfo: cabinetProgramInfo,
+        advancedInfo: advancedInfo, 
+        contacts: contacts 
+      })
       .then((response) => {
         this.showSubmitToast( );
       })
       .catch((error) => {
         console.error(error);
       });
-    
+      
     this.loading( );
   }
 
@@ -471,7 +417,7 @@ class ClientProfile extends Component {
 
             <Toast ref='toast' position='bottom' style={styles.toast} />
             <Toast ref='toast2' position='bottom' style={styles.toast} />
-            <Toast ref='toast3' position='bottom' style={styles.toast} />
+            <Toast ref='toast3' position='center' style={styles.toast} />
           </ScrollView>
         </KeyboardAvoidingView>
       );

@@ -8,107 +8,41 @@ import { styles, colors } from './Styles/SpreadSheet.style';
 import Table from '../Components/Table';
 
 class Vinyl extends Component {
-  state = {
-    parts: [ ],
-    tables: [
-      {
-        name: "Vinyl Plank",
-        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
-        rows: {
-          1: {
-            level: "",
-            unit: "",
-            material: "",
-            materialTax: "",
-            labor: "",
-            total: ""
-          }
-        },
-        part: {
-          level: "",
-          unit: "",
-          material: "",
-          materialTax: "",
-          labor: "",
-          total: ""
-        }
-      },
-      {
-        name: "Vinyl Sheet",
-        headers: ["Level"],
-        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
-        rows: {
-          1: {
-            level: "",
-            unit: "",
-            material: "",
-            materialTax: "",
-            labor: "",
-            total: ""
-          }
-        },
-        part: {
-          level: "",
-          unit: "",
-          material: "",
-          materialTax: "",
-          labor: "",
-          total: ""
-        }
-      },
-    ]
+  _saveTableData = async(formik, tableName) => {
+    let rows = formik.form.values.rows;
+    let user = this.props.user;
+    let client = this.props.client;
+
+    rows.map((row, index) => {
+      if (row.total === "" || row.total == "NaN") {
+        formik.remove(index);
+      } else {
+        row.client_id = client.id;
+        row.program = "vinyl";
+        row.programTable = tableName;
+
+        axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts`, row)
+          .then((response) => {
+            console.log(response.status);
+
+            this.props.savedTableNoti(tableName);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      }
+    });
   }
 
-  componentDidMount( ) {
-    const client = this.props.client;
-    const user = this.props.user;
+  autofill = (arrayHelpers) => {
+    let values = arrayHelpers.form.values.rows;
 
-    // axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/4`)
-    //     .then((response) => {
-    //       let parts = response.data;
-          
-    //       if (parts.length === 0) {
-    //         let part = Part;
-    //         this.setState({ parts: [...this.state.parts, part] });
-    //         return;
-    //       }
-          
-    //       this.setState({ parts: [...parts] });
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-  }
+    values.map((row, index) => {
+      let materialWithTax = row.material * 1.0825;
+      let total = parseFloat(materialWithTax) + parseFloat(row.labor);
 
-  _saveTableData = async(values, actions) => {
-    // let user = this.props.user;
-    // let client = this.props.client;
-
-    // this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
-
-    // values.clntid = client.id;
-    // values.prgrm_ = 1;
-
-    // axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/`, values)
-    //   .then((response) => {
-    //     console.log(response.status);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   })
-
-    console.log(values);
-  }
-
-  autofill = (formik) => {
-    let values = formik.values;
-
-    Object.keys(values).map((index) => {
-      let materialWithTax = values[index].material * 1.0825;
-      let total = parseFloat(materialWithTax) + parseFloat(values[index].labor);
-
-      formik.setFieldValue(`${index}.materialTax`, materialWithTax.toFixed(3));
-      formik.setFieldValue(`${index}.total`, total.toFixed(3));
+      arrayHelpers.form.setFieldValue(`rows.${index}.materialTax`, materialWithTax.toFixed(3));
+      arrayHelpers.form.setFieldValue(`rows.${index}.total`, total.toFixed(3));
     }); 
   }
   
@@ -116,7 +50,7 @@ class Vinyl extends Component {
     return (
       <ScrollView style={styles.sv}>
         <View style={styles.spreadsheet}>
-        {this.state.tables.map((tableObj, index) => (
+        {this.props.tables.map((tableObj, index) => (
           <Table 
             tableObj={tableObj} 
             key={index} 
@@ -136,7 +70,7 @@ class Vinyl extends Component {
   Vinyl.propTypes = {
     dropdown: PropTypes.bool,
     addRow: PropTypes.func,
-    tables: PropTypes.object
+    tables: PropTypes.array
   }
   
   export default Vinyl;

@@ -101,7 +101,8 @@ const styles = StyleSheet.create({
   },
   spreadsheet: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 100
   }
 });
 

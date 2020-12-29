@@ -5,8 +5,6 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import colors from '../Library/Colors';
 
 const DropdownRow = ({...props}) => {
-    console.log(props.choices);
-
     return (
         <View style={styles.textRow} zIndex={props.zIndex}>
             <Text style={styles.label}>{props.title}</Text>

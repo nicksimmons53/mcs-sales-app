@@ -8,327 +8,41 @@ import { styles, colors } from './Styles/SpreadSheet.style';
 import Table from '../Components/Table';
 
 class Tile extends Component {
-  state = {
-    tables: [
-      {
-        name: "Floor Tile",
-        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
-        rows: {
-          1: {
-              level: "",
-              unit: "",
-              material: "",
-              materialTax: "",
-              labor: "",
-              total: ""
-          }
-        },
-        part: {
-          level: "",
-          unit: "",
-          material: "",
-          materialTax: "",
-          labor: "",
-          total: ""
-        }
-      },
-      {
-        name: "Bathroom Wall Tile",
-        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
-        rows: {
-          1: {
-              level: "",
-              unit: "",
-              material: "",
-              materialTax: "",
-              labor: "",
-              total: ""
-          }
-        },
-        part: {
-          level: "",
-          unit: "",
-          material: "",
-          materialTax: "",
-          labor: "",
-          total: ""
-        }
-      },
-      {
-        name: "Backsplash Wall Tile",
-        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
-        rows: {
-          1: {
-              level: "",
-              unit: "",
-              material: "",
-              materialTax: "",
-              labor: "",
-              total: ""
-          }
-        },
-        part: {
-          level: "",
-          unit: "",
-          material: "",
-          materialTax: "",
-          labor: "",
-          total: ""
-        }
-      },
-      {
-        name: "Fireplace Wall Tile",
-        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
-        rows: {
-          1: {
-              level: "",
-              unit: "",
-              material: "",
-              materialTax: "",
-              labor: "",
-              total: ""
-          }
-        },
-        part: {
-          level: "",
-          unit: "",
-          material: "",
-          materialTax: "",
-          labor: "",
-          total: ""
-        }
-      },
-      {
-        name: "Floor Stone",
-        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
-        rows: {
-          1: {
-              level: "",
-              unit: "",
-              material: "",
-              materialTax: "",
-              labor: "",
-              total: ""
-          }
-        },
-        part: {
-          level: "",
-          unit: "",
-          material: "",
-          materialTax: "",
-          labor: "",
-          total: ""
-        }
-      },
-      {
-        name: "Bathroom Wall Stone",
-        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
-        rows: {
-          1: {
-              level: "",
-              unit: "",
-              material: "",
-              materialTax: "",
-              labor: "",
-              total: ""
-          }
-        },
-        part: {
-          level: "",
-          unit: "",
-          material: "",
-          materialTax: "",
-          labor: "",
-          total: ""
-        }
-      },
-      {
-        name: "Backsplash Wall Stone",
-        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
-        rows: {
-          1: {
-              level: "",
-              unit: "",
-              material: "",
-              materialTax: "",
-              labor: "",
-              total: ""
-          }
-        },
-        part: {
-          level: "",
-          unit: "",
-          material: "",
-          materialTax: "",
-          labor: "",
-          total: ""
-        }
-      },
-      {
-        name: "Fireplace Wall Stone",
-        headers: ["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"],
-        rows: {
-          1: {
-              level: "",
-              unit: "",
-              material: "",
-              materialTax: "",
-              labor: "",
-              total: ""
-          }
-        },
-        part: {
-          level: "",
-          unit: "",
-          material: "",
-          materialTax: "",
-          labor: "",
-          total: ""
-        }
-      },
-      {
-        name: "Shower Pans - Stone",
-        headers: ["Level", "Total"],
-        rows: {
-          1: {
-              level: "",
-              total: ""
-          }
-        },
-        part: {
-          level: "",
-          total: ""
-        }
-      },
-      {
-        name: "Shower Pans - Tile",
-        headers: ["Level", "Total"],
-        rows: {
-          1: {
-              level: "",
-              total: ""
-          }
-        },
-        part: {
-          level: "",
-          total: ""
-        }
-      },
-      {
-        name: "Shower Pans - Deco",
-        headers: ["Level", "Total"],
-        rows: {
-          1: {
-              level: "",
-              total: ""
-          }
-        },
-        part: {
-          level: "",
-          total: ""
-        }
-      },
-      {
-        name: "Pattern Charges",
-        headers: ["Level", "Pattern", "Cost per SqFt"],
-        rows: {
-          1: {
-              level: "",
-              pattern: "",
-              total: ""
-          }
-        },
-        part: {
-          level: "",
-          pattern: "",
-          total: ""
-        }
-      },,
-      {
-        name: "Add-Ons",
-        headers: ["Level", "Cost"],
-        rows: {
-          1: {
-              level: "",
-              total: ""
-          }
-        },
-        part: {
-          level: "",
-          total: ""
-        }
-      }
-    ]
-  }
-
-  componentDidMount( ) {
-    const client = this.props.client;
-    const user = this.props.user;
-
-    // this.state.tables.map((table, index) => {
-    //   let query = `?client=${client.id}&program=tile&table=${table.name}`;
-    //   let tables = this.state.tables;
-
-    //   axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/${query}`)
-    //     .then((response) => {
-    //       response.data.map((row) => {
-    //         Object.keys(row).map((key) => {
-    //           delete row[key];
-    //         });
-    //       });
-
-    //       // tables[index].rows = response.data;
-
-    //       // this.setState({ tables: tables });
-
-    //       // let parts = response.data;
-          
-    //       // if (parts.length === 0) {
-    //       //   let part = Part;
-    //       //   this.setState({ parts: [...this.state.parts, part] });
-    //       //   return;
-    //       // }
-
-    //       // this.setState({ parts: [...parts] });
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // });
-
-    // this.setState({ tables: TilePricing.tables });
-  }
-
-  _saveTableData = async(table, values, actions) => {
+  _saveTableData = async(formik, tableName) => {
+    let rows = formik.form.values.rows;
     let user = this.props.user;
     let client = this.props.client;
-    
-    this.timeout = setTimeout(( ) => { actions.setSubmitting(false); }, 1000);
 
-    // Object.keys(values).map((index) => {
-    //   values[index].client_id = client.id;
-    //   values[index].program = "tile";
-    //   values[index].programTable = table.name;
+    rows.map((row, index) => {
+      if (row.total === "" || row.total == "NaN") {
+        formik.remove(index);
+      } else {
+        row.client_id = client.id;
+        row.program = "tile";
+        row.programTable = tableName;
 
-    //   axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts`, values[index])
-    //     .then((response) => {
-    //       console.log(response);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     })
-    // });
+        axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts`, row)
+          .then((response) => {
+            console.log(response.status);
+
+            this.props.savedTableNoti(tableName);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      }
+    });
   }
 
-  autofill = (formik) => {
-    let values = formik.values;
+  autofill = (arrayHelpers, tableName) => {
+    let values = arrayHelpers.form.values.rows;
 
-    Object.keys(values).map((index) => {
-      let materialWithTax = values[index].material * 1.0825;
-      let total = parseFloat(materialWithTax) + parseFloat(values[index].labor);
+    values.map((row, index) => {
+      let materialWithTax = row.material * 1.0825;
+      let total = parseFloat(materialWithTax) + parseFloat(row.labor);
 
-      formik.setFieldValue(`${index}.materialTax`, materialWithTax.toFixed(3));
-      formik.setFieldValue(`${index}.total`, total.toFixed(3));
+      arrayHelpers.form.setFieldValue(`rows.${index}.materialTax`, materialWithTax.toFixed(3));
+      arrayHelpers.form.setFieldValue(`rows.${index}.total`, total.toFixed(3));
     }); 
   }
 
@@ -336,9 +50,10 @@ class Tile extends Component {
     return (
       <ScrollView style={styles.sv}>
         <View style={styles.spreadsheet}>
-        {this.state.tables.map((tableObj, index) => (
+        {this.props.tables.map((tableObj, index) => (
           <Table 
             tableObj={tableObj} 
+            setTable={this.setTable}
             key={index} 
             save={this._saveTableData}
             index={index}
@@ -356,7 +71,7 @@ class Tile extends Component {
 Tile.propTypes = {
   dropdown: PropTypes.bool,
   addRow: PropTypes.func,
-  tables: PropTypes.object
+  tables: PropTypes.array
 }
 
 export default Tile;

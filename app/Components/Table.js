@@ -2,11 +2,11 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
-import PropTypes from 'prop-types';
-import { Formik } from 'formik';
+import PropTypes, { array } from 'prop-types';
+import { Formik, FieldArray } from 'formik';
 import axios from 'axios';
 import { Divider, Input, Icon, Button } from 'react-native-elements';
-import { levels, units, countertopTypes, countertopColors } from '../Form/Values.form';
+import { levels, units, countertopTypes, countertopColors, edges, patterns } from '../Form/Values.form';
 import DropDownPicker from 'react-native-dropdown-picker';
 import colors from '../Library/Colors';
 
@@ -14,28 +14,32 @@ class Table extends Component {
   state = {
     units: units,
     levels: levels,
+    patterns: patterns,
     countertopTypes: countertopTypes,
     countertopColors: countertopColors,
+    edges: edges,
     table: this.props.tableObj
   }
 
-  addRow = ( ) => {
-    let table = this.state.table;
-    let lastIndex = Object.keys(table.rows).length;
-
-    table.rows[lastIndex + 1] = table.part;
-
-    this.setState({ table: table });
-
-    console.log(table)
+  addRow = (arrayHelpers) => {
+    arrayHelpers.push(this.props.tableObj.part)
   }
 
-  deleteRow = (index) => {
-    let table = this.state.table;
+  deleteRow = (arrayHelpers, index) => {
+    let user = this.props.user;
+    let client = this.props.client;
 
-    delete table.rows[index];
-
-    this.setState({ table: table });
+    console.log(arrayHelpers.form.values.rows[index].id)
+    
+    axios.delete(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/${arrayHelpers.form.values.rows[index].id}`)
+      .then((response) => {
+        console.log(response.status);
+        arrayHelpers.remove(index);
+      })
+      .catch((error) => {
+        console.log(error);
+        arrayHelpers.remove(index);
+      });
   }
 
   tableHeader = ( ) => (
@@ -82,133 +86,192 @@ class Table extends Component {
         return { placeholder: "Level...", choices: this.state.levels};
       
       case "type":
+        if (this.state.table.name === "Edges")
+          return { placeholder: "Choose...", choices: this.state.edges };
+
         return { placeholder: "Type...", choices: this.state.countertopTypes};
       
       case "color":
         return { placeholder: "Color...", choices: this.state.countertopColors};
+      
+      case "description":
+        return { placeholder: "Choose...", choices: this.state.patterns }
     }
   }
 
-  dropdown = (formik, row, attr, attrIndex, cellStyle) => {
+  dropdown = (formik, attr, row, attrIndex, rowIndex, cellStyle) => {
     let column = this.columnOptions(attr);
     
     return (
       <DropDownPicker
         placeholder={column.placeholder}
-        defaultValue={""}
+        defaultValue={formik.form.values.rows[rowIndex][attr]}
         items={column.choices}
         key={attrIndex}
         containerStyle={cellStyle}
         labelStyle={styles.dropdownItem}
         itemStyle={styles.dropdownItem}
         dropDownStyle={styles.dropdownMenu}
-        onChangeItem={item => formik.setFieldValue(`${row}.${attr}`, item)}/>
+        onChangeItem={item => formik.form.setFieldValue(`rows.${rowIndex}.${attr}`, item.value)}/>
     );
   }
 
-  input = (formik, attr, row, attrIndex, cellStyle) => {
-    const altered = ( ) => {
-      if (this.props.tableObj.name === "Sinks/Shape")
-        formik.setFieldValue(`${row}.altered`, true);
-    };
-    
+  input = (formik, attr, row, attrIndex, rowIndex, cellStyle) => {
+    // const altered = ( ) => {
+    //   if (this.props.tableObj.name === "Sinks/Shape")
+    //     formik.setFieldValue(`${row}.altered`, true);
+    // };
+
     return (
       <Input
-        onChangeText={ formik.handleChange(`${row}.${attr}`) }
+        onChangeText={ formik.form.handleChange(`rows.${rowIndex}.${attr}`) }
         key={attrIndex}
-        onBlur={( ) => altered( )}
-        defaultValue={formik.values[row][attr].toString( ) === null ? "" : formik.values[row][attr].toString( )}
+        defaultValue={formik.form.values.rows[rowIndex][attr].toString( )}
         disabled={this.attrCheck(attr)}
         containerStyle={cellStyle}
         inputContainerStyle={styles.cellContainer}/>
     );
   }
 
-  cell = (formik, attr, attrIndex, row, cellStyle) => {
+  cell = (formik, attr, attrIndex, row, rowIndex, cellStyle) => {
     switch (attr) {
+      case "id":
+        return;
+
       case "altered":
         return;
 
+      case "client_id":
+        return;
+      
+      case "program":
+        return;
+      
+      case "programTable":
+        return;
+
       case "unit":
-        return this.dropdown(formik, row, attr, attrIndex, cellStyle);
+        return this.dropdown(formik, attr, row, attrIndex, rowIndex, cellStyle);
       
       case "level":
-        return this.dropdown(formik, row, attr, attrIndex, cellStyle);
+        return this.dropdown(formik, attr, row, attrIndex, rowIndex, cellStyle);
       
       case "type":
-        return this.dropdown(formik, row, attr, attrIndex, cellStyle);
+        return this.dropdown(formik, attr, row, attrIndex, rowIndex, cellStyle);
       
       case "color":
-        return this.dropdown(formik, row, attr, attrIndex, cellStyle);
+        return this.dropdown(formik, attr, row, attrIndex, rowIndex, cellStyle);
+      
+      case "description":
+        if (this.state.table.name === "Pattern Charges")
+          return this.dropdown(formik, attr, row, attrIndex, rowIndex, cellStyle);
+
+        return this.input(formik, attr, row, attrIndex, rowIndex, cellStyle);
     
       default:
-        return this.input(formik, attr, row, attrIndex, cellStyle);
+        return this.input(formik, attr, row, attrIndex, rowIndex, cellStyle);
     }
   }
   
-  tableRow = (formik, row) => {
-    let inverseIndex = Object.keys(formik.initialValues).length;
+  tableRow = (arrayHelpers, row, index) => {
+    let inverseIndex = Object.keys(arrayHelpers.form.values).length;
     let cellStyle = styles.cell;
-
-    if ("altered" in formik.values[row] && formik.values[row]["altered"] === true)
-      cellStyle = {...cellStyle, backgroundColor: colors.red}
-
-    return ( 
-      <View style={styles.row} zIndex={inverseIndex - row}>
-        {Object.keys(formik.initialValues[row]).map((attr, attrIndex) => 
-          (
-            this.cell(formik, attr, attrIndex, row, cellStyle)
-          )
-        )}
-        <Icon 
-          name='minus-square' 
-          type='font-awesome' 
-          color={colors.red}
-          containerStyle={styles.deleteCell}
-          onPress ={( ) => this.deleteRow(row)}/>
-      </View>
+    
+    return (
+        <View style={styles.row} zIndex={inverseIndex - index}>
+          {Object.keys(row).map((attr, attrIndex) => 
+            (
+              this.cell(arrayHelpers, attr, attrIndex, row, index, cellStyle)
+            )
+          )}
+          <Icon 
+            name='minus-square' 
+            type='font-awesome' 
+            color={colors.red}
+            containerStyle={styles.deleteCell}
+            onPress ={( ) => this.deleteRow(arrayHelpers, index)}/>
+        </View>
     )
+  }
+
+  retrieveData = ( ) => {
+    const client = this.props.client;
+    const user = this.props.user;
+
+    let query = `?client=${client.id}&program=tile&table=${this.state.table.name}`;
+
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/${query}`)
+      .then((response) => {
+        if (response.data.length != 0) {
+          response.data.map((row, index) => {
+            for (var key in row) {
+              if (!table.part.hasOwnProperty(key))
+                delete response.data[index][key];
+            }
+          });
+
+          console.log(response.data)
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
     
   render( ) {
+    let tablesWithoutAutofill = ["Shower Pans - Stone", "Shower Pans - Tile", 
+        "Shower Pans - Deco", "Underlayment", "Pattern Charges", "Accents", 
+        "Shower Seats", "Add-Ons", "Carpet Pad", "Edges", "Sinks/Shape"];
+
     return (
       <View style={styles.table}>
         <Formik
-          initialValues={this.state.table.rows}
-          onSubmit={(values, actions) => this.props.save(this.props.tableObj, values, actions)}>
-          {formikProps => (
-            <>
-              <View style={{height: 48, width: '100%'}}>
-                <Text style={styles.tableHeaderText}>{this.state.table.name}</Text>
-                <Divider/>
-              </View>
+          initialValues={{ rows: this.state.table.rows }}
+          onSubmit={(formik) => this.props.save(formik, this.props.table)}
+          render={( { values } ) => (
+              <FieldArray name="rows" render={(arrayHelpers) => {
+                return (
+                  <>
+                    <View style={{height: 48, width: '100%'}}>
+                      <Text style={styles.tableHeaderText}>{this.state.table.name}</Text>
+                      <Divider/>
+                    </View>
 
-              {this.tableHeader( )}
+                    {this.tableHeader( )}
 
-              {Object.keys(this.state.table.rows).map((row) => (
-                this.tableRow(formikProps, row)
-              ))}
+                    {values.rows.map((row, index) => (
+                      this.tableRow(arrayHelpers, row, index)
+                    ))}
 
-              <View style={{...styles.row, justifyContent: 'flex-start'}} zIndex={-1}>
-                <Button
-                  title='Save'
-                  buttonStyle={styles.save}
-                  containerStyle={styles.saveButtonContainer}
-                  onPress={formikProps.handleSubmit}/>
-                <Button
-                  title='Add Row'
-                  buttonStyle={styles.addRow}
-                  containerStyle={styles.saveButtonContainer}
-                  onPress={( ) => this.addRow(this.props.index)}/>
-                <Button
-                  title='Autofill'
-                  buttonStyle={styles.autofill}
-                  containerStyle={styles.saveButtonContainer}
-                  onPress={( ) => this.props.autofill(formikProps, this.props.tableObj)}/>
-              </View>
-            </>
+                    <View style={{...styles.row, justifyContent: 'flex-start'}} zIndex={-1}>
+                      <Button
+                        title='Save'
+                        buttonStyle={styles.save}
+                        containerStyle={styles.saveButtonContainer}
+                        onPress={ ( ) => this.props.save(arrayHelpers, this.state.table.name) }/>
+                      <Button
+                        title='Add Row'
+                        buttonStyle={styles.addRow}
+                        containerStyle={styles.saveButtonContainer}
+                        onPress={( ) => this.addRow(arrayHelpers)}/>
+                      {
+                        tablesWithoutAutofill.includes(this.state.table.name)
+                        ?
+                        null
+                        :
+                        <Button
+                          title='Autofill'
+                          buttonStyle={styles.autofill}
+                          containerStyle={styles.saveButtonContainer}
+                          onPress={( ) => this.props.autofill(arrayHelpers, this.state.table)}/>
+                      }
+                    </View>
+                  </>
+                )}
+              }
+            />
           )}
-        </Formik>
+        />
       </View>
     )
   }
