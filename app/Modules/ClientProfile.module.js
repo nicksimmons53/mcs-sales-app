@@ -226,77 +226,117 @@ class ClientProfile extends Component {
   submitClient = async( ) => {
     let user = this.props.user;
     let client = this.props.client;
-    let contacts = [ ];
-    let advancedInfo = null;
-    let tileProgramInfo = null;
-    let woodProgramInfo = null;
-    let carpetProgramInfo = null;
-    let countertopProgramInfo = null;
-    let cabinetProgramInfo = null;
-
+    let parts = {
+      tile: null,
+      wood: null,
+      carpet: null,
+      vinyl: null,
+      countertops: null
+    };
+    
     this.loading( );
 
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advanced-info`)
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/tile-program`)
       .then((response) => {
-        advancedInfo = response.data[0];
+        parts.tile = {
+          floorTile: [...response.data[0]],
+          bathroomWallTile: [...response.data[1]],
+          backsplashWallTile: [...response.data[2]],
+          fireplaceWallTile: [...response.data[3]],
+          floorStone: [...response.data[4]],
+          bathroomWallStone: [...response.data[5]],
+          backsplashWallStone: [...response.data[6]],
+          fireplaceWallStone: [...response.data[7]],
+          showerPansStone: [...response.data[8]],
+          showerPansTile: [...response.data[9]],
+          showerPansDeco: [...response.data[10]],
+          underlayment: [...response.data[11]],
+          patternCharges: [...response.data[12]],
+          accents: [...response.data[13]],
+          showerSeats: [...response.data[14]],
+          addOns: [...response.data[15]]
+        };
       })
       .catch((error) => {
         console.error(error);
-      });
-    
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/woodProgram`)
-      .then((response) => {
-        woodProgramInfo = response.data[0];
-      })
-      .catch((error) => {
-        console.error(error)
-      });
-         
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/carpetProgram`)
-      .then((response) => {
-        carpetProgramInfo = response.data[0];
-      })
-      .catch((error) => {
-        console.error(error)
-      });
-             
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/countertopProgram`)
-      .then((response) => {
-        countertopProgramInfo = response.data[0];
-      })
-      .catch((error) => {
-        console.error(error)
-      });
-    
-          
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/cabinetProgram`)
-      .then((response) => {
-        cabinetProgramInfo = response.data[0];
-      })
-      .catch((error) => {
-        console.error(error)
       });
 
-    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/contacts`)
+
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/wood-program`)
       .then((response) => {
-        contacts = [...response.data];
+        parts.wood = {
+          woodFlooring: [...response.data[0]],
+          underlayment: [...response.data[1]]
+        };
       })
       .catch((error) => {
         console.error(error);
       });
+
     
-    axios.post(`${API_URL}/submit-client`, { 
-        client: this.props.client, 
-        tileProgramInfo: tileProgramInfo, 
-        woodProgramInfo: woodProgramInfo,
-        carpetProgramInfo: carpetProgramInfo,
-        countertopProgramInfo: countertopProgramInfo,
-        cabinetProgramInfo: cabinetProgramInfo,
-        advancedInfo: advancedInfo, 
-        contacts: contacts 
-      })
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/carpet-program`)
       .then((response) => {
-        this.showSubmitToast( );
+        parts.carpet = {
+          carpetFlooring: [...response.data[0]],
+          carpetPad: [...response.data[1]]
+        };
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/vinyl-program`)
+      .then((response) => {
+        parts.vinyl = {
+          vinylPlank: [...response.data[0]],
+          vinylSheet: [...response.data[1]],
+        };
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/countertops-program`)
+      .then((response) => {
+        parts.countertops = {
+          edges: [...response.data[0]],
+          sinks: [...response.data[1]],
+          level1: [...response.data[2]],
+          level2: [...response.data[3]],
+          level3: [...response.data[4]],
+          level4: [...response.data[5]],
+          level5: [...response.data[6]],
+          level6: [...response.data[7]],
+          level7: [...response.data[8]],
+          level8: [...response.data[9]],
+          level9: [...response.data[10]],
+          level10: [...response.data[11]]
+        };
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/client-data`)
+      .then((response) => {
+        axios.post(`${API_URL}/submit-client`, { 
+            client: this.props.client, 
+            tileProgramInfo: response.data.tileProgram, 
+            woodProgramInfo: response.data.woodProgram,
+            carpetProgramInfo: response.data.carpetProgram,
+            countertopProgramInfo: response.data.countertopProgram,
+            cabinetProgramInfo: response.data.cabinetProgram,
+            advancedInfo: response.data.clientInfo, 
+            contacts: response.data.contacts,
+            program: parts 
+          })
+          .then((response) => {
+            this.showSubmitToast( );
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       })
       .catch((error) => {
         console.error(error);

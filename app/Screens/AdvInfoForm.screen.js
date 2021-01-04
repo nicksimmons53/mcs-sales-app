@@ -58,6 +58,22 @@ class AdvInfoForm extends Component {
 		values.client_id = client.id;
 
 		console.log(values)
+
+		let contactValues = {
+			clientId: values.client_id,
+			name: values.acc_cont_name,
+			title: "Accounting",
+			phone: values.acc_cont_phn,
+			email: values.acc_cont_ema
+		}
+
+		axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/contacts`, contactValues)
+			.then((response) => {
+				console.log(response.status);
+			})
+			.catch((error) => {
+				console.error(error);	
+			});
 		
 		axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/advanced-info`, values)
 			.then((response) => {
