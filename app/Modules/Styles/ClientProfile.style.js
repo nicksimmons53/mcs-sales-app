@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: colors.light_grey,
     backgroundColor: colors.white,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 10,
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     borderRadius: 5,
     borderBottomWidth: 1,
     borderBottomColor: colors.light_grey,
@@ -35,6 +35,12 @@ const styles = StyleSheet.create({
     fontFamily: 'opensans-reg',
     fontSize: 28,
     color: colors.background,
+  },
+  pushToSageButtonContainer: {
+    width: 250,
+  },
+  pushToSageButton: {
+    backgroundColor: colors.orange
   },
 
   // ScrollView

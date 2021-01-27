@@ -43,7 +43,7 @@ class BasicInfo extends Component {
             formik={this.props.formik}/>
           
           <TinyInputRow
-            fieldName="state"
+            fieldName="state_"
             label="State"
             tooltip={false}
             formik={this.props.formik}/>

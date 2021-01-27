@@ -15,6 +15,7 @@ import List from './List.module';
 import axios from 'axios';
 import { styles, colors } from './Styles/ClientProfile.style';
 import { ClientInfo, TileProgram, WoodProgram, CarpetProgram, CountertopProgram, CabinetProgram } from '../Form/Values.form';
+import { Pressable } from 'react-native';
 
 // Class Component that will show the Client Profile Information
 class ClientProfile extends Component {
@@ -37,7 +38,10 @@ class ClientProfile extends Component {
     countertopProgram: null,
     cabinetProgram: null,
     emailOverlay: false,
-    loading: false
+    loading: false,
+    pushToSageDisabled: true,
+    submitForApprovalDisabled: false,
+    denied: false
   };
 
   componentDidMount( ) {
@@ -79,64 +83,94 @@ class ClientProfile extends Component {
       .catch((error) => {
         console.error(error);
       });
+  
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/tileProgram`)
+      .then((response) => {
+          if (response.data.length === 0)
+              this.setState({ tileProgram: TileProgram});
+          else 
+              this.setState({ tileProgram: response.data[0] });
+      })
+      .catch((error) => {
+        console.error(error)
+      });
+
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/woodProgram`)
+      .then((response) => {
+          if (response.data.length === 0)
+              this.setState({ woodProgram: WoodProgram});
+          else 
+              this.setState({ woodProgram: response.data[0] });
+      })
+      .catch((error) => {
+        console.error(error)
+      });
     
-      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/tileProgram`)
-        .then((response) => {
-            if (response.data.length === 0)
-                this.setState({ tileProgram: TileProgram});
-            else 
-                this.setState({ tileProgram: response.data[0] });
-        })
-        .catch((error) => {
-          console.error(error)
-        });
-
-      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/woodProgram`)
-        .then((response) => {
-            if (response.data.length === 0)
-                this.setState({ woodProgram: WoodProgram});
-            else 
-                this.setState({ woodProgram: response.data[0] });
-        })
-        .catch((error) => {
-          console.error(error)
-        });
-      
-      
-      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/carpetProgram`)
-        .then((response) => {
-            if (response.data.length === 0)
-                this.setState({ carpetProgram: CarpetProgram});
-            else 
-                this.setState({ carpetProgram: response.data[0] });
-        })
-        .catch((error) => {
-          console.error(error)
-        });
+    
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/carpetProgram`)
+      .then((response) => {
+          if (response.data.length === 0)
+              this.setState({ carpetProgram: CarpetProgram});
+          else 
+              this.setState({ carpetProgram: response.data[0] });
+      })
+      .catch((error) => {
+        console.error(error)
+      });
 
             
-      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/countertopProgram`)
-        .then((response) => {
-            if (response.data.length === 0)
-                this.setState({ countertopProgram: CountertopProgram});
-            else 
-                this.setState({ countertopProgram: response.data[0] });
-        })
-        .catch((error) => {
-          console.error(error)
-        });
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/countertopProgram`)
+      .then((response) => {
+          if (response.data.length === 0)
+              this.setState({ countertopProgram: CountertopProgram});
+          else 
+              this.setState({ countertopProgram: response.data[0] });
+      })
+      .catch((error) => {
+        console.error(error)
+      });
       
             
-      axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/cabinetProgram`)
-        .then((response) => {
-            if (response.data.length === 0)
-                this.setState({ cabinetProgram: CabinetProgram});
-            else 
-                this.setState({ cabinetProgram: response.data[0] });
-        })
-        .catch((error) => {
-          console.error(error)
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/cabinetProgram`)
+      .then((response) => {
+          if (response.data.length === 0)
+              this.setState({ cabinetProgram: CabinetProgram});
+          else 
+              this.setState({ cabinetProgram: response.data[0] });
+      })
+      .catch((error) => {
+        console.error(error)
+      });
+
+    axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/approved`)
+      .then((response) => {
+        let managers = response.data[0];
+
+        // If denied, reset submit and disable push to Sage
+        Object.values(managers).map((value) => {
+          if (value === 2) { 
+            this.setState({ denied: true });
+            this.setState({ pushToSageDisabled: true });
+            this.setState({ submitForApprovalDisabled: false });
+          }
         });
+        
+        // If approved, enable Push to Sage and disable submit
+        if (managers.lisak === 1 && managers.heathera === 1 && managers.kimn === 1) {
+          this.setState({ pushToSageDisabled : false });
+          // If already pushed to Sage
+          if (managers.pushedToSage === 1) {
+            this.setState({ pushToSageDisabled: true });
+          }
+
+          if (managers.pushedToSage === 0) {
+            this.setState({ submitForApprovalDisabled: true });
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      })
   }
 
   // Toggle Update Feature
@@ -321,6 +355,7 @@ class ClientProfile extends Component {
     await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/client-data`)
       .then((response) => {
         axios.post(`${API_URL}/submit-client`, { 
+            user: this.props.user,
             client: this.props.client, 
             tileProgramInfo: response.data.tileProgram, 
             woodProgramInfo: response.data.woodProgram,
@@ -333,6 +368,19 @@ class ClientProfile extends Component {
           })
           .then((response) => {
             this.showSubmitToast( );
+            this.setState({ submitForApprovalDisabled: true });
+            this.setState({ pushToSageDisabled: true });
+            axios.put(`${API_URL}/employee/${user.recnum}/clients/${client.id}/manager-approvals`, {
+              'lisak': 0,
+              'heathera': 0,
+              'kimn': 0
+            })
+            .then((response) => {
+              console.log(response)
+            })
+            .catch((error) => {
+              console.error(error);
+            })
           })
           .catch((error) => {
             console.error(error);
@@ -343,6 +391,123 @@ class ClientProfile extends Component {
       });
       
     this.loading( );
+  }
+
+  pushToSage = async( ) => {
+    let user = this.props.user;
+    let client = this.props.client;
+    let contacts = [ ];
+    let parts = {
+      tile: null,
+      wood: null,
+      carpet: null,
+      vinyl: null,
+      countertops: null
+    };
+
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/tile-program`)
+      .then((response) => {
+        parts.tile = {
+          floorTile: [...response.data[0]],
+          bathroomWallTile: [...response.data[1]],
+          backsplashWallTile: [...response.data[2]],
+          fireplaceWallTile: [...response.data[3]],
+          floorStone: [...response.data[4]],
+          bathroomWallStone: [...response.data[5]],
+          backsplashWallStone: [...response.data[6]],
+          fireplaceWallStone: [...response.data[7]],
+          showerPansStone: [...response.data[8]],
+          showerPansTile: [...response.data[9]],
+          showerPansDeco: [...response.data[10]],
+          underlayment: [...response.data[11]],
+          patternCharges: [...response.data[12]],
+          accents: [...response.data[13]],
+          showerSeats: [...response.data[14]],
+          addOns: [...response.data[15]]
+        };
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/wood-program`)
+      .then((response) => {
+        parts.wood = {
+          woodFlooring: [...response.data[0]],
+          underlayment: [...response.data[1]]
+        };
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/carpet-program`)
+      .then((response) => {
+        parts.carpet = {
+          carpetFlooring: [...response.data[0]],
+          carpetPad: [...response.data[1]]
+        };
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/vinyl-program`)
+      .then((response) => {
+        parts.vinyl = {
+          vinylPlank: [...response.data[0]],
+          vinylSheet: [...response.data[1]],
+        };
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    
+    await axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/countertops-program`)
+      .then((response) => {
+        parts.countertops = {
+          edges: [...response.data[0]],
+          sinks: [...response.data[1]],
+          level1: [...response.data[2]],
+          level2: [...response.data[3]],
+          level3: [...response.data[4]],
+          level4: [...response.data[5]],
+          level5: [...response.data[6]],
+          level6: [...response.data[7]],
+          level7: [...response.data[8]],
+          level8: [...response.data[9]],
+          level9: [...response.data[10]],
+          level10: [...response.data[11]]
+        };
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      
+    axios.post(`${API_URL}/employee/${user.recnum}/clients/${client.id}/push-to-sage`, { 
+        user: this.props.user,
+        client: this.props.client, 
+        contacts: this.state.contacts,
+        program: parts 
+      })
+      .then((res) => {
+        // Set pushed to Sage
+        axios.put(`${API_URL}/employee/${user.recnum}/clients/${client.id}/manager-approvals`, {
+            pushedToSage: true
+          })
+          .then(( ) => {
+            this.setState({ pushToSageDisabled: true });
+          })
+          .catch((error) => {
+            console.error(error);
+          })
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   render( ) {
@@ -362,6 +527,13 @@ class ClientProfile extends Component {
         <KeyboardAvoidingView enabled behavior='padding' style={styles.background}>
           <View style={headerStyle}>
             <Text style={styles.headerText}>{client.clnnme}</Text>
+            <Button 
+              title="Push To Sage"
+              disabled={this.state.pushToSageDisabled}
+              buttonStyle={styles.pushToSageButton}
+              containerStyle={styles.pushToSageButtonContainer}
+              onPress={
+                this.pushToSage}/>
           </View>
 
           <ScrollView style={styles.form}>
@@ -450,6 +622,7 @@ class ClientProfile extends Component {
               <Button
                 title='Submit for Approval'
                 raised
+                disabled={this.state.submitForApprovalDisabled}
                 containerStyle={styles.submitButtonContainer}
                 buttonStyle={styles.submitButton}
                 onPress={this.submitClient}/>
