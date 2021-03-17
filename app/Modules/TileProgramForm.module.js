@@ -26,11 +26,13 @@ class TileProgramForm extends Component {
         waterpoofingOptions: [
             { label: "Fiberglass", value: "Fiberglass" },
             { label: "Plumber Provided Rubber Liner", value: "Plumber Provided Rubber Liner" },
+            { label: "Membrane", value: "Membrane" },
+            { label: "Kerdi", value: "Kerdi" },
             { label: "Quikrete", value: "Quikrete" }
         ],
-        siliconOptions: [
-            { label: "Grout Match", value: "Grout Match" },
-            { label: "Colored Caulking", value: "Colored Caulking" }
+        punchOutOptions: [
+            { label: "Siliconized Grout Match", value: "Siliconized Grout Match" },
+            { label: "Colored Caulk", value: "Colored Caulk" }
         ],
         showerNicheOptions: [
             { label: "Premolded/Plastic", value: "Premolded/Plastic" },
@@ -38,7 +40,13 @@ class TileProgramForm extends Component {
         ],
         showerSeatOptions: [
             { label: "MC Surfaces Build", value: "MC Surfaces Build" },
+            { label: "Framed", value: "Framed" },
+            { label: "Combination", value: "Combination" },
             { label: "Other", value: "Other" }
+        ],
+        schulterOptions: [
+            { label: "Standard", value: "Standard" },
+            { label: "Optional", value: "Optional" }
         ],
         groutSizeOptions: [
             { label: "3/16\"", value: "3/16\"" },
@@ -53,11 +61,22 @@ class TileProgramForm extends Component {
             { label: "1/4\" Hardiebacker", value: "1/4\" Hardiebacker" },
             { label: "Ditra Box", value: "Ditra Box" },
             { label: "Mud Build", value: "Mud Build" },
+            { label: "Mapeguard", value: "Mapeguard" },
             { label: "Other", value: "Other" }
         ],
         takeoffOptions: [
             { label: "Builder", value: "Builder" },
             { label: "MC Surfaces, Inc.", value: "MC Surfaces, Inc." }
+        ],
+        wallTileHeightOptions: [
+            { label: "Standard", value: "Standard" },
+            { label: "Ceiling", value: "Ceiling" },
+            { label: "Plan", value: "Plan" },
+            { label: "7 ft.", value: "7 ft." }
+        ],
+        yesOrNoOptions: [
+            { label: "Yes", value: "Yes" },
+            { label: "No", value: "No" }
         ]
     };
     
@@ -107,6 +126,13 @@ class TileProgramForm extends Component {
                                 :
                                     null
                             }
+
+                            <SmallInputRow
+                                label='Setting Material Floors Product'
+                                zIndex={0}
+                                fieldName="setting_material_floors_product"
+                                formik={this.props.formik}
+                                tooltip={false}/>
                     
                             <DropdownRow
                                 title="Wall Setting Material"
@@ -129,12 +155,49 @@ class TileProgramForm extends Component {
                                 :
                                     null
                             }
+
+                            <SmallInputRow
+                                label='Setting Material Walls Product'
+                                zIndex={0}
+                                fieldName="setting_material_walls_product"
+                                formik={this.props.formik}
+                                tooltip={false}/>
+
+                            <SmallInputRow
+                                label='Allotted Float'
+                                zIndex={0}
+                                fieldName="alloted_float"
+                                formik={this.props.formik}
+                                tooltip={false}/>
+
+                            <SmallInputRow
+                                label='Charge for Extra Float'
+                                zIndex={0}
+                                fieldName="alotted_float_charge"
+                                formik={this.props.formik}
+                                tooltip={false}/>
                                             
                             <DropdownRow
                                 title="Waterproofing Method"
                                 choices={this.state.waterpoofingOptions}
                                 formik={this.props.formik}
                                 fieldName="waterproof_method"
+                                zIndex={8}
+                                tooltip={false}/>
+
+                            <DropdownRow
+                                title="Waterproofing Method - Shower Walls"
+                                choices={this.state.waterpoofingOptions}
+                                formik={this.props.formik}
+                                fieldName="waterproof_method_shower_wall"
+                                zIndex={8}
+                                tooltip={false}/>
+
+                            <DropdownRow
+                                title="Waterproofing Method - Tub Wall"
+                                choices={this.state.waterpoofingOptions}
+                                formik={this.props.formik}
+                                fieldName="waterproof_method_tub_wall"
                                 zIndex={8}
                                 tooltip={false}/>
 
@@ -153,19 +216,32 @@ class TileProgramForm extends Component {
                                     null
                             }
 
-                            <CheckboxRow
-                                zIndex={0}
-                                label="Will We Be Installing Backerboard?"
-                                fieldName="backerboard_installer"
+                            <DropdownRow
+                                title="Will We Be Installing Backerboard?"
+                                choices={this.state.yesOrNoOptions}
                                 formik={this.props.formik}
                                 defaultValue={values.backerboard_installer}
+                                fieldName="backerboard_installer"
+                                zIndex={8}
                                 tooltip={false}/>
+                            
+                            {
+                                (values.backerboard_installer === "No") ?
+                                    <MediumInputRow
+                                        label='Backerboard Options'
+                                        zIndex={0}
+                                        fieldName="backerboard_options"
+                                        formik={this.props.formik}
+                                        tooltip={false}/>
+                                :
+                                    null
+                            }
 
                             <DropdownRow
-                                title="Preferred Silicon"
-                                choices={this.state.siliconOptions}
+                                title="Punch Out Material"
+                                choices={this.state.punchOutOptions}
                                 formik={this.props.formik}
-                                fieldName="silicon_pref"
+                                fieldName="punch_out_material"
                                 zIndex={7}
                                 tooltip={false}/>
 
@@ -200,12 +276,12 @@ class TileProgramForm extends Component {
                                 null
                             }
 
-                            <CheckboxRow
-                                zIndex={0}
-                                label="Are Corner Soap Dishes Standard?"
-                                fieldName="corner_soap_dish"
+                            <DropdownRow
+                                title="Are Corner Soap Dishes Standard?"
+                                choices={this.state.yesOrNoOptions}
                                 formik={this.props.formik}
-                                defaultValue={values.corner_soap_dish}
+                                fieldName="corner_soap_dish_std"
+                                zIndex={6}
                                 tooltip={false}/>
                             
                             <DropdownRow
@@ -227,13 +303,14 @@ class TileProgramForm extends Component {
                                 null
                             }
 
-                            <CheckboxRow
-                                zIndex={0}
-                                label="Does the Builder Prefer Schulter?"
-                                fieldName="schulter_pref"
+                            <DropdownRow
+                                title="Schulter Options"
+                                choices={this.state.schulterOptions}
                                 formik={this.props.formik}
-                                defaultValue={values.schulter_pref}
-                                tooltip={false}/>
+                                fieldName="schulter_option"
+                                zIndex={6}
+                                tooltip={true}
+                                tooltipHeight={75}/>
 
                             <DropdownRow
                                 title="Shower Niche Construction"
@@ -244,6 +321,13 @@ class TileProgramForm extends Component {
                                 tooltip={true}
                                 tooltipHeight={75}
                                 popover={TileFieldInfo.showerNiche}/>
+                            
+                            <MediumInputRow
+                                label='Pony Wall Options'
+                                zIndex={0}
+                                fieldName="pony_wall"
+                                formik={this.props.formik}
+                                tooltip={false}/>
 
                             <DropdownRow
                                 title="Preferred Grout Joint and Sizing"
@@ -261,7 +345,21 @@ class TileProgramForm extends Component {
                                 formik={this.props.formik}
                                 fieldName="grout_pref"
                                 zIndex={3}
-                                tooltip={false}/>   
+                                tooltip={false}/>
+                            
+                            <SmallInputRow
+                                label='Upgraded Grout'
+                                zIndex={0}
+                                fieldName="grout_upgrade"
+                                formik={this.props.formik}
+                                tooltip={false}/>
+
+                            <SmallInputRow
+                                label='Grout Product'
+                                zIndex={0}
+                                fieldName="grout_product"
+                                formik={this.props.formik}
+                                tooltip={false}/>
 
                             <DropdownRow
                                 title="Preferred Standard Practice for Subfloor"
@@ -282,12 +380,12 @@ class TileProgramForm extends Component {
                                 null
                             }
 
-                            <CheckboxRow
-                                zIndex={0}
-                                label="Tile Return Walls at Backsplash?"
-                                fieldName="tile_return_walls"
+                            <DropdownRow
+                                title="Tile Return Walls at Backsplash?"
+                                choices={this.state.yesOrNoOptions}
                                 formik={this.props.formik}
-                                defaultValue={values.tile_return_walls}
+                                fieldName="tile_return_walls"
+                                zIndex={2}
                                 tooltip={false}/>
   
                             <DropdownRow
@@ -305,13 +403,34 @@ class TileProgramForm extends Component {
                                 formik={this.props.formik}
                                 tooltip={false}/>  
 
-                            <MediumInputRow
+                            <SmallInputRow
                                 zIndex={0}
-                                fieldName="wall_tile_height"
-                                label="Wall Tile Height"
+                                label="Waste Factor Percentage - Walls"
+                                fieldName="waste_pct_walls"
                                 formik={this.props.formik}
-                                tooltip={false}/>
+                                tooltip={false}/> 
+
+                            <SmallInputRow
+                                zIndex={0}
+                                label="Waste Factor Percentage - Floors"
+                                fieldName="waste_pct_floors"
+                                formik={this.props.formik}
+                                tooltip={false}/> 
+
+                            <SmallInputRow
+                                zIndex={0}
+                                label="Waste Factor Percentage - Mosaics"
+                                fieldName="waste_pct_mosaics"
+                                formik={this.props.formik}
+                                tooltip={false}/> 
                             
+                            <DropdownRow
+                                title="Wall Tile Height Options"
+                                choices={this.state.wallTileHeightOptions}
+                                formik={this.props.formik}
+                                fieldName="wall_tile_height_opt"
+                                zIndex={6}/>
+
                             <MediumInputRow
                                 zIndex={0}
                                 label="Notes"

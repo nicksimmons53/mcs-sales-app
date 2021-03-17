@@ -3,15 +3,13 @@ import { Alert, AsyncStorage } from 'react-native';
 
 // Alert to be shown for requesting access.
 // Triggered on Login Page.
-export const requestAccess = ( ) => {
+export const alert = ({...props}) => {
   Alert.alert(
-    'Request Access',
-    'Please request access from the system administrator.',
-    [
-      {text: 'Cancel', style: 'cancel'},
-    ]
+    props.title,
+    props.message,
+    props.buttons
   )
-};
+}
 
 export const loginError = ( ) => {
   Alert.alert(
@@ -62,7 +60,7 @@ export const cancelClient = (navigation) => {
 
 // Alert to be shown when signing out
 // Triggered from Toolbar Component
-export const signoutAlert = (navigation) => {
+export const signoutAlert = (signOut) => {
   Alert.alert(
     'Sign Out',
     '',
@@ -70,8 +68,11 @@ export const signoutAlert = (navigation) => {
       {
         text: 'Sign Out',
         onPress: ( ) => {
-          AsyncStorage.clear( );
-          navigation.navigate('Auth')
+          // AsyncStorage.clear( );
+          // navigation.navigate('Auth')
+          // props.signOut( );
+
+          signOut( );
         }
       }, {
         text: 'Cancel',
@@ -113,21 +114,6 @@ export const deleteContact = (contactID, deleteContact) => {
       }, {
         text: 'Cancel',
         style: 'cancel',
-      }
-    ]
-  )
-};
-
-// Alert to be shown if device is not connected to network
-// Triggered on Login Screen and Profile Screen
-export const networkALert = ( ) => {
-  Alert.alert(
-    'Network Connection',
-    'This device isn\'t connected to the network. Any work will be saved when reconnected',
-    [
-      {
-        text: 'Okay',
-        style: 'cancel'
       }
     ]
   )

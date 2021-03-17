@@ -47,7 +47,6 @@ class ClientForm extends Component {
 
     axios.post(`${API_URL}/employee/${user.recnum}/clients`, values)
       .then((response) => {
-        console.log(response);
         refresh(user);
         
         this.refs.toast.show(values.clnnme + ' has been saved.');

@@ -28,12 +28,9 @@ class Table extends Component {
   deleteRow = (arrayHelpers, index) => {
     let user = this.props.user;
     let client = this.props.client;
-
-    console.log(arrayHelpers.form.values.rows[index].id)
     
     axios.delete(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/${arrayHelpers.form.values.rows[index].id}`)
       .then((response) => {
-        console.log(response.status);
         arrayHelpers.remove(index);
       })
       .catch((error) => {
@@ -209,8 +206,6 @@ class Table extends Component {
                 delete response.data[index][key];
             }
           });
-
-          console.log(response.data)
         }
       })
       .catch((error) => {

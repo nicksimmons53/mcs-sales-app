@@ -376,7 +376,7 @@ class ClientProfile extends Component {
               'kimn': 0
             })
             .then((response) => {
-              console.log(response)
+              console.log(response.staus)
             })
             .catch((error) => {
               console.error(error);

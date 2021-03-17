@@ -63,28 +63,45 @@ const email = {
 const TileProgram = {
     client_id: null,
     setting_material_walls: null,
+    setting_material_walls_product: null,                   // Add to DB
     setting_material_floors: null,
-    setting_material_walls_cust: null,      //
-    setting_material_floors_cust: null,     //
+    setting_material_floors_product: null,                  // Add to DB
+    setting_material_walls_cust: null,      
+    setting_material_floors_cust: null,   
+    allotted_float: null,                                // Add to DB
+    allotted_float_charge: null,                         // Add to DB
+    waterproof_method: null,                     // Add to DB
+    waterproof_method_shower_wall: null,                     // Add to DB
+    waterproof_method_tub_wall: null,                     // Add to DB
     waterproof_method: null,
-    waterproof_sova_constr: false,          //
-    backerboard_installer: false,             
-    silicon_pref: null,                     
-    colored_caulk: null,                    //
+    waterproof_sova_constr: false,          
+    backerboard_installer: null, 
+    backerboard_options: null,          
+    silicon_pref: null,  
+    punch_out_material: null,                   
+    colored_caulk: null,                    
     shower_niche_pref: null,
     shower_niche_brand: null,
     shower_niche_std_size: null,
     corner_soap_dish: false,
+    corner_soap_dish_std: null,                           // Add to DB
     shower_seat_pref: null,
     shower_seat_constr: null,
+    schulter_option: null,                              // Add to DB
+    pony_wall: null,                                    // Add to DB
     schulter_pref: false,
     grout_joint_size_pref: null,
     grout_pref: null,
+    grout_product: null,                                // Add to DB
+    grout_upgrade: null,                                    // Add to DB
     subfloor_pref: null,
     subfloor_other: null,
     takeoff_resp: null,
-    tile_return_walls: false,
+    tile_return_walls: null,
     waste_pct: null,
+    waste_pct_walls: null,                                    // Add to DB
+    waste_pct_floors: null,                                    // Add to DB
+    waste_pct_mosaics: null,                                    // Add to DB
     wall_tile_height: null,
     notes: null
 };
@@ -92,8 +109,7 @@ const TileProgram = {
 const WoodProgram = {
     client_id: null,
     glue_pref: null,
-    floor_trim_installer: false,
-    floor_trim_pref: null,
+    floor_trim_installer: null,
     floor_trim_style: null,
     second_story_hardie: null,
     transition_strips_std: false,
@@ -107,8 +123,6 @@ const CarpetProgram = {
     client_id: null,
     padding_brand_pref: null,
     carpet_brand_pref: null,
-    floor_trim_style: null,
-    floor_trim_installer: false,
     takeoff_resp: null,
     waste_factor: null,
     notes: null

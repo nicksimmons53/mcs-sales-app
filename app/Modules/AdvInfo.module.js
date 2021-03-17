@@ -51,7 +51,7 @@ class AcctInfo extends Component {
 
     axios.post(`${API_URL}/create-file/${fileName}`, reqBody)
       .then((response) => {
-        console.log(response);
+        console.log(response.status);
       })
       .catch((error) => {
         console.log(error);
