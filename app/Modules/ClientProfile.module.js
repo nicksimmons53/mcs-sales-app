@@ -76,13 +76,13 @@ class ClientProfile extends Component {
         console.error(error);
       });
     
-    axios.get(`${API_URL}/list-files/${clientName}`)
-      .then((response) => {
-        this.setState({ files: response.data.file.Contents });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // axios.get(`${API_URL}/list-files/${clientName}`)
+    //   .then((response) => {
+    //     this.setState({ files: response.data.file.Contents });
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
   
     axios.get(`${API_URL}/employee/${user.recnum}/clients/${client.id}/program/tileProgram`)
       .then((response) => {

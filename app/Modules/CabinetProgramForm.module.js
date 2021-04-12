@@ -8,6 +8,8 @@ import CheckboxRow from '../Components/CheckboxRow';
 import DropdownRow from '../Components/DropdownRow';
 import { styles, colors } from './Styles/Form.style';
 
+let zIndex=100;
+
 // Class Component for Client Accounting Info
 class CabinetProgramForm extends Component {
     state = {
@@ -99,7 +101,7 @@ class CabinetProgramForm extends Component {
                                 choices={this.state.bidTypeOptions}
                                 formik={this.props.formik}
                                 fieldName="bid_type_pref"
-                                zIndex={2}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
 
                             <SmallInputRow

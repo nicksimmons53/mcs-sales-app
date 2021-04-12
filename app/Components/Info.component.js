@@ -1,45 +1,43 @@
+import { string } from 'prop-types';
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import colors from '../Library/Colors';
 
 const Info = ({...props}) => {
   let address = props.address;
-  let corpAddr2 = '';
-  let billAddr2 = '';
-  let shipAddr2 = '';
-  
-  if (address.addrs2 !== '' || typeof(address.addrs2) !== undefined) 
-    corpAddr2 = address.addrs2 + ' ';
-  else
-    address.addrs2 = '';
+  let corpAddr = [address.addrs1, address.addrs2, address.ctynme, address.state_, address.zipcde];
+  let billAddr = [address.bilad1, address.bilad2, address.bilcty, address.bilste, address.bilzip];
+  let shipAddr = [address.shpad1, address.shpad2, address.shpcty, address.shpste, address.shpzip];
 
-  if (address.bilad2 !== '' || typeof(address.bilad2) !== undefined) 
-    billAddr2 = address.bilad2 + ' ';
-  else 
-    address.bilad2 = '';
+  // Address Combine Rewrite
+  corpAddr.map((address, index) => {
+    if (address == null || address == '')
+      corpAddr.splice(index, 1)
+  });
 
-  if (address.shpad2 !== '' || typeof(address.shpad2) !== undefined) 
-    shipAddr2 = address.shpad2 + ' ';
-  else
-    address.shpad2 = '';
+  billAddr.map((address, index) => {
+    if (address == null || address.length == 0)
+      billAddr.splice(index)
+  });
 
-  let corpAddr = address.addrs1 + ' ' + corpAddr2 + address.ctynme + ' ' + address.state_ + " " + address.zipcde;
-  let billingAddr = address.bilad1 + ' ' + billAddr2 + address.bilcty + ' ' + address.bilste + " " + address.bilzip;
-  let shippingAddr = address.shpad1 + ' ' + shipAddr2 + address.shpcty + ' ' + address.shpste + " " + address.shpzip;
+  shipAddr.map((address, index) => {
+    if (address == null || address.length == 0)
+      shipAddr.splice(index)
+  });
 
   return (
     <View style={styles.background}>
       <View style={styles.row}>
         <Text style={styles.text}>Corporate Address:</Text>
-        <Text style={styles.text}>{corpAddr}</Text>
+        <Text style={styles.text}>{corpAddr.join(', ')}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.text}>Billing Address:</Text>
-        <Text style={styles.text}>{billingAddr}</Text>
+        <Text style={styles.text}>{billAddr.join(', ')}</Text>
       </View>      
       <View style={styles.row}>
         <Text style={styles.text}>Shipping Address:</Text>
-        <Text style={styles.text}>{shippingAddr}</Text>
+        <Text style={styles.text}>{shipAddr.join(', ')}</Text>
       </View>
     </View>
   )

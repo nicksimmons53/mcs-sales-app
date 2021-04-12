@@ -9,6 +9,8 @@ import DropdownRow from '../Components/DropdownRow';
 import { TileFieldInfo } from '../Form/Values.form';
 import { styles, colors } from './Styles/Form.style';
 
+let zIndex=100;
+
 // Class Component for Client Accounting Info
 class TileProgramForm extends Component {
     state = {
@@ -75,8 +77,8 @@ class TileProgramForm extends Component {
             { label: "7 ft.", value: "7 ft." }
         ],
         yesOrNoOptions: [
-            { label: "Yes", value: "Yes" },
-            { label: "No", value: "No" }
+            { label: "Yes", value: 1 },
+            { label: "No", value: 0 }
         ]
     };
     
@@ -111,7 +113,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.settingMaterialOptions}
                                 formik={this.props.formik}
                                 fieldName="setting_material_floors"
-                                zIndex={10}
+                                zIndex={zIndex-=1}
                                 tooltip={true}
                                 tooltipHeight={75}
                                 popover={TileFieldInfo.settingMaterial}/>
@@ -139,7 +141,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.settingMaterialOptions2}
                                 formik={this.props.formik}
                                 fieldName="setting_material_walls"
-                                zIndex={9}
+                                zIndex={zIndex-=1}
                                 tooltip={true}
                                 tooltipHeight={75}
                                 popover={TileFieldInfo.settingMaterial}/>
@@ -166,14 +168,14 @@ class TileProgramForm extends Component {
                             <SmallInputRow
                                 label='Allotted Float'
                                 zIndex={0}
-                                fieldName="alloted_float"
+                                fieldName="allotted_float"
                                 formik={this.props.formik}
                                 tooltip={false}/>
 
                             <SmallInputRow
                                 label='Charge for Extra Float'
                                 zIndex={0}
-                                fieldName="alotted_float_charge"
+                                fieldName="allotted_float_charge"
                                 formik={this.props.formik}
                                 tooltip={false}/>
                                             
@@ -182,7 +184,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.waterpoofingOptions}
                                 formik={this.props.formik}
                                 fieldName="waterproof_method"
-                                zIndex={8}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
 
                             <DropdownRow
@@ -190,7 +192,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.waterpoofingOptions}
                                 formik={this.props.formik}
                                 fieldName="waterproof_method_shower_wall"
-                                zIndex={8}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
 
                             <DropdownRow
@@ -198,7 +200,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.waterpoofingOptions}
                                 formik={this.props.formik}
                                 fieldName="waterproof_method_tub_wall"
-                                zIndex={8}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
 
                             {
@@ -222,7 +224,7 @@ class TileProgramForm extends Component {
                                 formik={this.props.formik}
                                 defaultValue={values.backerboard_installer}
                                 fieldName="backerboard_installer"
-                                zIndex={8}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
                             
                             {
@@ -242,7 +244,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.punchOutOptions}
                                 formik={this.props.formik}
                                 fieldName="punch_out_material"
-                                zIndex={7}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
 
                             <DropdownRow
@@ -250,7 +252,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.showerNicheOptions}
                                 formik={this.props.formik}
                                 fieldName="shower_niche_pref"
-                                zIndex={6}
+                                zIndex={zIndex-=1}
                                 tooltip={true}
                                 tooltipHeight={75}
                                 popover={TileFieldInfo.showerNiche}/>
@@ -281,7 +283,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.yesOrNoOptions}
                                 formik={this.props.formik}
                                 fieldName="corner_soap_dish_std"
-                                zIndex={6}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
                             
                             <DropdownRow
@@ -289,7 +291,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.showerSeatOptions}
                                 formik={this.props.formik}
                                 fieldName="shower_seat_pref"
-                                zIndex={5}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
 
                             {
@@ -308,7 +310,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.schulterOptions}
                                 formik={this.props.formik}
                                 fieldName="schulter_option"
-                                zIndex={6}
+                                zIndex={zIndex-=1}
                                 tooltip={true}
                                 tooltipHeight={75}/>
 
@@ -317,7 +319,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.showerNicheOptions}
                                 formik={this.props.formik}
                                 fieldName="shower_niche_pref"
-                                zIndex={6}
+                                zIndex={zIndex-=1}
                                 tooltip={true}
                                 tooltipHeight={75}
                                 popover={TileFieldInfo.showerNiche}/>
@@ -334,7 +336,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.groutSizeOptions}
                                 formik={this.props.formik}
                                 fieldName="grout_joint_size_pref"
-                                zIndex={4}
+                                zIndex={zIndex-=1}
                                 tooltip={true}
                                 tooltipHeight={75}
                                 popover={TileFieldInfo.groutJoint}/>
@@ -344,7 +346,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.groutBrandOptions}
                                 formik={this.props.formik}
                                 fieldName="grout_pref"
-                                zIndex={3}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
                             
                             <SmallInputRow
@@ -366,7 +368,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.subfloorOptions}
                                 formik={this.props.formik}
                                 fieldName="subfloor_pref"
-                                zIndex={2}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
 
                             {
@@ -385,7 +387,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.yesOrNoOptions}
                                 formik={this.props.formik}
                                 fieldName="tile_return_walls"
-                                zIndex={2}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
   
                             <DropdownRow
@@ -393,7 +395,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.takeoffOptions}
                                 formik={this.props.formik}
                                 fieldName="takeoff_resp"
-                                zIndex={1}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
                                        
                             <MediumInputRow
@@ -429,7 +431,7 @@ class TileProgramForm extends Component {
                                 choices={this.state.wallTileHeightOptions}
                                 formik={this.props.formik}
                                 fieldName="wall_tile_height_opt"
-                                zIndex={6}/>
+                                zIndex={zIndex-=1}/>
 
                             <MediumInputRow
                                 zIndex={0}

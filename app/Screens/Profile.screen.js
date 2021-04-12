@@ -22,7 +22,6 @@ import { styles, colors } from './Styles/Profile.style';
 // Profile.js
 // Purpose: This class will display the profile home page and show the list of
 // clients. It is the main navigator for the application.
-
 const auth0 = new Auth0({
   domain: 'dev-hfkkr2g4.auth0.com',
   clientId: 'dNZJDpWtXjY0IZZmze3UhEyG74azV5vK'

@@ -63,16 +63,15 @@ const email = {
 const TileProgram = {
     client_id: null,
     setting_material_walls: null,
-    setting_material_walls_product: null,                   // Add to DB
+    setting_material_walls_product: null,                   
     setting_material_floors: null,
-    setting_material_floors_product: null,                  // Add to DB
+    setting_material_floors_product: null,                  
     setting_material_walls_cust: null,      
     setting_material_floors_cust: null,   
-    allotted_float: null,                                // Add to DB
-    allotted_float_charge: null,                         // Add to DB
-    waterproof_method: null,                     // Add to DB
-    waterproof_method_shower_wall: null,                     // Add to DB
-    waterproof_method_tub_wall: null,                     // Add to DB
+    allotted_float: null,                                
+    allotted_float_charge: null,                                            
+    waterproof_method_shower_wall: null,                     
+    waterproof_method_tub_wall: null,                     
     waterproof_method: null,
     waterproof_sova_constr: false,          
     backerboard_installer: null, 
@@ -84,24 +83,24 @@ const TileProgram = {
     shower_niche_brand: null,
     shower_niche_std_size: null,
     corner_soap_dish: false,
-    corner_soap_dish_std: null,                           // Add to DB
+    corner_soap_dish_std: null,                           
     shower_seat_pref: null,
     shower_seat_constr: null,
-    schulter_option: null,                              // Add to DB
-    pony_wall: null,                                    // Add to DB
+    schulter_option: null,                              
+    pony_wall: null,                                    
     schulter_pref: false,
     grout_joint_size_pref: null,
     grout_pref: null,
-    grout_product: null,                                // Add to DB
-    grout_upgrade: null,                                    // Add to DB
+    grout_product: null,                                
+    grout_upgrade: null,                                    
     subfloor_pref: null,
     subfloor_other: null,
     takeoff_resp: null,
     tile_return_walls: null,
     waste_pct: null,
-    waste_pct_walls: null,                                    // Add to DB
-    waste_pct_floors: null,                                    // Add to DB
-    waste_pct_mosaics: null,                                    // Add to DB
+    waste_pct_walls: null,                                    
+    waste_pct_floors: null,                                    
+    waste_pct_mosaics: null,                                    
     wall_tile_height: null,
     notes: null
 };

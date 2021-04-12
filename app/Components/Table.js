@@ -114,11 +114,6 @@ class Table extends Component {
   }
 
   input = (formik, attr, row, attrIndex, rowIndex, cellStyle) => {
-    // const altered = ( ) => {
-    //   if (this.props.tableObj.name === "Sinks/Shape")
-    //     formik.setFieldValue(`${row}.altered`, true);
-    // };
-
     return (
       <Input
         onChangeText={ formik.form.handleChange(`rows.${rowIndex}.${attr}`) }
@@ -160,8 +155,10 @@ class Table extends Component {
         return this.dropdown(formik, attr, row, attrIndex, rowIndex, cellStyle);
       
       case "description":
-        if (this.state.table.name === "Pattern Charges")
+        if (this.state.table.name === "Pattern Charges") {
+          console.log(row)
           return this.dropdown(formik, attr, row, attrIndex, rowIndex, cellStyle);
+        }
 
         return this.input(formik, attr, row, attrIndex, rowIndex, cellStyle);
     

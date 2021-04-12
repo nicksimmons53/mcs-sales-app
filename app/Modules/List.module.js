@@ -1,7 +1,7 @@
 // Library Imports
 import React, { Component } from 'react';
 import { Text, ScrollView, Platform } from 'react-native';
-import { S3_URL_DEV } from 'react-native-dotenv';
+import { S3_URL_PROD } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import { Divider, ListItem, Icon } from 'react-native-elements';
 import  { WebView } from 'react-native-webview';
@@ -20,7 +20,7 @@ class List extends Component {
   }
 
   displayFile = async(fileName, file) => {
-    let s3FileURL = S3_URL_DEV + "/" + fileName;
+    let s3FileURL = S3_URL_PROD + "/" + fileName;
     let s3FileExt = fileName.split('.')[1];
     let localFile = `${RNFS.DocumentDirectoryPath}/tempFile.${s3FileExt}`;
     let options = {
@@ -33,8 +33,6 @@ class List extends Component {
       .catch((error) => {
         console.log(error);
       });
-      
-    this.setState({ modalVisible: true });
   }
 
   renderFileList = ( ) => {

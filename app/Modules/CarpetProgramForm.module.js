@@ -9,6 +9,8 @@ import CheckboxRow from '../Components/CheckboxRow';
 import { CarpetProgramInfo } from '../Form/Values.form';
 import { styles, colors } from './Styles/Form.style';
 
+let zIndex=100;
+
 // Class Component for Client Accounting Info
 class CarpetProgramForm extends Component {
     state = {
@@ -68,7 +70,7 @@ class CarpetProgramForm extends Component {
                                 choices={this.state.takeoffOptions}
                                 formik={this.props.formik}
                                 fieldName="takeoff_resp"
-                                zIndex={2}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
 
                             <SmallInputRow
