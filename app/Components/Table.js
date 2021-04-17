@@ -63,6 +63,20 @@ class Table extends Component {
           return false;
         if (this.props.tableObj.name === "Shower Pans - Stone")
           return false;
+        if (this.props.tableObj.name === "Shower Pans - Tile")
+          return false;
+        if (this.props.tableObj.name === "Shower Pans - Deco")
+          return false;
+        if (this.props.tableObj.name === "Underlayment")
+          return false;
+        if (this.props.tableObj.name === "Pattern Charges")
+          return false;
+        if (this.props.tableObj.name === "Accents")
+          return false;
+        if (this.props.tableObj.name === "Shower Seats")
+          return false;
+        if (this.props.tableObj.name === "Add-Ons")
+          return false;
 
         return true;
       
