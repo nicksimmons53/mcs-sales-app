@@ -57,8 +57,6 @@ class AdvInfoForm extends Component {
 
 		values.client_id = client.id;
 
-		console.log(values)
-
 		let contactValues = {
 			clientId: values.client_id,
 			name: values.acc_cont_name,

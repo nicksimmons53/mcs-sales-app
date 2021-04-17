@@ -1,20 +1,32 @@
 // Library Imports
 import React, { Component } from 'react';
-import { View, StatusBar, AsyncStorage, ActivityIndicator, Dimensions } from 'react-native';
+import { 
+  View, 
+  StatusBar, 
+  AsyncStorage, 
+  ActivityIndicator, 
+  Dimensions 
+} from 'react-native';
 import axios from 'axios';
 import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
+import Auth0 from 'react-native-auth0';
 import Modal from 'react-native-modal';
 import NetInfo from '@react-native-community/netinfo';
 import ClientList from '../Modules/ClientList.module';
 import ClientProfile from '../Modules/ClientProfile.module';
 import Toolbar from '../Components/Toolbar.component';
-import { networkALert } from '../Components/Alert.component';
+import { alert } from '../Components/Alert.component';
 import { styles, colors } from './Styles/Profile.style';
 
 // Profile.js
 // Purpose: This class will display the profile home page and show the list of
 // clients. It is the main navigator for the application.
+const auth0 = new Auth0({
+  domain: 'dev-hfkkr2g4.auth0.com',
+  clientId: 'dNZJDpWtXjY0IZZmze3UhEyG74azV5vK'
+});
+
 class Profile extends Component {
   constructor( ) {
     super( );
@@ -43,15 +55,17 @@ class Profile extends Component {
   }
 
   componentDidMount( ) {
-    let user = this.props.navigation.state.params.user[0];
+    let user = this.props.navigation.state.params.user;
+
     this.setState({ user: user });
+
     axios.get(`${API_URL}/employee/${user.recnum}/clients`)
-        .then((response) => {
-          this.setState({ clients: response.data });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      .then((response) => {
+        this.setState({ clients: response.data });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   // Update state when client is added
@@ -89,21 +103,35 @@ class Profile extends Component {
 
   // User Sign Out (clears AsyncStorage and Firebase)
   _signOutAsync = async( ) => {
-    await AsyncStorage.clear( );
-    this.props.navigation.navigate('Auth');
+    auth0.webAuth
+      .clearSession({})
+      .then(success => {
+        this.props.navigation.navigate('Auth');
+
+        this.props.clearAccessToken( );
+      })
+      .catch(error => {
+        console.log(error)
+      });
   }
 
   // Force Update
   toggleLoading = ( ) => {
-    this.setState({loading: true});
+    this.setState({ loading: true });
   }
 
   getNetworkInfo = ( ) => {
     NetInfo.fetch( ).then(state => {
       if (state.isConnected === false) {
-        return {networkALert};
+        return alert({
+          title: 'Network Connection',
+          message: 'This device isn\'t connected to the network. Any work will be lost if not reconnected',
+          buttons: [
+            { text: 'Okay', style: 'cancel' }
+          ]
+        });
       }
-    })
+    });
   }
 
   toggleModal = ( ) => {
@@ -111,48 +139,48 @@ class Profile extends Component {
   }
 
   render( ) {
-      return (
-        <View style={styles.background}>
-          <StatusBar barStyle='light-content' />
+    return (
+      <View style={styles.background}>
+        <StatusBar barStyle='light-content' />
 
-          <View style={styles.content}>
-            <View style={styles.list}>
-              <Toolbar
-                home={true}
-                createClient={true}
-                reportIssue={true}
-                signOut={true}
-                navigation={this.props.navigation}
-                signOutFunc={this._signOutAsync}
-                refresh={this.refresh}
-                user={this.state.user}/>
+        <View style={styles.content}>
+          <View style={styles.list}>
+            <Toolbar
+              home={true}
+              createClient={true}
+              reportIssue={true}
+              signOut={true}
+              navigation={this.props.navigation}
+              signOutFunc={this._signOutAsync}
+              refresh={this.refresh}
+              user={this.state.user}/>
 
-              <ClientList setClientUID={this.setClientUID} clients={this.state.clients}/>
-            </View>
+            <ClientList setClientUID={this.setClientUID} clients={this.state.clients}/>
           </View>
-
-          <Modal
-            isVisible={this.state.clientModal}
-            onBackdropPress={( ) => this.toggleModal( )}
-            style={{alignItems: 'center'}}>
-            {
-              this.state.client === null ?
-                <ActivityIndicator size='large' color={colors.black} style={{paddingTop: 200}} />
-              :
-                <ClientProfile
-                  user={this.state.user}
-                  nav={this.props.navigation}
-                  client={this.state.client}
-                  loading={this.toggleLoading}
-                  isPortrait={true}
-                  toggleModal={this.toggleModal}
-                  refresh={this.refresh}
-                  removeClientFromState={this.removeClientFromState}/>
-            }
-          </Modal>
         </View>
-      )
-    }
+
+        <Modal
+          isVisible={this.state.clientModal}
+          onBackdropPress={( ) => this.toggleModal( )}
+          style={{alignItems: 'center'}}>
+          {
+            this.state.client === null ?
+              <ActivityIndicator size='large' color={colors.black} style={{paddingTop: 200}} />
+            :
+              <ClientProfile
+                user={this.state.user}
+                nav={this.props.navigation}
+                client={this.state.client}
+                loading={this.toggleLoading}
+                isPortrait={true}
+                toggleModal={this.toggleModal}
+                refresh={this.refresh}
+                removeClientFromState={this.removeClientFromState}/>
+          }
+        </Modal>
+      </View>
+    )
+  }
 }
 
 // Prop Validation

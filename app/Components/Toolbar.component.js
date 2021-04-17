@@ -68,7 +68,7 @@ const SignOut = ({...props}) => (
     color={colors.red}
     underlayColor={colors.black}
     containerStyle={styles.icons}
-    onPress={( ) => signoutAlert(props.navigation)}/>
+    onPress={( ) => { signoutAlert(props.signOutFunc); }}/>
 )
 
 // Props Validation

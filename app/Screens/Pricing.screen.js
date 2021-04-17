@@ -293,7 +293,7 @@ export default class Pricing extends Component {
       },
       {
         name: "Accents",
-        headers: ["Pattern", "Cost per SqFt"],
+        headers: ["Cost per SqFt", "Pattern"],
         rows:[
           {
             id: "",
@@ -780,6 +780,8 @@ export default class Pricing extends Component {
           if (response.data.length != 0) {
             let tables = [...this.state.tileTables];
             tables[index].rows.pop();
+
+            console.log(response.data)
 
             response.data.map((row, rowIndex) => {
               for (var key in row) {

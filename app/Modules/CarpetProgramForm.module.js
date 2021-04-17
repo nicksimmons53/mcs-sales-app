@@ -9,6 +9,8 @@ import CheckboxRow from '../Components/CheckboxRow';
 import { CarpetProgramInfo } from '../Form/Values.form';
 import { styles, colors } from './Styles/Form.style';
 
+let zIndex=100;
+
 // Class Component for Client Accounting Info
 class CarpetProgramForm extends Component {
     state = {
@@ -62,31 +64,13 @@ class CarpetProgramForm extends Component {
                                 label="Preferred Carpet Brand"
                                 tooltip={false}
                                 formik={this.props.formik}/>
-                           
-                            <DropdownRow
-                                title="Will Floor Trim Be..."
-                                choices={this.state.floorTrimOptions}
-                                formik={this.props.formik}
-                                fieldName="floor_trim_style"
-                                zIndex={5}
-                                tooltip={false}/>
-
-                            <CheckboxRow
-                                zIndex={0}
-                                label="Will We Be Installing Floor Trim?"
-                                fieldName="floor_trim_installer"
-                                formik={this.props.formik}
-                                defaultValue={values.soft_close_std}
-                                tooltip={true}
-                                tooltipHeight={135}
-                                popover={CarpetProgramInfo.floorTrimInstaller}/>
 
                             <DropdownRow
                                 title="Who Will be Doing Takeoffs?"
                                 choices={this.state.takeoffOptions}
                                 formik={this.props.formik}
                                 fieldName="takeoff_resp"
-                                zIndex={2}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
 
                             <SmallInputRow

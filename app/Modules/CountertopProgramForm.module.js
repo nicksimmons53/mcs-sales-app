@@ -8,6 +8,8 @@ import DropdownRow from '../Components/DropdownRow';
 import CheckboxRow from '../Components/CheckboxRow';
 import { styles, colors } from './Styles/Form.style';
 
+let zIndex=100;
+
 // Class Component for Client Accounting Info
 class CountertopProgramForm extends Component {
     state = {
@@ -63,7 +65,7 @@ class CountertopProgramForm extends Component {
                                 choices={this.state.materialThicknessOptions}
                                 formik={this.props.formik}
                                 fieldName="material_thickness_pref"
-                                zIndex={5}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
 
                             {values.material_thickness_pref === "Other" ? 
@@ -80,7 +82,7 @@ class CountertopProgramForm extends Component {
                                 choices={this.state.edgeOptions}
                                 formik={this.props.formik}
                                 fieldName="edge_pref"
-                                zIndex={4}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
 
                             {values.edge_pref === "Other" ?    
@@ -120,7 +122,7 @@ class CountertopProgramForm extends Component {
                                 choices={this.state.takeoffOptions}
                                 formik={this.props.formik}
                                 fieldName="takeoff_resp"
-                                zIndex={2}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>                     
                                       
                             <MediumInputRow
@@ -132,7 +134,7 @@ class CountertopProgramForm extends Component {
                            
                             <MediumInputRow
                                 zIndex={0}
-                                fieldName="notes"
+                                fieldName="Notes"
                                 label="notes"
                                 formik={this.props.formik}
                                 tooltip={false}/>

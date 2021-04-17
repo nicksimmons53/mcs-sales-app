@@ -28,12 +28,9 @@ class Table extends Component {
   deleteRow = (arrayHelpers, index) => {
     let user = this.props.user;
     let client = this.props.client;
-
-    console.log(arrayHelpers.form.values.rows[index].id)
     
     axios.delete(`${API_URL}/employee/${user.recnum}/clients/${client.id}/parts/${arrayHelpers.form.values.rows[index].id}`)
       .then((response) => {
-        console.log(response.status);
         arrayHelpers.remove(index);
       })
       .catch((error) => {
@@ -65,6 +62,20 @@ class Table extends Component {
         if (this.props.tableObj.name === "Pattern Charges")
           return false;
         if (this.props.tableObj.name === "Shower Pans - Stone")
+          return false;
+        if (this.props.tableObj.name === "Shower Pans - Tile")
+          return false;
+        if (this.props.tableObj.name === "Shower Pans - Deco")
+          return false;
+        if (this.props.tableObj.name === "Underlayment")
+          return false;
+        if (this.props.tableObj.name === "Pattern Charges")
+          return false;
+        if (this.props.tableObj.name === "Accents")
+          return false;
+        if (this.props.tableObj.name === "Shower Seats")
+          return false;
+        if (this.props.tableObj.name === "Add-Ons")
           return false;
 
         return true;
@@ -117,11 +128,6 @@ class Table extends Component {
   }
 
   input = (formik, attr, row, attrIndex, rowIndex, cellStyle) => {
-    // const altered = ( ) => {
-    //   if (this.props.tableObj.name === "Sinks/Shape")
-    //     formik.setFieldValue(`${row}.altered`, true);
-    // };
-
     return (
       <Input
         onChangeText={ formik.form.handleChange(`rows.${rowIndex}.${attr}`) }
@@ -163,8 +169,10 @@ class Table extends Component {
         return this.dropdown(formik, attr, row, attrIndex, rowIndex, cellStyle);
       
       case "description":
-        if (this.state.table.name === "Pattern Charges")
+        if (this.state.table.name === "Pattern Charges") {
+          console.log(row)
           return this.dropdown(formik, attr, row, attrIndex, rowIndex, cellStyle);
+        }
 
         return this.input(formik, attr, row, attrIndex, rowIndex, cellStyle);
     
@@ -209,8 +217,6 @@ class Table extends Component {
                 delete response.data[index][key];
             }
           });
-
-          console.log(response.data)
         }
       })
       .catch((error) => {

@@ -1,10 +1,12 @@
 // Library Imports
 import React, { Component } from 'react';
-import { Text, ScrollView, Image } from 'react-native';
-import { S3_BUCKET } from 'react-native-dotenv';
+import { Text, ScrollView, Platform } from 'react-native';
+import { S3_URL_PROD } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import { Divider, ListItem, Icon } from 'react-native-elements';
 import  { WebView } from 'react-native-webview';
+import RNFS from 'react-native-fs';
+import FileViewer from 'react-native-file-viewer';
 import Modal from 'react-native-modal';
 import { styles, colors } from './Styles/List.style';
 
@@ -17,15 +19,20 @@ class List extends Component {
     modalVisible: false
   }
 
-  displayFile = async(fileName) => {
-    let fileURL = S3_BUCKET + "/" + fileName;
+  displayFile = async(fileName, file) => {
+    let s3FileURL = S3_URL_PROD + "/" + fileName;
+    let s3FileExt = fileName.split('.')[1];
+    let localFile = `${RNFS.DocumentDirectoryPath}/tempFile.${s3FileExt}`;
+    let options = {
+      fromUrl: s3FileURL,
+      toFile: localFile
+    };
 
-    if (/\.pdf$/.test(fileURL)) {
-      fileURL = `https://drive.google.com/viewerng/viewer?embedded=true&url=${fileURL}`;
-    }
-    
-    this.setState({ fileURL: fileURL });
-    this.setState({ modalVisible: true });
+    RNFS.downloadFile(options).promise
+      .then(( ) => FileViewer.open(localFile))
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   renderFileList = ( ) => {
@@ -53,7 +60,7 @@ class List extends Component {
                 color={colors.green}/>}
             topDivider={moreThanOneIndex}
             titleStyle={styles.listItemTitle}
-            onPress={( ) => this.displayFile(l.Key)}/>
+            onPress={( ) => this.displayFile(l.Key, l)}/>
         ))
       );
     }

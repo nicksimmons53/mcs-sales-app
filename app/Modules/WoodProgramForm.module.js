@@ -9,14 +9,12 @@ import DropdownRow from '../Components/DropdownRow';
 import { WoodFieldInfo } from '../Form/Values.form';
 import { styles, colors } from './Styles/Form.style';
 
+let zIndex=100;
+
 // Class Component for Client Accounting Info
 class WoodProgramForm extends Component {
     state = {
         fieldsVisible: false,
-        floorTrimOptions: [
-            { label: "1/4\" Round", value: "1/4\" Round" },
-            { label: "Shoe Mold", value: "Shoe Mold" }
-        ],
         floorTrimStyleOptions: [
             { label: "Pre-Primed", value: "Pre-Primed" },
             { label: "MC Surfaces Stain", value: "MC Surfaces Stain" }
@@ -28,6 +26,10 @@ class WoodProgramForm extends Component {
         takeoffOptions: [
             { label: "Builder", value: "Builder" },
             { label: "MC Surfaces, Inc.", value: "MC Surfaces, Inc." }
+        ],
+        yesOrNoOptions: [
+            { label: "Yes", value: 1 },
+            { label: "No", value: 0 }
         ]
     }
     
@@ -37,8 +39,6 @@ class WoodProgramForm extends Component {
 
     render( ) {
         let values = this.props.formik.values;
-        
-        console.log(values)
 
         return (
             <View style={styles.background}>
@@ -68,30 +68,37 @@ class WoodProgramForm extends Component {
                                 popover={WoodFieldInfo.preferredGlue}
                                 tooltipHeight={75}/>
 
-                            <CheckboxRow
-                                zIndex={0}
-                                label="Will We Be Installing Floor Trim?"
+                            <DropdownRow
+                                zIndex={zIndex-=1}
+                                title="Will We Be Installing Floor Trim?"
+                                choices={this.state.yesOrNoOptions}
                                 fieldName="floor_trim_installer"
                                 formik={this.props.formik}
-                                defaultValue={values.floor_trim_installer}
                                 tooltip={true}
                                 tooltipHeight={135}
                                 popover={WoodFieldInfo.floorTrimInstaller}/>
 
-                            <DropdownRow
-                                title="Preferred Floor Trim"
-                                choices={this.state.floorTrimOptions}
-                                formik={this.props.formik}
-                                fieldName="floor_trim_pref"
-                                zIndex={5}
-                                tooltip={false}/>
+                            {
+                                values.floor_trim_installer === "Yes" ?
+                                    <DropdownRow
+                                        zIndex={zIndex-=1}
+                                        title="Trim Around Cabinets?"
+                                        choices={this.state.yesOrNoOptions}
+                                        fieldName="cabinet_trim"
+                                        formik={this.props.formik}
+                                        tooltip={true}
+                                        tooltipHeight={135}
+                                        popover={WoodFieldInfo.cabinet_trim}/>
+                                :
+                                null
+                            }
 
                             <DropdownRow
                                 title="Will Floor Trim Be..."
                                 choices={this.state.floorTrimStyleOptions}
                                 formik={this.props.formik}
                                 fieldName="floor_trim_style"
-                                zIndex={4}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
 
                             <DropdownRow
@@ -99,7 +106,7 @@ class WoodProgramForm extends Component {
                                 choices={this.state.secondStoryOptions}
                                 formik={this.props.formik}
                                 fieldName="second_story_hardie"
-                                zIndex={3}
+                                zIndex={zIndex-=1}
                                 tooltip={true}
                                 tooltipHeight={90}
                                 popover={WoodFieldInfo.secondStorySubfloor}/>
@@ -129,7 +136,7 @@ class WoodProgramForm extends Component {
                                 choices={this.state.takeoffOptions}
                                 formik={this.props.formik}
                                 fieldName="takeoff_resp"
-                                zIndex={2}
+                                zIndex={zIndex-=1}
                                 tooltip={false}/>
 
                             <SmallInputRow
