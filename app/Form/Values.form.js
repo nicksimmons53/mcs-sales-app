@@ -328,8 +328,6 @@ let countertopColors = [
     { label: "Blanco Maple", value: "Blanco Maple" },
     { label: "Blanco Orion", value: "Blanco Orion" },
     { label: "Blanco Perla", value: "Blanco Perla" },
-    { label: "Blue Flower", value: "Blue Flower" },
-    { label: "Blue Pearl", value: "Blue Pearl" },
     { label: "Butterfly Beige", value: "Butterfly Beige" },
     { label: "Calacatta Gyotto", value: "Calacatta Gyotto" },
     { label: "Caramel Cream", value: "Caramel Cream" },
@@ -350,8 +348,6 @@ let countertopColors = [
     { label: "Eternal Calacatta Gold", value: "Eternal Calacatta Gold" },
     { label: "Eternal Serena", value: "Eternal Serena" },
     { label: "Giallo Arctic", value: "Giallo Arctic" },
-    { label: "Giallo Ornamental", value: "Giallo Ornamental" },
-    { label: "Giallo Vernon", value: "Giallo Vernon" },
     { label: "Golden Paradise", value: "Golden Paradise" },
     { label: "Grey Expo", value: "Grey Expo" },
     { label: "Helix", value: "Helix" },
@@ -377,7 +373,6 @@ let countertopColors = [
     { label: "Rocky Mountain", value: "Rocky Mountain" },
     { label: "Royal Reef", value: "Royal Reef" },
     { label: "San Leon", value: "San Leon" },
-    { label: "Sapphire Blue", value: "Sapphire Blue" },
     { label: "Sapphire Brown", value: "Sapphire Brown" },
     { label: "Sapphire Grey", value: "Sapphire Grey" },
     { label: "Silken Pearl", value: "Silken Pearl" },
@@ -385,7 +380,6 @@ let countertopColors = [
     { label: "Splendid", value: "Splendid" },
     { label: "Statuario", value: "Statuario" },
     { label: "Summit White", value: "Summit White" },
-    { label: "Super White", value: "Super White" },
     { label: "Taj Mahal", value: "Taj Mahal" },
     { label: "Tan Brown", value: "Tan Brown" },
     { label: "Taupe Gray", value: "Taupe Gray" },
@@ -404,12 +398,10 @@ let countertopColors = [
 
 let countertopTypes = [
     { label: "", value: "" },
-    { label: "Dolomite", value: "Dolomite" },
     { label: "Granite 2cm", value: "Granite 2cm" },
     { label: "Granite 3cm", value: "Granite 3cm" },
     { label: "Quartz 2cm", value: "Quartz 2cm" },
     { label: "Quartz 3cm", value: "Quartz 3cm" },
-    { label: "Quartzite", value: "Quartzite" },
     { label: "Porcelain 1.2cm", value: "Porcelain 1.2cm" }
 ];
 
