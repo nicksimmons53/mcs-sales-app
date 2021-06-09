@@ -226,18 +226,6 @@ class TileProgramForm extends Component {
                                 fieldName="backerboard_installer"
                                 zIndex={zIndex-=1}
                                 tooltip={false}/>
-                            
-                            {
-                                (values.backerboard_installer === "No") ?
-                                    <MediumInputRow
-                                        label='Backerboard Options'
-                                        zIndex={0}
-                                        fieldName="backerboard_options"
-                                        formik={this.props.formik}
-                                        tooltip={false}/>
-                                :
-                                    null
-                            }
 
                             <DropdownRow
                                 title="Punch Out Material"

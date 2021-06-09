@@ -186,7 +186,7 @@ class Table extends Component {
     let cellStyle = styles.cell;
     
     return (
-        <View style={styles.row} zIndex={inverseIndex - index}>
+        <View style={styles.row} zIndex={100 - index}>
           {Object.keys(row).map((attr, attrIndex) => 
             (
               this.cell(arrayHelpers, attr, attrIndex, row, index, cellStyle)
