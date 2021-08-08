@@ -36,7 +36,7 @@ class UpdateClient extends Component {
         this.props.cancel( );
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
       });
   }
 

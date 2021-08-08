@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         zIndex: 20
     },
     label: {
-        fontFamily: 'opensans-reg',
+        fontFamily: 'OpenSans',
         flex: 1,
         fontSize: 16,
         paddingRight: 30,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     promptText: {
       color: colors.white,
       fontSize: 18,
-      fontFamily: 'quicksand-reg'
+      fontFamily: 'Quicksand'
     }
 });
 

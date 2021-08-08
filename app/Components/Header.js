@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   headerText: {
-    fontFamily: 'opensans-bold',
+    fontFamily: 'OpenSans',
     fontSize: 28,
     color: colors.background,
   }

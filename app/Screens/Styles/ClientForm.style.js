@@ -5,40 +5,41 @@ import colors from '../../Library/Colors';
 const styles = StyleSheet.create({
   // Background
   background: {
-    flex: 1,
-    paddingTop: 24,
     backgroundColor: colors.black,
+    flex: 1,
+    paddingTop: 25
   },
 
   // Row
   row: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
 
   // Info Container
   infoContainer: {
-    flex: 1,
-    borderTopLeftRadius: 5,
     backgroundColor: colors.white,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    flex: 1
+  },
+
+  // Form
+  form: {
+    backgroundColor: colors.white,
+    borderRadius: 3,
+    flex: 1,
+    margin: 10,
+    padding: 20,
   },
 
   // ScrollView
   sv: {
-    backgroundColor: colors.light_grey
-  },
-
-  // Header
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    margin: 10,
-  },
-  headerText: {
-    fontFamily: 'opensans-bold',
-    fontSize: 28,
-    color: colors.background,
+    justifyContent: 'center',
+    backgroundColor: colors.light_grey,
+    flex: 1,
+    padding: 100
   },
 
   // Buttons
@@ -56,12 +57,6 @@ const styles = StyleSheet.create({
   },
   save: {
     backgroundColor: colors.green,
-  },
-
-  // Toast
-  toast: {
-    width: '50%',
-    alignItems: 'center'
   }
 });
 

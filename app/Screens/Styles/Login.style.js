@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   logoText: {
     color: colors.black,
     fontSize: 50,
-    fontFamily: 'quicksand-reg',
+    fontFamily: 'Quicksand',
     paddingLeft: 10,
     textAlign: 'center'
   },
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     width: 350
   },
   loginTitle: {
+    fontFamily: 'Quicksand',
     fontSize: 20,
   },
 
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
   },
   needHelpTitle: {
     color: colors.black,
-    fontFamily: 'quicksand-reg'
+    fontFamily: 'Quicksand'
   }
 });
 

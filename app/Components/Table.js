@@ -309,14 +309,14 @@ const styles = StyleSheet.create({
       backgroundColor: colors.white
     },
     tableHeaderText: {
-      fontFamily: 'opensans-reg',
+      fontFamily: 'OpenSans',
       fontSize: 20,
       padding: 10,
       color: colors.black
     },
   
     columnHeader: {
-      fontFamily: 'opensans-reg',
+      fontFamily: 'OpenSans',
       fontSize: 16,
       padding: 10,
       color: colors.black
@@ -364,7 +364,7 @@ const styles = StyleSheet.create({
     dropdownItem: {
         justifyContent: 'flex-start',
         fontSize: 16,
-        fontFamily: 'quicksand-reg'
+        fontFamily: 'Quicksand'
     },
   
     // Buttons

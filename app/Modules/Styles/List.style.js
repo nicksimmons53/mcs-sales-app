@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 
   // Header
   header: {
-    fontFamily: 'opensans-reg',
+    fontFamily: 'OpenSans',
     fontSize: 18,
     padding: 10,
     color: colors.background,
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
 
   // Text
   text: {
-    fontFamily: 'opensans-reg',
+    fontFamily: 'OpenSans',
     fontSize: 14,
     padding: 10,
   },

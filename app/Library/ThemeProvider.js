@@ -2,14 +2,15 @@ const theme = {
   // Button Styling
   Button: {
     titleStyle: {
-      fontFamily: 'quicksand-reg',
+      fontFamily: 'Quicksand',
+      fontSize: 14
     }
   },
 
   // Input Box Styling
   Input: {
     inputStyle: {
-      fontFamily: 'opensans-reg',
+      fontFamily: 'OpenSans',
       paddingLeft: 5,
     }
   }

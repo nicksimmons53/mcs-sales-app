@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   label: {
-    fontFamily: 'opensans-reg',
+    fontFamily: 'OpenSans',
     flex: 1,
     fontSize: 16,
     paddingRight: 30,

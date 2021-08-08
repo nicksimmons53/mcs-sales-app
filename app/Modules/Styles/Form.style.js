@@ -6,16 +6,12 @@ const styles = StyleSheet.create({
   // Background
   background: {
     width: '100%',
-    paddingTop: 15,
-    paddingLeft: 15,
-    paddingRight: 15,
     alignItems: 'center',
     justifyContent: 'center'
   },
 
   // Form
   form: {
-    height: 'auto',
     width: '95%',
     margin: 10,
     borderRadius: 3,
@@ -30,13 +26,13 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   headerText: {
-    fontFamily: 'opensans-reg',
+    fontFamily: 'OpenSans',
     fontSize: 20,
     padding: 10,
     color: colors.background,
   },
   sectionHeaderText: {
-    fontFamily: 'opensans-reg',
+    fontFamily: 'OpenSans',
     flex: 1,
     fontSize: 18,
     padding: 10,
@@ -53,7 +49,7 @@ const styles = StyleSheet.create({
     zIndex: 20
   },
   label: {
-    fontFamily: 'opensans-reg',
+    fontFamily: 'OpenSans',
     flex: 1,
     fontSize: 16,
     paddingRight: 30,
@@ -84,13 +80,13 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   dropdownLabel: {
-    fontFamily: 'opensans-reg',
+    fontFamily: 'OpenSans',
     justifyContent: 'flex-start'
   },
   dropdownItem: {
     justifyContent: 'flex-start',
     fontSize: 16,
-    fontFamily: 'quicksand-reg'
+    fontFamily: 'Quicksand'
   },
 
   // Button
@@ -148,7 +144,7 @@ const styles = StyleSheet.create({
   promptText: {
     color: colors.white,
     fontSize: 18,
-    fontFamily: 'quicksand-reg'
+    fontFamily: 'Quicksand'
   }
 });
 

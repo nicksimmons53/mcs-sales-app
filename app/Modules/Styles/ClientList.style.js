@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 
   // Header
   text: {
-    fontFamily: 'opensans-bold',
+    fontFamily: 'OpenSans',
     fontSize: 28,
     padding: 10,
     color: colors.black,
@@ -28,6 +28,26 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+
+  // Item
+  listItem: {
+    height: 50,
+  },
+
+  // Title
+  title: {
+    fontFamily: 'OpenSans',
+    fontSize: 14,
+    paddingTop: 5,
+    paddingBottom: 5,
+    color: colors.background,
+  },
+
+  // Subtitle
+  subtitle: {
+    fontFamily: 'OpenSans',
+    color: colors.blue,
   },
 });
 

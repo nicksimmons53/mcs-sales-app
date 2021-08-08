@@ -50,10 +50,10 @@ const styles = StyleSheet.create({
     dropdownItem: {
         justifyContent: 'flex-start',
         fontSize: 16,
-        fontFamily: 'quicksand-reg'
+        fontFamily: 'Quicksand'
     },
     label: {
-        fontFamily: 'opensans-reg',
+        fontFamily: 'OpenSans',
         flex: 1,
         fontSize: 16,
         paddingRight: 30,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     promptText: {
       color: colors.white,
       fontSize: 18,
-      fontFamily: 'quicksand-reg'
+      fontFamily: 'Quicksand'
     }
 });
 

@@ -1,16 +1,20 @@
 // Library Imports
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import * as FileSystem from 'expo-file-system';
-import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Button } from 'react-native-elements';
 import DocumentPicker from 'react-native-document-picker';
 import colors from '../Library/Colors';
+import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { openComposer } from 'react-native-email-link';
 
 // Presentational Component of Buttons inside Client Profile
 const ClientActions = ({...props}) => {
+  const navigation = useNavigation( );
+
   const saveFile = (base64, client, fileName) => {
     const clientName = client.clnnme.replace(/\s/g, "_");
     let reqBody = {
@@ -42,10 +46,6 @@ const ClientActions = ({...props}) => {
 
       const base64 = await FileSystem.readAsStringAsync(file.uri, { encoding: 'base64' });
 
-      props.showFileToast( );
-
-      props.refreshFiles( );
-
       return saveFile(base64, props.client, file.name);
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
@@ -57,114 +57,90 @@ const ClientActions = ({...props}) => {
   };
 
   return (
-    <ScrollView horizontal={true} style={styles.background}>
+    <View style={styles.background}>
       <Button
         title='Advanced Info'
         icon={{
           name: 'arrow-right',
           type: 'font-awesome',
-          size: 20,
+          size: 15,
           color: colors.white,
         }}
         buttonStyle={styles.button}
         iconContainerStyle={styles.icon}
-        onPress={( ) => {
-          if (props.isPortrait === true)
-            props.toggleModal( );
-            props.nav.navigate('AdvInfoForm', {
-              client: props.client,
-              user: props.user,
-              clientInfo: props.info,
-              refreshInfo: props.refreshInfo
-          });
-        }}/>
-        <Button
-          title='Program Info'
-          icon={{
-            name: 'folder',
-            type: 'font-awesome',
-            size: 20,
-            color: colors.white,
-          }}
-          buttonStyle={styles.button}
-          iconContainerStyle={styles.icon}
-          onPress={( ) => {
-            let timeout = null;
-  
-            if (typeof(props.toggleModal) !== 'undefined')
-              props.toggleModal( );
-  
-            timeout = setTimeout(( ) => {
-              props.nav.navigate('Program', {
-                client: props.client,
-                user: props.user,
-                tileProgram: props.tileProgram,
-                woodProgram: props.woodProgram,
-                carpetProgram: props.carpetProgram,
-                countertopProgram: props.countertopProgram,
-                cabinetProgram: props.cabinetProgram
-              });
-            }, 2000);
-          }}/>
+        containerStyle={styles.buttonContainer}
+        onPress={( ) => navigation.push("ClientDetails", { client: props.client })}/>
+      <Button
+        title='Program Info'
+        icon={{
+          name: 'folder',
+          type: 'font-awesome',
+          size: 15,
+          color: colors.white,
+        }}
+        buttonStyle={styles.button}
+        iconContainerStyle={styles.icon}
+        containerStyle={styles.buttonContainer}
+        onPress={( ) => navigation.push("ClientPrograms", { client: props.client })}/>
       <Button
         title='Build Pricing'
         icon={{
           name: 'wrench',
           type: 'font-awesome',
-          size: 20,
+          size: 15,
           color: colors.white,
         }}
         buttonStyle={styles.button}
+        containerStyle={styles.buttonContainer}
         iconContainerStyle={styles.icon}
-        onPress={( ) => {
-          let timeout = null;
-
-          if (typeof(props.toggleModal) !== 'undefined')
-            props.toggleModal( );
-
-          timeout = setTimeout(( ) => {
-            props.nav.navigate('Pricing', {
-              client: props.client,
-              user: props.user
-            });
-          }, 2000);
-        }}/>
+        onPress={( ) => navigation.push("ClientPricing", { client: props.client })}/>
       <Button
         title='Request COI'
         icon={{
           name: 'envelope',
           type: 'font-awesome',
-          size: 20,
+          size: 15,
           color: colors.white,
         }}
         buttonStyle={styles.button}
+        containerStyle={styles.buttonContainer}
         iconContainerStyle={styles.icon}
-        onPress={props.toggleEmailOverlay}/>
+        onPress={ ( ) => {
+          openComposer({
+            to: "lisak@mcsurfacesinc.com",
+            subject: `COI Request - ${props.client.clnnme}`,
+            body: `
+              ${props.client.clnnme}\n
+              Corporate Address: ${[props.client.addrs1 + props.client.addrs2, props.client.ctynme, props.client.state_, props.client.zipcde].filter(Boolean).join(', ')}
+              Shipping Address: ${[props.client.shpad1 + props.client.shpad2, props.client.shpcty, props.client.shpste, props.client.shpzip].filter(Boolean).join(', ')}
+              Billing Address: ${[props.client.bilad1 + props.client.bilad2, props.client.bilcty, props.client.bilste, props.client.bilzip].filter(Boolean).join(', ')}
+            `
+          })
+        }}/>
       <Button
         title='Update Client'
         icon={{
           name: 'pencil',
           type: 'font-awesome',
-          size: 20,
+          size: 15,
           color: colors.white,
         }}
         buttonStyle={styles.button}
-        iconContainerStyle={styles.icon}
-        onPress={props.update}/>
+        containerStyle={styles.buttonContainer}
+        iconContainerStyle={styles.icon}/>
       <Button
         title='Attach Files'
         icon={{
           name: 'paperclip',
           type: 'font-awesome',
-          size: 20,
+          size: 15,
           color: colors.white,
         }}
         buttonStyle={styles.button}
+        containerStyle={styles.buttonContainer}
         iconContainerStyle={styles.icon}
-        onPress={( ) => {
-          filePicker(props.client);
-        }}/>
-    </ScrollView>
+        onPress={( ) => filePicker(props.client)}/>
+    </View>
   );
 };
 
@@ -172,7 +148,10 @@ const ClientActions = ({...props}) => {
 const styles = StyleSheet.create({
   // Background
   background: {
+    display: 'flex',
     flexDirection: 'row',
+    flexWrap: "wrap",
+    justifyContent: 'center',
     margin: 0,
     marginTop: 10,
     marginBottom: 0,
@@ -184,12 +163,16 @@ const styles = StyleSheet.create({
 
   // Button
   button: {
-    height: 40,
-    width: 200,
-    margin: 10,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.background,
+    flex: 1,
+    height: 35,
+    justifyContent: 'center',
+    minWidth: 150,
+    width: 175
+  },
+  buttonContainer: {
+    padding: 10
   },
 
   // Icon
@@ -197,15 +180,5 @@ const styles = StyleSheet.create({
     paddingRight: 15
   }
 });
-
-// Props Validation
-ClientActions.propTypes = {
-  showFileToast: PropTypes.func,
-  client: PropTypes.object,
-  toggleModal: PropTypes.func,
-  nav: PropTypes.object,
-  update: PropTypes.func,
-  isPortrait: PropTypes.bool
-}
 
 export default ClientActions;

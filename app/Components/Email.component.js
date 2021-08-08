@@ -50,7 +50,7 @@ const Email = ({...props}) => {
                 props.toggleEmailOverlay( );
             })
             .catch((error) => {
-                console.error(error);
+                console.log(error);
             });
     }
 
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
     },
     headerText: {
-        fontFamily: 'opensans-reg',
+        fontFamily: 'OpenSans',
         fontSize: 20,
         padding: 10,
         color: colors.background,
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
         textAlignVertical: "center"
     },
     label: {
-        fontFamily: 'opensans-reg',
+        fontFamily: 'OpenSans',
         flex: 1,
         fontSize: 16,
         paddingRight: 30,

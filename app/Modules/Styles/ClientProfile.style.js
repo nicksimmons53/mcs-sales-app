@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   headerText: {
-    fontFamily: 'opensans-reg',
+    fontFamily: 'OpenSans',
     fontSize: 28,
     color: colors.background,
   },
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
 
   // Text
   text: {
-    fontFamily: 'opensans-reg',
+    fontFamily: 'OpenSans',
     fontSize: 18,
     paddingBottom: 10,
     color: colors.background,

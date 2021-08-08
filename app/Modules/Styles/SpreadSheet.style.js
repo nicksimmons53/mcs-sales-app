@@ -27,20 +27,20 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white
   },
   tableHeaderText: {
-    fontFamily: 'opensans-reg',
+    fontFamily: 'OpenSans',
     fontSize: 20,
     padding: 10,
     color: colors.black
   },
 
   columnHeader: {
-    fontFamily: 'opensans-reg',
+    fontFamily: 'OpenSans',
     fontSize: 16,
     padding: 10,
     color: colors.black
   },
   subtext: {
-    fontFamily: 'quicksand-reg',
+    fontFamily: 'Quicksand',
     fontSize: 16,
     paddingTop: 20,
     color: colors.grey

@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 
   // Header
   text: {
-    fontFamily: 'opensans-bold',
+    fontFamily: 'OpenSans',
     fontSize: 28,
     color: colors.black,
   },

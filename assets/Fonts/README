@@ -13,7 +13,7 @@ If your app fully supports variable fonts, you can now pick intermediate styles
 that aren’t available as static fonts. Not all apps support variable fonts, and
 in those cases you can use the static font files for Quicksand:
   static/Quicksand-Light.ttf
-  static/Quicksand-Regular.ttf
+  static/Quicksandular.ttf
   static/Quicksand-Medium.ttf
   static/Quicksand-SemiBold.ttf
   static/Quicksand-Bold.ttf
