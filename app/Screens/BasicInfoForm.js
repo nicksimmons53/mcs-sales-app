@@ -9,6 +9,7 @@ import {
 import PropTypes from 'prop-types';
 import { Button } from 'react-native-elements';
 import { Divider } from 'native-base';
+import { FAB } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -20,7 +21,8 @@ import Header from '../Components/Header';
 import Snack from '../Components/Snack';
 import schema from '../form/yup/schema';
 import { states } from '../form/dropdown/values';
-import { styles } from './Styles/ClientForm.style';
+import { styles, colors } from './Styles/ClientForm.style';
+import FloatingButton from '../Components/FloatingButton';
 
 // Class Component that will display client creation form
 function ClientForm({ navigation }) {
@@ -144,6 +146,7 @@ function ClientForm({ navigation }) {
         </ScrollView>
       </View>
 
+      <FloatingButton action={( ) => navigation.popToTop( )} icon="home"/>
       <Snack visible={visible} action={( ) => snackbarDismiss( )} message={snackMessage}/>
     </KeyboardAvoidingView>
   );
