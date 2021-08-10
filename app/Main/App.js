@@ -12,7 +12,7 @@ import { restoreToken } from '../features/user/userSlice';
 import theme from '../Library/ThemeProvider';
 import Login from '../screens/Login';
 import Profile from '../screens/Profile';
-import ClientForm from '../screens/ClientForm';
+import ClientForm from '../screens/BasicInfoForm';
 import readMultiples from '../Realm/readMultiples';
 import ClientProfile from '../screens/ClientProfile';
 import AdvInfoForm from '../screens/AdvInfoForm';

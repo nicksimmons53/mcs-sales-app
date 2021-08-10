@@ -6,7 +6,7 @@ import { Formik } from 'formik';
 import CheckboxRow from '../Components/CheckboxRow';
 import { SmallInputRow, MediumInputRow } from '../Components/InputRow';
 import DropdownRow from '../Components/DropdownRow';
-import { TileFieldInfo } from '../Form/Values.form';
+import { TileFieldInfo } from '../form/Values.form';
 import Programs from '../api/Programs';
 import { styles, colors } from './Styles/Form.style';
 

@@ -7,7 +7,7 @@ import { Divider, Button } from 'react-native-elements';
 import { SmallInputRow, MediumInputRow } from '../Components/InputRow';
 import CheckboxRow from '../Components/CheckboxRow';
 import DropdownRow from '../Components/DropdownRow';
-import { WoodFieldInfo } from '../Form/Values.form';
+import { WoodFieldInfo } from '../form/Values.form';
 import Programs from '../api/Programs';
 import { styles, colors } from './Styles/Form.style';
 

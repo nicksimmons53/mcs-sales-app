@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { Button, Input, Divider, Icon } from 'react-native-elements';
-import { Contact } from '../Form/Values.form';
+import { Contact } from '../form/Values.form';
 import { styles, colors } from './Styles/AddContact.style';
 
 function AddContact(props) {

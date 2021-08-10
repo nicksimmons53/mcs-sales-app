@@ -10,7 +10,7 @@ import axios from 'axios';
 import Toast from 'react-native-easy-toast';
 import { styles, colors } from './Styles/Form.style';
 
-// Class Component to show Update Client Form
+// Class Component to show Update Client form
 class UpdateClient extends Component {
   state = {
     address: this.props.address

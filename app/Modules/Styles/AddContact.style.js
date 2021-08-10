@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
   background: {
     alignItems: 'center',
   },
-  // Form
+  // form
   form: {
     height: 'auto',
     width: '95%',

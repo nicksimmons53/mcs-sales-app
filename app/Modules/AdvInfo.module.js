@@ -7,7 +7,7 @@ import * as FileSystem from 'expo-file-system';
 import DocumentPicker from 'react-native-document-picker';
 import DropdownRow from '../Components/DropdownRow';
 import Toast from 'react-native-easy-toast';
-import { FieldInfo } from '../Form/Values.form';
+import { FieldInfo } from '../form/Values.form';
 import { styles, colors } from './Styles/Form.style';
 import { SmallInputRow, MediumInputRow } from '../Components/InputRow';
 import CheckboxRow from '../Components/CheckboxRow';

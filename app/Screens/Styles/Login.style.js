@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
-  // Form View
+  // form View
   form: {
     alignItems: 'center',
     backgroundColor: colors.white,

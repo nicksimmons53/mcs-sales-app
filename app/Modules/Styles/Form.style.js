@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
-  // Form
+  // form
   form: {
     width: '95%',
     margin: 10,

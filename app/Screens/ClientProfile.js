@@ -25,7 +25,7 @@ import Contacts from '../api/Contacts';
 import Addresses from '../api/Addresses';
 import { FAB, Snackbar } from 'react-native-paper';
 import { StatusBar } from 'react-native';
-// import { ClientInfo, TileProgram, WoodProgram, CarpetProgram, CountertopProgram, CabinetProgram } from '../Form/Values.form';
+// import { ClientInfo, TileProgram, WoodProgram, CarpetProgram, CountertopProgram, CabinetProgram } from '../form/Values.form';
 
 // Class Component that will show the Client Profile Information
 function ClientProfile(props) {

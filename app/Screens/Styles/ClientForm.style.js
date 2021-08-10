@@ -21,25 +21,33 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
-    flex: 1
+    height: '100%'
   },
 
-  // Form
+  // form
+  formRoot: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
   form: {
     backgroundColor: colors.white,
     borderRadius: 3,
-    flex: 1,
     margin: 10,
     padding: 20,
+    width: '50%'
+  },
+  label: {
+    fontFamily: 'OpenSans',
+    flex: 1,
+    fontSize: 18,
+    paddingRight: 30,
+    color: colors.black
   },
 
   // ScrollView
   sv: {
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: colors.light_grey,
-    flex: 1,
-    padding: 100
   },
 
   // Buttons

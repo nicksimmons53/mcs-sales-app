@@ -6,7 +6,7 @@ import PropTypes, { array } from 'prop-types';
 import { Formik, FieldArray } from 'formik';
 import axios from 'axios';
 import { Divider, Input, Icon, Button } from 'react-native-elements';
-import { levels, units, countertopTypes, countertopColors, edges, patterns } from '../Form/Values.form';
+import { levels, units, countertopTypes, countertopColors, edges, patterns } from '../form/Values.form';
 import DropDownPicker from 'react-native-dropdown-picker';
 import colors from '../Library/Colors';
 
