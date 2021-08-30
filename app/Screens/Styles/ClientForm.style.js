@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
   background: {
     backgroundColor: colors.black,
     flex: 1,
-    paddingTop: 25
+    paddingTop: 25,
+    width: '100%'
   },
 
   // Row
@@ -21,7 +22,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderTopLeftRadius: 5,
     borderTopRightRadius: 5,
-    height: '100%'
+    height: '100%',
+    width: '100%',
   },
 
   // form
@@ -57,6 +59,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 30,
+  },
+  attachButtonContainer: {
+    height: 100,
+    width: 150,
+  },
+  attach: {
+    backgroundColor: colors.black,  
   },
   saveButtonContainer: {
     width: 350,

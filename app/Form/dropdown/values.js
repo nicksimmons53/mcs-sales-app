@@ -1,3 +1,10 @@
+let territories = [
+    { label: "Austin", value: "Austin" },
+    { label: "Dallas", value: "Dallas" },
+    { label: "Houston", value: "Houston" },
+    { label: "San Antonio", value: "San Antonio" }
+];
+
 let states = [
     { label:"AL", value:"AL" },
     { label:"AK", value:"AK" },
@@ -51,6 +58,35 @@ let states = [
     { label:"WY", value:"WY" },
 ];
 
+let yesOrNo = [
+    { label: "", value: null },
+    { label: "Yes", value: 1 },
+    { label: "No", value: 0 }
+];
+
+let paymentFrequency = [
+    { label: "", value: null },
+    { label: "Weekly", value: "Weekly" }
+];
+
+let paymentType = [
+    { label: "", value: null },
+    { label: "Credit-Card", value: "Credit-Card" },
+    { label: "Direct Deposit", value: "Direct Deposit" },
+    { label: "Check", value: "Check" }
+];
+
+let jobReleaseChoices = [
+    { label: "", value: null },
+    { label: "Email", value: "Email" },
+    { label: "Vendor Portal", value: "Vendor Portal" },
+];  
+
 export {
-    states
+    territories,
+    states,
+    yesOrNo,
+    paymentFrequency,
+    paymentType,
+    jobReleaseChoices
 };

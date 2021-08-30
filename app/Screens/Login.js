@@ -8,48 +8,37 @@ import {
   Keyboard,
   TouchableWithoutFeedback
 } from 'react-native';
-import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import auth0 from '../auth/Auth';
 import { useDispatch } from 'react-redux';
-import { restoreToken, restoreId } from '../features/user/userSlice';
+import { restoreToken, restoreId, restoreUser } from '../features/user/userSlice';
 import { Button } from 'react-native-elements';
+
 import styles from './Styles/Login.style';
 import colors from '../Library/Colors'
-import { alert } from '../Components/Alert.component';
-import createObject from '../Realm/createObject';
+import Users from '../api/Users';
+import { alert } from '../components/Alert.component';
+import createObject from '../realm/createObject';
 
 function Login( ) {
   const dispatch = useDispatch( );
   
-  handleLogin = ( ) => {
+  handleLogin = async ( ) => {
     auth0.webAuth
       .authorize({ scope: 'openid email profile' }, { ephemeralSession: true })
       .then(credentials => {
         auth0
           .auth
           .userInfo({ token: credentials.accessToken })
-          .then(user => {
-            axios.get(`${API_URL}/email_login?email=${user.email}`)
-              .then((response) => {
-                let user = response.data[0];
+          .then(async (user) => {
+            let apiRes = await Users.getByEmail(user.email);
+            let localUser = apiRes.users[0];
+            
+            createObject("user", { ...localUser, token: credentials.accessToken });
 
-                createObject("user", {
-                  id: user.id,
-                  email: user.e_mail,
-                  firstName: user.fstnme,
-                  lastName: user.lstnme,
-                  phone: user.cllphn,
-                  sageUserId: user.recnum,
-                  sagePassword: user.sagePass,
-                  recnum: user.recnum,
-                  token: credentials.accessToken 
-                });
-
-                dispatch(restoreId(user.recnum));
-                dispatch(restoreToken(credentials.accessToken));
-              });
+            dispatch(restoreId(localUser.id));
+            dispatch(restoreUser(localUser));
+            dispatch(restoreToken(credentials.accessToken));
           });
       })
       .catch(error => {

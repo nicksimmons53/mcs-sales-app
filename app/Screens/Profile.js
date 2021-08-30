@@ -7,13 +7,13 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
+import { getClientsByUser, setSelected } from '../features/clients/clientsSlice';
 import { reset, restoreId, signOut } from '../features/user/userSlice';
 import List from '../Modules/List';
-import Toolbar from '../Components/Toolbar';
+import Toolbar from '../components/Toolbar';
 import { styles } from './Styles/Profile.style';
-import deleteObject from '../Realm/deleteObject';
-import readMultiples from '../Realm/readMultiples';
-import Clients from '../api/Clients';
+import deleteObject from '../realm/deleteObject';
+import readMultiples from '../realm/readMultiples';
 import { useIsFocused } from '@react-navigation/native';
 
 function Profile({ navigation }) {
@@ -25,37 +25,22 @@ function Profile({ navigation }) {
   const dispatch = useDispatch( );
   const isFocused = useIsFocused( );
   let userId = useSelector((state) => state.user.id);
-  const [ clients, setClients ] = React.useState([ ]);
-  const [ client, setClient ] = React.useState(null);
+  let clients = useSelector(state => state.clients.entities);
   const [ portraitView, setPortraitView ] = React.useState(isPortrait( ) ? true : false);
 
   Dimensions.addEventListener('change', ( ) => {
     setPortraitView(isPortrait( ) ? true : false);
   });
 
-  React.useEffect(async ( ) => {
-    if (userId === null) {
-      readMultiples("user")
-        .then(async (objects) => {
-          dispatch(restoreId(objects[0].sageUserId));
-          setClients(await Clients.getAll(objects[0].sageUserId));
-        });
-    }
-    
-    if (userId !== null && isFocused) {
-      setClients(await Clients.getAll(userId));
-    }
+  React.useEffect(( ) => {
+    dispatch(getClientsByUser(userId));
   }, [ isFocused ]);
-
+  
   // Sets the UID when a client is selected for viewing
-  const setClientUID = (uid) => {
-    clients.map((client) => {
-      if (client.id === uid) {
-        setClient(client);
-
-        navigation.push('ClientProfile', { client: client });
-      }
-    });
+  const setClientUID = (id) => {
+    dispatch(setSelected(id));
+    
+    navigation.push('ClientProfile');
   }
 
   // User Sign Out (clears AsyncStorage and Firebase)
@@ -76,28 +61,25 @@ function Profile({ navigation }) {
         user = objects[0];
       });
       
-    dispatch(restoreId(user.sageUserId));
+    dispatch(restoreId(user.id));
   }
 
-  if (userId === null) {
-    refresh( );
+  if (typeof clients === "undefined") {
+    dispatch(getClientsByUser(userId));
   }
   
-  return userId !== null && (
+  console.log("User Id: " + userId);
+  console.log("Clients: " + clients[1]);
+
+  return (
     <View style={styles.background}>
       <StatusBar barStyle='light-content' />
 
       <View style={styles.content}>
         <View style={styles.list}>
-          <Toolbar
-            navigation={navigation}
-            logout={logout}
-            refresh={refresh}/>
+          <Toolbar navigation={navigation} logout={logout} refresh={refresh}/>
 
-          <List 
-            title="Client List"
-            action={setClientUID} 
-            list={clients}/>
+          <List title="Client List" action={setClientUID} list={clients} type="clients"/>
         </View>
       </View>
     </View>

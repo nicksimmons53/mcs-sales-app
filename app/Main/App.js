@@ -2,26 +2,49 @@
 import React from 'react';
 import { ThemeProvider } from 'react-native-elements';
 import { NativeBaseProvider } from 'native-base';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { useFonts }from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { store } from '../app/store';
+import { store, persistor } from '../app/store';
+import { PersistGate } from 'redux-persist/integration/react'
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import { restoreToken } from '../features/user/userSlice';
 import theme from '../Library/ThemeProvider';
 import Login from '../screens/Login';
 import Profile from '../screens/Profile';
 import ClientForm from '../screens/BasicInfoForm';
-import readMultiples from '../Realm/readMultiples';
+import readMultiples from '../realm/readMultiples';
 import ClientProfile from '../screens/ClientProfile';
 import AdvInfoForm from '../screens/AdvInfoForm';
 import Program from '../screens/Program';
 import Pricing from '../screens/Pricing';
+import colors from '../Library/Colors';
+
+const defaultTheme = {
+  ...DefaultTheme,
+  colors: { 
+    ...DefaultTheme.colors,
+    primary: colors.green,
+    background: colors.white,
+    error: colors.red,
+    text: colors.background
+  },
+  fonts: configureFonts({
+    ios: {
+      regular: {
+        fontFamily: 'Quicksand',
+        fontWeight: 'normal'
+      }
+    }
+  })
+};
 
 const AppWrapper = ( ) => (
   <Provider store={store}>
-    <App/>
+    <PersistGate loading={null} persistor={persistor}>
+      <App/>
+    </PersistGate>
   </Provider>
 );
 
@@ -64,7 +87,7 @@ function App( ) {
       <NavigationContainer>
         {
           <NativeBaseProvider>
-            <PaperProvider>
+            <PaperProvider theme={defaultTheme}>
               <ThemeProvider theme={theme}>
                   <Stack.Navigator screenOptions={{ headerShown: false }}>
                     { token === null ? 

@@ -4,7 +4,7 @@ import { View, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { Snackbar } from 'react-native-paper';
 import { styles, colors } from './Styles/SpreadSheet.style';
-import Table from '../Components/Table';
+import Table from '../components/Table';
 import Parts from '../api/Parts';
 
 function Tile(props) {

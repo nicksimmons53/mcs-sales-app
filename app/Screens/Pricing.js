@@ -13,7 +13,7 @@ import Carpet from '../Modules/Carpet.module';
 import Vinyl from '../Modules/Vinyl.module';
 import Countertops from '../Modules/Countertops.module';
 import Parts from '../api/Parts';
-import Header from '../Components/Header';
+import Header from '../components/Header';
 import { styles, colors } from './Styles/Pricing.style';
 
 function Pricing(navigation) {

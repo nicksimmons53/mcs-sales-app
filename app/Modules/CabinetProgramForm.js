@@ -3,9 +3,9 @@ import React from 'react';
 import { View, Text, Switch } from 'react-native';;
 import { Divider, Button } from 'react-native-elements';
 import { Formik } from 'formik';
-import { SmallInputRow, MediumInputRow } from '../Components/InputRow';
-import CheckboxRow from '../Components/CheckboxRow';
-import DropdownRow from '../Components/DropdownRow';
+import { SmallInputRow, MediumInputRow } from '../components/InputRow';
+import CheckboxRow from '../components/CheckboxRow';
+import DropdownRow from '../components/DropdownRow';
 import Programs from '../api/Programs';
 import { styles, colors } from './Styles/Form.style';
 

@@ -4,7 +4,7 @@ import { View, Text, Switch } from 'react-native';
 import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import { Icon, Divider, Input, Button } from 'react-native-elements';
-import { TinyInputRow, MediumInputRow, SmallInputRow } from '../Components/InputRow';
+import { TinyInputRow, MediumInputRow, SmallInputRow } from '../components/InputRow';
 import { Formik } from 'formik';
 import axios from 'axios';
 import Toast from 'react-native-easy-toast';

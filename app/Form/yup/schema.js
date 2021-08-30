@@ -1,5 +1,7 @@
-import address from './address';
+import basicInfo from './basicInfo';
+import advancedInfo from './advancedInfo';
 
 module.exports = {
-    address
+    basicInfo,
+    advancedInfo
 };

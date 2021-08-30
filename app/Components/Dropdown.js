@@ -1,26 +1,42 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { Controller } from 'react-hook-form';
+import { Controller, get } from 'react-hook-form';
 
 import colors from '../Library/Colors';
 
 const styles = StyleSheet.create({
     root: {
-        flex: 1,
-        margin: 5,
-        marginTop: 11,
-        height: 43
+        // flex: 1,
+        // maxHeight: 40,
+        // minHeight: 40,
+        marginTop: 10,
+        marginLeft: 2,
+        marginRight: 2,
+        // marginBottom: 0
+        // width: '100%'
     },
+    border: {
+        borderColor: colors.light_background
+    },  
     menu: {
         backgroundColor: colors.white,
-        borderColor: colors.light_background,
-    },
+        borderColor: colors.light_background
+    }, 
     item: {
         justifyContent: 'flex-start',
-        fontSize: 16,
         fontFamily: 'Quicksand'
     },
+    errorItem: {
+        color: colors.red,
+        fontSize: 16,
+        fontFamily: 'Quicksand',
+        justifyContent: 'flex-start'
+    },
+    errorBorder: {
+        borderColor: colors.red,
+        borderWidth: 1
+    }
 });
 
 const Dropdown = (props) => {
@@ -34,14 +50,15 @@ const Dropdown = (props) => {
                 <DropDownPicker
                     placeholder={label}
                     items={items}
-                    defaultValue={""}
-                    value={value}
+                    defaultValue={items.find(o => o.value === value) ? value : props.defaultValue}
+                    value={items.find(o => o.value === value) ? value : props.defaultValue}
+                    style={get(props.errors, props.field) ? styles.errorBorder : styles.border}
                     containerStyle={styles.root}
-                    style={{borderColor: colors.light_background}}
                     dropDownStyle={styles.menu}
                     labelStyle={styles.item}
-                    itemStyle={styles.item}
-                    onChangeItem={item => onChange(item.value)}/>
+                    itemStyle={{ justifyContent: 'flex-start' }}
+                    onChangeItem={item => onChange(item.value)}
+                    zIndex={props.zIndex-=1 || 100}/>
             )}
             name={props.field}
             defaultValue={props.defaultValue}/>

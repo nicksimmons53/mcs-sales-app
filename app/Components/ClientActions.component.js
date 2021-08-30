@@ -10,15 +10,17 @@ import colors from '../Library/Colors';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { openComposer } from 'react-native-email-link';
+import { useSelector } from 'react-redux';
 
 // Presentational Component of Buttons inside Client Profile
 const ClientActions = ({...props}) => {
   const navigation = useNavigation( );
+  let addresses = useSelector(state => (state.clients.addresses));
 
   const saveFile = (base64, client, fileName) => {
-    const clientName = client.clnnme.replace(/\s/g, "_");
+    const name = client.clnnme.replace(/\s/g, "_");
     let reqBody = {
-      clientName: clientName,
+      name: name,
       base64String: base64
     };
 
@@ -59,7 +61,7 @@ const ClientActions = ({...props}) => {
   return (
     <View style={styles.background}>
       <Button
-        title='Advanced Info'
+        title='Client Details'
         icon={{
           name: 'arrow-right',
           type: 'font-awesome',
@@ -69,9 +71,9 @@ const ClientActions = ({...props}) => {
         buttonStyle={styles.button}
         iconContainerStyle={styles.icon}
         containerStyle={styles.buttonContainer}
-        onPress={( ) => navigation.push("ClientDetails", { client: props.client })}/>
+        onPress={( ) => navigation.push("ClientDetails", { client: props.client }) }/>
       <Button
-        title='Program Info'
+        title='Program Details'
         icon={{
           name: 'folder',
           type: 'font-awesome',
@@ -83,7 +85,7 @@ const ClientActions = ({...props}) => {
         containerStyle={styles.buttonContainer}
         onPress={( ) => navigation.push("ClientPrograms", { client: props.client })}/>
       <Button
-        title='Build Pricing'
+        title='Program Pricing'
         icon={{
           name: 'wrench',
           type: 'font-awesome',
@@ -106,16 +108,16 @@ const ClientActions = ({...props}) => {
         containerStyle={styles.buttonContainer}
         iconContainerStyle={styles.icon}
         onPress={ ( ) => {
+          let addressString = "";
+          addresses.map(address =>
+            addressString += `${address.type}: ${[address.address1 + " " + address.address2, address.city, address.state, address.zip].filter(Boolean).join(', ')}\n`
+          );
+
           openComposer({
             to: "lisak@mcsurfacesinc.com",
-            subject: `COI Request - ${props.client.clnnme}`,
-            body: `
-              ${props.client.clnnme}\n
-              Corporate Address: ${[props.client.addrs1 + props.client.addrs2, props.client.ctynme, props.client.state_, props.client.zipcde].filter(Boolean).join(', ')}
-              Shipping Address: ${[props.client.shpad1 + props.client.shpad2, props.client.shpcty, props.client.shpste, props.client.shpzip].filter(Boolean).join(', ')}
-              Billing Address: ${[props.client.bilad1 + props.client.bilad2, props.client.bilcty, props.client.bilste, props.client.bilzip].filter(Boolean).join(', ')}
-            `
-          })
+            subject: `COI Request - ${props.client.name}`,
+            body: addressString
+          });
         }}/>
       <Button
         title='Update Client'

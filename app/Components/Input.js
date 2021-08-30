@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { Controller } from 'react-hook-form';
+import { Controller, get } from 'react-hook-form';
 
 import colors from '../Library/Colors';
 
@@ -9,8 +9,9 @@ const styles = StyleSheet.create({
     root: {
         flex: 1,
         fontFamily: 'Quicksand',
-        height: 40,
-        margin: 5,
+        marginTop: 4,
+        marginLeft: 2,
+        marginRight: 2
     }
 });
 
@@ -27,6 +28,7 @@ const defaultTheme = {
 const Input = (props) => {
     let mode = props.mode || "outlined";
     let label = props.label || "undefined";
+    let multiline = props.multiline || false;
 
     return (
         <Controller
@@ -39,9 +41,11 @@ const Input = (props) => {
                     mode={mode}
                     label={label}
                     theme={defaultTheme}
-                    error={props.errors[props.field]}
+                    error={get(props.errors, props.field)}
+                    multiline={multiline}
                     outlineColor={colors.light_background}
-                    style={styles.root}/>
+                    style={styles.root}
+                    {...props.options}/>
             )}
             name={props.field}
             defaultValue={props.defaultValue}/>

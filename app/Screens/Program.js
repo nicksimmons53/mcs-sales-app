@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Divider } from 'react-native-elements';
 import { Snackbar } from 'react-native-paper';
 import { styles } from './Styles/ClientForm.style';
-import Header from '../Components/Header';
+import Header from '../components/Header';
 import TileProgramForm from '../Modules/TileProgramForm';
 import WoodProgramForm from '../Modules/WoodProgramForm';
 import CarpetProgramForm from '../Modules/CarpetProgramForm';
@@ -17,12 +17,15 @@ import CountertopProgramForm from '../Modules/CountertopProgramForm';
 import CabinetProgramForm from '../Modules/CabinetProgramForm';
 import { StatusBar } from 'react-native';
 import Programs from '../api/Programs';
+import FloatingButton from '../components/FloatingButton';
+import Snack from '../components/Snack';
 
 // Class Component that will display client creation form
 function Program(navigation) {
     const dispatch = useDispatch( );
     let userId = useSelector((state) => state.user.id);
-	const [ client, setClient ] = React.useState(navigation.route.params.client);
+    let client = useSelector((state) => state.clients.selected);
+    
     const [ visible, setVisible ] = React.useState(false);
     const [ snackMessage, setSnackMessage ] = React.useState(null);
     const [ disableSave, setDisableSave ] = React.useState(null);
@@ -30,29 +33,29 @@ function Program(navigation) {
 
 	// Saving Accounting/Expediting Information
 	const save = async(values, program) => {
-		setDisableSave(program);
+		// setDisableSave(program);
 
-		values.client_id = client.id;
+		// values.client_id = client.id;
 
-		let status = await Programs.createNew(userId, client.id, program, values);
+		// let status = await Programs.createNew(userId, client.id, program, values);
 
-		if (status >= 200 && status <= 299) {
-		  setSnackMessage(`Client Program was saved successfully.`);
-		} else {
-		  setError(true);
-		  setSnackMessage("There was an error saving Program Details. Please try again.");
-		  setDisableSave(null);
-		}
+		// if (status >= 200 && status <= 299) {
+		//   setSnackMessage(`Client Program was saved successfully.`);
+		// } else {
+		//   setError(true);
+		//   setSnackMessage("There was an error saving Program Details. Please try again.");
+		//   setDisableSave(null);
+		// }
 	
-		setVisible(true);
+		// setVisible(true);
 	}
 
 	const snackbarDismiss = ( ) => {
-		setVisible(false);
+		// setVisible(false);
 
-		if (error === true) {
-			setError(false);
-		}
+		// if (error === true) {
+		// 	setError(false);
+		// }
 	}
     
     return (
@@ -98,13 +101,9 @@ function Program(navigation) {
                     </ScrollView>
                 </View>
             </View>
-
-            <Snackbar 
-                visible={visible} 
-                onDismiss={( ) => snackbarDismiss( )} 
-                style={{width: '30%'}}>
-                {snackMessage}
-            </Snackbar>
+      
+            <FloatingButton action={( ) => navigation.navigation.pop(1)} icon="arrow-left"/>
+            <Snack visible={visible} action={( ) => snackbarDismiss( )} message={snackMessage}/>
         </KeyboardAvoidingView>
     );
 }

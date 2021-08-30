@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     id: null,
+    info: null,
     accessToken: null,
     isSigningOut: false
 };
@@ -10,6 +11,9 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
+        restoreUser: (state, action) => {
+            state.info = action.payload;
+        },
         restoreToken: (state, action) => {
             state.accessToken = action.payload;
         },
@@ -23,6 +27,6 @@ export const userSlice = createSlice({
     }
 });
 
-export const { restoreToken, restoreId, signOut, reset } = userSlice.actions;
+export const { restoreUser, restoreToken, restoreId, signOut, reset } = userSlice.actions;
 
 export default userSlice.reducer;

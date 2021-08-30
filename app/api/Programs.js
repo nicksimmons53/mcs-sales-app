@@ -1,6 +1,29 @@
 import axios from 'axios';
 import { API_URL } from 'react-native-dotenv';
 
+const getAll = async(clientId) => {
+    try {
+        let result = await axios.get(`${API_URL}/programs?clientId=${clientId}`);
+        return result.data;
+    } catch(error) {
+        return error;
+    }
+};
+
+const alterChoices = async(query) => {
+    let status;
+
+    await axios.put(`${API_URL}/programs?clientId=${query.clientId}`, query.values)
+        .then((response) => {
+            status = response.status;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+    return status;
+}
+
 const getTile = async(id, clientId) => {
     try {
         let result = await axios.get(`${API_URL}/employee/${id}/clients/${clientId}/program/tileProgram`);
@@ -61,6 +84,8 @@ const createNew = async(id, clientId, program, values) => {
 }
 
 module.exports = {
+    getAll,
+    alterChoices,
     getTile,
     getWood,
     getCarpet,

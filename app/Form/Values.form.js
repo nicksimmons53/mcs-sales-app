@@ -1,40 +1,3 @@
-const User = {
-    recnum: "",
-    fstnme: "",
-    lstnme: "",
-    e_mail: "",
-    cllphn: "",
-    usrnme: "",
-    passwd: ""
-};
-
-const NewClient = {
-    shtnme: "",
-    clnnme: "",
-    addrs1: "",
-    addrs2: "",
-    ctynme: "",
-    state_: "",
-    zipcde: "",
-    bilad1: "",
-    bilad2: "",
-    bilcty: "",
-    bilste: "",
-    bilzip: "",
-    shpad1: "",
-    shpad2: "",
-    shpcty: "",
-    shpste: "",
-    shpzip: "",
-    mannum: 1010,
-    clntyp: 1,
-    status: 1,
-    ntetxt: null,
-    inactv: null,
-    completed: 0, // INT    - COMPLETED
-    done: 0,      // INT    - DONE
-};
-
 const Part = {
     description: "",
     unit: "",
@@ -43,21 +6,6 @@ const Part = {
     labor: "",
     total: ""
 }
-
-const Contact = {
-    clientId: "",
-    name: "",
-    title: "",
-    phone: "",
-    email: ""
-};
-
-const email = {
-    to: "",
-    from: "",
-    subject: "",
-    message: ""
-};
 
 const TileProgram = {
     client_id: null,
@@ -150,51 +98,6 @@ const CabinetProgram = {
     notes: null
 };
 
-const ClientInfo = {
-    client_id: null,
-    client_status: null,
-    payment_freq: null,
-    autopay: false,
-    invoice_submit: null,
-    invoice_email: null,
-    invoice_addr: null,
-    invoice_city: null,
-    invoice_state: null,
-    invoice_zip: null,
-    payment_type: null,
-    payment_portal: false,
-    payment_url: null,
-    po_required: false,
-    invoice_req_pos: false,
-    approvals_req: false,
-    acc_cont_name: null,
-    acc_cont_phn: null,
-    acc_cont_ema: null,
-    vendor_portal: null,
-    vnd_portal_user: null,
-    vnd_portal_pswd: null,
-    job_release: null,
-    job_email: null,
-    po_handling: false,
-    po_hndl_email: null,
-    exp_start_date: null,
-    est_num_homes: null
-};
-
-const FieldInfo = {
-    paymentFrequency: "Please indicate how often payment is expected by selecting, weekly, bi-weekly, or monthly.",
-    autopay: "Please mark if payment is automatically sent when PO/Work is submitted/complete. If yes, then \"How to submit invoices?\", \"Are PO's Required for Invoice Submittal?\", and \"Approvals Required?\" do not need to be answered.",
-    invoiceSubmit: "Please indicate how invoices are sent by selecting email, mail, or drop off and fill in additional information.",
-    paymentType: "Please indicate how payment will be made by selecting credit card, check, or direct deposit.",
-    paymentPortal: "If there is a portal for payment, please enter the website below.",
-    poRequired: "Are PO’s required for installations?",
-    poInvoice: "Is it required for PO’s to be submitted with invoices for payment?",
-    approvalsReq: "Are approvals required to be submitted with the invoices for payment if there is not a PO?",
-    jobsReleased: "How do expeditors receive job requests?",
-    poCorrection: "Does the client allow for PO Corrections? If yes, please enter the email for correction submittal.",
-    expFiles: "Attach Community Standards or Building Forms. No Plans."
-};
-
 const TileFieldInfo = {
     settingMaterial: "Texrite preferred for floors. Custom preferred for walls.",
     sovaConstruction: "Does Sova need to be contacted for installation?",
@@ -283,33 +186,7 @@ let levels = [
     { label: "47", value: 47 },
     { label: "48", value: 48 },
     { label: "49", value: 49 },
-    { label: "50", value: 50 },
-    { label: "A", value: "A"},
-    { label: "B", value: "B"},
-    { label: "C", value: "C"},
-    { label: "D", value: "D"},
-    { label: "E", value: "E"},
-    { label: "F", value: "F"},
-    { label: "G", value: "G"},
-    { label: "H", value: "H"},
-    { label: "I", value: "I"},
-    { label: "J", value: "J"},
-    { label: "K", value: "K"},
-    { label: "L", value: "L"},
-    { label: "M", value: "M"},
-    { label: "N", value: "N"},
-    { label: "O", value: "O"},
-    { label: "P", value: "P"},
-    { label: "Q", value: "Q"},
-    { label: "R", value: "R"},
-    { label: "S", value: "S"},
-    { label: "T", value: "T"},
-    { label: "U", value: "U"},
-    { label: "V", value: "V"},
-    { label: "W", value: "W"},
-    { label: "X", value: "X"},
-    { label: "Y", value: "Y"},
-    { label: "Z", value: "Z"},
+    { label: "50", value: 50 }
 ];
 
 let countertopColors = [
@@ -433,18 +310,12 @@ let patterns = [
 ]
 
 export { 
-    User, 
-    NewClient,
-    Contact,
     Part,
-    email,
-    FieldInfo,
     TileProgram,
     WoodProgram,
     CarpetProgram,
     CountertopProgram,
     CabinetProgram,
-    ClientInfo,
     TileFieldInfo,
     WoodFieldInfo,
     CarpetProgramInfo,

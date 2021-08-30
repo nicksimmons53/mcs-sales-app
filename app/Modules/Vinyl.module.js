@@ -5,7 +5,7 @@ import { API_URL } from 'react-native-dotenv';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { styles, colors } from './Styles/SpreadSheet.style';
-import Table from '../Components/Table';
+import Table from '../components/Table';
 
 class Vinyl extends Component {
   _saveTableData = async(formik, tableName) => {
