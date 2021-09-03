@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     },
     errorBorder: {
         borderColor: colors.red,
-        borderWidth: 1
+        borderWidth: 2
     }
 });
 

@@ -1,7 +1,6 @@
 // Library Imports
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Divider } from 'react-native-elements/dist/divider/Divider';
+import { StyleSheet } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import colors from '../Library/Colors';
 
@@ -13,6 +12,7 @@ function DataGrid({...props}) {
   let title = props.title || null;
   let header = props.header || [];
   let rows = props.rows || [];
+  let data = props.fieldsNeeded || [];
   let flex = props.flex || 1;
 
   const styles = StyleSheet.create({
@@ -36,15 +36,23 @@ function DataGrid({...props}) {
         }
   
         <DataTable.Header>
-          { header.map(columnName => (
-            <DataTable.Title>{ columnName }</DataTable.Title>
+          { header.map((columnName, index) => (
+            <DataTable.Title 
+              key={index}
+              style={props.columnStyle ? { flex: props.columnStyle.flex[index] } : null}>
+              { columnName }
+            </DataTable.Title>
           ))}
         </DataTable.Header>
   
         { rows.map((row, rowIndex) => (
           <DataTable.Row key={rowIndex}>
             { header.map((columnName, cellIndex) => (
-              <DataTable.Cell key={cellIndex}>{ row[columnName.toLowerCase( )] }</DataTable.Cell>
+              <DataTable.Cell 
+                key={cellIndex}
+                style={props.columnStyle ? { flex: props.columnStyle.flex[cellIndex] } : null}>
+                { row[data[cellIndex]] }
+              </DataTable.Cell>
             ))}
           </DataTable.Row>
         ))}
@@ -61,9 +69,9 @@ function DataGrid({...props}) {
           </DataTable.Header>
         }
 
-        <DataTable.Header style={{flexDirection: 'column', height: 'auto'}}>
+        <DataTable.Header style={{borderBottomWidth: 0, flexDirection: 'column', height: 'auto'}}>
           { rows.map((row, index) => (
-            <DataTable.Row>
+            <DataTable.Row key={index} style={rows.length/(index+1) === 1 ? {borderBottomWidth: 0} : null}>
               <DataTable.Cell>{ row }</DataTable.Cell>
             </DataTable.Row>
           ))}

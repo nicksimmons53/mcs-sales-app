@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 50,
         justifyContent: 'center',
-        margin: 10
+        margin: 5
     },
     selectedRoot: {
         alignItems: 'center',
@@ -18,16 +18,18 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 50,
         justifyContent: 'center',
-        margin: 10
+        margin: 5
     },
     selectedText: {
         color: colors.white,
         fontFamily: 'Quicksand',
+        fontSize: 16,
         fontWeight: 'bold'
     },
     text: {
         color: colors.background,
         fontFamily: 'Quicksand',
+        fontSize: 16,
         fontWeight: 'bold'
     }
 });

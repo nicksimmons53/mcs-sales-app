@@ -24,42 +24,40 @@ const styles = StyleSheet.create({
 
 // Presentational Component that will dynamically show icons on sidebar.
 const Toolbar = ({ navigation, user, logout }) => {
-  const Icons = [
-    {
-      name: "home",
-      color: colors.white,
-      action: ( ) => navigation.popToTop() 
-    },
-    {
-      name: "user-plus",
-      color: colors.white,
-      action: ( ) => {
-        navigation.push('ClientForm', {
-          headerText: 'Create Client',
-          createClient: true,
-          user: user
-        })
-      }
-    },
-    {
-      name: "sign-out",
-      color: colors.red,
-      action: ( ) => logout( )
-    }
-  ];
-
   return (
     <View style={styles.background}>
-      { Icons.map((icon, index) => (
-        <Icon
-          key={index}
-          name={icon.name}
-          type="font-awesome"
-          color={icon.color}
-          underlayColor={colors.black}
-          containerStyle={styles.icons}
-          onPress={icon.action}/>
-      )) }
+      <Icon
+        name="home"
+        type="font-awesome"
+        color={colors.white}
+        underlayColor={colors.black}
+        containerStyle={styles.icons}/>
+      <Icon
+        name="user-plus"
+        type="font-awesome"
+        color={colors.white}
+        underlayColor={colors.black}
+        containerStyle={styles.icons}
+        onPress={( ) => {
+          navigation.push('ClientForm', {
+            headerText: 'Create Client',
+            createClient: true,
+            user: user
+          })
+        }}/>
+      <Icon
+        name="bell"
+        type="font-awesome"
+        color={colors.white}
+        underlayColor={colors.black}
+        containerStyle={styles.icons}/>
+      <Icon
+        name="sign-out"
+        type="font-awesome"
+        color={colors.red}
+        underlayColor={colors.black}
+        containerStyle={styles.icons}
+        onPress={( ) => logout( )}/>
     </View>
   )
 }

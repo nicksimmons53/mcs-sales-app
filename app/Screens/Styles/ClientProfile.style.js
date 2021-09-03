@@ -103,8 +103,7 @@ const styles = StyleSheet.create({
   // Footer
   footer: {
     alignItems: 'center',
-    marginLeft: 10,
-    marginRight: 10,
+    margin: 35
   },
 
   // Buttons

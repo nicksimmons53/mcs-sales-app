@@ -119,7 +119,7 @@ const ClientActions = ({...props}) => {
             body: addressString
           });
         }}/>
-      <Button
+      {/* <Button
         title='Update Client'
         icon={{
           name: 'pencil',
@@ -141,7 +141,7 @@ const ClientActions = ({...props}) => {
         buttonStyle={styles.button}
         containerStyle={styles.buttonContainer}
         iconContainerStyle={styles.icon}
-        onPress={( ) => filePicker(props.client)}/>
+        onPress={( ) => filePicker(props.client)}/> */}
     </View>
   );
 };
@@ -160,20 +160,20 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 3,
     borderColor: colors.white,
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
+    width: '100%'
   },
 
   // Button
   button: {
     alignItems: 'center',
-    backgroundColor: colors.background,
+    backgroundColor: colors.black,
     flex: 1,
     height: 35,
     justifyContent: 'center',
-    minWidth: 150,
-    width: 175
   },
   buttonContainer: {
+    flex: 1,
     padding: 10
   },
 

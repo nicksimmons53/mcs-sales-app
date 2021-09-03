@@ -34,7 +34,7 @@ function AdvInfoForm(navigation) {
 	const dispatch = useDispatch( );
 	let clientId = useSelector((state) => state.clients.selected.id);
 	let details = useSelector((state) => state.clients.details);
-	let programs = useSelector((state) => state.programs.entities);
+	let programs = useSelector((state) => state.clients.programs.entities);
 
 	const [ snackMessage, setSnackMessage ] = React.useState(null);
 	const [ visible, setVisible ] = React.useState(false);
@@ -113,7 +113,7 @@ function AdvInfoForm(navigation) {
 
 	const AccountingInfo = ( ) => (
 		<View style={styles.formRoot}>
-			  <View style={{...styles.form, width: '75%'}}>
+			  <View style={{...styles.form, width: '80%'}}>
 				<Text style={styles.label}>Accounting Information</Text>
 
 				<Divider/>
@@ -287,7 +287,7 @@ function AdvInfoForm(navigation) {
 
 	const ExpeditingInfo = ( ) => (
 		<View style={styles.formRoot}>
-			  <View style={{...styles.form, width: '75%', zIndex: 3}}>
+			  <View style={{...styles.form, width: '80%', zIndex: 3}}>
 					
 				<Text style={styles.label}>Expediting Information</Text>
 
@@ -382,7 +382,7 @@ function AdvInfoForm(navigation) {
 
 				<Divider style={{ marginBottom: 10 }}/>
 
-				<View style={{ flexDirection: 'row', width: '100%', height: 75 }}>
+				<View style={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%', height: 75 }}>
 					<ChipInput 
 						title="Cabinets"
 						control={control}

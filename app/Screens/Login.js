@@ -19,6 +19,7 @@ import colors from '../Library/Colors'
 import Users from '../api/Users';
 import { alert } from '../components/Alert.component';
 import createObject from '../realm/createObject';
+import S3 from '../helpers/S3';
 
 function Login( ) {
   const dispatch = useDispatch( );
@@ -35,7 +36,8 @@ function Login( ) {
             let localUser = apiRes.users[0];
             
             createObject("user", { ...localUser, token: credentials.accessToken });
-
+            
+            await S3.createBucket(localUser.sageUserId + "-" + localUser.sageEmployeeNumber);
             dispatch(restoreId(localUser.id));
             dispatch(restoreUser(localUser));
             dispatch(restoreToken(credentials.accessToken));

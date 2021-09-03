@@ -3,6 +3,7 @@ import Clients from '../../api/Clients';
 import Addresses from '../../api/Addresses';
 import Contacts from '../../api/Contacts';
 import Programs from '../../api/Programs';
+import Approvals from '../../api/Approvals';
 
 const initialState = {
   entities: [],
@@ -10,11 +11,13 @@ const initialState = {
   selected: null,
   addresses: [],
   contacts: [],
+  files: [],
   programs: {
     entities: [],
     selected: []
   },
-  details: null
+  details: null,
+  approvals: null
 };
 
 export const getClientsByUser = createAsyncThunk(
@@ -89,6 +92,15 @@ export const updateClientPrograms = createAsyncThunk(
   }
 );
 
+export const getClientApprovals = createAsyncThunk(
+  'clients/approvals',
+  async (clientId) => {
+    const response = await Approvals.getAll(clientId);
+
+    return response.approvals;
+  }
+);
+
 export const clientsSlice = createSlice({
     name: 'clients',
     initialState,
@@ -152,6 +164,16 @@ export const clientsSlice = createSlice({
         state.programs.entities = action.payload;
       },
       [getProgramsByClient.rejected]: (state, action) => {
+        state.status = 'rejected';
+      },
+      [getClientApprovals.pending]: (state, action) => {
+        state.status = 'loading';
+      },
+      [getClientApprovals.fulfilled]: (state, action) => {
+        state.status = 'fulfilled';
+        state.approvals = action.payload;
+      },
+      [getClientApprovals.rejected]: (state, action) => {
         state.status = 'rejected';
       },
     }

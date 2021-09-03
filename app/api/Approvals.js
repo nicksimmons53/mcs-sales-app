@@ -3,7 +3,7 @@ import { API_URL } from 'react-native-dotenv';
 
 const getAll = async(id) => {
     try {
-        let result = await axios.get(`${API_URL}/clients/${id}/addresses`);
+        let result = await axios.get(`${API_URL}/clients/${id}/approvals`);
         
         return result.data;
     } catch(error) {
@@ -12,5 +12,5 @@ const getAll = async(id) => {
 }
 
 module.exports = {
-    getAll
+  getAll
 }

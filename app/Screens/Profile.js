@@ -24,7 +24,7 @@ function Profile({ navigation }) {
 
   const dispatch = useDispatch( );
   const isFocused = useIsFocused( );
-  let userId = useSelector((state) => state.user.id);
+  let user = useSelector((state) => state.user.info);
   let clients = useSelector(state => state.clients.entities);
   const [ portraitView, setPortraitView ] = React.useState(isPortrait( ) ? true : false);
 
@@ -33,7 +33,12 @@ function Profile({ navigation }) {
   });
 
   React.useEffect(( ) => {
-    dispatch(getClientsByUser(userId));
+    if (user === null) {
+      dispatch(reset( ));
+      dispatch(signOut( ));
+    } else {
+      dispatch(getClientsByUser(user.id));
+    }
   }, [ isFocused ]);
   
   // Sets the UID when a client is selected for viewing
@@ -45,7 +50,7 @@ function Profile({ navigation }) {
 
   // User Sign Out (clears AsyncStorage and Firebase)
   const logout = async( ) => {
-    readMultiples("user", userId)
+    readMultiples("user", user.id)
       .then((objects) => {
         deleteObject(objects[0]);
       }); 
@@ -65,11 +70,8 @@ function Profile({ navigation }) {
   }
 
   if (typeof clients === "undefined") {
-    dispatch(getClientsByUser(userId));
+    dispatch(getClientsByUser(user.id));
   }
-  
-  console.log("User Id: " + userId);
-  console.log("Clients: " + clients[1]);
 
   return (
     <View style={styles.background}>

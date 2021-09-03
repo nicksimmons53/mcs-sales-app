@@ -9,19 +9,18 @@ const chipStyle = (status) => {
   switch (status) {
     case "Potential":
       return { backgroundColor: colors.black }
-      break;
+
+    case "Queued":
+      return { backgroundColor: colors.blue }
 
     case "Approved":
       return { backgroundColor: colors.orange }
-      break;
 
     case "Pushed":
       return { backgroundColor: colors.green }
-      break;
 
     case "Declined":
       return { backgroundColor: colors.red }
-      break;
 
     default:
       break;
@@ -46,13 +45,13 @@ function List(props) {
               bottomDivider 
               onPress={( ) => props.action(item.id)}>
               <ListItem.Content>
-                <ListItem.Title>{item.name}</ListItem.Title>
+                <ListItem.Title style={{fontFamily: 'OpenSans', fontWeight: 'bold'}}>{item.name}</ListItem.Title>
               </ListItem.Content>
               
               <Chip 
                 title={item.status} 
                 buttonStyle={chipStyle(item.status)}
-                containerStyle={{width: '10%'}}/>
+                containerStyle={{width: '15%'}}/>
               <ListItem.Chevron/>
             </ListItem>
           ))
