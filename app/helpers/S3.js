@@ -101,8 +101,8 @@ const viewObject = async (row) => {
 
 const putObject = async (user, parentBucket) => {
   let file = await pickFile( );
-  if (file === "Cancelled")
-    return;
+  if (file === "Canceled")
+    return "Canceled";
 
   let bucket = "onboard-".concat(user.sageUserId, "-", user.sageEmployeeNumber);
   let key = parentBucket.concat("/", file.name);
@@ -130,7 +130,7 @@ const pickFile = async ( ) => {
     return res;
   } catch (error) {
     if (DocumentPicker.isCancel(error)) {
-      return "Cancelled";
+      return "Canceled";
     } else {
       console.log(error)
     }

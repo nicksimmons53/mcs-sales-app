@@ -362,7 +362,8 @@ export const ClientDetails = (props) => (
           title='Attach Files'
           containerStyle={styles.attachButtonContainer}
           buttonStyle={styles.attach}
-          containerStyle={styles.saveButtonContainer}/>
+          containerStyle={styles.saveButtonContainer}
+          onPress={( ) => props.addFile( )}/>
       </View>
       
       <Divider style={{ marginVertical: 20 }}/>
@@ -525,7 +526,8 @@ export const ClientDetails = (props) => (
           title='Attach Files'
           containerStyle={styles.attachButtonContainer}
           buttonStyle={styles.attach}
-          containerStyle={styles.saveButtonContainer}/>
+          containerStyle={styles.saveButtonContainer}
+          onPress={( ) => props.addFile( )}/>
       </View>
       
       <Divider style={{ marginVertical: 20 }}/>

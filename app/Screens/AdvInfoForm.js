@@ -18,13 +18,15 @@ import FloatingButton from '../components/FloatingButton';
 import Snack from '../components/Snack';
 import { updateClientDetails, resetDetails, updateClientPrograms } from '../features/clients/clientsSlice';
 import { ClientDetails } from '../Modules/InfoForms';
+import S3 from '../helpers/S3';
 
 let zIndex = 5000;
 
 // Class Component that will display client creation form
 function AdvInfoForm(navigation) {
 	const dispatch = useDispatch( );
-	let clientId = useSelector((state) => state.clients.selected.id);
+	let user = useSelector((state) => state.user.info);
+	let client = useSelector((state) => state.clients.selected);
 	let details = useSelector((state) => state.clients.details);
 	let programs = useSelector((state) => state.clients.programs.entities);
 
@@ -41,14 +43,14 @@ function AdvInfoForm(navigation) {
 		setDisableSave(true);
 		
 		let responses = [];
-		let queryValues = { type: "accounting", id: clientId, values: values.accounting };
+		let queryValues = { type: "accounting", id: client.id, values: values.accounting };
 		responses.push(await dispatch(updateClientDetails(queryValues)));
 
 		values.expediting.estimatedStartDate = values.expediting.estimatedStartDate.toISOString( ).slice(0, 19).replace('T', ' ');
-		queryValues = { type: "expediting", id: clientId, values: values.expediting};
+		queryValues = { type: "expediting", id: client.id, values: values.expediting};
 		responses.push(await dispatch(updateClientDetails(queryValues)));
 
-		queryValues = { values: values.programs, clientId: clientId };
+		queryValues = { values: values.programs, clientId: client.id };
 		responses.push(await dispatch(updateClientPrograms(queryValues)));
 
 		console.log(responses)
@@ -103,6 +105,19 @@ function AdvInfoForm(navigation) {
 		}
 	}
 
+	const addFile = async( ) => {
+    const res = await S3.putObject(user, client.name);
+    if (res === "File Uploaded Successfully.") {
+      setSnackMessage("File was successfully uploaded.");
+		} else if (res === "Canceled") {
+			setSnackMessage("File Upload was canceled.");
+		} else {
+			setSnackMessage("There was an error uploading the selected file.");
+		}
+    
+    setVisible(true);
+	}
+
 	return details !== null && (
 		<KeyboardAvoidingView behavior='padding' enabled style={styles.background}>
 			<StatusBar barStyle="light-content"/>
@@ -121,7 +136,8 @@ function AdvInfoForm(navigation) {
 						handleSubmit={handleSubmit}
 						disableSave={disableSave}
 						onSubmit={onSubmit}
-						onErrors={onErrors}/>
+						onErrors={onErrors}
+						addFile={addFile}/>
 				</ScrollView>
 			</View> 
 

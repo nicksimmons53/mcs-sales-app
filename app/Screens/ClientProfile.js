@@ -91,6 +91,8 @@ function ClientProfile(props) {
     if (res === "File Uploaded Successfully.") {
       setFiles(await S3.getFiles(user, client.name));
       setSnackMessage("File was successfully uploaded.");
+    } else if (res === "Canceled") {
+      setSnackMessage("File Upload was canceled.");
     } else {
       setSnackMessage("There was an error uploading the selected file.");
     }
