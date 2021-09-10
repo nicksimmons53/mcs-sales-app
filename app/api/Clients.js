@@ -58,6 +58,18 @@ const create = async(values) => {
     return status;
 };
 
+const update = async(values) => {
+    let status;
+
+    await axios.put(`${API_URL}/clients/${values.id}`, values)
+        .then((response) => {
+            status = response.status;
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+};
+
 const updateDetails = async (query) => {
     let status;
 
@@ -70,12 +82,13 @@ const updateDetails = async (query) => {
         });
     
     return status;
-}
+};
 
 module.exports = {
     getAll,
     getDetails,
     create,
+    update,
     updateDetails
 };
 

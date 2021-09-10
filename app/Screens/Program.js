@@ -8,7 +8,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { Divider } from 'react-native-elements';
 import { Snackbar } from 'react-native-paper';
-import { styles } from './Styles/ClientForm.style';
+import styles from '../styles/Screen';
 import Header from '../components/Header';
 import TileProgramForm from '../Modules/TileProgramForm';
 import WoodProgramForm from '../Modules/WoodProgramForm';

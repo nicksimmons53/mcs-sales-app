@@ -28,7 +28,7 @@ const defaultTheme = {
     primary: colors.green,
     background: colors.white,
     error: colors.red,
-    text: colors.background
+    text: colors.black
   },
   fonts: configureFonts({
     ios: {

@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   // ScrollView
   sv: {
     flex: 1,
-    backgroundColor: colors.white
+    backgroundColor: colors.light_grey
   },
 
   // Table

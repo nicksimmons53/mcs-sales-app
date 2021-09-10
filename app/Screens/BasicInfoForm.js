@@ -3,6 +3,7 @@ import React from 'react';
 import {
   KeyboardAvoidingView,
   ScrollView,
+  StatusBar,
   View
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -14,8 +15,8 @@ import { createClient } from '../features/clients/clientsSlice';
 import Header from '../components/Header';
 import Snack from '../components/Snack';
 import schema from '../form/yup/schema';
-import { styles } from './Styles/ClientForm.style';
-import { BasicInfo } from '../Modules/Forms';
+import styles from '../styles/Screen';
+import { BasicInfo } from '../Modules/InfoForms';
 import FloatingButton from '../components/FloatingButton';
 import S3 from '../helpers/S3';
 
@@ -87,13 +88,15 @@ function ClientForm({ navigation }) {
   }
 
   return (
-    <KeyboardAvoidingView behavior='padding' enabled style={styles.background}>
-      <View style={styles.infoContainer}>
+    <KeyboardAvoidingView behavior='padding' style={styles.background}>
+      <StatusBar barStyle="dark-content"/>
+      
+      <View style={styles.grid}>
         <Header title="Create a New Client"/>
         
         <Divider />
 
-        <ScrollView contentContainerStyle={styles.sv}>
+        <ScrollView>
           <BasicInfo 
             control={control} 
             errors={errors} 

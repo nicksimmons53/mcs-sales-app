@@ -11,7 +11,7 @@ import { getClientsByUser, setSelected } from '../features/clients/clientsSlice'
 import { reset, restoreId, signOut } from '../features/user/userSlice';
 import List from '../Modules/List';
 import Toolbar from '../components/Toolbar';
-import { styles } from './Styles/Profile.style';
+import styles from '../styles/Screen';
 import deleteObject from '../realm/deleteObject';
 import readMultiples from '../realm/readMultiples';
 import { useIsFocused } from '@react-navigation/native';
@@ -23,7 +23,7 @@ function Profile({ navigation }) {
   }
 
   const dispatch = useDispatch( );
-  const isFocused = useIsFocused( );
+  const isFocused = useIsFocused( ); 
   let user = useSelector((state) => state.user.info);
   let clients = useSelector(state => state.clients.entities);
   const [ portraitView, setPortraitView ] = React.useState(isPortrait( ) ? true : false);
@@ -75,14 +75,12 @@ function Profile({ navigation }) {
 
   return (
     <View style={styles.background}>
-      <StatusBar barStyle='light-content' />
+      <StatusBar barStyle='light-content'/>
 
-      <View style={styles.content}>
-        <View style={styles.list}>
-          <Toolbar navigation={navigation} logout={logout} refresh={refresh}/>
+      <View style={styles.row}>
+        <Toolbar navigation={navigation} logout={logout} refresh={refresh}/>
 
-          <List title="Client List" action={setClientUID} list={clients} type="clients"/>
-        </View>
+        <List title="Client List" action={setClientUID} list={clients} type="clients"/>
       </View>
     </View>
   );

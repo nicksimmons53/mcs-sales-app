@@ -39,6 +39,13 @@ const styles = StyleSheet.create({
     }
 });
 
+// label
+// items
+// control
+// defaultValue
+// errors
+// field
+// zIndex
 const Dropdown = (props) => {
     let label = props.label || "undefined";
     const [ items, setItems ] = React.useState(props.items);

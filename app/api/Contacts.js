@@ -25,10 +25,10 @@ const createNew = async(id, clientId, values) => {
     return status;
 };
 
-const deleteById = async(id, clientId, contactId) => {
+const deleteById = async(object) => {
     let status;
 
-    await axios.delete(`${API_URL}/employee/${id}/clients/${clientId}/contacts/${contactId}`)
+    await axios.delete(`${API_URL}/clients/${object.clientId}/contacts/${object.id}`)
         .then((response) => {
             status = response.status;
         })

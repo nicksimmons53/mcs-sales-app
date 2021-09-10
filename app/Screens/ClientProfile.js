@@ -1,27 +1,26 @@
 // // Library Imports
 import React from 'react';
-import { ScrollView, View, Text, KeyboardAvoidingView } from 'react-native';
+import { ScrollView, View, KeyboardAvoidingView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button } from 'react-native-elements';
 import ClientActions from '../components/ClientActions';
-import { styles } from './Styles/ClientProfile.style';
+import styles from '../styles/Screen';
 import { StatusBar } from 'react-native';
 import Snack from '../components/Snack';
+import Header from '../components/Header';
 import { 
+  deleteClientContact,
   getClientAddresses, 
   getClientApprovals, 
   getClientContacts, 
   getClientDetails,
   getProgramsByClient
 } from '../features/clients/clientsSlice';
-import { useForm } from 'react-hook-form';
 import ClientStatusBar from '../components/ClientStatusBar';
-import DataGrid from '../components/DataGrid';
+import { DataGrid, DataGridHorizontal } from '../components/DataGrid';
 import FloatingButtonGroup from '../components/FloatingButtonGroup';
-import QuickForm from '../components/QuickForm';
-import { Slide } from 'native-base';
-import { BasicInfo } from '../Modules/Forms';
+import { deleteContactAlert, deleteFileAlert  } from '../components/Alert';
 import S3 from '../helpers/S3';
+import { ActionButtonMedium, SuccessButtonLarge } from '../components/Button';
 
 function ClientProfile(props) {
   const dispatch = useDispatch( );
@@ -34,9 +33,7 @@ function ClientProfile(props) {
 
   const [ files, setFiles ] = React.useState([ ]);
   const [ visible, setVisible ] = React.useState(false);
-  const [ showForm, setShowForm ] = React.useState(false);
   const [ snackMessage, setSnackMessage ] = React.useState(null);
-  const [ formTitle, setFormTitle ] = React.useState("");
 
   React.useEffect(( ) => {
     const unsubscribe = props.navigation.addListener('focus', () => {
@@ -48,18 +45,7 @@ function ClientProfile(props) {
   }, [ props.navigation ]);
 
   React.useEffect(( ) => {
-    const getFiles = async( ) => {
-      let response = await S3.getObjects(user.sageUserId + "-" + user.sageEmployeeNumber, client.name);
-      if (typeof response.Contents === "undefined")
-        return;
-
-      response.Contents.forEach(file => {
-        file.Name = file.Key.split("/")[1];
-        file.LastModified = new Date(file.LastModified).toLocaleString("en-us");
-      });
-      
-      setFiles(response.Contents);
-    }
+    const getFiles = async( ) => setFiles(await S3.getFiles(user, client.name));
 
     dispatch(getClientAddresses(client.id));
     dispatch(getClientContacts(client.id));
@@ -68,22 +54,25 @@ function ClientProfile(props) {
     getFiles( );
   }, [ ]);
 
-  console.log(approvals)
+  const deleteContact = (row) => {
+    const action = async(row) => {
+      let response = await dispatch(deleteClientContact({ id: row.id, clientId: client.id }));
+      let status = response.payload;
+  
+      if (status >= 200 && status <= 299) {
+        dispatch(getClientContacts(client.id));
+        setSnackMessage("Contact was successfully deleted.");
+      } else {
+        setSnackMessage("There was an error deleting the selected contact.");
+      }
+  
+      setVisible(true);
+    }
 
-  const deleteContact = async(contactID) => {
-    // let status = await Contacts.deleteById(user.id, client.id, contactID);
-
-    // if (status >= 200 && status <= 299) {
-    //   setContacts(await Contacts.getAll(user.id, client.id));
-    //   setSnackMessage("Contact was successfully deleted.");
-    // } else {
-    //   setSnackMessage("There was an error deleting the selected contact.");
-    // }
-
-    // setVisible(true);
+    deleteContactAlert(( ) => action(row));
   }
 
-  const saveContact = async(values) => {
+  const saveContact = async (values) => {
     // let status = await Clients.createContact(user.id, client.id, values);
 
     // if (status >= 200 && status <= 299) {
@@ -97,8 +86,40 @@ function ClientProfile(props) {
     // setVisible(true);
   }
 
+  const addFile = async ( ) => {
+    const res = await S3.putObject(user, client.name);
+    if (res === "File Uploaded Successfully.") {
+      setFiles(await S3.getFiles(user, client.name));
+      setSnackMessage("File was successfully uploaded.");
+    } else {
+      setSnackMessage("There was an error uploading the selected file.");
+    }
+    
+    setVisible(true);
+  }
+
+  const deleteFile = async (fileToDelete) => {
+    const action = async (file) => {
+      let response = await S3.deleteObject(user.sageUserId + "-" + user.sageEmployeeNumber, fileToDelete.Key);
+  
+      if (response === "Object Deleted") {
+        setFiles(await S3.getFiles(user, client.name));
+        setSnackMessage("File was successfully deleted.");
+      } else {
+        setSnackMessage("There was an error deleting the selected file.");
+      }
+  
+      setVisible(true);
+    }
+
+    deleteFileAlert(( ) => action(fileToDelete));
+  }
+
   const formatPrograms = (object) => {
     let tempArr = [];
+
+    if (typeof object === "undefined")
+      return tempArr;
 
     Object.keys(object).forEach(program => {
       if (program === "clientId")
@@ -115,6 +136,9 @@ function ClientProfile(props) {
   const formatApprovals = (object) => {
     let tempArr = [];
 
+    if (typeof object === "undefined")
+      return tempArr;
+    
     Object.keys(object).forEach(approval => {
       if (approval === "clientId")
         return;
@@ -127,8 +151,7 @@ function ClientProfile(props) {
 
       let firstName = approval.charAt(0).toUpperCase( ).concat(approval.substring(1, approval.length-1));
       let lastName =  approval.charAt(approval.length-1).toUpperCase( );
-      let status = object[approval] === 1 && "Approved";
-      status = object[approval] === 0 ? "Declined" : "No Response";
+      let status = object[approval] === 1 ? "Approved" : object[approval] === 0 ? "Declined" : "No Response";
 
       tempArr.push({
         name: firstName + " " + lastName,
@@ -139,37 +162,30 @@ function ClientProfile(props) {
     return tempArr;
   }
 
+  const snackbarDismiss = ( ) => setVisible(false)
+  
   const buttonIcons = [
     { icon: 'folder', label: 'Edit Program Choices', onPress: ( ) => console.log("PRESSED") },
-    { icon: 'file-upload', label: 'Upload File', onPress: ( ) => console.log("PRESSED") },
-    { icon: 'account-edit', label: 'Add Contact',  onPress: ( ) => { 
-      setShowForm(!showForm); 
-      setFormTitle("Add a Contact");
-    }},
-    { icon: 'pencil', label: 'Edit Client', onPress: ( ) => { 
-      setShowForm(!showForm); 
-      setFormTitle("Edit Client Information");
-    }},
+    { icon: 'file-upload', label: 'Upload File', onPress: ( ) => addFile( ) },
+    { icon: 'account-edit', label: 'Add Contact',  onPress: ( ) => console.log("PRESSED") },
+    { icon: 'pencil', label: 'Edit Client', onPress: ( ) => console.log("PRESSED") },
     { icon: 'home', label: 'Home', onPress: ( ) => { setFiles([ ]); props.navigation.popToTop( )} },
   ];
 
   return (
-    <KeyboardAvoidingView enabled behavior='padding' style={styles.background}>
+    <KeyboardAvoidingView enabled behavior='padding' style={styles.grid}>
       <StatusBar barStyle="dark-content"/>
-      
-      <View style={styles.header}>
-        <Text style={styles.headerText}>{client.name}</Text>
-        <Button 
-          title="Push To Sage"
-          disabled={client.status !== "Approved"}
-          buttonStyle={styles.pushToSageButton}
-          containerStyle={styles.pushToSageButtonContainer}/>
-      </View>
 
-      <ScrollView style={styles.form}>
+      <Header title={client.name}>
+        <ActionButtonMedium
+          title="Push To Sage"
+          disabled={client.status !== "Approved"}/>
+      </Header>
+
+      <ScrollView>
         <ClientStatusBar status={client.status}/>
 
-        <View style={{ flexDirection: 'row', width: '100%' }}>
+        <View style={styles.rowNoMargin}>
           { addresses !== null && 
             <DataGrid
               title="Addresses"
@@ -181,7 +197,7 @@ function ClientProfile(props) {
           }
         </View>
 
-        <View style={{ flexDirection: 'row', width: '100%' }}>
+        <View style={styles.rowNoMargin}>
           { contacts !== null &&
             <DataGrid
               title="Contacts"
@@ -189,22 +205,28 @@ function ClientProfile(props) {
               fieldsNeeded={["name", "title", "phone", "email"]}
               rows={contacts}
               columnStyle={{flex: [1.5, 1.5, 1, 2]}}
-              flex={3}/>
+              flex={3}
+              pagination={true}
+              itemsPerPage={5}
+              action={deleteContact}/>
           }
         </View>
 
-        <View style={{ flexDirection: 'row', width: '100%' }}>
+        <View style={styles.rowNoMargin}>
           { files !== null && 
             <DataGrid
               title="Files"
               header={["Name", "Last Modified"]}
               fieldsNeeded={["Name", "LastModified"]}
               rows={files}
-              flex={2}/>
+              columnStyle={{flex: [6, 2.5, 1]}}
+              flex={2}
+              pagination={true}
+              action={S3.viewObject}/>
           } 
 
           { programs !== null &&
-            <DataGrid
+            <DataGridHorizontal
               title="Selected Programs"
               rows={formatPrograms(programs)}
               orientation="horizontal"/>
@@ -219,27 +241,15 @@ function ClientProfile(props) {
           }
         </View>
 
-        <View style={styles.lists}>
-          <ClientActions user={user.id} client={client}/>
-        </View>
+        <ClientActions user={user.id} client={client}/>
 
-         <View style={styles.footer}>
-            <Button
-              title='Submit for Approval'
-              disabled={client.status === "Queued" || client.status === "Approved"}
-              raised
-              containerStyle={styles.submitButtonContainer}
-              buttonStyle={styles.submitButton}
-              onPress={S3.createBucket}/>
-         </View>
-        </ScrollView>
-      
-      <Slide in={showForm}>
-        <QuickForm 
-          title={formTitle}
-          setIsVisible={( ) => setShowForm(!showForm)}>
-        </QuickForm> 
-      </Slide>
+        <View style={styles.center}>
+          <SuccessButtonLarge 
+            title="Submit for Approval" 
+            action={( ) => S3.viewObject("nicks-9995", "Test1/Accounts.txt")}
+            disabled={client.status === "Queued" || client.status === "Approved"}/>
+        </View>
+      </ScrollView>
 
       <FloatingButtonGroup actions={buttonIcons}/>
       <Snack visible={visible} action={( ) => snackbarDismiss( )} message={snackMessage}/>

@@ -119,29 +119,6 @@ const ClientActions = ({...props}) => {
             body: addressString
           });
         }}/>
-      {/* <Button
-        title='Update Client'
-        icon={{
-          name: 'pencil',
-          type: 'font-awesome',
-          size: 15,
-          color: colors.white,
-        }}
-        buttonStyle={styles.button}
-        containerStyle={styles.buttonContainer}
-        iconContainerStyle={styles.icon}/>
-      <Button
-        title='Attach Files'
-        icon={{
-          name: 'paperclip',
-          type: 'font-awesome',
-          size: 15,
-          color: colors.white,
-        }}
-        buttonStyle={styles.button}
-        containerStyle={styles.buttonContainer}
-        iconContainerStyle={styles.icon}
-        onPress={( ) => filePicker(props.client)}/> */}
     </View>
   );
 };
@@ -154,14 +131,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: "wrap",
     justifyContent: 'center',
-    margin: 0,
-    marginTop: 10,
-    marginBottom: 0,
+    margin: 10,
     borderWidth: 1,
     borderRadius: 3,
     borderColor: colors.white,
     backgroundColor: colors.white,
-    width: '100%'
   },
 
   // Button

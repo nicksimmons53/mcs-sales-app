@@ -10,15 +10,14 @@ import Input from '../components/Input';
 import Dropdown from '../components/Dropdown';
 import { states, territories } from '../form/dropdown/values';
 import { KeyboardAvoidingView } from 'react-native';
+import { BasicInfo } from '../Modules/InfoForms';
 
 const styles = StyleSheet.create({
   root: {
     alignSelf: 'center',
-    backgroundColor: colors.white, 
-    borderColor: colors.background,
+    backgroundColor: colors.light_grey, 
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    borderWidth: 1,
     height: 600,
     padding: 20,
     width: '70%'
