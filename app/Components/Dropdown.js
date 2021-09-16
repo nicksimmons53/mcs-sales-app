@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { Controller, get } from 'react-hook-form';
 
@@ -7,14 +7,9 @@ import colors from '../Library/Colors';
 
 const styles = StyleSheet.create({
     root: {
-        // flex: 1,
-        // maxHeight: 40,
-        // minHeight: 40,
         marginTop: 10,
         marginLeft: 2,
-        marginRight: 2,
-        // marginBottom: 0
-        // width: '100%'
+        marginRight: 2
     },
     border: {
         borderColor: colors.light_background

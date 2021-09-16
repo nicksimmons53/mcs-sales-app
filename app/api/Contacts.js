@@ -10,11 +10,10 @@ const getAll = async(id, clientId) => {
     }
 };
 
-const createNew = async(id, clientId, values) => {
-    values.clientId = clientId;
-
+const create = async(object) => {
     let status;
-    await axios.post(`${API_URL}/employee/${id}/clients/${clientId}/contacts`, values)
+    console.log(object);
+    await axios.post(`${API_URL}/clients/${object.id}/contacts`, object.values)
       .then((response) => {
         status = response.status;
       })
@@ -41,6 +40,6 @@ const deleteById = async(object) => {
 
 module.exports = {
     getAll,
-    createNew,
+    create,
     deleteById  
 }

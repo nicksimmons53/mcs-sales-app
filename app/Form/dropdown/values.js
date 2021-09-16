@@ -82,11 +82,21 @@ let jobReleaseChoices = [
     { label: "Vendor Portal", value: "Vendor Portal" },
 ];  
 
+let units = [
+    { label: "", value: null },
+    { label: "SqFt", value: "SqFt" },
+    { label: "Each", value: "Each" },
+    { label: "Linear Foot", value: "Linear" },
+    { label: "SqYd", value: "SqYd" },
+    { label: "Per Bag", value: "Per Bag"}
+]
+
 export {
-    territories,
-    states,
-    yesOrNo,
     paymentFrequency,
     paymentType,
-    jobReleaseChoices
+    jobReleaseChoices,
+    states,
+    territories,
+    units,
+    yesOrNo,
 };

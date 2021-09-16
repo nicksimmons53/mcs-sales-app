@@ -38,12 +38,22 @@ export const GeneralButtonSmall = (props) => (
     {...props}/>
 );
 
+export const OutlineButtonSmall = (props) => (
+  <Button
+    title={props.title}
+    type="outline"
+    buttonStyle={styles.outlineSmall}
+    titleStyle={styles.title}
+    onPress={( ) => props.action( )}
+    {...props}/>
+)
+
 export const SuccessButtonSmall = (props) => (
   <Button
     title={props.title}
     type="solid"
     buttonStyle={styles.successSmall}
-    titleStyle={styles.title}
+    titleStyle={styles.outlineTitle}
     onPress={( ) => props.action( )}
     {...props}/>
 );
@@ -73,6 +83,16 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue,
     margin: 10,
     width: 100
+  },
+  outlineSmall: {
+    borderColor: colors.red,
+    margin: 10,
+    width: 100
+  },
+  outlineTitle: {
+    color: colors.red,
+    fontFamily: 'Quicksand',
+    fontSize: 16
   },
   successLarge: {
     backgroundColor: colors.green,

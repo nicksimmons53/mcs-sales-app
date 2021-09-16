@@ -67,7 +67,7 @@ const update = async(values) => {
         })
         .catch((error) => {
             console.log(error);
-        })
+        });
 };
 
 const updateDetails = async (query) => {

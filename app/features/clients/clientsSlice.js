@@ -56,6 +56,15 @@ export const getClientAddresses = createAsyncThunk(
   }
 );
 
+export const updateClientAddresses = createAsyncThunk(
+  'clients/addresses/update',
+  async (values) => {
+    const response = await Addresses.update(values);
+
+    return response;
+  }
+)
+
 export const getClientContacts = createAsyncThunk(
   'clients/contacts',
   async (id) => {
@@ -65,8 +74,17 @@ export const getClientContacts = createAsyncThunk(
   }
 );
 
+export const createClientContact = createAsyncThunk(
+  'clients/contacts/add',
+  async (values) => {
+    const response = await Contacts.create(values);
+
+    return response;
+  }
+)
+
 export const deleteClientContact = createAsyncThunk(
-  'clients/contact/delete',
+  'clients/contacts/delete',
   async (query) => {
     const response = await Contacts.deleteById(query);
 
@@ -144,6 +162,15 @@ export const clientsSlice = createSlice({
       [getClientsByUser.rejected]: (state, action) => {
         state.status = 'rejected';
       },
+      [updateClient.pending]: (state, action) => {
+        state.status = 'loading';
+      },
+      [updateClient.fulfilled]: (state, action) => {
+        state.status = 'fulfilled';
+      },
+      [updateClient.rejected]: (state, action) => {
+        state.status = 'rejected';
+      },
       [getClientAddresses.pending]: (state, action) => {
         state.status = 'loading';
       },
@@ -162,6 +189,15 @@ export const clientsSlice = createSlice({
         state.contacts = action.payload;
       },
       [getClientContacts.rejected]: (state, action) => {
+        state.status = 'rejected';
+      },
+      [createClientContact.pending]: (state, action) => {
+        state.status = 'loading';
+      },
+      [createClientContact.fulfilled]: (state, action) => {
+        state.status = 'fulfilled';
+      },
+      [createClientContact.rejected]: (state, action) => {
         state.status = 'rejected';
       },
       [deleteClientContact.pending]: (state, action) => {

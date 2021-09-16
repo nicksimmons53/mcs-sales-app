@@ -87,11 +87,13 @@ export const TilePricing = (props) => {
         <View style={{width: '75%'}}>
           <DataGridPricing 
             title="Floor Tile" 
-            header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}/>
+            header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+            components={["input", "dropdown", "input", "input", "input", "input"]}/>
           <DataGridPricing 
             title="Bathroom Wall Tile" 
-            header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}/>
-          <DataGridPricing 
+            header={["Level", "Material", "Material w/ Tax", "Labor", "Total"]}
+            components={["input", "input", "input", "input", "input"]}/>
+          {/* <DataGridPricing 
             title="Backsplash Wall Tile" 
             header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}/>
           <DataGridPricing 
@@ -132,7 +134,7 @@ export const TilePricing = (props) => {
             header={["Description", "Unit", "Total"]}/>
           <DataGridPricing 
             title="Add-Ons" 
-            header={["Description", "Unit", "Total"]}/>
+            header={["Description", "Unit", "Total"]}/> */}
         </View>
       </View>
     </ScrollView>

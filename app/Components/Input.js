@@ -25,6 +25,14 @@ const defaultTheme = {
     },
 };
 
+// Props
+// mode
+// label
+// multiline
+// control
+// errors
+// field
+// default value
 const Input = (props) => {
     let mode = props.mode || "outlined";
     let label = props.label || "undefined";

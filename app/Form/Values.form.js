@@ -281,15 +281,6 @@ let countertopTypes = [
     { label: "Porcelain 1.2cm", value: "Porcelain 1.2cm" }
 ];
 
-let units = [
-    { label: "", value: "" },
-    { label: "SqFt", value: "sqft" },
-    { label: "Each", value: "each" },
-    { label: "Linear Foot", value: "linear" },
-    { label: "SqYd", value: "sqyd" },
-    { label: "Per Bag", value: "per bag"}
-];
-
 let edges = [
     { label: "3cm Straight", value: "3cm Straight" },
     { label: "3cm Bullnose", value: "3cm Bullnose" },
@@ -321,7 +312,6 @@ export {
     CarpetProgramInfo,
     TilePricing,
     levels,
-    units,
     countertopTypes,
     countertopColors,
     edges,

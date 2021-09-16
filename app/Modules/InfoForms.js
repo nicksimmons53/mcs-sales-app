@@ -201,7 +201,7 @@ export const BasicInfo = (props) => {
 
       <View style={{...styles.buttonView, zIndex: 0}}>
         <Button
-          title='SAVE'
+          title='Save'
           disabled={props.disableSave}
           buttonStyle={styles.save}
           containerStyle={styles.saveButtonContainer}
@@ -551,7 +551,7 @@ export const ClientDetails = (props) => (
 	
     <View style={{...styles.buttonView, zIndex: 0}}>
       <Button
-        title='SAVE'
+        title='Save'
         disabled={props.disableSave}
         buttonStyle={styles.save}
         containerStyle={styles.saveButtonContainer}

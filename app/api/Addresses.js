@@ -9,8 +9,23 @@ const getAll = async(id) => {
     } catch(error) {
         return error;
     }
+};
+
+const update = async(values) => {
+    let status;
+
+    await axios.post(`${API_URL}/clients/${values.id}/addresses`, values)
+        .then((response) => {
+            status = response.status;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+    return status;
 }
 
 module.exports = {
-    getAll
+    getAll,
+    update
 }

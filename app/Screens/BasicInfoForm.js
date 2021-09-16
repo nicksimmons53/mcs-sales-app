@@ -65,15 +65,10 @@ function ClientForm({ navigation }) {
   
   const onErrors = errors => {
     let errorMessage = findAllByKey(errors, 'message').join('\n');
-
     setDisableSave(true);
-
     setSnackMessage(errorMessage);
-
     setError(true);
-
     setVisible(true);
-
     setDisableSave(false);
   }
 

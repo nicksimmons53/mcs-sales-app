@@ -32,17 +32,17 @@ function Pricing(navigation) {
               <Drawer.Item  active={program === "Wood"}label="Wood" onPress={( ) => setProgram("Wood")}/>
             </Drawer.Section>
             
-            {program === "Cabinets" && <CabinetPricing/> }
+            {/* {program === "Cabinets" && <CabinetPricing/> } */}
 
-            {program === "Tile" && <TilePricing/> }
+            { program === "Tile" && <TilePricing/> }
             
-            {program === "Carpet" && <CarpetPricing/> }
+            {/* {program === "Carpet" && <CarpetPricing/> }
             
             {program === "Vinyl" && <VinylPricing/> }
             
             {program === "Wood" && <WoodPricing/> }
             
-            {program === "Countertops" && <CountertopPricing/> }
+            {program === "Countertops" && <CountertopPricing/> } */}
           </View>
         </View>    
       </View>

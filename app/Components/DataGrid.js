@@ -1,8 +1,10 @@
 // Library Imports
 import React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
-import { Button, DataTable, IconButton } from 'react-native-paper';
+import { StyleSheet, TextInput, View } from 'react-native';
+import { DataTable, IconButton } from 'react-native-paper';
+import { units } from '../form/dropdown/values';
 import colors from '../Library/Colors';
+import RNPickerSelect from 'react-native-picker-select';
 import { ActionButtonSmall, GeneralButtonSmall, SuccessButtonSmall } from './Button';
 
 // Props Needed
@@ -161,7 +163,7 @@ export const DataGridPricing = (props) => {
       borderColor: colors.light_black,
       borderRadius: 3,
       borderWidth: 1,
-      flex: flex,
+      flex: 1,
       margin: 10,
     },
     input: {
@@ -171,13 +173,46 @@ export const DataGridPricing = (props) => {
       borderTopWidth: 1,
       flex: 1,
       fontFamily: 'Quicksand',
+      height: '100%',
       padding: 5
+    },
+    select: {
+      borderColor: colors.grey, 
+      borderBottomLeftRadius: 0, 
+      borderBottomRightRadius: 0,
+      borderTopLeftRadius: 0, 
+      borderTopRightRadius: 0,
+      flex: 1
     }
   });
 
   React.useEffect(() => {
      setPage(0);
   }, [ itemsPerPage ]);
+
+  const Input = ( ) => (
+    <TextInput 
+      style={styles.input}>
+        TEST
+    </TextInput>
+  );
+
+  const Dropdown = (props) => {
+    const [ value, setValue ] = React.useState();
+    return (
+      <RNPickerSelect 
+        placeholder={{ label: props.label, value: null }}
+        value={value}
+        onValueChange={value => setValue(value)}
+        items={units} 
+        style={{viewContainer: {...styles.input, justifyContent: 'center', paddingLeft: 5 }, inputIOS: { flex: 1, margin: 0, height: '100%' }, inputIOSContainer: { flex: 1, margin: 0, height: '100%' }}}/>
+      // <DropDownPicker 
+      //   items={units} 
+      //   placeholder="Units" 
+      //   containerStyle={{ flex: 1 }} 
+      //   labelStyle={{ fontFamily: 'Quicksand' }} 
+      //   style={styles.select}/>
+  )};
 
   return (
     <DataTable style={styles.background}>
@@ -189,26 +224,20 @@ export const DataGridPricing = (props) => {
 
       <DataTable.Header style={{ paddingLeft: 0, paddingRight: 0 }}>
         { header.map((columnName, index) => (
-          <DataTable.Title 
-            key={index}
-            style={props.columnStyle ? { 
-              flex: props.columnStyle.flex[index],
-              padding: 5
-              } : {
-                padding: 5
-              }}>
+          <DataTable.Title key={index} style={{ flex: 1, paddingLeft: 5 }}>
             { columnName }
           </DataTable.Title>
         ))}
       </DataTable.Header>
 
       <DataTable.Row style={{ paddingLeft: 0, paddingRight: 0 }}>
-          <TextInput style={styles.input}>TEST</TextInput>
-          <TextInput style={styles.input}>TEST</TextInput>
-          <TextInput style={styles.input}>TEST</TextInput>
-          <TextInput style={styles.input}>TEST</TextInput>
-          <TextInput style={styles.input}>TEST</TextInput>
-          <TextInput style={{...styles.input, borderRightWidth: 0}}>TEST</TextInput>
+          { props.components.map((component, index) => (
+            <>
+              { component === "input" && <Input key={index}/> }
+              { component === "dropdown" && <Dropdown key={index} label={header[index]}/>}
+            </>
+            ))
+          }
       </DataTable.Row>
 
       { props.pagination &&

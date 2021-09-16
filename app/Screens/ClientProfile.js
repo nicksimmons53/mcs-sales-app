@@ -21,6 +21,7 @@ import FloatingButtonGroup from '../components/FloatingButtonGroup';
 import { deleteContactAlert, deleteFileAlert  } from '../components/Alert';
 import S3 from '../helpers/S3';
 import { ActionButtonMedium, SuccessButtonLarge } from '../components/Button';
+import ActionModal from '../components/ActionModal';
 
 function ClientProfile(props) {
   const dispatch = useDispatch( );
@@ -34,6 +35,8 @@ function ClientProfile(props) {
   const [ files, setFiles ] = React.useState([ ]);
   const [ visible, setVisible ] = React.useState(false);
   const [ snackMessage, setSnackMessage ] = React.useState(null);
+  const [ showEditClientModal, setShowEditClientModal ] = React.useState(false);
+  const [ showAddContactModal, setShowAddContactModal ] = React.useState(false);
 
   React.useEffect(( ) => {
     const unsubscribe = props.navigation.addListener('focus', () => {
@@ -169,8 +172,8 @@ function ClientProfile(props) {
   const buttonIcons = [
     { icon: 'folder', label: 'Edit Program Choices', onPress: ( ) => console.log("PRESSED") },
     { icon: 'file-upload', label: 'Upload File', onPress: ( ) => addFile( ) },
-    { icon: 'account-edit', label: 'Add Contact',  onPress: ( ) => console.log("PRESSED") },
-    { icon: 'pencil', label: 'Edit Client', onPress: ( ) => console.log("PRESSED") },
+    { icon: 'account-edit', label: 'Add Contact',  onPress: ( ) => setShowAddContactModal(!showAddContactModal) },
+    { icon: 'pencil', label: 'Edit Client', onPress: ( ) => setShowEditClientModal(!showEditClientModal) },
     { icon: 'home', label: 'Home', onPress: ( ) => { setFiles([ ]); props.navigation.popToTop( )} },
   ];
 
@@ -224,6 +227,7 @@ function ClientProfile(props) {
               columnStyle={{flex: [6, 2.5, 1]}}
               flex={2}
               pagination={true}
+              itemsPerPage={5}
               action={S3.viewObject}/>
           } 
 
@@ -255,6 +259,8 @@ function ClientProfile(props) {
 
       <FloatingButtonGroup actions={buttonIcons}/>
       <Snack visible={visible} action={( ) => snackbarDismiss( )} message={snackMessage}/>
+      <ActionModal visible={showEditClientModal} setVisible={setShowEditClientModal} form="Edit Client"/>
+      <ActionModal visible={showAddContactModal} setVisible={setShowAddContactModal} form="Add Contacts"/>
     </KeyboardAvoidingView>
   );
 }
