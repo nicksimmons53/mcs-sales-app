@@ -1,61 +1,50 @@
 // // Library Imports
 import React from 'react';
-import { ScrollView, View, KeyboardAvoidingView } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { ScrollView, Text, View, KeyboardAvoidingView } from 'react-native';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import ClientActions from '../components/ClientActions';
 import styles from '../styles/Screen';
 import { StatusBar } from 'react-native';
-import Snack from '../components/Snack';
 import Header from '../components/Header';
-import { 
-  deleteClientContact,
-  getClientAddresses, 
-  getClientApprovals, 
-  getClientContacts, 
-  getClientDetails,
-  getProgramsByClient
-} from '../features/clients/clientsSlice';
+import { useIsFocused } from '@react-navigation/native';
+import { getClientContacts, deleteClientContact } from '../redux/features/contacts/contactsThunk';
+import { setMessage, show } from '../redux/features/snackbar/snackbarSlice';
 import ClientStatusBar from '../components/ClientStatusBar';
 import { DataGrid, DataGridHorizontal } from '../components/DataGrid';
 import FloatingButtonGroup from '../components/FloatingButtonGroup';
 import { deleteContactAlert, deleteFileAlert  } from '../components/Alert';
 import S3 from '../helpers/S3';
+import AnimatedLoader from 'react-native-animated-loader';
 import { ActionButtonMedium, SuccessButtonLarge } from '../components/Button';
 import ActionModal from '../components/ActionModal';
+import colors from '../Library/Colors';
 
 function ClientProfile(props) {
+  const isFocused = useIsFocused( ); 
   const dispatch = useDispatch( );
   let user = useSelector((state) => state.user.info);
   let client = useSelector((state) => state.clients.selected);
-  let addresses = useSelector((state) => state.clients.addresses);
-  let contacts = useSelector((state) => state.clients.contacts);
-  let programs = useSelector((state) => state.clients.programs.entities);
+  let addresses = useSelector((state) => state.addresses.entities);
+  let contacts = useSelector((state) => state.contacts.entities)
+  let programs = useSelector((state) => state.programs.entities)
   let approvals = useSelector((state) => state.clients.approvals);
 
+  const [ visible, setVisible ] = React.useState(true);
   const [ files, setFiles ] = React.useState([ ]);
-  const [ visible, setVisible ] = React.useState(false);
-  const [ snackMessage, setSnackMessage ] = React.useState(null);
   const [ showEditClientModal, setShowEditClientModal ] = React.useState(false);
   const [ showAddContactModal, setShowAddContactModal ] = React.useState(false);
 
   React.useEffect(( ) => {
-    const unsubscribe = props.navigation.addListener('focus', () => {
-      dispatch(getClientDetails(client.id));
-      dispatch(getProgramsByClient(client.id));
-    });
-
-    return unsubscribe;
-  }, [ props.navigation ]);
+    setInterval(( ) => {
+      setVisible(false);
+    }, 3000);
+  }, [ ]);
 
   React.useEffect(( ) => {
     const getFiles = async( ) => setFiles(await S3.getFiles(user, client.name));
 
-    dispatch(getClientAddresses(client.id));
-    dispatch(getClientContacts(client.id));
-    dispatch(getProgramsByClient(client.id));
-    dispatch(getClientApprovals(client.id));
     getFiles( );
-  }, [ ]);
+  }, [ isFocused ]);
 
   const deleteContact = (row) => {
     const action = async(row) => {
@@ -64,60 +53,29 @@ function ClientProfile(props) {
   
       if (status >= 200 && status <= 299) {
         dispatch(getClientContacts(client.id));
-        setSnackMessage("Contact was successfully deleted.");
+        dispatch(setMessage("Contact was successfully deleted."));
       } else {
-        setSnackMessage("There was an error deleting the selected contact.");
+        dispatch(setMessage("There was an error deleting the selected contact."));
       }
   
-      setVisible(true);
+      dispatch(show( ));
     }
 
     deleteContactAlert(( ) => action(row));
-  }
-
-  const saveContact = async (values) => {
-    // let status = await Clients.createContact(user.id, client.id, values);
-
-    // if (status >= 200 && status <= 299) {
-    //   setContacts(await Contacts.getAll(user.id, client.id));
-    //   setSnackMessage("Contact was successfully created.");
-    //   toggleAddContact( );
-    // } else {
-    //   setSnackMessage("There was an error creating the new contact.");
-    // }
-
-    // setVisible(true);
   }
 
   const addFile = async ( ) => {
     const res = await S3.putObject(user, client.name);
     if (res === "File Uploaded Successfully.") {
       setFiles(await S3.getFiles(user, client.name));
-      setSnackMessage("File was successfully uploaded.");
+      dispatch(setMessage("File was successfully uploaded."));
     } else if (res === "Canceled") {
-      setSnackMessage("File Upload was canceled.");
+      dispatch(setMessage("File Upload was canceled."));
     } else {
-      setSnackMessage("There was an error uploading the selected file.");
+      dispatch(setMessage("There was an error uploading the selected file."));
     }
     
-    setVisible(true);
-  }
-
-  const deleteFile = async (fileToDelete) => {
-    const action = async (file) => {
-      let response = await S3.deleteObject(user.sageUserId + "-" + user.sageEmployeeNumber, fileToDelete.Key);
-  
-      if (response === "Object Deleted") {
-        setFiles(await S3.getFiles(user, client.name));
-        setSnackMessage("File was successfully deleted.");
-      } else {
-        setSnackMessage("There was an error deleting the selected file.");
-      }
-  
-      setVisible(true);
-    }
-
-    deleteFileAlert(( ) => action(fileToDelete));
+    dispatch(show( ));
   }
 
   const formatPrograms = (object) => {
@@ -166,40 +124,44 @@ function ClientProfile(props) {
     
     return tempArr;
   }
-
-  const snackbarDismiss = ( ) => setVisible(false)
   
   const buttonIcons = [
-    { icon: 'folder', label: 'Edit Program Choices', onPress: ( ) => console.log("PRESSED") },
     { icon: 'file-upload', label: 'Upload File', onPress: ( ) => addFile( ) },
     { icon: 'account-edit', label: 'Add Contact',  onPress: ( ) => setShowAddContactModal(!showAddContactModal) },
     { icon: 'pencil', label: 'Edit Client', onPress: ( ) => setShowEditClientModal(!showEditClientModal) },
     { icon: 'home', label: 'Home', onPress: ( ) => { setFiles([ ]); props.navigation.popToTop( )} },
   ];
 
+  if (visible === true) {
+    return (
+      <AnimatedLoader
+        visible={visible}
+        overlayColor={colors.light_grey}
+        animationStyle={{ height: 200, width: 200 }}
+        speed={1}
+        source={require("../../assets/7899-loading.json")}/>
+    )
+  }
+
   return (
     <KeyboardAvoidingView enabled behavior='padding' style={styles.grid}>
       <StatusBar barStyle="dark-content"/>
 
       <Header title={client.name}>
-        <ActionButtonMedium
-          title="Push To Sage"
-          disabled={client.status !== "Approved"}/>
+        <ActionButtonMedium title="Push To Sage" disabled={client.status !== "Approved"}/>
       </Header>
 
       <ScrollView>
         <ClientStatusBar status={client.status}/>
 
         <View style={styles.rowNoMargin}>
-          { addresses !== null && 
-            <DataGrid
-              title="Addresses"
-              header={["Type", "Address", "City", "State", "Zip"]}
-              fieldsNeeded={["type", "address", "city", "state", "zip"]}
-              rows={addresses}
-              columnStyle={{flex: [2, 3.5, 1.5, 1, 1]}}
-              flex={3}/>
-          }
+          <DataGrid
+            title="Addresses"
+            header={["Type", "Address", "City", "State", "Zip"]}
+            fieldsNeeded={["type", "address", "city", "state", "zip"]}
+            rows={addresses}
+            columnStyle={{flex: [2, 3.5, 1.5, 1, 1]}}
+            flex={3}/>
         </View>
 
         <View style={styles.rowNoMargin}>
@@ -252,13 +214,12 @@ function ClientProfile(props) {
         <View style={styles.center}>
           <SuccessButtonLarge 
             title="Submit for Approval" 
-            action={( ) => S3.viewObject("nicks-9995", "Test1/Accounts.txt")}
+            action={( ) => dispatch(show( ))}
             disabled={client.status === "Queued" || client.status === "Approved"}/>
         </View>
       </ScrollView>
 
       <FloatingButtonGroup actions={buttonIcons}/>
-      <Snack visible={visible} action={( ) => snackbarDismiss( )} message={snackMessage}/>
       <ActionModal visible={showEditClientModal} setVisible={setShowEditClientModal} form="Edit Client"/>
       <ActionModal visible={showAddContactModal} setVisible={setShowAddContactModal} form="Add Contacts"/>
     </KeyboardAvoidingView>

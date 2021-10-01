@@ -17,47 +17,6 @@ const ClientActions = ({...props}) => {
   const navigation = useNavigation( );
   let addresses = useSelector(state => (state.clients.addresses));
 
-  const saveFile = (base64, client, fileName) => {
-    const name = client.clnnme.replace(/\s/g, "_");
-    let reqBody = {
-      name: name,
-      base64String: base64
-    };
-
-    axios.post(`${API_URL}/create-file/${fileName}`, reqBody)
-      .then((response) => {
-        console.log(response.status);
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }
-
-  // Expo Cli Document Picker Component
-  const filePicker = async( ) => {
-    try {
-      const result = await DocumentPicker.pick({
-        type: [DocumentPicker.types.allFiles]
-      });
-
-      let file = {
-        name: result.name,
-        type: "*",
-        uri: result.uri
-      };
-
-      const base64 = await FileSystem.readAsStringAsync(file.uri, { encoding: 'base64' });
-
-      return saveFile(base64, props.client, file.name);
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-
-      } else {
-        throw err;
-      }
-    }
-  };
-
   return (
     <View style={styles.background}>
       <Button
@@ -71,7 +30,7 @@ const ClientActions = ({...props}) => {
         buttonStyle={styles.button}
         iconContainerStyle={styles.icon}
         containerStyle={styles.buttonContainer}
-        onPress={( ) => navigation.push("ClientDetails", { client: props.client }) }/>
+        onPress={( ) => navigation.push("ClientDetails") }/>
       <Button
         title='Program Details'
         icon={{
@@ -83,7 +42,7 @@ const ClientActions = ({...props}) => {
         buttonStyle={styles.button}
         iconContainerStyle={styles.icon}
         containerStyle={styles.buttonContainer}
-        onPress={( ) => navigation.push("ClientPrograms", { client: props.client })}/>
+        onPress={( ) => navigation.push("ClientPrograms")}/>
       <Button
         title='Program Pricing'
         icon={{
@@ -95,7 +54,7 @@ const ClientActions = ({...props}) => {
         buttonStyle={styles.button}
         containerStyle={styles.buttonContainer}
         iconContainerStyle={styles.icon}
-        onPress={( ) => navigation.push("ClientPricing", { client: props.client })}/>
+        onPress={( ) => navigation.push("ClientPricing")}/>
       <Button
         title='Request COI'
         icon={{

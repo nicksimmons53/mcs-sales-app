@@ -6,6 +6,7 @@ let territories = [
 ];
 
 let states = [
+    { label:"TX", value:"TX" },
     { label:"AL", value:"AL" },
     { label:"AK", value:"AK" },
     { label:"AZ", value:"AZ" },
@@ -83,20 +84,207 @@ let jobReleaseChoices = [
 ];  
 
 let units = [
-    { label: "", value: null },
     { label: "SqFt", value: "SqFt" },
-    { label: "Each", value: "Each" },
-    { label: "Linear Foot", value: "Linear" },
+    { label: "Each", value: "EA" },
+    { label: "Linear Ft", value: "Linear Ft" },
     { label: "SqYd", value: "SqYd" },
-    { label: "Per Bag", value: "Per Bag"}
-]
+    { label: "Bag", value: "Bag"}
+];
+
+let levels = [
+    { label: "1", value: 1 },
+    { label: "2", value: 2 },
+    { label: "3", value: 3 },
+    { label: "4", value: 4 },
+    { label: "5", value: 5 },
+    { label: "6", value: 6 },
+    { label: "7", value: 7 },
+    { label: "8", value: 8 },
+    { label: "9", value: 9 },
+    { label: "10", value: 10 },
+    { label: "11", value: 11 },
+    { label: "12", value: 12 },
+    { label: "13", value: 13 },
+    { label: "14", value: 14 },
+    { label: "15", value: 15 },
+    { label: "16", value: 16 },
+    { label: "17", value: 17 },
+    { label: "18", value: 18 },
+    { label: "19", value: 19 },
+    { label: "20", value: 20 },
+    { label: "21", value: 21 },
+    { label: "22", value: 22 },
+    { label: "23", value: 23 },
+    { label: "24", value: 24 },
+    { label: "25", value: 25 },
+    { label: "26", value: 26 },
+    { label: "27", value: 27 },
+    { label: "28", value: 28 },
+    { label: "29", value: 29 },
+    { label: "30", value: 30 },
+    { label: "31", value: 31 },
+    { label: "32", value: 32 },
+    { label: "33", value: 33 },
+    { label: "34", value: 34 },
+    { label: "35", value: 35 },
+    { label: "36", value: 36 },
+    { label: "37", value: 37 },
+    { label: "38", value: 38 },
+    { label: "39", value: 39 },
+    { label: "40", value: 40 },
+    { label: "41", value: 41 },
+    { label: "42", value: 42 },
+    { label: "43", value: 43 },
+    { label: "44", value: 44 },
+    { label: "45", value: 45 },
+    { label: "46", value: 46 },
+    { label: "47", value: 47 },
+    { label: "48", value: 48 },
+    { label: "49", value: 49 },
+    { label: "50", value: 50 }
+];
+
+let cabinets = {
+    bidTypes: [
+        { label: "Whole House", value: "Whole House" },
+        { label: "Specific Rooms", value: "Specific Rooms" },
+    ]
+};
+
+let carpet = {
+    carpetPad: [
+        { label: "Mohawk", value: "Mohawk" },
+        { label: "Other", value: "Other" },
+    ],
+    takeoffResp: [
+        { label: "Builder", value: "Builder" },
+        { label: "MC Surfaces", value: "MC Surfaces" },
+    ]
+};
+
+let countertops = {
+    materialThickness: [
+        { label: "3cm", value: "3cm" },
+        { label: "2cm", value: "2cm" },
+        { label: "Both", value: "Both" },
+        { label: "Other", value: "Other" },
+    ],
+    edges: [
+        { label: "Straight/Square", value: "Straight/Square" },
+        { label: "Bullnose", value: "Bullnose" },
+        { label: "Ogee", value: "Ogee" },
+        { label: "Waterfall", value: "Waterfall" },
+    ],
+    standardOrOption: [
+        { label: "Standard", value: "Standard" },
+        { label: "Option", value: "Option" },
+    ],
+    takeoffResp: [
+        { label: "Builder", value: "Builder" },
+        { label: "MC Surfaces", value: "MC Surfaces" },
+    ]
+};
+
+let wood = {
+    glueProducts: [
+        { label: "Mapei Ultra Bond 980", value: "Mapei Ultra Bond 980" },
+        { label: "Other", value: "Other" },
+    ],
+    stainOrPrimed: [
+        { label: "Pre-Primed", value: "Pre-Primed" },
+        { label: "MC Surfaces Stain", value: "MC Surfaces Stain" },
+    ],
+    subfloorConstruction: [
+        { label: "None", value: "None" },
+        { label: "Hardiebacker for Wood", value: "Hardiebacker for Wood" },
+    ]
+};
+
+let tile = {
+    settingMaterial: [
+        { label: "No Preference", value: "No Preference" },
+        { label: "Custom", value: "Custom" },
+        { label: "Mapei", value: "Mapei" },
+        { label: "Texrite", value: "Texrite" },
+    ],
+    waterproofMethod: [
+        { label: "Fiberglass", value: "Fiberglass" },
+        { label: "Plumber Provided Rubber Liner", value: "Plumber Provided Rubber Liner" },
+        { label: "Membrane (Waterstop Only)", value: "Membrane (Waterstop Only)" },
+        { label: "Kerdi", value: "Kerdi" },
+        { label: "Hardie", value: "Hardie" },
+        { label: "Waterstop", value: "Waterstop" },
+    ],
+    showerFloorWaterproof: [
+        { label: "Fiberglass", value: "Fiberglass" },
+        { label: "Plumber Provided Rubber Liner", value: "Plumber Provided Rubber Liner" },
+        { label: "Membrane (Waterstop Only)", value: "Membrane (Waterstop Only)" },
+        { label: "Kerdi", value: "Kerdi" },
+        { label: "Hardie", value: "Hardie" },
+        { label: "Waterstop", value: "Waterstop" },
+        { label: "Quickrete", value: "Quickrete" },
+    ],
+    punchOutMaterial: [
+        { label: "No Preference", value: "Fiberglass" },
+        { label: "Siliconized Grout Match", value: "Siliconized Grout Match" },
+    ],
+    showerNiche: [
+        { label: "Preformed/Molded", value: "Preformed/Molded" },
+        { label: "Framed w/ Waterproofing", value: "Framed w/ Waterproofing" },
+    ],
+    showerNicheFraming: [
+        { label: "MC Surfaces (chargeable)", value: "MC Surfaces (chargeable)" },
+        { label: "MC Surfaces (not chargeable)", value: "MC Surfaces (not chargeable)" },
+        { label: "Builder", value: "Builder" },
+    ],
+    cornerSoapDishes: [
+        { label: "Standard w/o Niche", value: "Standard w/o Niche" },
+        { label: "Standard w/ Niche (extra charge)", value: "Standard w/ Niche (extra charge)" },
+        { label: "Builder", value: "Builder" },
+    ],
+    showerSeat: [
+        { label: "MC Surfaces (cinderblock)", value: "MC Surfaces (cinderblock)" },
+        { label: "MC Surfaces (other)", value: "MC Surfaces (other)" },
+        { label: "Builder", value: "Builder" },
+    ],
+    metalEdge: [
+        { label: "Standard", value: "Standard" },
+        { label: "Optional", value: "Optional" },
+    ],
+    groutJointSize: [
+        { label: "3/16\"", value: "3/16\"" },
+        { label: "1/8\"", value: "1/8\"" },
+    ],
+    groutBrand: [
+        { label: "No Preference", value: "No Preference" },
+        { label: "Custom", value: "Custom" },
+        { label: "Mapei", value: "Mapei" },
+        { label: "Texrite", value: "Texrite" },
+    ],
+    subfloorPractice: [
+        { label: "1/4\" Hardie", value: "1/4\" Hardie" },
+        { label: "Ditra", value: "Ditra" },
+        { label: "Mudbuild", value: "Mudbuild" },
+        { label: "Mapeguard", value: "Mapeguard" },
+    ],
+    takeoffResp: [
+        { label: "Builder", value: "Builder" },
+        { label: "MC Surfaces", value: "MC Surfaces" },
+    ]
+};
 
 export {
+    cabinets,
+    carpet,
+    countertops,
+    jobReleaseChoices,
+    levels,
     paymentFrequency,
     paymentType,
-    jobReleaseChoices,
     states,
     territories,
+    tile,
     units,
+    wood,
     yesOrNo,
 };

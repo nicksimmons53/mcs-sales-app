@@ -26,20 +26,6 @@ import colors from '../Library/Colors';
 let zIndex = 100000;
 
 export const BasicInfo = (props) => {
-  let info;
-  let addresses = {};
-
-  if (typeof props.defaultValues !== "undefined") {
-    info = props.defaultValues.client;
-    addresses = props.defaultValues.addresses.reduce(
-      (object, item) => Object.assign(object, { [item.type]: item }), {}
-    );
-  } else {
-    addresses.Corporate;
-    addresses.Billing;
-    addresses.Shipping;
-  }
-
   return (
     <View style={styles.formRoot}>
       <View style={styles.form}>
@@ -51,7 +37,7 @@ export const BasicInfo = (props) => {
           label="Client Name" 
           control={props.control} 
           field="info.name" 
-          defaultValue={typeof info !== "undefined" ? info.name : ""}
+          defaultValue=""
           errors={props.errors}/>
       </View>
 
@@ -65,7 +51,7 @@ export const BasicInfo = (props) => {
           items={territories} 
           control={props.control} 
           field="info.territory" 
-          defaultValue={typeof info !== "undefined" ? info.territory : ""}
+          defaultValue=""
           errors={props.errors} 
           zIndex={zIndex-=1}/>
       </View>
@@ -74,41 +60,44 @@ export const BasicInfo = (props) => {
         <Text style={styles.label}>Corporate Address</Text>
 
         <Divider/>
-
         <Input 
           label="Address 1" 
           control={props.control} 
           field="addresses.Corporate.address1" 
-          defaultValue={typeof addresses.Corporate !== "undefined" ? addresses.Corporate.address1 : ""}
+          defaultValue=""
           errors={props.errors}/>
         <Input 
           label="Address 2" 
           control={props.control} 
           field="addresses.Corporate.address2" 
-          defaultValue={typeof addresses.Corporate !== "undefined" ? addresses.Corporate.address2 : ""}
+          defaultValue=""
           errors={props.errors}/>
         <View style={{ flexDirection: 'row'}}>
-          <Input 
-            label="City" 
-            control={props.control} 
-            field="addresses.Corporate.city" 
-            defaultValue={typeof addresses.Corporate !== "undefined" ? addresses.Corporate.city : ""}
-            errors={props.errors}/>
-          <View style={{ width: '15%'}}>
+          <View style={{flex: 1}}>
+            <Input 
+              label="City" 
+              control={props.control} 
+              field="addresses.Corporate.city" 
+              defaultValue=""
+              errors={props.errors}/>
+          </View>
+          <View style={{flex: 1}}>
             <Dropdown 
               label="State" items={states} 
               control={props.control} 
               field="addresses.Corporate.state" 
-              defaultValue={typeof addresses.Corporate !== "undefined" ? addresses.Corporate.state : ""}
+              defaultValue=""
               errors={props.errors} 
               zIndex={zIndex-=1}/>
           </View>
-          <Input 
-            label="Zip" 
-            control={props.control} 
-            field="addresses.Corporate.zip" 
-            defaultValue={typeof addresses.Corporate !== "undefined" ? addresses.Corporate.zip : ""}
-            errors={props.errors}/>
+          <View style={{flex: 1}}>
+            <Input 
+              label="Zip" 
+              control={props.control} 
+              field="addresses.Corporate.zip" 
+              defaultValue=""
+              errors={props.errors}/>
+          </View>
         </View>
       </View>
 
@@ -121,38 +110,40 @@ export const BasicInfo = (props) => {
           label="Address 1" 
           control={props.control} 
           field="addresses.Billing.address1" 
-          defaultValue={typeof addresses.Billing !== "undefined" ? addresses.Billing.address1 : ""}
+          defaultValue=""
           errors={props.errors}/>
         <Input 
           label="Address 2" 
           control={props.control} 
           field="addresses.Billing.address2" 
-          defaultValue={typeof addresses.Billing !== "undefined" ? addresses.Billing.address2 : ""}
+          defaultValue=""
           errors={props.errors}/>
-        <View style={{ flexDirection: 'row' }}>
-          <Input 
-            label="City" 
-            control={props.control} 
-            field="addresses.Billing.city" 
-            defaultValue={typeof addresses.Billing !== "undefined" ? addresses.Billing.city : ""}
-            errors={props.errors}/>
-          <View style={{ width: '15%'}}>
+        <View style={{ flexDirection: 'row'}}>
+          <View style={{flex: 1}}>
+            <Input 
+              label="City" 
+              control={props.control} 
+              field="addresses.Billing.city" 
+              defaultValue=""
+              errors={props.errors}/>
+          </View>
+          <View style={{flex: 1}}>
             <Dropdown 
-              label="State" 
-              items={states} 
+              label="State" items={states} 
               control={props.control} 
               field="addresses.Billing.state" 
-              defaultValue={typeof addresses.Billing !== "undefined" ? addresses.Billing.zip : ""}
+              defaultValue=""
               errors={props.errors} 
               zIndex={zIndex-=1}/>
           </View>
-          <Input 
-            label="Zip" 
-            control={props.control} 
-            field="addresses.Billing.zip" 
-            defaultValue={typeof addresses.Billing !== "undefined" ? addresses.Billing.state : ""}
-            defaultValue="" 
-            errors={props.errors}/>
+          <View style={{flex: 1}}>
+            <Input 
+              label="Zip" 
+              control={props.control} 
+              field="addresses.Billing.zip" 
+              defaultValue=""
+              errors={props.errors}/>
+          </View>
         </View>
       </View>
 
@@ -165,37 +156,40 @@ export const BasicInfo = (props) => {
           label="Address 1" 
           control={props.control} 
           field="addresses.Shipping.address1" 
-          defaultValue={typeof addresses.Shipping !== "undefined" ? addresses.Shipping.address1 : ""}
+          defaultValue=""
           errors={props.errors}/>
         <Input 
-        label="Address 2" 
-        control={props.control} 
-        field="addresses.Shipping.address2" 
-        defaultValue={typeof addresses.Shipping !== "undefined" ? addresses.Shipping.address2 : ""}
-        errors={props.errors}/>
+          label="Address 2" 
+          control={props.control} 
+          field="addresses.Shipping.address2" 
+          defaultValue=""
+          errors={props.errors}/>
         <View style={{ flexDirection: 'row' }}>
-          <Input 
-            label="City" 
-            control={props.control} 
-            field="addresses.Shipping.city" 
-            defaultValue={typeof addresses.Shipping !== "undefined" ? addresses.Shipping.city : ""}
-            errors={props.errors}/>
-          <View style={{ width: '15%'}}>
+          <View style={{flex: 1}}>
+            <Input 
+              label="City" 
+              control={props.control} 
+              field="addresses.Shipping.city" 
+              defaultValue=""
+              errors={props.errors}/>
+          </View>
+          <View style={{flex: 1}}>
             <Dropdown 
-              label="State" 
-              items={states} 
+              label="State" items={states} 
               control={props.control} 
               field="addresses.Shipping.state" 
-              defaultValue={typeof addresses.Shipping !== "undefined" ? addresses.Shipping.state : ""}
+              defaultValue=""
               errors={props.errors} 
               zIndex={zIndex-=1}/>
           </View>
-          <Input 
-            label="Zip" 
-            control={props.control} 
-            field="addresses.Shipping.zip" 
-            defaultValue={typeof addresses.Shipping !== "undefined" ? addresses.Shipping.zip : ""}
-            errors={props.errors}/>
+          <View style={{flex: 1}}>
+            <Input 
+              label="Zip" 
+              control={props.control} 
+              field="addresses.Shipping.zip" 
+              defaultValue=""
+              errors={props.errors}/>
+          </View>
         </View>
       </View>
 
@@ -225,8 +219,8 @@ export const ClientDetails = (props) => (
             label="Payment Frequency" 
             items={paymentFrequency} 
             control={props.control} 
-            field="accounting.paymentFrequency" 
-            defaultValue={props.details.accounting_details.paymentFrequency || ""} 
+            field="accounting_details.paymentFrequency" 
+            defaultValue="" 
             errors={props.errors}
             zIndex={zIndex-=1}
             rightIcon={<ToolTip popover={DetailInfo.paymentFrequency} height={75} width={325}/>}/>
@@ -234,8 +228,8 @@ export const ClientDetails = (props) => (
             label="Auto Pay" 
             items={yesOrNo} 
             control={props.control} 
-            field="accounting.autopay" 
-            defaultValue={props.details.accounting_details.autopay || null}
+            field="accounting_details.autopay" 
+            defaultValue=""
             errors={props.errors}
             zIndex={zIndex-=1}
             rightIcon={<ToolTip popover={DetailInfo.autopay} height={125} width={525}/>}/>
@@ -243,8 +237,8 @@ export const ClientDetails = (props) => (
             <Input 
               label="Email for Submitting Invoices" 
               control={props.control} 
-              field="accounting.invoiceEmailAddress" 
-              defaultValue={props.details.accounting_details.invoiceEmailAddress || ""}
+              field="accounting_details.invoiceEmailAddress" 
+              defaultValue=""
               errors={props.errors}
               zIndex={zIndex-=1}
               options={{ autoCapitalize: 'none', keyboardType: 'email-address' }}/>
@@ -253,8 +247,8 @@ export const ClientDetails = (props) => (
             label="Payment Type" 
             items={paymentType} 
             control={props.control} 
-            field="accounting.paymentType" 
-            defaultValue={props.details.accounting_details.paymentType || ""}
+            field="accounting_details.paymentType" 
+            defaultValue=""
             errors={props.errors}
             zIndex={zIndex-=1}
             rightIcon={<ToolTip popover={DetailInfo.paymentType} height={75} width={400}/>}/>
@@ -262,22 +256,19 @@ export const ClientDetails = (props) => (
             label="Payment Portal" 
             items={yesOrNo} 
             control={props.control} 
-            field="accounting.paymentPortal" 
-            defaultValue={props.details.accounting_details.paymentPortal || null}
+            field="accounting_details.paymentPortal" 
+            defaultValue=""
             errors={props.errors}
             zIndex={zIndex-=1}/>
-
-          <View style={{ flex: 1, width: 300 }}>
-            <Input 
-              label="Portal URL" 
-              control={props.control} 
-              field="accounting.paymentURL" 
-              defaultValue={props.details.accounting_details.paymentURL || ""}
-              errors={props.errors}
-              mutliline={true}
-              zIndex={zIndex-=1}
-              options={{ autoCapitalize: 'none', keyboardType: 'url' }}/>
-          </View>
+          <Input 
+            label="Portal URL" 
+            control={props.control} 
+            field="accounting_details.paymentURL" 
+            defaultValue=""
+            errors={props.errors}
+            mutliline={true}
+            zIndex={zIndex-=1}
+            options={{ autoCapitalize: 'none', keyboardType: 'url' }}/>
         </View>
 
         <Divider orientation="vertical" style={{ margin: 10 }}/>
@@ -287,8 +278,8 @@ export const ClientDetails = (props) => (
             label="PO's Required" 
             items={yesOrNo} 
             control={props.control} 
-            field="accounting.poRequired" 
-            defaultValue={props.details.accounting_details.poRequired || null}
+            field="accounting_details.poRequired" 
+            defaultValue=""
             errors={props.errors}
             zIndex={zIndex-=1}
             rightIcon={<ToolTip popover={DetailInfo.poRequired} height={50} width={325}/>}/>
@@ -296,8 +287,8 @@ export const ClientDetails = (props) => (
             label="PO's Required for Invoices" 
             items={yesOrNo} 
             control={props.control} 
-            field="accounting.poInvoiceRequired" 
-            defaultValue={props.details.accounting_details.poInvoiceRequired || null}
+            field="accounting_details.poInvoiceRequired" 
+            defaultValue=""
             errors={props.errors}
             zIndex={zIndex-=1}
             rightIcon={<ToolTip popover={DetailInfo.poInvoiceRequired} height={75} width={350}/>}/>
@@ -305,8 +296,8 @@ export const ClientDetails = (props) => (
             label="Approval's Required?" 
             items={yesOrNo} 
             control={props.control} 
-            field="accounting.approvalsRequired" 
-            defaultValue={props.details.accounting_details.approvalsRequired || null}
+            field="accounting_details.approvalsRequired" 
+            defaultValue=""
             errors={props.errors}
             zIndex={zIndex-=1}
             rightIcon={<ToolTip popover={DetailInfo.approvalsRequired} height={75} width={425}/>}/>
@@ -314,8 +305,8 @@ export const ClientDetails = (props) => (
             label="Have you attached the contract?" 
             items={yesOrNo} 
             control={props.control} 
-            field="accounting.contractAttached" 
-            defaultValue={props.details.accounting_details.contractAttached || null}
+            field="accounting_details.contractAttached" 
+            defaultValue=""
             errors={props.errors}
             zIndex={zIndex-=1}/>
         </View>
@@ -327,25 +318,29 @@ export const ClientDetails = (props) => (
 
       <Divider style={{ marginBottom: 10 }}/>
 
-      <View style={{ flexDirection: 'row', width: '100%', zIndex: 99 }}>
-        <View style={{ flex: 1, flexDirection: 'row' }}>
+      <View style={{ flex: 1, flexDirection: 'row', zIndex: 99 }}>
+        <View style={{flex: 1}}>
           <Input 
             label="Contact Name" 
-            control={props.control} field="accounting.contactName" 
-            defaultValue={props.details.accounting_details.contactName || ""}
+            control={props.control} field="accounting_details.contactName" 
+            defaultValue=""
             errors={props.errors}
             options={{ autoCapitalize: 'words' }}/>
+        </View>
+        <View style={{flex: 1}}>
           <Input 
             label="Contact Phone" 
-            control={props.control} field="accounting.contactPhone" 
-            defaultValue={props.details.accounting_details.contactPhone || ""}
+            control={props.control} field="accounting_details.contactPhone" 
+            defaultValue=""
             errors={props.errors}
             options={{ keyboardType: 'phone-pad' }}/>
+        </View>
+        <View style={{flex: 1}}>
           <Input 
             label="Contact Email" 
             control={props.control} 
-            field="accounting.contactEmail" 
-            defaultValue={props.details.accounting_details.contactEmail || ""}
+            field="accounting_details.contactEmail" 
+            defaultValue=""
             errors={props.errors}
             options={{ autoCapitalize: 'none', keyboardType: 'email-address' }}/>
         </View>
@@ -372,16 +367,18 @@ export const ClientDetails = (props) => (
 
       <Divider style={{ marginBottom: 10 }}/>
 
-      <View style={{ flexDirection: 'row', width: '100%' }}>
-        <Input 
-          label="Notes" 
-          control={props.control} 
-          field="accounting.notes" 
-          defaultValue={props.details.accounting_details.notes || ""}
-          errors={props.errors}
-          mutliline={true}
-          zIndex={zIndex-=1}
-          options= {{ maxLength: 250 }}/>
+      <View style={{ flex: 1, flexDirection: 'row' }}>
+        <View style={{flex: 1}}>
+          <Input 
+            label="Notes" 
+            control={props.control} 
+            field="accounting_details.notes" 
+            defaultValue=""
+            errors={props.errors}
+            mutliline={true}
+            zIndex={zIndex-=1}
+            options= {{ maxLength: 250 }}/>
+        </View>
       </View>
     </View>
   </View>
@@ -399,15 +396,15 @@ export const ClientDetails = (props) => (
             label="Is there a Vendor Portal?" 
             items={yesOrNo} 
             control={props.control} 
-            field="expediting.vendorPortal" 
-            defaultValue={props.details.expediting_details.vendorPortal || null} 
+            field="expediting_details.vendorPortal" 
+            defaultValue="" 
             errors={props.errors}
             zIndex={zIndex-=1}/>
           <Input 
             label="Vendor Portal URL" 
             control={props.control} 
-            field="expediting.vendorPortalURL" 
-            defaultValue={props.details.expediting_details.vendorPortalURL || ""}
+            field="expediting_details.vendorPortalURL" 
+            defaultValue=""
             errors={props.errors}
             mutliline={true}
             zIndex={zIndex-=1}
@@ -416,15 +413,15 @@ export const ClientDetails = (props) => (
             label="Has the Vendor Portal Account been created?" 
             items={yesOrNo} 
             control={props.control} 
-            field="expediting.portalAccountCreated" 
-            defaultValue={props.details.expediting_details.portalAccountCreated || null}
+            field="expediting_details.portalAccountCreated" 
+            defaultValue=""
             errors={props.errors}
             zIndex={zIndex-=1}/>
           <Input 
             label="Portal Username" 
             control={props.control} 
-            field="expediting.portalUsername" 
-            defaultValue={props.details.expediting_details.portalUsername || null}
+            field="expediting_details.portalUsername" 
+            defaultValue=""
             errors={props.errors}
             mutliline={true}
             zIndex={zIndex-=1}
@@ -432,8 +429,8 @@ export const ClientDetails = (props) => (
           <Input 
             label="Portal Password" 
             control={props.control} 
-            field="expediting.portalPassword" 
-            defaultValue={props.details.expediting_details.portalPassword || ""}
+            field="expediting_details.portalPassword" 
+            defaultValue=""
             errors={props.errors}
             mutliline={true}
             zIndex={zIndex-=1}
@@ -447,8 +444,8 @@ export const ClientDetails = (props) => (
             label="How are jobs released?" 
             items={jobReleaseChoices} 
             control={props.control} 
-            field="expediting.jobReleaseMethod" 
-            defaultValue={props.details.expediting_details.jobReleaseMethod || ""}
+            field="expediting_details.jobReleaseMethod" 
+            defaultValue=""
             errors={props.errors}
             zIndex={zIndex-=1}
             rightIcon={<ToolTip popover={DetailInfo.jobReleaseMethod} height={50} width={400}/>}/>
@@ -456,23 +453,23 @@ export const ClientDetails = (props) => (
             label="PO Correction Handling?" 
             items={yesOrNo} 
             control={props.control} 
-            field="expediting.poErrorHandling" 
-            defaultValue={props.details.expediting_details.poErrorHandling || null}
+            field="expediting_details.poErrorHandling" 
+            defaultValue=""
             errors={props.errors}
             zIndex={zIndex-=1}
             rightIcon={<ToolTip popover={DetailInfo.poErrorHandling} height={75} width={450}/>}/>
           <Input 
             label="Estimated Number of Homes per Year" 
             control={props.control} 
-            field="expediting.estimatedHomes"
-            defaultValue={props.details.expediting_details.estimatedHomes || null}
+            field="expediting_details.estimatedHomes"
+            defaultValue=""
             errors={props.errors}
             zIndex={zIndex-=1}
             options={{ keyboardType: 'numeric' }}/>
           <DateModal
             control={props.control}
-            defaultValue={props.details.expediting_details.estimatedStartDate || null}
-            field="expediting.estimatedStartDate"/>
+            defaultValue=""
+            field="expediting_details.estimatedStartDate"/>
         </View>
       </View>
       
@@ -487,32 +484,32 @@ export const ClientDetails = (props) => (
           title="Cabinets"
           control={props.control}
           field="programs.cabinets"
-          defaultValue={props.programs.cabinets || 0}/>
+          defaultValue=""/>
         <ChipInput 
           title="Carpet"
           control={props.control}
           field="programs.carpet"
-          defaultValue={props.programs.carpet || 0}/>
+          defaultValue=""/>
         <ChipInput 
           title="Countertops"
           control={props.control}
           field="programs.countertops"
-          defaultValue={props.programs.countertops || 0}/>
+          defaultValue=""/>
         <ChipInput 
           title="Tile"
           control={props.control}
           field="programs.tile"
-          defaultValue={props.programs.tile || 0}/>
+          defaultValue=""/>
         <ChipInput 
           title="Vinyl"
           control={props.control}
           field="programs.vinyl"
-          defaultValue={props.programs.vinyl || 0}/>
+          defaultValue=""/>
         <ChipInput 
           title="Wood"
           control={props.control}
           field="programs.wood"
-          defaultValue={props.programs.wood || 0}/>
+          defaultValue=""/>
       </View>
       
       <Divider style={{ marginVertical: 20 }}/>
@@ -537,15 +534,17 @@ export const ClientDetails = (props) => (
       <Divider style={{ marginBottom: 10 }}/>
 
       <View style={{ flexDirection: 'row', width: '100%' }}>
-        <Input 
-          label="Notes" 
-          control={props.control}
-          field="expediting.notes" 
-          defaultValue={props.details.expediting_details.notes || ""}
-          errors={props.errors}
-          mutliline={true}
-          zIndex={zIndex-=1}
-          options={{ maxLength: 250 }}/>
+        <View style={{flex: 1}}>
+          <Input 
+            label="Notes" 
+            control={props.control}
+            field="expediting_details.notes" 
+            defaultValue=""
+            errors={props.errors}
+            mutliline={true}
+            zIndex={zIndex-=1}
+            options={{ maxLength: 250 }}/>
+        </View>
       </View> 
     </View>
 	

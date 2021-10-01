@@ -11,6 +11,20 @@ const getAll = async(id) => {
     }
 };
 
+const create = async(data) => {
+    let status;
+
+    await axios.post(`${API_URL}/clients/${data.id}/addresses`, data)
+        .then((response) => {
+            status = response.status;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    
+    return status;
+}
+
 const update = async(values) => {
     let status;
 
@@ -27,5 +41,6 @@ const update = async(values) => {
 
 module.exports = {
     getAll,
+    create,
     update
 }

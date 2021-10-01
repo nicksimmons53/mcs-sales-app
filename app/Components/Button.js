@@ -4,7 +4,6 @@ import { StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import colors from '../Library/Colors';
 
-// props
 // title
 // action 
 // disabled
@@ -53,7 +52,7 @@ export const SuccessButtonSmall = (props) => (
     title={props.title}
     type="solid"
     buttonStyle={styles.successSmall}
-    titleStyle={styles.outlineTitle}
+    titleStyle={styles.title}
     onPress={( ) => props.action( )}
     {...props}/>
 );

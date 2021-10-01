@@ -7,7 +7,7 @@ import colors from '../Library/Colors';
 
 const styles = StyleSheet.create({
     root: {
-        flex: 1,
+        // flex: 1,
         fontFamily: 'Quicksand',
         marginTop: 4,
         marginLeft: 2,
@@ -37,11 +37,11 @@ const Input = (props) => {
     let mode = props.mode || "outlined";
     let label = props.label || "undefined";
     let multiline = props.multiline || false;
-
+    
     return (
         <Controller
             control={props.control}
-            render={({ field: { onChange, value } } ) => (
+            render={({ field: { onChange, value }}) => (
                 <TextInput 
                     dense
                     onChangeText={onChange}

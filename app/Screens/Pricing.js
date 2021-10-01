@@ -8,43 +8,58 @@ import Header from '../components/Header';
 import styles from '../styles/Screen';
 import { Drawer } from 'react-native-paper';
 import colors from '../Library/Colors';
-import { CabinetPricing, CarpetPricing, CountertopPricing, TilePricing, VinylPricing, WoodPricing } from '../Modules/PricingTables';
+import { 
+  CabinetPricing, 
+  CarpetPricing, 
+  CountertopPricing, 
+  LVPPricing, 
+  TilePricing, 
+  WoodPricing 
+} from '../Modules/PricingTables';
+import { ActionButtonMedium } from '../components/Button';
 
 function Pricing(navigation) {
-  const [ program, setProgram ] = React.useState("Carpet");
+  const [ selected, setSelected ] = React.useState( );
+  let programs = useSelector((state) => state.programs.entities);
 
   return (
     <KeyboardAvoidingView enabled behavior='padding' style={styles.background}>
       <StatusBar barStyle='light-content'/>
-      <View style={styles.row}>
-        <View style={styles.grid}>
-          <Header title="Client Program Pricing"/>
+      
+      <View style={styles.infoContainer}>
+        <Header title="Client Program Pricing">
+          <ActionButtonMedium title="Import In-House Program" action={( ) => console.log("Import in-house program")}/>
+        </Header>
 
-          <Divider/>
+        <Divider/>
 
-          <View style={{flexDirection: 'row', height: '100%'}}>
-            <Drawer.Section style={{backgroundColor: colors.white, width: '15%'}}>
-              <Drawer.Item active={program === "Cabinets"} label="Cabinets" onPress={( ) => setProgram("Cabinets")}/>
-              <Drawer.Item active={program === "Carpet"} label="Carpet" onPress={( ) => setProgram("Carpet")}/>
-              <Drawer.Item active={program === "Countertops"} label="Countertops" onPress={( ) => setProgram("Countertops")}/>
-              <Drawer.Item active={program === "Tile"} label="Tile" onPress={( ) => setProgram("Tile")}/>
-              <Drawer.Item active={program === "Vinyl"} label="Vinyl" onPress={( ) => setProgram("Vinyl")}/>
-              <Drawer.Item  active={program === "Wood"}label="Wood" onPress={( ) => setProgram("Wood")}/>
-            </Drawer.Section>
-            
-            {/* {program === "Cabinets" && <CabinetPricing/> } */}
+        <View style={{flexDirection: 'row', height: '100%', width: '100%'}}>
+          <Drawer.Section title="Programs" style={{backgroundColor: colors.white, width: '15%'}}>
+            { Object.keys(programs).map((program, index) => (
+              <>
+                { programs[program] === 1 &&
+                  <Drawer.Item 
+                    key={index}
+                    active={selected === program} 
+                    label={program.charAt(0).toUpperCase( ) + program.slice(1)}
+                    onPress={( ) => setSelected(program)}/>
+                }
+              </>
+            ))}
+          </Drawer.Section>
+          
+          { selected === "cabinets" && <CabinetPricing/> }
 
-            { program === "Tile" && <TilePricing/> }
-            
-            {/* {program === "Carpet" && <CarpetPricing/> }
-            
-            {program === "Vinyl" && <VinylPricing/> }
-            
-            {program === "Wood" && <WoodPricing/> }
-            
-            {program === "Countertops" && <CountertopPricing/> } */}
-          </View>
-        </View>    
+          { selected === "tile" && <TilePricing/> }
+          
+          { selected === "carpet" && <CarpetPricing/> }
+          
+          { selected === "vinyl" && <LVPPricing/> }
+          
+          { selected === "wood" && <WoodPricing/> }
+          
+          { selected === "countertops" && <CountertopPricing/> }
+        </View>
       </View>
 
       <FloatingButton action={( ) => navigation.navigation.pop(1) } icon="arrow-left"/>

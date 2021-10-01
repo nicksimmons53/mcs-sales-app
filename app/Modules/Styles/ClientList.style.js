@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
   // Background
   background: {
     flex: 1,
-    borderTopStartRadius: 5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
     backgroundColor: colors.white,
   },
 

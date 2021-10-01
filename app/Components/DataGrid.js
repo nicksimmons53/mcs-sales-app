@@ -1,11 +1,13 @@
 // Library Imports
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
 import { DataTable, IconButton } from 'react-native-paper';
+import { ListItem } from 'react-native-elements';
 import { units } from '../form/dropdown/values';
 import colors from '../Library/Colors';
 import RNPickerSelect from 'react-native-picker-select';
-import { ActionButtonSmall, GeneralButtonSmall, SuccessButtonSmall } from './Button';
+import { Controller, useFieldArray, useForm } from 'react-hook-form';
+import { ActionButtonSmall, SuccessButtonSmall } from './Button';
 
 // Props Needed
 // title = ""
@@ -147,10 +149,15 @@ export const DataGridHorizontal = (props) => {
 }
 
 export const DataGridPricing = (props) => {
+  const { control, handleSubmit, formState: { errors } } = useForm( );
+  const { fields, append, remove } = useFieldArray({
+    control: control,
+    name: `${props.title}`
+  });
+
   let title = props.title || null;
   let header = props.header || [];
   let rows = props.rows || [];
-  let data = props.fieldsNeeded || [];
   let flex = props.flex || 1;
   const [ page, setPage ] = React.useState(0);
   const [ itemsPerPage, setItemsPerPage ] = React.useState(props.itemsPerPage || 3);
@@ -170,7 +177,6 @@ export const DataGridPricing = (props) => {
       borderColor: colors.grey,
       borderBottomWidth: 1, 
       borderRightWidth: 1, 
-      borderTopWidth: 1,
       flex: 1,
       fontFamily: 'Quicksand',
       height: '100%',
@@ -182,36 +188,55 @@ export const DataGridPricing = (props) => {
       borderBottomRightRadius: 0,
       borderTopLeftRadius: 0, 
       borderTopRightRadius: 0,
-      flex: 1
+      flex: 1,
+      fontFamily: 'Quicksand'
     }
   });
 
-  React.useEffect(() => {
+  React.useEffect(( ) => {
+    if (fields.length === 0) {
+      append(props.newRow);
+    }
+  }, [ ]);
+
+  React.useEffect(( ) => {
      setPage(0);
   }, [ itemsPerPage ]);
 
-  const Input = ( ) => (
-    <TextInput 
-      style={styles.input}>
-        TEST
-    </TextInput>
-  );
+  const onSubmit = (data) => {
+    console.log(data)
+  }
 
-  const Dropdown = (props) => {
-    const [ value, setValue ] = React.useState();
+  const Input = ({ name }) => {
     return (
-      <RNPickerSelect 
-        placeholder={{ label: props.label, value: null }}
-        value={value}
-        onValueChange={value => setValue(value)}
-        items={units} 
-        style={{viewContainer: {...styles.input, justifyContent: 'center', paddingLeft: 5 }, inputIOS: { flex: 1, margin: 0, height: '100%' }, inputIOSContainer: { flex: 1, margin: 0, height: '100%' }}}/>
-      // <DropDownPicker 
-      //   items={units} 
-      //   placeholder="Units" 
-      //   containerStyle={{ flex: 1 }} 
-      //   labelStyle={{ fontFamily: 'Quicksand' }} 
-      //   style={styles.select}/>
+      <Controller
+        control={control}
+        render={( { field: { onChange, value } }) => (
+          <TextInput value={value} onChangeText={onChange} style={styles.input}/>
+        )}
+        name={name}
+        defaultValue=""/>
+    )
+  };
+
+  const Dropdown = ({ name }) => {
+    return (
+      <Controller
+        control={control}
+        render={( { field: { onChange, value } }) => (
+          <RNPickerSelect 
+            placeholder={{ label: "Unit", value: "" }}
+            value={value || ""}
+            onValueChange={value => onChange(value)}
+            items={units} 
+            style={{
+              viewContainer: {...styles.input, justifyContent: 'center', paddingLeft: 5 }, 
+              inputIOS: { flex: 1, fontFamily: 'Quicksand', margin: 0, height: '100%' }, 
+              inputIOSContainer: { flex: 1, margin: 0, height: '100%' }
+            }}/>
+        )}
+        name={name}
+        defaultValue=""/>
   )};
 
   return (
@@ -228,37 +253,53 @@ export const DataGridPricing = (props) => {
             { columnName }
           </DataTable.Title>
         ))}
+        
+        <IconButton/>
       </DataTable.Header>
+      
+      { fields.map((row, rowIndex) => (
+        <DataTable.Row key={rowIndex} style={{ flex: 1, paddingLeft: 0, paddingRight: 0, width: '100%' }}>
+            { props.components.map((component, index) => (
+              <>
+                { component === "input" && 
+                  <Input 
+                    key={index} 
+                    name={`${title}.${rowIndex}.${Object.keys(props.newRow)[index]}`}/> 
+                }
+                { component === "dropdown" && 
+                  <Dropdown 
+                    key={index} 
+                    label={header[index]}
+                    name={`${title}.${rowIndex}.${Object.keys(props.newRow)[index]}`}/>
+                }
+              </>
+            ))}
 
-      <DataTable.Row style={{ paddingLeft: 0, paddingRight: 0 }}>
-          { props.components.map((component, index) => (
-            <>
-              { component === "input" && <Input key={index}/> }
-              { component === "dropdown" && <Dropdown key={index} label={header[index]}/>}
-            </>
-            ))
-          }
-      </DataTable.Row>
+            <IconButton 
+              color={colors.red} 
+              icon="minus-box" 
+              size={35} 
+              style={{margin: 0, padding: 0, width: '5%'}}
+              onPress={( ) => remove(rowIndex)}/>
+        </DataTable.Row>
+      ))}
 
       { props.pagination &&
         <DataTable.Pagination
           page={page}
           onPageChange={page => setPage(page)}
-          numberOfPages={Math.ceil(rows.length/itemsPerPage)}
-          itemsPerPage={itemsPerPage}
+          numberOfPages={Math.ceil(rows.length/5)}
+          itemsPerPage={5}
           label={`${from + 1}-${to} of ${rows.length}`}/>
       }
 
       <DataTable.Row style={{ alignItems: 'flex-end' }}>
         <SuccessButtonSmall 
           title="Save"
-          action={( ) => console.log("Please add a row")}/>
-        <GeneralButtonSmall 
-          title="Autofill"
-          action={( ) => console.log("Please add a row")}/>
+          action={handleSubmit(onSubmit)}/> 
         <ActionButtonSmall 
           title="Add Row"
-          action={( ) => console.log("Please add a row")}/>
+          action={( ) => append(props.newRow)}/>
       </DataTable.Row>
     </DataTable>
   );

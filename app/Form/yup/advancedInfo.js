@@ -1,8 +1,8 @@
 import * as yup from 'yup';
 
 const advancedInfo = yup.object( ).shape({
-  accounting: yup.object( ).shape({
-    invoiceEmailAddress: yup.string( ).email("Invoice Email Contact is formatted incorrectly.").trim( ),
+  accounting_details: yup.object( ).shape({
+    invoiceEmailAddress: yup.string( ).email("Invoice Email Contact is formatted incorrectly.").trim( ).nullable( ),
     paymentPortal: yup.boolean( ).nullable( ),
     paymentURL: yup
       .string( )
@@ -12,11 +12,11 @@ const advancedInfo = yup.object( ).shape({
         otherwise: yup.string( ).nullable( ),
       })
       .trim( ),
-    contactPhone: yup.string( ).matches(/[0-9]{3}-[0-9]{3}-[0-9]{4}|^(?![\s\S])/, "Accounting Contact Phone Number should be in 999-999-9999 format.").trim( ),
-    contactEmail: yup.string( ).email("Accounting Contact Email is formatted incorrectly.").trim( ),
+    contactPhone: yup.string( ).matches(/[0-9]{3}-[0-9]{3}-[0-9]{4}|^(?![\s\S])/, "Accounting Contact Phone Number should be in 999-999-9999 format.").trim( ).nullable( ),
+    contactEmail: yup.string( ).email("Accounting Contact Email is formatted incorrectly.").trim( ).nullable( ),
 
   }),
-  expediting: yup.object( ).shape({
+  expediting_details: yup.object( ).shape({
     vendorPortal: yup.boolean( ).nullable( ),
     vendorPortalURL: yup
       .string( )

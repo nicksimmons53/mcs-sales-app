@@ -38,19 +38,7 @@ const Toolbar = ({ navigation, user, logout }) => {
         color={colors.white}
         underlayColor={colors.black}
         containerStyle={styles.icons}
-        onPress={( ) => {
-          navigation.push('ClientForm', {
-            headerText: 'Create Client',
-            createClient: true,
-            user: user
-          })
-        }}/>
-      <Icon
-        name="bell"
-        type="font-awesome"
-        color={colors.white}
-        underlayColor={colors.black}
-        containerStyle={styles.icons}/>
+        onPress={( ) => navigation.push('ClientForm')}/>
       <Icon
         name="sign-out"
         type="font-awesome"

@@ -1,16 +1,21 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Snackbar } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { show } from '../redux/features/snackbar/snackbarSlice';
 
 const Snack = (props) => {
-    return (
-        <Snackbar 
-          visible={props.visible} 
-          onDismiss={props.action} 
-          style={styles.root}>
-          {props.message}
-        </Snackbar>
-    )
+  const dispatch = useDispatch( );
+  let state = useSelector((state) => state.snackbar);
+
+  return (
+      <Snackbar 
+        visible={state.visible} 
+        onDismiss={( ) => dispatch(show( ))} 
+        style={styles.root}>
+        {state.message}
+      </Snackbar>
+  )
 };
 
 const styles = StyleSheet.create({

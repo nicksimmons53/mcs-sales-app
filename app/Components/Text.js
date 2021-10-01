@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
   medium: {
     color: colors.black,
     fontFamily: 'Quicksand',
-    fontSize: 36
+    fontSize: 36,
+    margin: 5
   },
   small: {
     color: colors.black,

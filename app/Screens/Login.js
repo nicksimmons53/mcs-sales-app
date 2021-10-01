@@ -7,18 +7,17 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import auth0 from '../auth/Auth';
-import { useDispatch } from 'react-redux';
-import { restoreToken, restoreId, restoreUser } from '../features/user/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserBySub } from '../redux/features/user/userThunk';
 
 import styles from '../styles/Screen';
 import colors from '../Library/Colors'
-import Users from '../api/Users';
 import createObject from '../realm/createObject';
-import S3 from '../helpers/S3';
 import { LargeText, SmallText } from '../components/Text';
 import { SuccessButtonLarge } from '../components/Button';
 
 function Login( ) {
+  let user = useSelector((state) => state.user.info);
   const dispatch = useDispatch( );
   
   handleLogin = async ( ) => {
@@ -28,16 +27,9 @@ function Login( ) {
         auth0
           .auth
           .userInfo({ token: credentials.accessToken })
-          .then(async (user) => {
-            let apiRes = await Users.getByEmail(user.email);
-            let localUser = apiRes.users[0];
-            
-            createObject("user", { ...localUser, token: credentials.accessToken });
-            
-            await S3.createBucket(localUser.sageUserId + "-" + localUser.sageEmployeeNumber);
-            dispatch(restoreId(localUser.id));
-            dispatch(restoreUser(localUser));
-            dispatch(restoreToken(credentials.accessToken));
+          .then(async (auth0) => {
+            dispatch(getUserBySub(auth0.sub));
+            createObject("user", { ...user, sub: auth0.sub, token: credentials.accessToken });
           });
       })
       .catch(error => {
@@ -46,7 +38,7 @@ function Login( ) {
   }
 
   return (
-    <KeyboardAvoidingView behavior='padding' enabled style={styles.background}>
+    <KeyboardAvoidingView behavior='padding' enabled style={{...styles.background, backgroundColor: colors.black}}>
       <StatusBar barStyle="light-content"/>
 
       <View style={styles.center}>

@@ -7,14 +7,19 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import { getClientsByUser, setSelected } from '../features/clients/clientsSlice';
-import { reset, restoreId, signOut } from '../features/user/userSlice';
-import List from '../Modules/List';
+import { reset, signOut } from '../redux/features/user/userSlice';
+import { setSelected } from '../redux/features/clients/clientsSlice';
+import { getClientsByUser, getClientApprovals } from '../redux/features/clients/clientsThunk';
+import { getClientContacts } from '../redux/features/contacts/contactsThunk';
+import { getClientAddresses } from '../redux/features/addresses/addressThunk';
+import { getProgramsByClient } from '../redux/features/programs/programsThunk';
+import { ClientList, DocumentsList, NotificationsList } from '../Modules/List';
 import Toolbar from '../components/Toolbar';
 import styles from '../styles/Screen';
 import deleteObject from '../realm/deleteObject';
 import readMultiples from '../realm/readMultiples';
 import { useIsFocused } from '@react-navigation/native';
+import colors from '../Library/Colors';
 
 function Profile({ navigation }) {
   const isPortrait = ( ) => {
@@ -25,15 +30,15 @@ function Profile({ navigation }) {
   const dispatch = useDispatch( );
   const isFocused = useIsFocused( ); 
   let user = useSelector((state) => state.user.info);
-  let clients = useSelector(state => state.clients.entities);
+  let clients = useSelector((state) => state.clients.entities);
   const [ portraitView, setPortraitView ] = React.useState(isPortrait( ) ? true : false);
-
+  
   Dimensions.addEventListener('change', ( ) => {
     setPortraitView(isPortrait( ) ? true : false);
   });
 
   React.useEffect(( ) => {
-    if (user === null) {
+    if (user.info === null) {
       dispatch(reset( ));
       dispatch(signOut( ));
     } else {
@@ -42,8 +47,12 @@ function Profile({ navigation }) {
   }, [ isFocused ]);
   
   // Sets the UID when a client is selected for viewing
-  const setClientUID = (id) => {
+  const fetchClientById = (id) => {
     dispatch(setSelected(id));
+    dispatch(getClientAddresses(id));
+    dispatch(getClientContacts(id))    
+    dispatch(getProgramsByClient(id));
+    dispatch(getClientApprovals(id));
     
     navigation.push('ClientProfile');
   }
@@ -56,31 +65,23 @@ function Profile({ navigation }) {
       }); 
 
     dispatch(reset( ));
-    await dispatch(signOut());
+    dispatch(signOut( ));
   }
-
-  const refresh = async( ) => {
-    let user;
-    await readMultiples("user")
-      .then((objects) => {
-        user = objects[0];
-      });
-      
-    dispatch(restoreId(user.id));
-  }
-
-  if (typeof clients === "undefined") {
-    dispatch(getClientsByUser(user.id));
-  }
-
+  
   return (
-    <View style={styles.background}>
-      <StatusBar barStyle='light-content'/>
+    <View style={{...styles.background, backgroundColor: colors.black}}>
+      <StatusBar barStyle="light-content"/>
 
       <View style={styles.row}>
-        <Toolbar navigation={navigation} logout={logout} refresh={refresh}/>
+        <Toolbar navigation={navigation} logout={logout}/>
 
-        <List title="Client List" action={setClientUID} list={clients} type="clients"/>
+        <ClientList action={fetchClientById} list={clients}/>
+
+        <View style={{ flexDirection: 'column', flex: 1.5 }}>
+          <NotificationsList list={[]}/>
+
+          <DocumentsList list={[]}/>
+        </View>
       </View>
     </View>
   );

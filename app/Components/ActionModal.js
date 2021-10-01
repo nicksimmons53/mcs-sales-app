@@ -11,7 +11,9 @@ import { MediumText, SmallText } from './Text';
 import { IconButton } from 'react-native-paper';
 import colors from '../Library/Colors';
 import { useDispatch, useSelector } from 'react-redux';
-import { createClientContact, updateClient, updateClientAddresses } from '../features/clients/clientsSlice';
+import { createClientContact } from '../redux/features/contacts/contactsThunk';
+import { updateClient } from '../redux/features/clients/clientsThunk';
+import { updateClientAddresses } from '../redux/features/addresses/addressThunk';
 
 const AddContacts = ( ) => {
   const { control, handleSubmit, formState: { errors } } = useForm( );
@@ -44,34 +46,42 @@ const AddContacts = ( ) => {
 
   const Row = (props) => (
     <View style={{ alignContent: "center", flexDirection: "row", justifyContent: "center"}}>
-      <Input
-        label="Name"
-        control={control}
-        errors={errors}
-        field={`contacts.${props.index}.name`}
-        defaultValue=""
-        options={{ autoCapitalize: 'words' }}/>
-      <Input
-        label="Title"
-        control={control}
-        errors={errors}
-        field={`contacts.${props.index}.title`}
-        defaultValue=""
-        options={{ autoCapitalize: 'words' }}/>
-      <Input
-        label="Phone"
-        control={control}
-        errors={errors}
-        field={`contacts.${props.index}.phone`}
-        defaultValue=""
-        options={{ keyboardType: 'phone-pad' }}/>
-      <Input
-        label="Email"
-        control={control}
-        errors={errors}
-        field={`contacts.${props.index}.email`}
-        defaultValue=""
-        options={{ autoCapitalize: 'none', keyboardType: 'email-address' }}/>
+      <View style={{ flex: 1 }}>
+        <Input
+          label="Name"
+          control={control}
+          errors={errors}
+          field={`contacts.${props.index}.name`}
+          defaultValue=""
+          options={{ autoCapitalize: 'words' }}/>
+      </View>
+      <View style={{ flex: 1 }}>
+        <Input
+          label="Title"
+          control={control}
+          errors={errors}
+          field={`contacts.${props.index}.title`}
+          defaultValue=""
+          options={{ autoCapitalize: 'words' }}/>
+      </View>
+      <View style={{ flex: 1 }}>
+        <Input
+          label="Phone"
+          control={control}
+          errors={errors}
+          field={`contacts.${props.index}.phone`}
+          defaultValue=""
+          options={{ keyboardType: 'phone-pad' }}/>
+      </View>
+      <View style={{ flex: 1 }}>
+        <Input
+          label="Email"
+          control={control}
+          errors={errors}
+          field={`contacts.${props.index}.email`}
+          defaultValue=""
+          options={{ autoCapitalize: 'none', keyboardType: 'email-address' }}/>
+      </View>
       <IconButton 
         color={colors.red} 
         icon="minus-box" 
@@ -121,37 +131,40 @@ const EditClient = ( ) => {
   let addresses = useSelector((state) => state.clients.addresses);
   
   React.useEffect(( ) => {
-    let corporate = addresses.find(address => address.type === "Corporate");
-    let billing = addresses.find(address => address.type === "Billing");
-    let shipping = addresses.find(address => address.type === "Shipping");
+    let corporate = {};
+    let billing = {};
+    let shipping = {};
+    // let corporate = addresses.find(address => address.type === "Corporate");
+    // let billing = addresses.find(address => address.type === "Billing");
+    // let shipping = addresses.find(address => address.type === "Shipping");
 
-    setValue("client", {
-      id: client.id,
-      name: client.name,
-      shortName: client.shortName,
-      territory: client.territory,
-      updatedAt: client.updatedAt
-    });
+    // setValue("client", {
+    //   id: client.id,
+    //   name: client.name,
+    //   shortName: client.shortName,
+    //   territory: client.territory,
+    //   updatedAt: client.updatedAt
+    // });
 
-    setValue("address.Corporate", corporate);
-    setValue("address.Billing", typeof billing === "undefined" ? {
-      address1: "",
-      address2: "",
-      city: "",
-      clientId: client.id,
-      state: "",
-      type: "Billing",
-      zip: ""
-    } : billing);
-    setValue("address.Shipping", typeof shipping === "undefined" ? {
-      address1: "",
-      address2: "",
-      city: "",
-      clientId: client.id,
-      state: "",
-      type: "Shipping",
-      zip: ""
-    } : shipping);
+    // setValue("address.Corporate", corporate);
+    // setValue("address.Billing", typeof billing === "undefined" ? {
+    //   address1: "",
+    //   address2: "",
+    //   city: "",
+    //   clientId: client.id,
+    //   state: "",
+    //   type: "Billing",
+    //   zip: ""
+    // } : billing);
+    // setValue("address.Shipping", typeof shipping === "undefined" ? {
+    //   address1: "",
+    //   address2: "",
+    //   city: "",
+    //   clientId: client.id,
+    //   state: "",
+    //   type: "Shipping",
+    //   zip: ""
+    // } : shipping);
   }, [ ]);
 
   const onSubmit = (data) => {
@@ -213,25 +226,31 @@ const EditClient = ( ) => {
 
       <SmallText>Corporate Address</SmallText>
       <View style={{ flexDirection: 'row', zIndex: 99 }}>
-        <Input
-          label="Address 1"
-          control={control}
-          errors={errors}
-          field="address.Corporate.address1"
-          defaultValue=""/>
-        <Input
-          label="Address 2"
-          control={control}
-          errors={errors}
-          field="address.Corporate.address2"
-          defaultValue=""/>
-        <Input
-          label="City"
-          control={control}
-          errors={errors}
-          field="address.Corporate.city"
-          defaultValue=""/>
-        <View style={{ width: '15%' }}>
+        <View style={{ flex: 1 }}>
+          <Input
+            label="Address 1"
+            control={control}
+            errors={errors}
+            field="address.Corporate.address1"
+            defaultValue=""/>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Input
+            label="Address 2"
+            control={control}
+            errors={errors}
+            field="address.Corporate.address2"
+            defaultValue=""/>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Input
+            label="City"
+            control={control}
+            errors={errors}
+            field="address.Corporate.city"
+            defaultValue=""/>
+        </View>
+        <View style={{ flex: 1 }}>
           <Dropdown
             label="State"
             control={control}
@@ -241,77 +260,93 @@ const EditClient = ( ) => {
             field="address.Corporate.state"
             zIndex={99}/>
         </View>
-        <Input
-          label="Zip"
-          control={control}
-          errors={errors}
-          field="address.Corporate.zip"
-          defaultValue=""/>
+        <View style={{ flex: 1 }}>
+          <Input
+            label="Zip"
+            control={control}
+            errors={errors}
+            field="address.Corporate.zip"
+            defaultValue=""/>
+        </View>
       </View>
         
       <Divider style={{ margin: 10 }}/>
 
       <SmallText>Billing Address</SmallText>
-      <View style={{ flexDirection: 'row', zIndex: 98 }}>
-        <Input
-          label="Address 1"
-          control={control}
-          errors={errors}
-          field="address.Billing.address1"
-          defaultValue=""/>
-        <Input
-          label="Address 2"
-          control={control}
-          errors={errors}
-          field="address.Billing.address2"
-          defaultValue=""/>
-        <Input
-          label="City"
-          control={control}
-          errors={errors}
-          field="address.Billing.city"
-          defaultValue=""/>
-        <View style={{ width: '15%' }}>
+      <View style={{ flexDirection: 'row', zIndex: 99 }}>
+        <View style={{ flex: 1 }}>
+          <Input
+            label="Address 1"
+            control={control}
+            errors={errors}
+            field="address.Billing.address1"
+            defaultValue=""/>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Input
+            label="Address 2"
+            control={control}
+            errors={errors}
+            field="address.Billing.address2"
+            defaultValue=""/>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Input
+            label="City"
+            control={control}
+            errors={errors}
+            field="address.Billing.city"
+            defaultValue=""/>
+        </View>
+        <View style={{ flex: 1 }}>
           <Dropdown
             label="State"
             control={control}
             items={states}
-            field="address.Billing.state"
-            errors={errors}
             defaultValue=""
+            errors={errors}
+            field="address.Billing.state"
             zIndex={99}/>
         </View>
-        <Input
-          label="Zip"
-          control={control}
-          errors={errors}
-          defaultValue=""
-          field="address.Billing.zip"/>
+        <View style={{ flex: 1 }}>
+          <Input
+            label="Zip"
+            control={control}
+            errors={errors}
+            field="address.Billing.zip"
+            defaultValue=""/>
+        </View>
       </View>
 
       <Divider style={{ margin: 10 }}/>
 
       <SmallText>Shipping Address</SmallText>
-      <View style={{ flexDirection: 'row', zIndex: 97 }}>
-        <Input
-          label="Address 1"
-          control={control}
-          errors={errors}
-          field="address.Shipping.address1"
-          defaultValue=""/>
-        <Input
-          label="Address 2"
-          control={control}
-          errors={errors}
-          field="address.Shipping.address2"
-          defaultValue=""/>
-        <Input
-          label="City"
-          control={control}
-          errors={errors}
-          field="address.Shipping.city"
-          defaultValue=""/>
-        <View style={{ width: '15%' }}>
+      <View style={{ flexDirection: 'row', zIndex: 99 }}>
+        <View style={{ flex: 1 }}>
+          <Input
+            label="Address 1"
+            control={control}
+            errors={errors}
+            field="address.Shipping.address1"
+            defaultValue=""/>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Input
+            label="Address 2"
+            control={control}
+            errors={errors}
+            field="address.Shipping.address2"
+            defaultValue=""/>
+        </View>
+        <View style={{ flex: 1 }}>
+          <Input
+            label="City"
+            control={control}
+            errors={errors}
+            field="address.Shipping.city"
+            defaultValue=""/>
+        </View>
+        <View style={{ flex: 1 }}>
           <Dropdown
             label="State"
             control={control}
@@ -321,12 +356,14 @@ const EditClient = ( ) => {
             field="address.Shipping.state"
             zIndex={99}/>
         </View>
-        <Input
-          label="Zip"
-          control={control}
-          errors={errors}
-          field="address.Shipping.zip"
-          defaultValue=""/>
+        <View style={{ flex: 1 }}>
+          <Input
+            label="Zip"
+            control={control}
+            errors={errors}
+            field="address.Shipping.zip"
+            defaultValue=""/>
+        </View>
       </View>
 
       <Divider style={{ margin: 10 }}/>

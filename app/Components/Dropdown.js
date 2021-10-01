@@ -7,7 +7,7 @@ import colors from '../Library/Colors';
 
 const styles = StyleSheet.create({
     root: {
-        marginTop: 10,
+        marginTop: 8.5,
         marginLeft: 2,
         marginRight: 2
     },

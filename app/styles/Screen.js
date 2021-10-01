@@ -6,7 +6,6 @@ import colors from '../Library/Colors';
 const styles = StyleSheet.create({
   // Background View
   background: {
-    backgroundColor: colors.black,
     flex: 1
   },
 

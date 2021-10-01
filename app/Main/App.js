@@ -6,10 +6,10 @@ import { configureFonts, DefaultTheme, Provider as PaperProvider } from 'react-n
 import { useFonts }from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { store, persistor } from '../app/store';
+import { store, persistor } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider, useDispatch, useSelector } from 'react-redux';
-import { restoreToken } from '../features/user/userSlice';
+import { restoreSub } from '../redux/features/user/userSlice';
 import theme from '../Library/ThemeProvider';
 import Login from '../screens/Login';
 import Profile from '../screens/Profile';
@@ -20,6 +20,7 @@ import AdvInfoForm from '../screens/AdvInfoForm';
 import Program from '../screens/Program';
 import Pricing from '../screens/Pricing';
 import colors from '../Library/Colors';
+import Snack from '../components/Snack';
 
 const defaultTheme = {
   ...DefaultTheme,
@@ -50,7 +51,7 @@ const AppWrapper = ( ) => (
 
 // Main Application Class
 function App( ) {
-  let token = useSelector((state) => state.user.accessToken);
+  let sub = useSelector((state) => state.user.sub);
   let signout = useSelector((state) => state.user.isSigningOut);
   const dispatch = useDispatch( );
   const [ loaded ] = useFonts({
@@ -61,17 +62,16 @@ function App( ) {
 
   // Check if user is logged in
   React.useEffect(( ) => {
-    const fetchToken = async( ) => {
+    const fetchSub = async( ) => {
       await readMultiples("user")
         .then((objects) => {
           if (objects.length !== 0) {
-            dispatch(restoreToken(objects[0].sageUserId));
-            dispatch(restoreToken(objects[0].token));
+            dispatch(restoreSub(objects[0].auth0Sub));
           }
         });
     }
     
-    fetchToken( );
+    fetchSub( );
   }, [ ]);
 
   // Wait for fonts to load
@@ -90,7 +90,7 @@ function App( ) {
             <PaperProvider theme={defaultTheme}>
               <ThemeProvider theme={theme}>
                   <Stack.Navigator screenOptions={{ headerShown: false }}>
-                    { token === null ? 
+                    { sub === null ? 
                       <>
                         <Stack.Screen 
                           name="Login" 
@@ -110,6 +110,8 @@ function App( ) {
                       </>
                     }
                   </Stack.Navigator>
+                  
+                  <Snack/>
               </ThemeProvider>
             </PaperProvider>
           </NativeBaseProvider>

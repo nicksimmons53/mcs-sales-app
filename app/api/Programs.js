@@ -10,10 +10,10 @@ const getAll = async(clientId) => {
     }
 };
 
-const alterChoices = async(query) => {
+const update = async(values) => {
     let status;
 
-    await axios.put(`${API_URL}/programs?clientId=${query.clientId}`, query.values)
+    await axios.put(`${API_URL}/programs?clientId=${values.id}`, values.programs)
         .then((response) => {
             status = response.status;
         })
@@ -24,45 +24,9 @@ const alterChoices = async(query) => {
     return status;
 }
 
-const getTile = async(id, clientId) => {
+const getByName = async(clientId, programName) => {
     try {
-        let result = await axios.get(`${API_URL}/employee/${id}/clients/${clientId}/program/tileProgram`);
-        return result.data;
-    } catch(error) {
-        return error;
-    }
-};
-
-const getWood = async(id, clientId) => {
-    try {
-        let result = await axios.get(`${API_URL}/employee/${id}/clients/${clientId}/program/woodProgram`);
-        return result.data;
-    } catch(error) {
-        return error;
-    }
-};
-
-const getCarpet = async(id, clientId) => {
-    try {
-        let result = await axios.get(`${API_URL}/employee/${id}/clients/${clientId}/program/carpetProgram`);
-        return result.data;
-    } catch(error) {
-        return error;
-    }
-};
-
-const getCountertop = async(id, clientId) => {
-    try {
-        let result = await axios.get(`${API_URL}/employee/${id}/clients/${clientId}/program/countertopProgram`);
-        return result.data;
-    } catch(error) {
-        return error;
-    }
-};
-
-const getCabinet = async(id, clientId) => {
-    try {
-        let result = await axios.get(`${API_URL}/employee/${id}/clients/${clientId}/program/cabinetProgram`);
+        let result = await axios.get(`${API_URL}/programs?clientId=${clientId}&program=${programName}`);
         return result.data;
     } catch(error) {
         return error;
@@ -85,11 +49,7 @@ const createNew = async(id, clientId, program, values) => {
 
 module.exports = {
     getAll,
-    alterChoices,
-    getTile,
-    getWood,
-    getCarpet,
-    getCountertop,
-    getCabinet,
+    update,
+    getByName,
     createNew
 };

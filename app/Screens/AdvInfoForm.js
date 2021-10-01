@@ -15,10 +15,13 @@ import Header from '../components/Header';
 import styles from '../styles/Screen';
 import { StatusBar } from 'react-native';
 import FloatingButton from '../components/FloatingButton';
-import Snack from '../components/Snack';
-import { updateClientDetails, resetDetails, updateClientPrograms } from '../features/clients/clientsSlice';
+import { getClientDetails, updateClientDetails } from '../redux/features/details/detailsThunk';
+import { reset } from '../redux/features/details/detailsSlice';
+import { getProgramsByClient, updatePrograms } from '../redux/features/programs/programsThunk';
 import { ClientDetails } from '../Modules/InfoForms';
 import S3 from '../helpers/S3';
+import { setMessage, show } from '../redux/features/snackbar/snackbarSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 let zIndex = 5000;
 
@@ -27,51 +30,53 @@ function AdvInfoForm(navigation) {
 	const dispatch = useDispatch( );
 	let user = useSelector((state) => state.user.info);
 	let client = useSelector((state) => state.clients.selected);
-	let details = useSelector((state) => state.clients.details);
-	let programs = useSelector((state) => state.clients.programs.entities);
-
-	const [ snackMessage, setSnackMessage ] = React.useState(null);
-	const [ visible, setVisible ] = React.useState(false);
+	
 	const [ disableSave, setDisableSave ] = React.useState(false);
 	const [ error, setError ] = React.useState(false);
-	const { control, handleSubmit, formState: { errors } } = useForm({
+	const { control, handleSubmit, setValue, formState: { errors } } = useForm({
 		resolver: yupResolver(schema.advancedInfo)
 	});
 
-	// Saving Accounting/Expediting Information
-	const onSubmit = async(values, actions) => {
-		setDisableSave(true);
-		
-		let responses = [];
-		let queryValues = { type: "accounting", id: client.id, values: values.accounting };
-		responses.push(await dispatch(updateClientDetails(queryValues)));
+	React.useEffect(( ) => {
+		const getClientData = async ( ) => {
+			let resultAction = await dispatch(getClientDetails(client.id));
+			setValue("accounting_details", unwrapResult(resultAction).accounting_details);
+			setValue("expediting_details", unwrapResult(resultAction).expediting_details);
 
-		values.expediting.estimatedStartDate = values.expediting.estimatedStartDate.toISOString( ).slice(0, 19).replace('T', ' ');
-		queryValues = { type: "expediting", id: client.id, values: values.expediting};
-		responses.push(await dispatch(updateClientDetails(queryValues)));
-
-		queryValues = { values: values.programs, clientId: client.id };
-		responses.push(await dispatch(updateClientPrograms(queryValues)));
-
-		console.log(responses)
-		responses.forEach((response) => {
-			if (response.payload < 200 || response.payload > 299) {
-				setError(true);
-				setSnackMessage("There was an error saving Client Details. Please try again.");
-				setDisableSave(false);
-
-				return;
-			}
-		});
-
-		if (error !== true) {
-			setSnackMessage(`Client Details were saved successfully.`);
+			resultAction = await dispatch(getProgramsByClient(client.id));
+			setValue("programs", unwrapResult(resultAction).programs);
 		}
+		
+		getClientData( );
+	}, [ ]);
+
+	// Saving Accounting/Expediting Information
+	const onSubmit = async(data) => {
+		setDisableSave(true);
+
+		data.id = client.id;
+		
+		let response = await dispatch(updateClientDetails(data));
+		if (response.payload >= 200 && response.payload <= 299) {
+			response = await dispatch(updatePrograms({id: data.id, programs: data.programs}));
+		}
+
+    if (response.payload >= 200 && response.payload <= 299) {
+      dispatch(setMessage(`Client Details were saved successfully.`));
+    } else {
+      setError(true);
+      dispatch(setMessage("There was an error saving Client Details. Please try again."));
+      setDisableSave(false);
+    }
 	
-		setVisible(true);
+		dispatch(show( ));
+		setDisableSave(false);
 	}
 
   function findAllByKey(obj, keyToFind) {
+		if (obj === null || typeof(obj) === "undefined")
+			return;
+
     return Object.entries(obj)
       .reduce((acc, [key, value]) => (key === keyToFind)
         ? acc.concat(value)
@@ -83,42 +88,27 @@ function AdvInfoForm(navigation) {
 
 	const onErrors = errors => {
     let errorMessage = findAllByKey(errors, 'message').join('\n');
-
     setDisableSave(true);
-
-    setSnackMessage(errorMessage);
-
+    dispatch(setMessage(errorMessage));
     setError(true);
-
-    setVisible(true);
-
+    dispatch(show( ));
     setDisableSave(false);
-	}
-
-	const snackbarDismiss = ( ) => {
-		setVisible(false);
-
-		if (error === false) {
-			setDisableSave(false);
-		} else {
-			setError(false);
-		}
 	}
 
 	const addFile = async( ) => {
     const res = await S3.putObject(user, client.name);
     if (res === "File Uploaded Successfully.") {
-      setSnackMessage("File was successfully uploaded.");
+      dispatch(setMessage("File was successfully uploaded."));
 		} else if (res === "Canceled") {
-			setSnackMessage("File Upload was canceled.");
+			dispatch(setMessage("File Upload was canceled."));
 		} else {
-			setSnackMessage("There was an error uploading the selected file.");
+			dispatch(setMessage("There was an error uploading the selected file."));
 		}
     
-    setVisible(true);
+		dispatch(show( ));
 	}
 
-	return details !== null && (
+	return (
 		<KeyboardAvoidingView behavior='padding' enabled style={styles.background}>
 			<StatusBar barStyle="light-content"/>
 
@@ -128,9 +118,7 @@ function AdvInfoForm(navigation) {
 				<Divider/>
 
 				<ScrollView>
-					<ClientDetails 
-						details={details} 
-						programs={programs}
+					<ClientDetails  
 						control={control} 
 						errors={errors}
 						handleSubmit={handleSubmit}
@@ -141,8 +129,7 @@ function AdvInfoForm(navigation) {
 				</ScrollView>
 			</View> 
 
-			<FloatingButton action={( ) => { navigation.navigation.pop(1); resetDetails( ); }} icon="arrow-left"/>
-			<Snack visible={visible} action={( ) => snackbarDismiss( )} message={snackMessage}/>
+			<FloatingButton action={( ) => { navigation.navigation.pop(1); reset( ); }} icon="arrow-left"/>
 		</KeyboardAvoidingView>
 	);
 }

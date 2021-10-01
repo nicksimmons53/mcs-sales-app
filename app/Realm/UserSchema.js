@@ -6,6 +6,7 @@ const UserSchema = {
         firstName: "string",
         lastName: "string",
         phone: "string",
+        auth0Sub: "string",
         sageEmployeeNumber: "int",
         sageUserId: "string",
         sagePassword: "string",

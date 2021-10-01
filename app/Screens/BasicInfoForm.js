@@ -11,22 +11,21 @@ import { Divider } from 'native-base';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { createClient } from '../features/clients/clientsSlice';
+import { createClient } from '../redux/features/clients/clientsThunk';
+import { createClientAddresses } from '../redux/features/addresses/addressThunk';
 import Header from '../components/Header';
-import Snack from '../components/Snack';
 import schema from '../form/yup/schema';
 import styles from '../styles/Screen';
 import { BasicInfo } from '../Modules/InfoForms';
 import FloatingButton from '../components/FloatingButton';
 import S3 from '../helpers/S3';
+import { show, setMessage } from '../redux/features/snackbar/snackbarSlice';
 
 // Class Component that will display client creation form
 function ClientForm({ navigation }) {
   const dispatch = useDispatch( );
   let user = useSelector((state) => state.user.info);
 
-  const [ visible, setVisible ] = React.useState(false);
-  const [ snackMessage, setSnackMessage ] = React.useState(null);
   const [ disableSave, setDisableSave ] = React.useState(false); 
   const [ error, setError ] = React.useState(false);
   const { control, handleSubmit, formState: { errors } } = useForm({
@@ -40,17 +39,43 @@ function ClientForm({ navigation }) {
     
     data.info.employeeNumber = user.sageEmployeeNumber;
     data.info.userId = user.id;
-    let response = await dispatch(createClient(data));
+    data.info.shortName = data.info.name;
+
+    // Address Data Cleanup
+    data.addresses.Corporate.type = "Corporate";
+    data.addresses.Billing.type = "Billing";
+    data.addresses.Shipping.type = "Shipping";
+    
+    let response = await dispatch(createClient(data.info));
+    
+    data.addresses.Corporate.clientId = response.payload.data.insertId;
+    data.addresses.Billing.clientId = response.payload.data.insertId;
+    data.addresses.Shipping.clientId = response.payload.data.insertId;
+    if (response.payload.data.status < 200 && response.payload.data.status > 299) {
+      setError(true);
+      dispatch(setMessage("There was an error creating your client. Please try again."));
+      setDisableSave(false);
+    } else {
+      let addresses = [
+        Object.values(data.addresses.Corporate), 
+        Object.values(data.addresses.Billing),
+        Object.values(data.addresses.Shipping)
+      ];
+
+      response = await dispatch(createClientAddresses(addresses));
+    }
 
     if (response.payload >= 200 && response.payload <= 299) {
-      setSnackMessage(`${data.info.name} was created successfully.`);
+      dispatch(setMessage(`${data.info.name} was created successfully.`));
     } else {
       setError(true);
-      setSnackMessage("There was an error creating your client. Please try again.");
+      dispatch(setMessage("There was an error creating your client. Please try again."));
       setDisableSave(false);
     }
 
-    setVisible(true);
+    dispatch(show( ));
+
+    navigation.popToTop();
   }
 
   function findAllByKey(obj, keyToFind) {
@@ -66,20 +91,10 @@ function ClientForm({ navigation }) {
   const onErrors = errors => {
     let errorMessage = findAllByKey(errors, 'message').join('\n');
     setDisableSave(true);
-    setSnackMessage(errorMessage);
+    dispatch(setMessage(errorMessage));
     setError(true);
-    setVisible(true);
+    dispatch(show( ));
     setDisableSave(false);
-  }
-
-  const snackbarDismiss = ( ) => {
-    setVisible(false);
-
-    if (error === false) {
-      navigation.pop(1);
-    } else {
-      setError(false);
-    }
   }
 
   return (
@@ -103,7 +118,6 @@ function ClientForm({ navigation }) {
       </View>
 
       <FloatingButton action={( ) => navigation.popToTop( )} icon="home"/>
-      <Snack visible={visible} action={( ) => snackbarDismiss( )} message={snackMessage}/>
     </KeyboardAvoidingView>
   );
 }

@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TextInput } from 'react-native-paper';
-import { DatePickerModal } from 'react-native-paper-dates';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Controller, get } from 'react-hook-form';
 
 import colors from '../Library/Colors';
+import { DateTime } from 'luxon';
 
 const styles = StyleSheet.create({
     root: {
@@ -23,29 +24,20 @@ const defaultTheme = {
 };
 
 const DateModal = (props) => {
-	// const [date, setDate] = React.useState(new Date(props.defaultValue));
 	const [open, setOpen] = React.useState(false);
   
 	const onDismissSingle = React.useCallback(() => {
 	  setOpen(false);
 	}, [setOpen]);
-  
-	// const onConfirmSingle = React.useCallback(
-	//   (params) => {
-	// 	setOpen(false);
-	// 	setDate(params.date);
-	//   },
-	//   [setOpen, setDate]
-	// );
     
     return (
-        <Controller
+        <Controller 
             control={props.control}
-            render={({ field: { onChange, value } } ) => {console.log( value); return (
+            render={({ field: { onChange, value } } ) => (
                 <>
                     <TextInput 
                         dense
-                        value={new Date(value).toDateString( )}
+                        value={DateTime.fromISO(value).toFormat("LLL dd yyyy")}
                         mode={"outlined"}
                         label={"Estimated Start Date"}
                         theme={defaultTheme}
@@ -53,19 +45,18 @@ const DateModal = (props) => {
                         outlineColor={colors.light_background}
                         style={styles.root}
                         onFocus={( ) => setOpen(true)}/>
-                    
-                    <DatePickerModal
-                        mode="single"
-                        visible={open}
-                        onDismiss={onDismissSingle}
-                        date={new Date(value)}
-                        onConfirm={params => {
-                            onChange(params.date);
+                    <DateTimePickerModal
+                        isVisible={open}
+                        mode="date"
+                        display="inline"
+                        onConfirm={date => {
+                            onChange(DateTime.fromJSDate(date))
                             setOpen(false);
-                        }}/>
-                </>)}}
+                        }}
+                        onCancel={( ) => setOpen(false)}/>
+                </>)}
             name={props.field}
-            defaultValue={props.defaultValue}/>
+            defaultValue=""/>
     );
 }
 

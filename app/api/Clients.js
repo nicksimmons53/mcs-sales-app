@@ -21,41 +21,38 @@ const getDetails = async(id) => {
     }
 };
 
-const create = async(values) => {
-    let status;
+const create = async(data) => {
+    let apiResponse;
+    
+    await axios.post(`${API_URL}/clients`, data)
+        .then((response) => {
+            apiResponse = {data: {insertId: response.data.data.insertId, status: response.status}};
+            // if (status < 200 || status > 299) {
+            //     return response;
+            // }
 
-    values.info.shortName = values.info.name;
-
-    await axios.post(`${API_URL}/clients`, values.info)
-        .then(async (response) => {
-            status = response.status;
-
-            if (status < 200 || status > 299) {
-                return response;
-            }
-
-            let newClientId = response.data.insertId;
-            let addresses = Object.keys(values.addresses).map((address, index) => ({
-                clientId: newClientId,
-                type: address,
-                ...values.addresses[address]
-            }));
+            // let newClientId = response.data.insertId;
+            // let addresses = Object.keys(values.addresses).map((address, index) => ({
+            //     clientId: newClientId,
+            //     type: address,
+            //     ...values.addresses[address]
+            // }));
             
-            addresses.forEach(async (address) => {
-                await axios.post(`${API_URL}/clients/${newClientId}/addresses`, address)
-                    .then((response) => {
-                        status = response.status;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    })
-            });
+            // addresses.forEach(async (address) => {
+            //     await axios.post(`${API_URL}/clients/${newClientId}/addresses`, address)
+            //         .then((response) => {
+            //             status = response.status;
+            //         })
+            //         .catch((error) => {
+            //             console.log(error);
+            //         })
+            // });
         })
         .catch((error) => {
             console.log(error);
         });
     
-    return status;
+    return apiResponse;
 };
 
 const update = async(values) => {
@@ -68,14 +65,29 @@ const update = async(values) => {
         .catch((error) => {
             console.log(error);
         });
+
+    return status;
 };
 
-const updateDetails = async (query) => {
+const updateDetails = async (values) => {
     let status;
 
-    await axios.put(`${API_URL}/details?type=${query.type}&clientId=${query.id}`, query.values)
+    await axios.put(`${API_URL}/details?type=accounting_details&clientId=${values.id}`, values.accounting_details)
         .then((response) => {
             status = response.status;
+            if (status < 200 || status > 299)
+                return status;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+
+    await axios.put(`${API_URL}/details?type=expediting_details&clientId=${values.id}`, values.expediting_details)
+        .then((response) => {
+            status = response.status;
+            if (status < 200 || status > 299)
+                return status;
         })
         .catch((error) => {
             console.log(error);
