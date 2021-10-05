@@ -18,3 +18,21 @@ export const updatePrograms = createAsyncThunk(
     return response;
   }
 );
+
+export const getProgramByName = createAsyncThunk(
+  'programs/getByName',
+  async (query) => {
+    const response = await Programs.getByName(query);
+
+    return response;
+  }
+);
+
+export const createProgram = createAsyncThunk(
+  'programs/create',
+  async (query) => {
+    const response = await Programs.createByName(query);
+
+    return response;
+  }
+);

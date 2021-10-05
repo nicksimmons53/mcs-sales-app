@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { 
+  createProgram,
+  getProgramByName,
   getProgramsByClient,
   updatePrograms
 } from './programsThunk';
@@ -7,6 +9,7 @@ import {
 const initialState = {
   entities: [],
   loading: false,
+  selected: null
 };
 
 export const programsSlice = createSlice({
@@ -34,6 +37,25 @@ export const programsSlice = createSlice({
         state.loading = false;
       },
       [updatePrograms.rejected]: (state, action) => {
+        state.loading = false;
+      },
+      [getProgramByName.pending]: (state, action) => {
+        state.loading = true;
+      },
+      [getProgramByName.fulfilled]: (state, action) => {
+        state.loading = false;
+        state.selected = {...action.payload};
+      },
+      [getProgramByName.rejected]: (state, action) => {
+        state.loading = false;
+      },
+      [createProgram.pending]: (state, action) => {
+        state.loading = true;
+      },
+      [createProgram.fulfilled]: (state, action) => {
+        state.loading = false;
+      },
+      [createProgram.rejected]: (state, action) => {
         state.loading = false;
       },
     }

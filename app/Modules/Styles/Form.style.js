@@ -12,7 +12,6 @@ const styles = StyleSheet.create({
 
   // form
   form: {
-    width: '95%',
     margin: 10,
     borderRadius: 3,
     backgroundColor: colors.white,

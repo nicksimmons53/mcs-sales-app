@@ -1,23 +1,25 @@
 // // Library Imports
 import React from 'react';
-import { ScrollView, Text, View, KeyboardAvoidingView } from 'react-native';
-import { useDispatch, useSelector, useStore } from 'react-redux';
+import { ScrollView, View, KeyboardAvoidingView } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import ClientActions from '../components/ClientActions';
 import styles from '../styles/Screen';
 import { StatusBar } from 'react-native';
 import Header from '../components/Header';
 import { useIsFocused } from '@react-navigation/native';
 import { getClientContacts, deleteClientContact } from '../redux/features/contacts/contactsThunk';
+import { getClientApprovals } from '../redux/features/clients/clientsThunk';
+import { getClientAddresses } from '../redux/features/addresses/addressThunk';
+import { getProgramsByClient } from '../redux/features/programs/programsThunk';
 import { setMessage, show } from '../redux/features/snackbar/snackbarSlice';
 import ClientStatusBar from '../components/ClientStatusBar';
 import { DataGrid, DataGridHorizontal } from '../components/DataGrid';
 import FloatingButtonGroup from '../components/FloatingButtonGroup';
-import { deleteContactAlert, deleteFileAlert  } from '../components/Alert';
+import { deleteContactAlert } from '../components/Alert';
 import S3 from '../helpers/S3';
 import AnimatedLoader from 'react-native-animated-loader';
 import { ActionButtonMedium, SuccessButtonLarge } from '../components/Button';
 import ActionModal from '../components/ActionModal';
-import colors from '../Library/Colors';
 
 function ClientProfile(props) {
   const isFocused = useIsFocused( ); 
@@ -37,11 +39,16 @@ function ClientProfile(props) {
   React.useEffect(( ) => {
     setInterval(( ) => {
       setVisible(false);
-    }, 3000);
+    }, 2750);
   }, [ ]);
 
   React.useEffect(( ) => {
     const getFiles = async( ) => setFiles(await S3.getFiles(user, client.name));
+
+    dispatch(getClientAddresses(client.id));
+    dispatch(getClientContacts(client.id));    
+    dispatch(getProgramsByClient(client.id));
+    dispatch(getClientApprovals(client.id));
 
     getFiles( );
   }, [ isFocused ]);
@@ -132,19 +139,14 @@ function ClientProfile(props) {
     { icon: 'home', label: 'Home', onPress: ( ) => { setFiles([ ]); props.navigation.popToTop( )} },
   ];
 
-  if (visible === true) {
-    return (
+  return (
+    <KeyboardAvoidingView enabled behavior='padding' style={styles.grid}>
       <AnimatedLoader
         visible={visible}
-        overlayColor={colors.light_grey}
         animationStyle={{ height: 200, width: 200 }}
         speed={1}
         source={require("../../assets/7899-loading.json")}/>
-    )
-  }
 
-  return (
-    <KeyboardAvoidingView enabled behavior='padding' style={styles.grid}>
       <StatusBar barStyle="dark-content"/>
 
       <Header title={client.name}>
@@ -205,7 +207,7 @@ function ClientProfile(props) {
               title="Approvals"
               header={["Name", "Status"]}
               fieldsNeeded={["name", "status"]}
-              rows={formatApprovals(approvals)}/>
+              rows={approvals.timesSubmitted !== 0 ? formatApprovals(approvals) : [ ]}/>
           }
         </View>
 

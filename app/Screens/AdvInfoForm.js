@@ -43,8 +43,9 @@ function AdvInfoForm(navigation) {
 			setValue("accounting_details", unwrapResult(resultAction).accounting_details);
 			setValue("expediting_details", unwrapResult(resultAction).expediting_details);
 
+			// ISSUE RIGHT HERE
 			resultAction = await dispatch(getProgramsByClient(client.id));
-			setValue("programs", unwrapResult(resultAction).programs);
+			setValue("programs", unwrapResult(resultAction));
 		}
 		
 		getClientData( );

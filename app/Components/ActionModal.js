@@ -11,9 +11,11 @@ import { MediumText, SmallText } from './Text';
 import { IconButton } from 'react-native-paper';
 import colors from '../Library/Colors';
 import { useDispatch, useSelector } from 'react-redux';
-import { createClientContact } from '../redux/features/contacts/contactsThunk';
+import { createClientContact, getClientContacts } from '../redux/features/contacts/contactsThunk';
 import { updateClient } from '../redux/features/clients/clientsThunk';
-import { updateClientAddresses } from '../redux/features/addresses/addressThunk';
+import { getClientAddresses, updateClientAddresses } from '../redux/features/addresses/addressThunk';
+import { setUpdated } from '../redux/features/clients/clientsSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 const AddContacts = ( ) => {
   const { control, handleSubmit, formState: { errors } } = useForm( );
@@ -37,11 +39,12 @@ const AddContacts = ( ) => {
     }
   }, [ ]);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     data = data.contacts.map(contact => Object.values(contact));
     let object = { id: client.id, values: data };
-
+    
     dispatch(createClientContact(object));
+    await dispatch(getClientContacts(client.id));
   }
 
   const Row = (props) => (
@@ -128,66 +131,56 @@ const EditClient = ( ) => {
   const { control, handleSubmit, setValue, formState: { errors } } = useForm( );
   const dispatch = useDispatch( );
   let client = useSelector((state) => state.clients.selected);
-  let addresses = useSelector((state) => state.clients.addresses);
+  let addresses = useSelector((state) => state.addresses.entities);
   
   React.useEffect(( ) => {
-    let corporate = {};
-    let billing = {};
-    let shipping = {};
-    // let corporate = addresses.find(address => address.type === "Corporate");
-    // let billing = addresses.find(address => address.type === "Billing");
-    // let shipping = addresses.find(address => address.type === "Shipping");
+    let corporate = addresses.find(address => address.type === "Corporate");
+    let billing = addresses.find(address => address.type === "Billing");
+    let shipping = addresses.find(address => address.type === "Shipping");
+    
+    setValue("client", {
+      id: client.id,
+      name: client.name,
+      shortName: client.shortName,
+      territory: client.territory,
+      updatedAt: client.updatedAt
+    });
 
-    // setValue("client", {
-    //   id: client.id,
-    //   name: client.name,
-    //   shortName: client.shortName,
-    //   territory: client.territory,
-    //   updatedAt: client.updatedAt
-    // });
-
-    // setValue("address.Corporate", corporate);
-    // setValue("address.Billing", typeof billing === "undefined" ? {
-    //   address1: "",
-    //   address2: "",
-    //   city: "",
-    //   clientId: client.id,
-    //   state: "",
-    //   type: "Billing",
-    //   zip: ""
-    // } : billing);
-    // setValue("address.Shipping", typeof shipping === "undefined" ? {
-    //   address1: "",
-    //   address2: "",
-    //   city: "",
-    //   clientId: client.id,
-    //   state: "",
-    //   type: "Shipping",
-    //   zip: ""
-    // } : shipping);
+    setValue("addresses.Corporate", corporate);
+    setValue("addresses.Billing", typeof billing === "undefined" ? {
+      address1: "",
+      address2: "",
+      city: "",
+      clientId: client.id,
+      state: "",
+      type: "Billing",
+      zip: ""
+    } : billing);
+    setValue("addresses.Shipping", typeof shipping === "undefined" ? {
+      address1: "",
+      address2: "",
+      city: "",
+      clientId: client.id,
+      state: "",
+      type: "Shipping",
+      zip: ""
+    } : shipping);
   }, [ ]);
 
   const onSubmit = (data) => {
     // Client info cleanup
     data.client.shortName = data.client.name;
-    
-    // Client Address Cleanup
-    Object.keys(data.address).map(key => {
-      if (typeof data.address[key] === "undefined") {
-        delete data.address[key];
-        return;
-      };
+    delete data.addresses.Corporate.address;
+    delete data.addresses.Billing.address;
+    delete data.addresses.Shipping.address;
 
-      if (data.address[key].address1 === "") {
-        delete data.address[key];
-        return;
-      }
-
-      delete data.address[key].address;
-      dispatch(updateClientAddresses(data.address[key]));
-    });
-
+    dispatch(updateClientAddresses(data.addresses.Corporate));
+    dispatch(updateClientAddresses(data.addresses.Billing));
+    dispatch(updateClientAddresses(data.addresses.Shipping));
     dispatch(updateClient(data.client));
+
+    dispatch(setUpdated(data.client));
+    dispatch(getClientAddresses(data.client.id));
   }
 
   return (
@@ -231,7 +224,7 @@ const EditClient = ( ) => {
             label="Address 1"
             control={control}
             errors={errors}
-            field="address.Corporate.address1"
+            field="addresses.Corporate.address1"
             defaultValue=""/>
         </View>
         <View style={{ flex: 1 }}>
@@ -239,7 +232,7 @@ const EditClient = ( ) => {
             label="Address 2"
             control={control}
             errors={errors}
-            field="address.Corporate.address2"
+            field="addresses.Corporate.address2"
             defaultValue=""/>
         </View>
         <View style={{ flex: 1 }}>
@@ -247,7 +240,7 @@ const EditClient = ( ) => {
             label="City"
             control={control}
             errors={errors}
-            field="address.Corporate.city"
+            field="addresses.Corporate.city"
             defaultValue=""/>
         </View>
         <View style={{ flex: 1 }}>
@@ -257,7 +250,7 @@ const EditClient = ( ) => {
             items={states}
             defaultValue=""
             errors={errors}
-            field="address.Corporate.state"
+            field="addresses.Corporate.state"
             zIndex={99}/>
         </View>
         <View style={{ flex: 1 }}>
@@ -265,7 +258,7 @@ const EditClient = ( ) => {
             label="Zip"
             control={control}
             errors={errors}
-            field="address.Corporate.zip"
+            field="addresses.Corporate.zip"
             defaultValue=""/>
         </View>
       </View>
@@ -279,7 +272,7 @@ const EditClient = ( ) => {
             label="Address 1"
             control={control}
             errors={errors}
-            field="address.Billing.address1"
+            field="addresses.Billing.address1"
             defaultValue=""/>
         </View>
         <View style={{ flex: 1 }}>
@@ -287,7 +280,7 @@ const EditClient = ( ) => {
             label="Address 2"
             control={control}
             errors={errors}
-            field="address.Billing.address2"
+            field="addresses.Billing.address2"
             defaultValue=""/>
         </View>
         <View style={{ flex: 1 }}>
@@ -295,7 +288,7 @@ const EditClient = ( ) => {
             label="City"
             control={control}
             errors={errors}
-            field="address.Billing.city"
+            field="addresses.Billing.city"
             defaultValue=""/>
         </View>
         <View style={{ flex: 1 }}>
@@ -305,7 +298,7 @@ const EditClient = ( ) => {
             items={states}
             defaultValue=""
             errors={errors}
-            field="address.Billing.state"
+            field="addresses.Billing.state"
             zIndex={99}/>
         </View>
         <View style={{ flex: 1 }}>
@@ -313,7 +306,7 @@ const EditClient = ( ) => {
             label="Zip"
             control={control}
             errors={errors}
-            field="address.Billing.zip"
+            field="addresses.Billing.zip"
             defaultValue=""/>
         </View>
       </View>
@@ -327,7 +320,7 @@ const EditClient = ( ) => {
             label="Address 1"
             control={control}
             errors={errors}
-            field="address.Shipping.address1"
+            field="addresses.Shipping.address1"
             defaultValue=""/>
         </View>
         <View style={{ flex: 1 }}>
@@ -335,7 +328,7 @@ const EditClient = ( ) => {
             label="Address 2"
             control={control}
             errors={errors}
-            field="address.Shipping.address2"
+            field="addresses.Shipping.address2"
             defaultValue=""/>
         </View>
         <View style={{ flex: 1 }}>
@@ -343,7 +336,7 @@ const EditClient = ( ) => {
             label="City"
             control={control}
             errors={errors}
-            field="address.Shipping.city"
+            field="addresses.Shipping.city"
             defaultValue=""/>
         </View>
         <View style={{ flex: 1 }}>
@@ -353,7 +346,7 @@ const EditClient = ( ) => {
             items={states}
             defaultValue=""
             errors={errors}
-            field="address.Shipping.state"
+            field="addresses.Shipping.state"
             zIndex={99}/>
         </View>
         <View style={{ flex: 1 }}>

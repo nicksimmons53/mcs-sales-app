@@ -12,7 +12,7 @@ const getAll = async(id, clientId) => {
 
 const create = async(object) => {
     let status;
-    console.log(object);
+    
     await axios.post(`${API_URL}/clients/${object.id}/contacts`, object.values)
       .then((response) => {
         status = response.status;

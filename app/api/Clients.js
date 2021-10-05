@@ -21,32 +21,22 @@ const getDetails = async(id) => {
     }
 };
 
+const getById = async(id) => {
+    try {
+        let result = await axios.get(`${API_URL}/clients/${id}`);
+         
+        return result.data;
+    } catch(error) {
+        return error;
+    }
+}
+
 const create = async(data) => {
     let apiResponse;
     
     await axios.post(`${API_URL}/clients`, data)
         .then((response) => {
             apiResponse = {data: {insertId: response.data.data.insertId, status: response.status}};
-            // if (status < 200 || status > 299) {
-            //     return response;
-            // }
-
-            // let newClientId = response.data.insertId;
-            // let addresses = Object.keys(values.addresses).map((address, index) => ({
-            //     clientId: newClientId,
-            //     type: address,
-            //     ...values.addresses[address]
-            // }));
-            
-            // addresses.forEach(async (address) => {
-            //     await axios.post(`${API_URL}/clients/${newClientId}/addresses`, address)
-            //         .then((response) => {
-            //             status = response.status;
-            //         })
-            //         .catch((error) => {
-            //             console.log(error);
-            //         })
-            // });
         })
         .catch((error) => {
             console.log(error);
@@ -99,6 +89,7 @@ const updateDetails = async (values) => {
 module.exports = {
     getAll,
     getDetails,
+    getById,
     create,
     update,
     updateDetails

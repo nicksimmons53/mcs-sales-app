@@ -38,15 +38,14 @@ function Program(navigation) {
                 <View style={{flexDirection: 'row', height: '100%', width: '100%'}}>
                     <Drawer.Section title="Programs" style={{backgroundColor: colors.white, width: '15%'}}>
                         { Object.keys(programs).map((program, index) => (
-                            <>
+                            <View key={index}>
                                 { programs[program] === 1 &&
                                     <Drawer.Item 
-                                        key={index}
                                         active={selected === program} 
                                         label={program.charAt(0).toUpperCase( ) + program.slice(1)}
                                         onPress={( ) => setSelected(program)}/>
                                 }
-                            </>
+                            </View>
                         ))}
                     </Drawer.Section>
                     

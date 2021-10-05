@@ -25,10 +25,10 @@ const create = async(data) => {
     return status;
 }
 
-const update = async(values) => {
+const update = async(data) => {
     let status;
 
-    await axios.post(`${API_URL}/clients/${values.id}/addresses`, values)
+    await axios.put(`${API_URL}/clients/${data.clientId}/addresses/${data.id}`, data)
         .then((response) => {
             status = response.status;
         })

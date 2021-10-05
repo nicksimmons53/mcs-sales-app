@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { 
   createClient, 
   getClientApprovals, 
+  getClientById, 
   getClientsByUser, 
   updateClient 
 } from './clientsThunk';
@@ -22,6 +23,9 @@ export const clientsSlice = createSlice({
           client.id === action.payload
         );
       },
+      setUpdated: (state, action) => {
+        state.selected = action.payload;
+      },
       reset: ( ) => initialState
     },
     extraReducers: {
@@ -33,6 +37,16 @@ export const clientsSlice = createSlice({
         state.entities = action.payload;
       },
       [getClientsByUser.rejected]: (state, action) => {
+        state.loading = false;
+      },
+      [getClientById.pending]: (state, action) => {
+        state.loading = true;
+      },
+      [getClientById.fulfilled]: (state, action) => {
+        state.loading = false;
+        state.selected = action.payload;
+      },
+      [getClientById.rejected]: (state, action) => {
         state.loading = false;
       },
       [createClient.pending]: (state, action) => {
@@ -58,7 +72,6 @@ export const clientsSlice = createSlice({
       },
       [getClientApprovals.fulfilled]: (state, action) => {
         state.loading = false;
-        console.log(action)
         state.approvals = action.payload;
       },
       [getClientApprovals.rejected]: (state, action) => {
@@ -67,6 +80,6 @@ export const clientsSlice = createSlice({
     }
 });
 
-export const { setSelected, reset } = clientsSlice.actions;
+export const { setSelected, setUpdated, reset } = clientsSlice.actions;
 
 export default clientsSlice.reducer;

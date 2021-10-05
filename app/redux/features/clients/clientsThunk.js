@@ -11,6 +11,15 @@ export const getClientsByUser = createAsyncThunk(
   }
 );
 
+export const getClientById = createAsyncThunk(
+  'clients/fetchById',
+  async (userId) => {
+    const response = await Clients.getById(userId);
+    
+    return response.client;
+  }
+);
+
 export const createClient = createAsyncThunk(
   'clients/create',
   async (values) => {

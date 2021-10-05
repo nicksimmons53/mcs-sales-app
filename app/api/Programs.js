@@ -24,19 +24,20 @@ const update = async(values) => {
     return status;
 }
 
-const getByName = async(clientId, programName) => {
+const getByName = async(values) => {
     try {
-        let result = await axios.get(`${API_URL}/programs?clientId=${clientId}&program=${programName}`);
+        let result = await axios.get(`${API_URL}/programs/info?clientId=${values.id}&programName=${values.program}`);
+
         return result.data;
     } catch(error) {
         return error;
     }
 };
 
-const createNew = async(id, clientId, program, values) => {
+const createByName = async(values) => {
     let status;
 
-    await axios.post(`${API_URL}/employee/${id}/clients/${clientId}/program/${program}`, values)
+    await axios.post(`${API_URL}/programs/info?programName=${values.program}`, values.info)
         .then((response) => {
             status = response.status;
         })
@@ -45,11 +46,11 @@ const createNew = async(id, clientId, program, values) => {
         });
 
     return status;
-}
+};
 
 module.exports = {
     getAll,
     update,
     getByName,
-    createNew
+    createByName
 };

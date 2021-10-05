@@ -208,7 +208,7 @@ export const BasicInfo = (props) => {
 export const ClientDetails = (props) => (
   <>
   <View style={styles.formRoot}>
-      <View style={{...styles.form, width: '80%'}}>
+    <View style={{...styles.form, width: '80%'}}>
       <Text style={styles.label}>Accounting Information</Text>
 
       <Divider/>
