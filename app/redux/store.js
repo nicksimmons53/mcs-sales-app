@@ -16,6 +16,7 @@ import addressReducer from './features/addresses/addressSlice';
 import contactsReducer from './features/contacts/contactsSlice';
 import detailsReducer from './features/details/detailsSlice';
 import programsReducer from './features/programs/programsSlice';
+import pricingReducer from './features/pricing/pricingSlice';
 import snackbarReducer from './features/snackbar/snackbarSlice'
 
 const persistConfig = {
@@ -39,12 +40,13 @@ export const store = configureStore({
         contacts: contactsReducer,
         details: detailsReducer,
         programs: programsReducer,
+        pricing: pricingReducer,
         snackbar: snackbarReducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             serializableCheck: {
-            ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         }),
 });

@@ -3,7 +3,11 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { colors, styles } from './Styles/SpreadSheet.style';
 import { DataGridPricing } from '../components/DataGrid';
+import { useForm } from 'react-hook-form';
 import { LargeText } from '../components/Text';
+import { levels, units } from '../form/dropdown/values';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCountertopOptions } from '../redux/features/pricing/pricingThunk';
 
 export const CabinetPricing = (props) => {
   return (
@@ -14,256 +18,385 @@ export const CabinetPricing = (props) => {
 }
 
 export const CarpetPricing = (props) => {
+  let carpetFlooring = props.parts.filter(row => row.programTable === "Carpet Flooring");
+  let carpetPad = props.parts.filter(row => row.programTable === "Carpet Pad");
+  let miscellaneous = props.parts.filter(row => row.programTable === "Miscellaneous");
+  
   return (
-    <ScrollView style={styles.form}>
-      <DataGridPricing 
-        title="Carpet Flooring" 
-        program="Carpet"
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Carpet Pad" 
-        header={["Description", "Unit", "Total"]}
-        components={["input", "dropdown", "input"]}
-        newRow={{level: "", unit: "", total: ""}}/>
-      <DataGridPricing 
-        title="Miscellaneous" 
-        header={["Description", "Unit", "Total"]}
-        components={["input", "dropdown", "input"]}
-        newRow={{level: "", unit: "", total: ""}}/>
+    <ScrollView>
+      <View style={{ backgroundColor: colors.black, flex: 1, paddingBottom: 300 }}>
+        <DataGridPricing 
+          title="Carpet Flooring" 
+          program="Carpet"
+          rows={carpetFlooring}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Carpet Pad" 
+          program="Carpet"
+          rows={carpetPad}
+          header={["Description", "Unit", "Total"]}
+          choices={[null, units, null]}
+          components={["input", "dropdown", "input"]}
+          newRow={{description: "", unit: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Miscellaneous" 
+          program="Carpet"
+          rows={miscellaneous}
+          header={["Description", "Unit", "Total"]}
+          choices={[null, units, null]}
+          components={["input", "dropdown", "input"]}
+          newRow={{description: "", unit: "", totalCost: ""}}/>
+      </View>
     </ScrollView>
   );
 }
 
 export const CountertopPricing = (props) => {
+  let options = useSelector((state) => state.pricing.countertopOptions);
+  let edges = props.parts.filter(row => row.programTable === "Edges");
+  let sinks = props.parts.filter(row => row.programTable === "Sinks");
+  let level1 = props.parts.filter(row => row.programTable === "Level 1");
+  let level2 = props.parts.filter(row => row.programTable === "Level 2");
+  let level3 = props.parts.filter(row => row.programTable === "Level 3");
+  let level4 = props.parts.filter(row => row.programTable === "Level 4");
+  let level5 = props.parts.filter(row => row.programTable === "Level 5");
+  let level6 = props.parts.filter(row => row.programTable === "Level 6");
+  let level7 = props.parts.filter(row => row.programTable === "Level 7");
+  let level8 = props.parts.filter(row => row.programTable === "Level 8");
+  let level9 = props.parts.filter(row => row.programTable === "Level 9");
+  let level10 = props.parts.filter(row => row.programTable === "Level 10");
+
   return (
-    <ScrollView style={styles.form}>
-      <DataGridPricing 
-        title="Edges" 
-        program="Countertops"
-        header={["Type", "Unit", "Total"]}
-        components={["dropdown", "dropdown", "input"]}
-        newRow={{type: "", unit: "", total: ""}}/>
-      <DataGridPricing 
-        title="Sinks" 
-        program="Countertops"
-        header={["Description", "Unit", "Total"]}
-        components={["input", "dropdown", "input"]}
-        newRow={{description: "", unit: "", total: ""}}/>
-      <DataGridPricing 
-        title="Level 1" 
-        program="Countertops"
-        header={["Type", "Color", "Total"]}
-        components={["dropdown", "dropdown", "input"]}
-        newRow={{type: "", color: "", total: ""}}/>
-      <DataGridPricing 
-        title="Level 2" 
-        program="Countertops"
-        header={["Type", "Color", "Total"]}
-        components={["dropdown", "dropdown", "input"]}
-        newRow={{type: "", color: "", total: ""}}/>
-      <DataGridPricing 
-        title="Level 3" 
-        program="Countertops"
-        header={["Type", "Color", "Total"]}
-        components={["dropdown", "dropdown", "input"]}
-        newRow={{type: "", color: "", total: ""}}/>
-      <DataGridPricing 
-        title="Level 4" 
-        program="Countertops"
-        header={["Type", "Color", "Total"]}
-        components={["dropdown", "dropdown", "input"]}
-        newRow={{type: "", color: "", total: ""}}/>
-      <DataGridPricing 
-        title="Level 5" 
-        program="Countertops"
-        header={["Type", "Color", "Total"]}
-        components={["dropdown", "dropdown", "input"]}
-        newRow={{type: "", color: "", total: ""}}/>
-      <DataGridPricing 
-        title="Level 6" 
-        program="Countertops"
-        header={["Type", "Color", "Total"]}
-        components={["dropdown", "dropdown", "input"]}
-        newRow={{type: "", color: "", total: ""}}/>
-      <DataGridPricing 
-        title="Level 7" 
-        program="Countertops"
-        header={["Type", "Color", "Total"]}
-        components={["dropdown", "dropdown", "input"]}
-        newRow={{type: "", color: "", total: ""}}/>
-      <DataGridPricing 
-        title="Level 8" 
-        program="Countertops"
-        header={["Type", "Color", "Total"]}
-        components={["dropdown", "dropdown", "input"]}
-        newRow={{type: "", color: "", total: ""}}/>
-      <DataGridPricing 
-        title="Level 9" 
-        program="Countertops"
-        header={["Type", "Color", "Total"]}
-        components={["dropdown", "dropdown", "input"]}
-        newRow={{type: "", color: "", total: ""}}/>
-      <DataGridPricing 
-        title="Level 10" 
-        program="Countertops"
-        header={["Type", "Color", "Total"]}
-        components={["dropdown", "dropdown", "input"]}
-        newRow={{type: "", color: "", total: ""}}/>
+    <ScrollView>
+      <View style={{ backgroundColor: colors.black, flex: 1, paddingBottom: 300 }}>
+        <DataGridPricing 
+          title="Edges" 
+          program="Countertops"
+          rows={edges}
+          header={["Type", "Unit", "Total"]}
+          choices={[null, units, null]}
+          components={["input", "dropdown", "input"]}
+          newRow={{type: "", unit: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Sinks" 
+          program="Countertops"
+          rows={sinks}
+          header={["Description", "Unit", "Total"]}
+          choices={[null, units, null]}
+          components={["input", "dropdown", "input"]}
+          newRow={{description: "", unit: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Level 1" 
+          program="Countertops"
+          rows={level1}
+          header={["Type", "Color", "Total"]}
+          choices={[options.types, options.colors, null]}
+          components={["dropdown", "dropdown", "input"]}
+          newRow={{type: "", color: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Level 2" 
+          program="Countertops"
+          rows={level2}
+          header={["Type", "Color", "Total"]}
+          choices={[options.types, options.colors, null]}
+          components={["dropdown", "dropdown", "input"]}
+          newRow={{type: "", color: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Level 3" 
+          program="Countertops"
+          rows={level3}
+          header={["Type", "Color", "Total"]}
+          choices={[options.types, options.colors, null]}
+          components={["dropdown", "dropdown", "input"]}
+          newRow={{type: "", color: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Level 4" 
+          program="Countertops"
+          rows={level4}
+          header={["Type", "Color", "Total"]}
+          choices={[options.types, options.colors, null]}
+          components={["dropdown", "dropdown", "input"]}
+          newRow={{type: "", color: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Level 5" 
+          program="Countertops"
+          rows={level5}
+          header={["Type", "Color", "Total"]}
+          choices={[options.types, options.colors, null]}
+          components={["dropdown", "dropdown", "input"]}
+          newRow={{type: "", color: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Level 6" 
+          program="Countertops"
+          rows={level6}
+          header={["Type", "Color", "Total"]}
+          choices={[options.types, options.colors, null]}
+          components={["dropdown", "dropdown", "input"]}
+          newRow={{type: "", color: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Level 7" 
+          program="Countertops"
+          rows={level7}
+          header={["Type", "Color", "Total"]}
+          choices={[options.types, options.colors, null]}
+          components={["dropdown", "dropdown", "input"]}
+          newRow={{type: "", color: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Level 8" 
+          program="Countertops"
+          rows={level8}
+          header={["Type", "Color", "Total"]}
+          choices={[options.types, options.colors, null]}
+          components={["dropdown", "dropdown", "input"]}
+          newRow={{type: "", color: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Level 9" 
+          program="Countertops"
+          rows={level9}
+          header={["Type", "Color", "Total"]}
+          choices={[options.types, options.colors, null]}
+          components={["dropdown", "dropdown", "input"]}
+          newRow={{type: "", color: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Level 10" 
+          program="Countertops"
+          rows={level10}
+          header={["Type", "Color", "Total"]}
+          choices={[options.types, options.colors, null]}
+          components={["dropdown", "dropdown", "input"]}
+          newRow={{type: "", color: "", totalCost: ""}}/>
+      </View>
     </ScrollView>
   );
 };
 
-export const TilePricing = ( ) => {
+export const TilePricing = (props ) => {
+  let backsplashFireplaceWallTile = props.parts.filter(row => row.programTable === "Backsplash/Fireplace Wall Tile");
+  let backsplashFireplaceDeco = props.parts.filter(row => row.programTable === "Backsplash/Fireplace Deco");
+  let showerFloorTile = props.parts.filter(row => row.programTable === "Shower Floor - Tile");
+  let showerFloorMesh = props.parts.filter(row => row.programTable === "Shower Floor - Mesh");
+  let floorTile = props.parts.filter(row => row.programTable === "Floor Tile");
+  let floorTileDeco = props.parts.filter(row => row.programTable === "Floor Tile Deco");
+  let bathroomWallTile = props.parts.filter(row => row.programTable === "Bathroom Wall Tile");
+  let decoWithWaterproofing = props.parts.filter(row => row.programTable === "Deco w/ Waterproofing");
+  let floorStone = props.parts.filter(row => row.programTable === "Floor Stone");
+  let bathroomWallStone = props.parts.filter(row => row.programTable === "Bathroom Wall Stone");
+  let backsplashWallStone = props.parts.filter(row => row.programTable === "Backsplash Wall Stone");
+  let fireplaceWallStone = props.parts.filter(row => row.programTable === "Fireplace Wall Stone");
+  let showerFloorStone = props.parts.filter(row => row.programTable === "Shower Floor - Stone");
+  let showerFloorDeco = props.parts.filter(row => row.programTable === "Shower Floor - Deco");
+  let patterns = props.parts.filter(row => row.programTable === "Patterns");
+  let accents = props.parts.filter(row => row.programTable === "Accents");
+  let bathAccessories = props.parts.filter(row => row.programTable === "Bath Accessories");
+  let miscellaneous = props.parts.filter(row => row.programTable === "Miscellaneous");
+  
   return (
-    <ScrollView style={styles.form}>
-      <DataGridPricing 
-        title="Backsplash/Fireplace Wall Tile" 
-        program="Tile"
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Backsplash/Fireplace Deco" 
-        program="Tile"
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Shower Floor - Tile" 
-        program="Tile"
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Shower Floor - Mesh" 
-        program="Tile"
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Floor Tile" 
-        program="Tile"
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Floor Tile Deco" 
-        program="Tile"
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Bathroom Wall Tile" 
-        program="Tile"
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Deco w/ Waterproofing" 
-        program="Tile"
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Floor Stone"
-        program="Tile" 
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Bathroom Wall Stone" 
-        program="Tile"
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Backsplash Wall Stone" 
-        program="Tile"
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Fireplace Wall Stone" 
-        program="Tile"
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Shower Floor - Stone" 
-        program="Tile"
-        header={["Level", "Total"]}
-        components={["dropdown", "input"]}
-        newRow={{level: "", total: ""}}/>
-      <DataGridPricing 
-        title="Shower Floor - Deco" 
-        program="Tile"
-        header={["Level", "Total"]}
-        components={["dropdown", "input"]}
-        newRow={{level: "", total: ""}}/>
-      <DataGridPricing 
-        title="Patterns" 
-        program="Tile"
-        header={["Description", "Unit", "Total"]}
-        components={["input", "dropdown", "input"]}
-        newRow={{description: "", dropdown: "", total: ""}}/>
-      <DataGridPricing 
-        title="Accents" 
-        program="Tile"
-        header={["Description", "Total"]}
-        components={["input", "input"]}
-        newRow={{description: "", total: ""}}/>
-      <DataGridPricing 
-        title="Bath Accessories"
-        program="Tile" 
-        header={["Description", "Unit", "Total"]}
-        components={["input", "dropdown", "input"]}
-        newRow={{description: "", unit: "", total: ""}}/>
-      <DataGridPricing 
-        title="Miscellaneous" 
-        program="Tile"
-        header={["Description", "Unit", "Total"]}
-        components={["input", "dropdown", "input"]}
-        newRow={{description: "", unit: "", total: ""}}/>
+    <ScrollView>
+      <View style={{ backgroundColor: colors.black, flex: 1, paddingBottom: 300 }}>
+        <DataGridPricing 
+          title="Backsplash/Fireplace Wall Tile" 
+          program="Tile"
+          rows={backsplashFireplaceWallTile}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Backsplash/Fireplace Deco" 
+          program="Tile"
+          rows={backsplashFireplaceDeco}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Shower Floor - Tile" 
+          program="Tile"
+          rows={showerFloorTile}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Shower Floor - Mesh" 
+          program="Tile"
+          rows={showerFloorMesh}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Floor Tile" 
+          program="Tile"
+          rows={floorTile}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Floor Tile Deco" 
+          program="Tile"
+          rows={floorTileDeco}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Bathroom Wall Tile" 
+          program="Tile"
+          rows={bathroomWallTile}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Deco w/ Waterproofing" 
+          program="Tile"
+          rows={decoWithWaterproofing}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Floor Stone"
+          program="Tile" 
+          rows={floorStone}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Bathroom Wall Stone" 
+          program="Tile"
+          rows={bathroomWallStone}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Backsplash Wall Stone" 
+          program="Tile"
+          rows={backsplashWallStone}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Fireplace Wall Stone" 
+          program="Tile"
+          rows={fireplaceWallStone}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Shower Floor - Stone" 
+          program="Tile"
+          rows={showerFloorStone}
+          header={["Level", "Total"]}
+          choices={[levels, null]}
+          components={["dropdown", "input"]}
+          newRow={{level: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Shower Floor - Deco" 
+          program="Tile"
+          rows={showerFloorDeco}
+          header={["Level", "Total"]}
+          choices={[levels, null]}
+          components={["dropdown", "input"]}
+          newRow={{level: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Patterns" 
+          program="Tile"
+          rows={patterns}
+          header={["Description", "Unit", "Total"]}
+          choices={[null, units, null]}
+          components={["input", "dropdown", "input"]}
+          newRow={{description: "", dropdown: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Accents" 
+          program="Tile"
+          rows={accents}
+          header={["Description", "Total"]}
+          choices={[null, null]}
+          components={["input", "input"]}
+          newRow={{description: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Bath Accessories"
+          program="Tile" 
+          rows={bathAccessories}
+          header={["Description", "Unit", "Total"]}
+          choices={[null, units, null]}
+          components={["input", "dropdown", "input"]}
+          newRow={{description: "", unit: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Miscellaneous" 
+          program="Tile"
+          rows={miscellaneous}
+          header={["Description", "Unit", "Total"]}
+          choices={[null, units, null]}
+          components={["input", "dropdown", "input"]}
+          newRow={{description: "", unit: "", totalCost: ""}}/>
+      </View>
     </ScrollView>
   );
 }
 
 export const LVPPricing = (props) => {
+  let lvpFlooring = props.parts.filter(row => row.programTable === "LVP Flooring");
+  let miscellaneous = props.parts.filter(row => row.programTable === "Miscellaneous");
+
   return (
-    <ScrollView style={styles.form}>
-      <DataGridPricing 
-        title="LVP Flooring" 
-        program="LVP"
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Miscellaneous"
-        program="LVP" 
-        header={["Description", "Unit", "Total"]}
-        components={["input", "dropdown", "input"]}
-        newRow={{description: "", unit: "", total: ""}}/>
+    <ScrollView>
+      <View style={{ backgroundColor: colors.black, flex: 1, paddingBottom: 300 }}>  
+        <DataGridPricing 
+          title="LVP Flooring" 
+          program="LVP"
+          rows={lvpFlooring}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Miscellaneous"
+          program="LVP" 
+          rows={miscellaneous}
+          header={["Description", "Unit", "Total"]}
+          choices={[null, units, null]}
+          components={["input", "dropdown", "input"]}
+          newRow={{description: "", unit: "", totalCost: ""}}/>
+        </View>
     </ScrollView>
   );
 }
 
 export const WoodPricing = (props) => {
+  let woodFlooring = props.parts.filter(row => row.programTable === "Wood Flooring");
+  let miscellaneous = props.parts.filter(row => row.programTable === "Miscellaneous");
+
   return (
     <ScrollView style={styles.form}>
-      <DataGridPricing 
-        title="Wood Flooring"
-        program="Wood" 
-        header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
-        components={["dropdown", "dropdown", "input", "input", "input", "input"]}
-        newRow={{level: "", unit: "", material: "", materialWithTax: "", labor: "", total: ""}}/>
-      <DataGridPricing 
-        title="Miscellaneous" 
-        program="Wood"
-        header={["Description", "Unit", "Total"]}
-        components={["input", "dropdown", "input"]}
-        newRow={{description: "", total: ""}}/>
+      <View style={{ backgroundColor: colors.black, flex: 1, paddingBottom: 300 }}>
+        <DataGridPricing 
+          title="Wood Flooring"
+          program="Wood" 
+          rows={woodFlooring}
+          header={["Level", "Unit", "Material", "Material w/ Tax", "Labor", "Total"]}
+          choices={[levels, units, null, null, null, null]}
+          components={["dropdown", "dropdown", "input", "input", "input", "input"]}
+          newRow={{level: "", unit: "", cost: "", costWithTax: "", laborCost: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Miscellaneous" 
+          program="Wood"
+          rows={miscellaneous}
+          header={["Description", "Unit", "Total"]}
+          choices={[null, units, null]}
+          components={["input", "dropdown", "input"]}
+          newRow={{description: "", unit: "", totalCost: ""}}/>
+      </View>
     </ScrollView>
   );
 }

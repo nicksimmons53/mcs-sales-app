@@ -4,7 +4,9 @@ import {
   getClientApprovals, 
   getClientById, 
   getClientsByUser, 
-  updateClient 
+  pushClientToSage, 
+  updateClient, 
+  updateClientStatus
 } from './clientsThunk';
 
 const initialState = {
@@ -75,6 +77,24 @@ export const clientsSlice = createSlice({
         state.approvals = action.payload;
       },
       [getClientApprovals.rejected]: (state, action) => {
+        state.loading = false;
+      },
+      [pushClientToSage.pending]: (state, action) => {
+        state.loading = true;
+      },
+      [pushClientToSage.fulfilled]: (state, action) => {
+        state.loading = false;
+      },
+      [pushClientToSage.rejected]: (state, action) => {
+        state.loading = false;
+      },
+      [updateClientStatus.pending]: (state, action) => {
+        state.loading = true;
+      },
+      [updateClientStatus.fulfilled]: (state, action) => {
+        state.loading = false;
+      },
+      [updateClientStatus.rejected]: (state, action) => {
         state.loading = false;
       },
     }

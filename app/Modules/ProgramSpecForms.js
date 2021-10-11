@@ -30,7 +30,6 @@ export const CabinetProgramForm = ( ) => {
       let resultAction = await dispatch(getProgramByName(query));
       
       if (Object.keys(unwrapResult(resultAction)).length !== 0) {
-        console.log(unwrapResult(resultAction));
         setValue("cabinets", unwrapResult(resultAction).data);
       }
     }

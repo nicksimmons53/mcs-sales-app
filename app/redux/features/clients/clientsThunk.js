@@ -46,3 +46,21 @@ export const getClientApprovals = createAsyncThunk(
     return response.approvals;
   }
 );
+
+export const pushClientToSage = createAsyncThunk(
+  'clients/pushToSage',
+  async (id) => {
+    const response = await Clients.pushToSage(id);
+
+    return response;
+  }
+);
+
+export const updateClientStatus = createAsyncThunk(
+  'clients/status/update',
+  async (values) => {
+    const response = await Clients.updateStatus(values);
+
+    return response;
+  }
+)

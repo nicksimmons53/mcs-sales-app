@@ -5,8 +5,9 @@ import colors from '../../Library/Colors';
 const styles = StyleSheet.create({
   // ScrollView
   sv: {
-    flex: 1,
-    backgroundColor: colors.light_grey
+    backgroundColor: colors.light_grey,
+    height: '100%',
+    paddingBottom: 200
   },
 
   // Table

@@ -1,6 +1,6 @@
 // Library Imports
 import React from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 import { DataTable, IconButton } from 'react-native-paper';
 import { ListItem } from 'react-native-elements';
 import { units } from '../form/dropdown/values';
@@ -8,6 +8,11 @@ import colors from '../Library/Colors';
 import RNPickerSelect from 'react-native-picker-select';
 import { Controller, useFieldArray, useForm } from 'react-hook-form';
 import { ActionButtonSmall, SuccessButtonSmall } from './Button';
+import { useDispatch, useSelector } from 'react-redux';
+import { show, setMessage } from '../redux/features/snackbar/snackbarSlice';
+import { createClientParts, deleteClientParts } from '../redux/features/pricing/pricingThunk';
+import { TextInputMask } from 'react-native-masked-text';
+
 
 // Props Needed
 // title = ""
@@ -149,18 +154,25 @@ export const DataGridHorizontal = (props) => {
 }
 
 export const DataGridPricing = (props) => {
-  const { control, handleSubmit, formState: { errors } } = useForm( );
+  const dispatch = useDispatch( );
+  const { control, handleSubmit, setValue, formState: { errors } } = useForm( );
   const { fields, append, remove } = useFieldArray({
     control: control,
     name: `${props.title}`
   });
 
+  React.useEffect(( ) => {
+    setValue(props.title, props.rows);
+  }, [ ]);
+
+  let client = useSelector((state) => state.clients.selected);
   let title = props.title || null;
   let header = props.header || [];
   let rows = props.rows || [];
   let flex = props.flex || 1;
   const [ page, setPage ] = React.useState(0);
   const [ itemsPerPage, setItemsPerPage ] = React.useState(props.itemsPerPage || 3);
+  const [ disabled, setDisabled ] = React.useState(false);
   const from = page * itemsPerPage;
   const to = Math.min((page + 1) * itemsPerPage, rows.length);
 
@@ -204,31 +216,77 @@ export const DataGridPricing = (props) => {
   }, [ itemsPerPage ]);
 
   const onSubmit = (data) => {
-    console.log(data)
+    setDisabled(true);
+
+    let rows = Object.values(data)[0];
+    let program = props.program;
+    let table = (Object.keys(data)[0]);
+    let responses = [ ];
+
+    rows.forEach(async (row, index) => {
+      row.clientId = client.id;
+      row.program = program;
+      row.programTable = table;
+      row.cost = "cost" in row && parseFloat(row?.cost.slice(1)).toFixed(2);
+      row.costWithTax = "costWithTax" in row && parseFloat(row?.costWithTax.slice(1)).toFixed(2);
+      row.laborCost = "laborCost" in row && parseFloat(row?.laborCost.slice(1)).toFixed(2);
+      row.totalCost = "totalCost" in row && parseFloat(row?.totalCost.slice(1)).toFixed(2);
+
+      let response = await dispatch(createClientParts(row));
+
+      responses.push(response.payload);
+    });
+
+    let errors = responses.filter(status => status < 200 || status > 200);
+    if (errors.length === 0) {
+      dispatch(setMessage(`${table} Parts were saved successfully.`));
+    }
+    
+    dispatch(show( ));
+    setDisabled(false);
   }
 
-  const Input = ({ name }) => {
+  const Input = ({ name, type }) => {
     return (
       <Controller
         control={control}
         render={( { field: { onChange, value } }) => (
-          <TextInput value={value} onChangeText={onChange} style={styles.input}/>
+          <>
+          { type === "description" || type === "type" ?
+            <TextInput 
+              value={value} 
+              onChangeText={onChange} 
+              style={styles.input}/>
+            :
+            <TextInputMask
+              type={"money"}
+              options={{
+                precision: 2,
+                delimiter: ",",
+                separator: ".",
+                unit: "$"
+              }}
+              value={value}
+              onChangeText={text => onChange(text)}
+              style={styles.input}/>
+          }
+          </>
         )}
         name={name}
         defaultValue=""/>
     )
   };
 
-  const Dropdown = ({ name }) => {
+  const Dropdown = ({ label, name, items }) => {
     return (
       <Controller
         control={control}
-        render={( { field: { onChange, value } }) => (
+        render={({ field: { onChange, value } }) => (
           <RNPickerSelect 
-            placeholder={{ label: "Unit", value: "" }}
+            placeholder={{ label: label, value: "" }}
             value={value || ""}
             onValueChange={value => onChange(value)}
-            items={units} 
+            items={items} 
             style={{
               viewContainer: {...styles.input, justifyContent: 'center', paddingLeft: 5 }, 
               inputIOS: { flex: 1, fontFamily: 'Quicksand', margin: 0, height: '100%' }, 
@@ -238,7 +296,7 @@ export const DataGridPricing = (props) => {
         name={name}
         defaultValue=""/>
   )};
-
+  
   return (
     <DataTable style={styles.background}>
       { title &&
@@ -260,19 +318,21 @@ export const DataGridPricing = (props) => {
       { fields.map((row, rowIndex) => (
         <DataTable.Row key={rowIndex} style={{ flex: 1, paddingLeft: 0, paddingRight: 0, width: '100%' }}>
             { props.components.map((component, index) => (
-              <>
+              <View key={index} style={{ flex: 1}}>
                 { component === "input" && 
                   <Input 
                     key={index} 
+                    type={Object.keys(props.newRow)[index]}
                     name={`${title}.${rowIndex}.${Object.keys(props.newRow)[index]}`}/> 
                 }
                 { component === "dropdown" && 
                   <Dropdown 
-                    key={index} 
+                    key={index}
                     label={header[index]}
+                    items={props.choices[index]}
                     name={`${title}.${rowIndex}.${Object.keys(props.newRow)[index]}`}/>
                 }
-              </>
+              </View>
             ))}
 
             <IconButton 
@@ -280,7 +340,17 @@ export const DataGridPricing = (props) => {
               icon="minus-box" 
               size={35} 
               style={{margin: 0, padding: 0, width: '5%'}}
-              onPress={( ) => remove(rowIndex)}/>
+              onPress={async ( ) => {
+                remove(rowIndex);
+                let response = await dispatch(deleteClientParts(row.id));
+                if (response.payload >= 200 || response.payload <= 299) {
+                  dispatch(setMessage("Line Successfully Deleted."));
+                } else {
+                  dispatch(setMessage("There was an error deleting the selected line. Please try again."));
+                }
+                
+                dispatch(show( ));
+              }}/>
         </DataTable.Row>
       ))}
 
@@ -296,6 +366,7 @@ export const DataGridPricing = (props) => {
       <DataTable.Row style={{ alignItems: 'flex-end' }}>
         <SuccessButtonSmall 
           title="Save"
+          disabled={disabled}
           action={handleSubmit(onSubmit)}/> 
         <ActionButtonSmall 
           title="Add Row"

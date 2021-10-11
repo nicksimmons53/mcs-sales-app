@@ -8,7 +8,7 @@ import { StatusBar } from 'react-native';
 import Header from '../components/Header';
 import { useIsFocused } from '@react-navigation/native';
 import { getClientContacts, deleteClientContact } from '../redux/features/contacts/contactsThunk';
-import { getClientApprovals } from '../redux/features/clients/clientsThunk';
+import { getClientApprovals, pushClientToSage, updateClientStatus } from '../redux/features/clients/clientsThunk';
 import { getClientAddresses } from '../redux/features/addresses/addressThunk';
 import { getProgramsByClient } from '../redux/features/programs/programsThunk';
 import { setMessage, show } from '../redux/features/snackbar/snackbarSlice';
@@ -37,12 +37,6 @@ function ClientProfile(props) {
   const [ showAddContactModal, setShowAddContactModal ] = React.useState(false);
 
   React.useEffect(( ) => {
-    setInterval(( ) => {
-      setVisible(false);
-    }, 2750);
-  }, [ ]);
-
-  React.useEffect(( ) => {
     const getFiles = async( ) => setFiles(await S3.getFiles(user, client.name));
 
     dispatch(getClientAddresses(client.id));
@@ -52,6 +46,12 @@ function ClientProfile(props) {
 
     getFiles( );
   }, [ isFocused ]);
+  
+  React.useEffect(( ) => {
+    setInterval(( ) => {
+      setVisible(false);
+    }, 2750);
+  }, [ ]);
 
   const deleteContact = (row) => {
     const action = async(row) => {
@@ -69,7 +69,7 @@ function ClientProfile(props) {
     }
 
     deleteContactAlert(( ) => action(row));
-  }
+  };
 
   const addFile = async ( ) => {
     const res = await S3.putObject(user, client.name);
@@ -83,7 +83,7 @@ function ClientProfile(props) {
     }
     
     dispatch(show( ));
-  }
+  };
 
   const formatPrograms = (object) => {
     let tempArr = [];
@@ -130,6 +130,33 @@ function ClientProfile(props) {
     });
     
     return tempArr;
+  };
+
+  const submitForApproval = async( ) => {
+    let response = await dispatch(updateClientStatus({ id: client.id, info: {status: "Queued"} }));
+    
+    if (response.payload >= 200 || response.payload <= 299) {
+      dispatch(setMessage(`${client.name} successfully submitted for approval.`));
+      props.navigation.popToTop();
+    } else {
+      dispatch(setMessage(`${client.name} was not submitted for approval. Please try again.`));
+    }
+
+    dispatch(show( ));
+  };
+
+  const pushToSage = async( ) => {
+    let response = await dispatch(pushClientToSage(client.id));
+
+    if (response.payload.status >= 200 || response.payload.status <= 299) {
+      dispatch(updateClientStatus({ id: client.id, info: {status: "Pushed"} }));
+      dispatch(setMessage(`${client.name} successfully pushed to Sage 100 Contractor.`));
+      props.navigation.popToTop();
+    } else {
+      dispatch(setMessage(`${client.name} was not pushed to Sage 100 Contractor. Please try again.`));
+    }
+
+    dispatch(show( ));
   }
   
   const buttonIcons = [
@@ -150,20 +177,25 @@ function ClientProfile(props) {
       <StatusBar barStyle="dark-content"/>
 
       <Header title={client.name}>
-        <ActionButtonMedium title="Push To Sage" disabled={client.status !== "Approved"}/>
+        <ActionButtonMedium 
+          title="Push To Sage" 
+          disabled={client.status !== "Approved"}
+          action={( ) => pushToSage( )}/>
       </Header>
 
       <ScrollView>
         <ClientStatusBar status={client.status}/>
 
         <View style={styles.rowNoMargin}>
-          <DataGrid
-            title="Addresses"
-            header={["Type", "Address", "City", "State", "Zip"]}
-            fieldsNeeded={["type", "address", "city", "state", "zip"]}
-            rows={addresses}
-            columnStyle={{flex: [2, 3.5, 1.5, 1, 1]}}
-            flex={3}/>
+          { addresses !== null &&
+            <DataGrid
+              title="Addresses"
+              header={["Type", "Address", "City", "State", "Zip"]}
+              fieldsNeeded={["type", "address", "city", "state", "zip"]}
+              rows={addresses}
+              columnStyle={{flex: [2, 3.5, 1.5, 1, 1]}}
+              flex={3}/>
+          }
         </View>
 
         <View style={styles.rowNoMargin}>
@@ -202,12 +234,12 @@ function ClientProfile(props) {
               orientation="horizontal"/>
           }
 
-          { approvals !== null &&
+          { approvals !== null && client.status !== "Potential" &&
             <DataGrid
               title="Approvals"
               header={["Name", "Status"]}
               fieldsNeeded={["name", "status"]}
-              rows={approvals.timesSubmitted !== 0 ? formatApprovals(approvals) : [ ]}/>
+              rows={client.status !== "Potential" && formatApprovals(approvals)}/>
           }
         </View>
 
@@ -216,7 +248,7 @@ function ClientProfile(props) {
         <View style={styles.center}>
           <SuccessButtonLarge 
             title="Submit for Approval" 
-            action={( ) => dispatch(show( ))}
+            action={( ) => submitForApproval( )}
             disabled={client.status === "Queued" || client.status === "Approved"}/>
         </View>
       </ScrollView>

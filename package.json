@@ -56,6 +56,7 @@
     "react-native-fs": "^2.18.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-get-random-values": "^1.7.0",
+    "react-native-masked-text": "^1.13.0",
     "react-native-modal": "^11.10.0",
     "react-native-modal-datetime-picker": "^11.0.0",
     "react-native-paper": "^4.9.2",

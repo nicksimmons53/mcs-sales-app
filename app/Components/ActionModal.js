@@ -15,7 +15,7 @@ import { createClientContact, getClientContacts } from '../redux/features/contac
 import { updateClient } from '../redux/features/clients/clientsThunk';
 import { getClientAddresses, updateClientAddresses } from '../redux/features/addresses/addressThunk';
 import { setUpdated } from '../redux/features/clients/clientsSlice';
-import { unwrapResult } from '@reduxjs/toolkit';
+import { show, setMessage } from '../redux/features/snackbar/snackbarSlice';
 
 const AddContacts = ( ) => {
   const { control, handleSubmit, formState: { errors } } = useForm( );
@@ -43,7 +43,23 @@ const AddContacts = ( ) => {
     data = data.contacts.map(contact => Object.values(contact));
     let object = { id: client.id, values: data };
     
-    dispatch(createClientContact(object));
+    let response = await dispatch(createClientContact(object));
+
+    if (response.payload >= 200 && response.payload <= 299) {
+      if (data.length > 1) {
+        dispatch(setMessage("Client Contacts were Successfully Added."));
+      } else {
+        dispatch(setMessage("Client Contact was Successfully Added."));
+      }
+    } else {
+      if (data.length > 1) {
+        dispatch(setMessage("There was an issue adding the Client Contacts."));
+      } else {
+        dispatch(setMessage("There was an issue adding the Client Contact."));
+      }
+    }
+
+    dispatch(show( ));
     await dispatch(getClientContacts(client.id));
   }
 
@@ -167,20 +183,31 @@ const EditClient = ( ) => {
     } : shipping);
   }, [ ]);
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     // Client info cleanup
     data.client.shortName = data.client.name;
     delete data.addresses.Corporate.address;
     delete data.addresses.Billing.address;
     delete data.addresses.Shipping.address;
 
-    dispatch(updateClientAddresses(data.addresses.Corporate));
-    dispatch(updateClientAddresses(data.addresses.Billing));
-    dispatch(updateClientAddresses(data.addresses.Shipping));
-    dispatch(updateClient(data.client));
+    let responses = [];
+    let issue = false;
+    responses.push(await dispatch(updateClientAddresses(data.addresses.Corporate)));
+    responses.push(await dispatch(updateClientAddresses(data.addresses.Billing)));
+    responses.push(await dispatch(updateClientAddresses(data.addresses.Shipping)));
+    responses.push(await dispatch(updateClient(data.client)));
 
-    dispatch(setUpdated(data.client));
-    dispatch(getClientAddresses(data.client.id));
+    responses = responses.filter(response => response.payload < 200 && response.payload > 299);
+
+    if (responses.length === 0) {
+      dispatch(setMessage("Client Information was Successfully Saved."));
+    } else {
+      dispatch(setMessage("There was an issue saving the Client Information."));
+    }
+
+    dispatch(show( ));
+    await dispatch(setUpdated(data.client));
+    await dispatch(getClientAddresses(data.client.id));
   }
 
   return (

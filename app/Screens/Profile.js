@@ -38,7 +38,7 @@ function Profile({ navigation }) {
   });
 
   React.useEffect(( ) => {
-    if (user.info === null) {
+    if (user === null) {
       dispatch(reset( ));
       dispatch(signOut( ));
     } else {
