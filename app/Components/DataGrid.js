@@ -227,10 +227,18 @@ export const DataGridPricing = (props) => {
       row.clientId = client.id;
       row.program = program;
       row.programTable = table;
-      row.cost = "cost" in row && parseFloat(row?.cost.slice(1)).toFixed(2);
-      row.costWithTax = "costWithTax" in row && parseFloat(row?.costWithTax.slice(1)).toFixed(2);
-      row.laborCost = "laborCost" in row && parseFloat(row?.laborCost.slice(1)).toFixed(2);
-      row.totalCost = "totalCost" in row && parseFloat(row?.totalCost.slice(1)).toFixed(2);
+
+      if (row.hasOwnProperty("cost") && row.cost !== null && typeof row.cost === "string")
+        row.cost = parseFloat(row.cost.slice(1)).toFixed(2);
+
+      if (row.hasOwnProperty("costWithTax") && row.costWithTax !== null && typeof row.costWithTax === "string")
+        row.costWithTax = parseFloat(row.costWithTax.slice(1)).toFixed(2);
+
+      if (row.hasOwnProperty("laborCost") && row.laborCost !== null && typeof row.laborCost === "string")
+        row.laborCost = parseFloat(row.laborCost.slice(1)).toFixed(2);
+
+      if (row.hasOwnProperty("totalCost") && row.totalCost !== null && typeof row.totalCost === "string")
+        row.totalCost = parseFloat(row.totalCost.slice(1)).toFixed(2);
 
       let response = await dispatch(createClientParts(row));
 

@@ -60,8 +60,31 @@ export const createClientParts = createAsyncThunk(
 export const deleteClientParts = createAsyncThunk(
   'pricing/deleteClientParts',
   async (id) => {
-      const response = await Pricing.deleteClientParts(id);
+    const response = await Pricing.deleteClientParts(id);
 
-      return response;
+    return response;
   }
 );
+
+export const getInHouseProgram = createAsyncThunk(
+  'pricing/inHouseProgram',
+  async ( ) => {
+    const response = await Pricing.getInHouseProgram( );
+
+    let carpet = response.parts.filter(row => row.program === "Carpet");
+    let countertops = response.parts.filter(row => row.program === "Countertops");
+    let tile = response.parts.filter(row => row.program === "Tile");
+    let vinyl = response.parts.filter(row => row.program === "LVP");
+    let wood = response.parts.filter(row => row.program === "Wood");
+
+    parts = {
+      carpet: carpet,
+      countertops: countertops,
+      tile: tile,
+      vinyl: vinyl,
+      wood: wood 
+    };
+    
+    return parts;
+  }
+)

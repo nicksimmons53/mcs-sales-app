@@ -33,7 +33,7 @@ const createClientParts = async(values) => {
       });
 
   return status;
-}
+};
 
 const deleteClientParts = async(id) => {
   let status;
@@ -47,11 +47,22 @@ const deleteClientParts = async(id) => {
       });
 
   return status;
+};
+
+const getInHouseProgram = async( ) => {
+  try {
+    let result = await axios.get(`${API_URL}/pricing/in-house`);
+    
+    return result.data;
+  } catch(error) {
+    return error;
+  }
 }
 
 module.exports = {
   getCountertopOptions,
   getClientParts,
+  getInHouseProgram,
   createClientParts,
   deleteClientParts
 }

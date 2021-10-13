@@ -17,13 +17,16 @@ import {
   WoodPricing 
 } from '../Modules/PricingTables';
 import { ActionButtonMedium } from '../components/Button';
-import { getClientParts, getCountertopOptions } from '../redux/features/pricing/pricingThunk';
+import { createClientParts, getClientParts, getCountertopOptions, getInHouseProgram } from '../redux/features/pricing/pricingThunk';
 import AnimatedLoader from 'react-native-animated-loader';
+import { show, setMessage } from '../redux/features/snackbar/snackbarSlice';
+import { unwrapResult } from '@reduxjs/toolkit';
 
 function Pricing(navigation) {
   const dispatch = useDispatch( );
   const [ selected, setSelected ] = React.useState( );
   const [ visible, setVisible ] = React.useState(true);
+  const [ disableImport, setDisableImport ] = React.useState(false);
   let client = useSelector((state) => state.clients.selected);
   let programs = useSelector((state) => state.programs.entities);
   let parts = useSelector((state) => state.pricing.parts);
@@ -47,7 +50,48 @@ function Pricing(navigation) {
         speed={1}
         source={require("../../assets/7899-loading.json")}/>
     );
-  }
+  };
+
+  importInHouseProgram = async( ) => {
+    setDisableImport(true);
+    
+    let resultAction = await dispatch(getInHouseProgram( ));
+    let parts = unwrapResult(resultAction);
+
+    // Save All Parts
+    let responses = [];
+    Object.keys(parts).forEach(program => {
+      parts[program].forEach(async(row) => {
+        let newRow = {
+          color: row.color,
+          clientId: client.id,
+          cost: row.cost,
+          costWithTax: row.costWithTax,
+          description: row.description,
+          laborCost: row.laborCost,
+          level: row.level,
+          program: row.program,
+          programTable: row.programTable,
+          sagePartDescription: row.sagePartDescription,
+          totalCost: row.totalCost,
+          type: row.type,
+          unit: row.unit
+        };
+  
+        let response = await dispatch(createClientParts(newRow));
+  
+        responses.push(response.payload);
+      });
+    });
+
+    let errors = responses.filter(status => status < 200 || status > 200);
+    if (errors.length === 0) {
+      dispatch(setMessage(`In-House Program was imported successfully. You may need to refresh the page.`));
+    }
+    
+    dispatch(show( ));
+    setDisableImport(false);
+  };
 
   return (
     <KeyboardAvoidingView enabled behavior='padding' style={styles.background}>
@@ -55,7 +99,10 @@ function Pricing(navigation) {
       
       <View style={styles.infoContainer}>
         <Header title="Client Program Pricing">
-          <ActionButtonMedium title="Import In-House Program" action={( ) => console.log("Import in-house program")}/>
+          <ActionButtonMedium 
+            title="Import In-House Program" 
+            disabled={disableImport}
+            action={( ) => importInHouseProgram( )}/>
         </Header>
 
         <Divider/>

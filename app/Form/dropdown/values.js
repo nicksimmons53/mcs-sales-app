@@ -85,7 +85,7 @@ let jobReleaseChoices = [
 
 let units = [
     { label: "SqFt", value: "SqFt" },
-    { label: "Each", value: "EA" },
+    { label: "Each", value: "Ea" },
     { label: "Linear Ft", value: "Linear Ft" },
     { label: "SqYd", value: "SqYd" },
     { label: "Bag", value: "Bag"}

@@ -38,6 +38,10 @@ function Profile({ navigation }) {
   });
 
   React.useEffect(( ) => {
+    dispatch(getClientsByUser(user.id));
+  }, [ ]);
+
+  React.useEffect(( ) => {
     if (user === null) {
       dispatch(reset( ));
       dispatch(signOut( ));

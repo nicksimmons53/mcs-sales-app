@@ -3,7 +3,8 @@ import {
   getCountertopOptions,
   getClientParts,
   createClientParts,
-  deleteClientParts
+  deleteClientParts,
+  getInHouseProgram
 } from './pricingThunk';
 
 const initialState = {
@@ -56,6 +57,16 @@ export const pricingSlice = createSlice({
         state.loading = false;
       },
       [deleteClientParts.rejected]: (state, action) => {
+        state.loading = false;
+      },
+      [getInHouseProgram.pending]: (state, action) => {
+        state.loading = true;
+      },
+      [getInHouseProgram.fulfilled]: (state, action) => {
+        state.loading = false;
+        state.parts = action.payload;
+      },
+      [getInHouseProgram.rejected]: (state, action) => {
         state.loading = false;
       },
     }

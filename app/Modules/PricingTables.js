@@ -9,7 +9,7 @@ import { levels, units } from '../form/dropdown/values';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCountertopOptions } from '../redux/features/pricing/pricingThunk';
 
-export const CabinetPricing = (props) => {
+export const CabinetPricing = ( ) => {
   return (
     <View style={styles.spreadsheet}>
       <LargeText>Coming Soon...</LargeText>
@@ -21,6 +21,10 @@ export const CarpetPricing = (props) => {
   let carpetFlooring = props.parts.filter(row => row.programTable === "Carpet Flooring");
   let carpetPad = props.parts.filter(row => row.programTable === "Carpet Pad");
   let miscellaneous = props.parts.filter(row => row.programTable === "Miscellaneous");
+
+  // Sort Levels
+  let sortedValues = levels.map(level => level.value);
+  carpetFlooring = sortedValues.map(level => carpetFlooring.find((o) => o.level === level)).filter(o => o);
   
   return (
     <ScrollView>
@@ -58,6 +62,7 @@ export const CountertopPricing = (props) => {
   let options = useSelector((state) => state.pricing.countertopOptions);
   let edges = props.parts.filter(row => row.programTable === "Edges");
   let sinks = props.parts.filter(row => row.programTable === "Sinks");
+  let miscellaneous = props.parts.filter(row => row.programTable === "Miscellaneous");
   let level1 = props.parts.filter(row => row.programTable === "Level 1");
   let level2 = props.parts.filter(row => row.programTable === "Level 2");
   let level3 = props.parts.filter(row => row.programTable === "Level 3");
@@ -84,6 +89,14 @@ export const CountertopPricing = (props) => {
           title="Sinks" 
           program="Countertops"
           rows={sinks}
+          header={["Description", "Unit", "Total"]}
+          choices={[null, units, null]}
+          components={["input", "dropdown", "input"]}
+          newRow={{description: "", unit: "", totalCost: ""}}/>
+        <DataGridPricing 
+          title="Miscellaneous" 
+          program="Countertops"
+          rows={miscellaneous}
           header={["Description", "Unit", "Total"]}
           choices={[null, units, null]}
           components={["input", "dropdown", "input"]}
@@ -192,6 +205,23 @@ export const TilePricing = (props ) => {
   let accents = props.parts.filter(row => row.programTable === "Accents");
   let bathAccessories = props.parts.filter(row => row.programTable === "Bath Accessories");
   let miscellaneous = props.parts.filter(row => row.programTable === "Miscellaneous");
+
+  // Sort Levels
+  let sortedValues = levels.map(level => level.value);
+  backsplashFireplaceWallTile = sortedValues.map(level => backsplashFireplaceWallTile.find((o) => o.level === level)).filter(o => o);
+  backsplashFireplaceDeco = sortedValues.map(level => backsplashFireplaceDeco.find((o) => o.level === level)).filter(o => o);
+  showerFloorTile = sortedValues.map(level => showerFloorTile.find((o) => o.level === level)).filter(o => o);
+  showerFloorMesh = sortedValues.map(level => showerFloorMesh.find((o) => o.level === level)).filter(o => o);
+  floorTile = sortedValues.map(level => floorTile.find((o) => o.level === level)).filter(o => o);
+  floorTileDeco = sortedValues.map(level => floorTileDeco.find((o) => o.level === level)).filter(o => o);
+  bathroomWallTile = sortedValues.map(level => bathroomWallTile.find((o) => o.level === level)).filter(o => o);
+  decoWithWaterproofing = sortedValues.map(level => decoWithWaterproofing.find((o) => o.level === level)).filter(o => o);
+  floorStone = sortedValues.map(level => floorStone.find((o) => o.level === level)).filter(o => o);
+  bathroomWallStone = sortedValues.map(level => bathroomWallStone.find((o) => o.level === level)).filter(o => o);
+  backsplashWallStone = sortedValues.map(level => backsplashWallStone.find((o) => o.level === level)).filter(o => o);
+  fireplaceWallStone = sortedValues.map(level => fireplaceWallStone.find((o) => o.level === level)).filter(o => o);
+  showerFloorStone = sortedValues.map(level => showerFloorStone.find((o) => o.level === level)).filter(o => o);
+  showerFloorDeco = sortedValues.map(level => showerFloorDeco.find((o) => o.level === level)).filter(o => o);
   
   return (
     <ScrollView>
@@ -349,6 +379,10 @@ export const LVPPricing = (props) => {
   let lvpFlooring = props.parts.filter(row => row.programTable === "LVP Flooring");
   let miscellaneous = props.parts.filter(row => row.programTable === "Miscellaneous");
 
+  // Sort Levels
+  let sortedValues = levels.map(level => level.value);
+  lvpFlooring = sortedValues.map(level => lvpFlooring.find((o) => o.level === level)).filter(o => o);
+
   return (
     <ScrollView>
       <View style={{ backgroundColor: colors.black, flex: 1, paddingBottom: 300 }}>  
@@ -376,6 +410,10 @@ export const LVPPricing = (props) => {
 export const WoodPricing = (props) => {
   let woodFlooring = props.parts.filter(row => row.programTable === "Wood Flooring");
   let miscellaneous = props.parts.filter(row => row.programTable === "Miscellaneous");
+
+  // Sort Levels
+  let sortedValues = levels.map(level => level.value);
+  woodFlooring = sortedValues.map(level => woodFlooring.find((o) => o.level === level)).filter(o => o);
 
   return (
     <ScrollView style={styles.form}>
