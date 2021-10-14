@@ -345,7 +345,7 @@ export const TilePricing = (props ) => {
           header={["Description", "Unit", "Total"]}
           choices={[null, units, null]}
           components={["input", "dropdown", "input"]}
-          newRow={{description: "", dropdown: "", totalCost: ""}}/>
+          newRow={{description: "", unit: "", totalCost: ""}}/>
         <DataGridPricing 
           title="Accents" 
           program="Tile"
