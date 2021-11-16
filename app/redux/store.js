@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers } from 'redux';
 import { 
     persistStore, 
     persistReducer,
@@ -21,12 +22,7 @@ import snackbarReducer from './features/snackbar/snackbarSlice'
 
 const persistConfig = {
     key: 'root',
-    version: 1,
-    storage: AsyncStorage,
-    whitelist: [
-        'user',
-        'clients'
-    ]
+    storage: AsyncStorage
 };
 
 const persistedUserReducer = persistReducer(persistConfig, userReducer);

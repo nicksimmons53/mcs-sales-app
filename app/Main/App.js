@@ -9,7 +9,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { store, persistor } from '../redux/store';
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider, useDispatch, useSelector } from 'react-redux';
-import { restoreSub } from '../redux/features/user/userSlice';
+import { setSub } from '../redux/features/user/userSlice';
 import theme from '../Library/ThemeProvider';
 import Login from '../screens/Login';
 import Profile from '../screens/Profile';
@@ -21,6 +21,10 @@ import Program from '../screens/Program';
 import Pricing from '../screens/Pricing';
 import colors from '../Library/Colors';
 import Snack from '../components/Snack';
+import AnimatedLoader from 'react-native-animated-loader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getUserBySub } from '../redux/features/user/userThunk';
+import { getClientsByUser } from '../redux/features/clients/clientsThunk';
 
 const defaultTheme = {
   ...DefaultTheme,
@@ -51,31 +55,35 @@ const AppWrapper = ( ) => (
 
 // Main Application Class
 function App( ) {
-  let sub = useSelector((state) => state.user.sub);
-  let signout = useSelector((state) => state.user.isSigningOut);
   const dispatch = useDispatch( );
-  const [ loaded ] = useFonts({
+  const [ fontsLoaded ] = useFonts({
     Quicksand   : require('../../assets/Fonts/Quicksand.ttf'),
     OpenSans    : require('../../assets/Fonts/OpenSans.ttf'),
     SourceSerif : require('../../assets/Fonts/SourceSerif.ttf')
   });
 
+  let sub = useSelector((state) => state.user.sub);
+  let signout = useSelector((state) => state.user.isSigningOut);
+  let userId = useSelector((state) => state.user.id);
+  
   // Check if user is logged in
   React.useEffect(( ) => {
     const fetchSub = async( ) => {
-      await readMultiples("user")
-        .then((objects) => {
-          if (objects.length !== 0) {
-            dispatch(restoreSub(objects[0].auth0Sub));
-          }
-        });
+      let token = await AsyncStorage.getItem("sub");
+      dispatch(setSub(token));
+      dispatch(getUserBySub(token));
     }
-    
+
+    const fetchClients = ( ) => {
+      dispatch(getClientsByUser(userId));
+    }
+
     fetchSub( );
+    fetchClients( );
   }, [ ]);
 
   // Wait for fonts to load
-  if (!loaded) {
+  if (!fontsLoaded) {
     return null;
   }
 
@@ -83,41 +91,39 @@ function App( ) {
   const Stack = createStackNavigator( );
 
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        {
-          <NativeBaseProvider>
-            <PaperProvider theme={defaultTheme}>
-              <ThemeProvider theme={theme}>
-                  <Stack.Navigator screenOptions={{ headerShown: false }}>
-                    { sub === null ? 
-                      <>
-                        <Stack.Screen 
-                          name="Login" 
-                          component={Login}
-                          options={{
-                            animationTypeForReplace: signout ? 'pop' : 'push'
-                          }}/>
-                      </>
-                      :
-                      <>
-                        <Stack.Screen name="Profile" component={Profile}/>
-                        <Stack.Screen name="ClientForm" component={ClientForm}/>
-                        <Stack.Screen name="ClientProfile" component={ClientProfile}/>
-                        <Stack.Screen name="ClientDetails" component={AdvInfoForm}/>
-                        <Stack.Screen name="ClientPrograms" component={Program}/>
-                        <Stack.Screen name="ClientPricing" component={Pricing}/>
-                      </>
-                    }
-                  </Stack.Navigator>
-                  
-                  <Snack/>
-              </ThemeProvider>
-            </PaperProvider>
-          </NativeBaseProvider>
-        }
-      </NavigationContainer>
-    </Provider>
+    <NavigationContainer>
+      {
+        <NativeBaseProvider>
+          <PaperProvider theme={defaultTheme}>
+            <ThemeProvider theme={theme}>
+                <Stack.Navigator screenOptions={{ headerShown: false }}>
+                  { sub === null ? 
+                    <>
+                      <Stack.Screen 
+                        name="Login" 
+                        component={Login}
+                        options={{
+                          animationTypeForReplace: signout ? 'pop' : 'push'
+                        }}/>
+                    </>
+                    :
+                    <>
+                      <Stack.Screen name="Profile" component={Profile}/>
+                      <Stack.Screen name="ClientForm" component={ClientForm}/>
+                      <Stack.Screen name="ClientProfile" component={ClientProfile}/>
+                      <Stack.Screen name="ClientDetails" component={AdvInfoForm}/>
+                      <Stack.Screen name="ClientPrograms" component={Program}/>
+                      <Stack.Screen name="ClientPricing" component={Pricing}/>
+                    </>
+                  }
+                </Stack.Navigator>
+                
+                <Snack/>
+            </ThemeProvider>
+          </PaperProvider>
+        </NativeBaseProvider>
+      }
+    </NavigationContainer>
   );
 };
 

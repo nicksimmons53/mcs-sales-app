@@ -14,7 +14,7 @@ const getCountertopOptions = async( ) => {
 const getClientParts = async(id) => {
   try {
     let result = await axios.get(`${API_URL}/pricing/parts?clientId=${id}`);
-    
+    console.log(result)
     return result.data;
   } catch(error) {
     return error;

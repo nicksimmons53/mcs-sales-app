@@ -5,7 +5,7 @@ export const getClientAddresses = createAsyncThunk(
   'addresses/getAll',
   async (id) => {
     const response = await Addresses.getAll(id);
-    
+    console.log(response)
     return response.addresses;
   }
 );

@@ -4,7 +4,7 @@ import { API_URL } from 'react-native-dotenv';
 const getAll = async(id) => {
     try {
         let result = await axios.get(`${API_URL}/clients/${id}/addresses`);
-        
+        console.log(result)
         return result.data;
     } catch(error) {
         return error;

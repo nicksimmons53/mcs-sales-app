@@ -166,6 +166,8 @@ function ClientProfile(props) {
     { icon: 'home', label: 'Home', onPress: ( ) => { setFiles([ ]); props.navigation.popToTop( )} },
   ];
 
+  console.log(programs)
+
   return (
     <KeyboardAvoidingView enabled behavior='padding' style={styles.grid}>
       <AnimatedLoader

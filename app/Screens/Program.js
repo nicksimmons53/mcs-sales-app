@@ -25,8 +25,10 @@ import FloatingButton from '../components/FloatingButton';
 function Program(navigation) {
     const [ selected, setSelected ] = React.useState( );
     let programs = useSelector((state) => state.programs.entities);
+
+    console.log(programs)
     
-    return (
+    return programs !== null && (
         <KeyboardAvoidingView behavior='padding' enabled style={styles.background}>
             <StatusBar barStyle="light-content"/>
 

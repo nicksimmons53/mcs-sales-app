@@ -7,7 +7,7 @@ import {
 } from './programsThunk';
 
 const initialState = {
-  entities: [],
+  entities: null,
   loading: false,
   selected: null
 };
@@ -24,7 +24,9 @@ export const programsSlice = createSlice({
       },
       [getProgramsByClient.fulfilled]: (state, action) => {
         state.loading = false;
-        delete action.payload.clientId;
+        if (action.payload !== undefined) {
+          delete action.payload.clientId;
+        }
         state.entities = action.payload;
       },
       [getProgramsByClient.rejected]: (state, action) => {

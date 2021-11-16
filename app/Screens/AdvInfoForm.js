@@ -23,7 +23,7 @@ import S3 from '../helpers/S3';
 import { setMessage, show } from '../redux/features/snackbar/snackbarSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
 
-let zIndex = 5000;
+let zIndex = 100000000000;
 
 // Class Component that will display client creation form
 function AdvInfoForm(navigation) {

@@ -326,18 +326,18 @@ export const TilePricing = (props ) => {
           title="Shower Floor - Stone" 
           program="Tile"
           rows={showerFloorStone}
-          header={["Level", "Total"]}
-          choices={[levels, null]}
+          header={["Level", "Unit", "Total"]}
+          choices={[levels, units, null]}
           components={["dropdown", "input"]}
-          newRow={{level: "", totalCost: ""}}/>
+          newRow={{level: "", unit: "", totalCost: ""}}/>
         <DataGridPricing 
           title="Shower Floor - Deco" 
           program="Tile"
           rows={showerFloorDeco}
-          header={["Level", "Total"]}
-          choices={[levels, null]}
+          header={["Level", "Unit", "Total"]}
+          choices={[levels, units, null]}
           components={["dropdown", "input"]}
-          newRow={{level: "", totalCost: ""}}/>
+          newRow={{level: "", unit: "", totalCost: ""}}/>
         <DataGridPricing 
           title="Patterns" 
           program="Tile"
@@ -350,10 +350,10 @@ export const TilePricing = (props ) => {
           title="Accents" 
           program="Tile"
           rows={accents}
-          header={["Description", "Total"]}
-          choices={[null, null]}
+          header={["Description", "Unit", "Total"]}
+          choices={[null, units, null]}
           components={["input", "input"]}
-          newRow={{description: "", totalCost: ""}}/>
+          newRow={{description: "", unit: "", totalCost: ""}}/>
         <DataGridPricing 
           title="Bath Accessories"
           program="Tile" 
@@ -416,7 +416,7 @@ export const WoodPricing = (props) => {
   woodFlooring = sortedValues.map(level => woodFlooring.find((o) => o.level === level)).filter(o => o);
 
   return (
-    <ScrollView style={styles.form}>
+    <ScrollView>
       <View style={{ backgroundColor: colors.black, flex: 1, paddingBottom: 300 }}>
         <DataGridPricing 
           title="Wood Flooring"

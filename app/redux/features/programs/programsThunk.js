@@ -5,7 +5,7 @@ export const getProgramsByClient = createAsyncThunk(
   'programs/getAll',
   async (clientId) => {
     const response = await Programs.getAll(clientId);
-    
+    console.log(response)
     return response.programs;
   }
 );

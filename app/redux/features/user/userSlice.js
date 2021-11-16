@@ -13,13 +13,14 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        restoreSub: (state, action) => {
+        setSub: (state, action) => {
             state.sub = action.payload;
         },
         restoreId: (state, action) => {
             state.id = action.payload;
         },
         signOut: (state) => {
+            state.sub = null;
             state.isSigningOut = true;
         },
         reset: ( ) => initialState
@@ -30,7 +31,6 @@ export const userSlice = createSlice({
         },
         [getUserBySub.fulfilled]: (state, action) => {
             state.id = action.payload.id;
-            state.sub = action.payload.auth0Sub;
             state.info = {...action.payload};
         },
         [getUserBySub.rejected]: (state, action) => {
@@ -39,6 +39,6 @@ export const userSlice = createSlice({
     }
 });
 
-export const { restoreSub, restoreId, signOut, reset } = userSlice.actions;
+export const { setSub, restoreId, signOut, reset } = userSlice.actions;
 
 export default userSlice.reducer;

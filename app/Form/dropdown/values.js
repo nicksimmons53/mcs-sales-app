@@ -67,7 +67,8 @@ let yesOrNo = [
 
 let paymentFrequency = [
     { label: "", value: null },
-    { label: "Weekly", value: "Weekly" }
+    { label: "Weekly", value: "Weekly" },
+    { label: "Bi-Weekly (Twice a Month)", value: "Bi-Weekly" }
 ];
 
 let paymentType = [
@@ -143,6 +144,8 @@ let countertops = {
     materialThickness: [
         { label: "3cm", value: "3cm" },
         { label: "2cm", value: "2cm" },
+        { label: "1.6cm", value: "1.6cm" },
+        { label: "1.2cm", value: "1.2cm" },
         { label: "Both", value: "Both" },
         { label: "Other", value: "Other" },
     ],

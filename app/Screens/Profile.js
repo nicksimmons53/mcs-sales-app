@@ -20,6 +20,7 @@ import deleteObject from '../realm/deleteObject';
 import readMultiples from '../realm/readMultiples';
 import { useIsFocused } from '@react-navigation/native';
 import colors from '../Library/Colors';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Profile({ navigation }) {
   const isPortrait = ( ) => {
@@ -38,20 +39,31 @@ function Profile({ navigation }) {
   });
 
   React.useEffect(( ) => {
-    dispatch(getClientsByUser(user.id));
+    const getClients = async(id) => {
+      await dispatch(getClientsByUser(id));
+    }
+    
+    getClients(user.id);
   }, [ ]);
 
   React.useEffect(( ) => {
-    if (user === null) {
-      dispatch(reset( ));
-      dispatch(signOut( ));
-    } else {
-      dispatch(getClientsByUser(user.id));
-    }
+    // if (user === null) {
+    //   AsyncStorage.removeItem("sub");
+    //   dispatch(reset( ));
+    //   dispatch(signOut( ));
+    // } else {
+    //   dispatch(getClientsByUser(user.id));
+    // }
+
+    // const getClients = async(id) => {
+    //   await dispatch(getClientsByUser(id));
+    // }
+    
+    // getClients(user.id);
   }, [ isFocused ]);
   
   // Sets the UID when a client is selected for viewing
-  const fetchClientById = (id) => {
+  const fetchClientById = async (id) => {
     dispatch(setSelected(id));
     dispatch(getClientAddresses(id));
     dispatch(getClientContacts(id))    
@@ -63,13 +75,8 @@ function Profile({ navigation }) {
 
   // User Sign Out (clears AsyncStorage and Firebase)
   const logout = async( ) => {
-    readMultiples("user", user.id)
-      .then((objects) => {
-        deleteObject(objects[0]);
-      }); 
-
-    dispatch(reset( ));
     dispatch(signOut( ));
+    await AsyncStorage.removeItem("sub");
   }
   
   return (
@@ -79,7 +86,7 @@ function Profile({ navigation }) {
       <View style={styles.row}>
         <Toolbar navigation={navigation} logout={logout}/>
 
-        <ClientList action={fetchClientById} list={clients}/>
+        {clients !== undefined && <ClientList action={fetchClientById} list={clients}/> }
 
         <View style={{ flexDirection: 'column', flex: 1.5 }}>
           <NotificationsList list={[]}/>

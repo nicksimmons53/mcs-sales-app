@@ -23,9 +23,8 @@ import {
 import ToolTip from '../components/ToolTip';
 import colors from '../Library/Colors';
 
-let zIndex = 100000;
-
 export const BasicInfo = (props) => {
+  let zIndex = 100000000000;
   return (
     <View style={styles.formRoot}>
       <View style={styles.form}>
@@ -205,7 +204,9 @@ export const BasicInfo = (props) => {
   )
 };
 
-export const ClientDetails = (props) => (
+export const ClientDetails = (props) => {
+  let zIndex = 100000000000;
+  return (
   <>
   <View style={styles.formRoot}>
     <View style={{...styles.form, width: '80%'}}>
@@ -390,7 +391,7 @@ export const ClientDetails = (props) => (
 
       <Divider/>
 
-      <View style={{ flex: 1, flexDirection: 'row' }}>
+      <View style={{ flex: 1, flexDirection: 'row', zIndex: 100 }}>
         <View style={{ flex: 1, flexDirection: 'column' }}>
           <Dropdown 
             label="Is there a Vendor Portal?" 
@@ -470,6 +471,14 @@ export const ClientDetails = (props) => (
             control={props.control}
             defaultValue=""
             field="expediting_details.estimatedStartDate"/>
+          <Dropdown 
+            label="Is the client using the In-House Program?" 
+            items={yesOrNo} 
+            control={props.control} 
+            field="expediting_details.inHouseProgram" 
+            defaultValue="" 
+            errors={props.errors}
+            zIndex={zIndex-=1}/>
         </View>
       </View>
       
@@ -479,7 +488,7 @@ export const ClientDetails = (props) => (
 
       <Divider style={{ marginBottom: 10 }}/>
 
-      <View style={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%', height: 75 }}>
+      <View style={{ flexDirection: 'row', flexWrap: 'wrap', width: '100%', height: 75, zIndex: 99 }}>
         <ChipInput 
           title="Cabinets"
           control={props.control}
@@ -558,7 +567,8 @@ export const ClientDetails = (props) => (
     </View>
   </View>
   </>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   // Background

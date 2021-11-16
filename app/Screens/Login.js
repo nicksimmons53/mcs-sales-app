@@ -15,10 +15,13 @@ import colors from '../Library/Colors'
 import createObject from '../realm/createObject';
 import { LargeText, SmallText } from '../components/Text';
 import { SuccessButtonLarge } from '../components/Button';
+import { setSub } from '../redux/features/user/userSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function Login( ) {
   let user = useSelector((state) => state.user.info);
   const dispatch = useDispatch( );
+  console.log(user)
   
   handleLogin = async ( ) => {
     auth0.webAuth
@@ -28,8 +31,9 @@ function Login( ) {
           .auth
           .userInfo({ token: credentials.accessToken })
           .then(async (auth0) => {
+            await AsyncStorage.setItem("sub", auth0.sub);
+            dispatch(setSub(auth0.sub));
             dispatch(getUserBySub(auth0.sub));
-            createObject("user", { ...user, sub: auth0.sub, token: credentials.accessToken });
           });
       })
       .catch(error => {

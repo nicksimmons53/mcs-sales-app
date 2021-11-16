@@ -5,7 +5,7 @@ export const getUserBySub = createAsyncThunk(
   'user/fetchBySub',
   async (sub) => {
     const response = await Users.getBySub(sub);
-
+    
     return response;
   }
 );

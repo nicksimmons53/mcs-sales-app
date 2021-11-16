@@ -6,7 +6,7 @@ import {
 } from './addressThunk';
 
 const initialState = {
-  entities: [],
+  entities: null,
   loading: false
 };
 
