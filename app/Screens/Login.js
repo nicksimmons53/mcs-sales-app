@@ -12,7 +12,6 @@ import { getUserBySub } from '../redux/features/user/userThunk';
 
 import styles from '../styles/Screen';
 import colors from '../Library/Colors'
-import createObject from '../realm/createObject';
 import { LargeText, SmallText } from '../components/Text';
 import { SuccessButtonLarge } from '../components/Button';
 import { setSub } from '../redux/features/user/userSlice';

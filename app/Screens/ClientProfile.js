@@ -1,11 +1,13 @@
 // // Library Imports
 import React from 'react';
-import { ScrollView, View, KeyboardAvoidingView } from 'react-native';
+import { ScrollView, StatusBar, View, KeyboardAvoidingView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import ClientActions from '../components/ClientActions';
 import styles from '../styles/Screen';
-import { StatusBar } from 'react-native';
+import { Divider } from 'react-native-elements'
+import { HamburgerIcon, Menu, Pressable } from "native-base";
+import { IconButton } from 'react-native-paper';
 import Header from '../components/Header';
+import { LargeText } from '../components/Text';
 import { useIsFocused } from '@react-navigation/native';
 import { getClientContacts, deleteClientContact } from '../redux/features/contacts/contactsThunk';
 import { getClientApprovals, pushClientToSage, updateClientStatus } from '../redux/features/clients/clientsThunk';
@@ -20,6 +22,7 @@ import S3 from '../helpers/S3';
 import AnimatedLoader from 'react-native-animated-loader';
 import { ActionButtonMedium, SuccessButtonLarge } from '../components/Button';
 import ActionModal from '../components/ActionModal';
+import colors from '../Library/Colors';
 
 function ClientProfile(props) {
   const isFocused = useIsFocused( ); 
@@ -158,6 +161,10 @@ function ClientProfile(props) {
 
     dispatch(show( ));
   }
+
+  const navigate = (page) => {
+    props.navigation.push(page);
+  }
   
   const buttonIcons = [
     { icon: 'file-upload', label: 'Upload File', onPress: ( ) => addFile( ) },
@@ -166,7 +173,18 @@ function ClientProfile(props) {
     { icon: 'home', label: 'Home', onPress: ( ) => { setFiles([ ]); props.navigation.popToTop( )} },
   ];
 
-  console.log(programs)
+  const emailRequest = ( ) => {
+    let addressString = "";
+    addresses.map(address =>
+        addressString += `${address.type}: ${[address.address1 + " " + address.address2, address.city, address.state, address.zip].filter(Boolean).join(', ')}\n`
+    );
+
+    openComposer({
+      to: "lisak@mcsurfacesinc.com",
+      subject: `COI Request - ${props.client.name}`,
+      body: addressString
+    });
+  }
 
   return (
     <KeyboardAvoidingView enabled behavior='padding' style={styles.grid}>
@@ -178,12 +196,28 @@ function ClientProfile(props) {
 
       <StatusBar barStyle="dark-content"/>
 
-      <Header title={client.name}>
-        <ActionButtonMedium 
-          title="Push To Sage" 
-          disabled={client.status !== "Approved"}
-          action={( ) => pushToSage( )}/>
-      </Header>
+      <View style={{ alignItems: 'center', backgroundColor: colors.white, flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: 20, paddingBottom: 5, paddingTop: 25 }}>
+        <LargeText>{client.name}</LargeText>
+        <Menu
+          width="200"
+          trigger={(triggerProps) => {
+            return (
+              <Pressable accessibilityLabel="More options menu" {...triggerProps}>
+                <HamburgerIcon />
+              </Pressable>
+            )
+          }}
+        >
+          <Menu.Item onPress={( ) => navigate("ClientDetails")}>Client Details</Menu.Item>
+          <Menu.Item onPress={( ) => navigate("ClientPrograms")}>Program Details</Menu.Item>
+          <Menu.Item onPress={( ) => navigate("ClientPricing")}>Program Pricing</Menu.Item>
+          <Menu.Item>Request COI</Menu.Item>
+          <Divider/>
+          <Menu.Item>Submit Client</Menu.Item>
+          <Divider/>
+          <Menu.Item isDisabled={client.status !== "Approved"} onPress={( ) => pushToSage( )}>Push to Sage</Menu.Item>
+        </Menu>
+      </View>
 
       <ScrollView>
         <ClientStatusBar status={client.status}/>
@@ -243,15 +277,6 @@ function ClientProfile(props) {
               fieldsNeeded={["name", "status"]}
               rows={client.status !== "Potential" && formatApprovals(approvals)}/>
           }
-        </View>
-
-        <ClientActions user={user.id} client={client}/>
-
-        <View style={styles.center}>
-          <SuccessButtonLarge 
-            title="Submit for Approval" 
-            action={( ) => submitForApproval( )}
-            disabled={client.status === "Queued" || client.status === "Approved"}/>
         </View>
       </ScrollView>
 
