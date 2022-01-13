@@ -109,6 +109,7 @@ function Pricing(navigation) {
 
         <View style={{flexDirection: 'row', height: '100%', width: '100%'}}>
           <Drawer.Section title="Programs" style={{backgroundColor: colors.white, width: '15%'}}>
+            <Divider/>
             { Object.keys(programs).map((program, index) => (
               <View key={index}>
                 { programs[program] === 1 &&

@@ -28,7 +28,7 @@ export const CarpetPricing = (props) => {
   
   return (
     <ScrollView>
-      <View style={{ backgroundColor: colors.black, flex: 1, paddingBottom: 300 }}>
+      <View style={{ flex: 1, paddingBottom: 300 }}>
         <DataGridPricing 
           title="Carpet Flooring" 
           program="Carpet"
@@ -76,7 +76,7 @@ export const CountertopPricing = (props) => {
 
   return (
     <ScrollView>
-      <View style={{ backgroundColor: colors.black, flex: 1, paddingBottom: 300 }}>
+      <View style={{ flex: 1, paddingBottom: 300 }}>
         <DataGridPricing 
           title="Edges" 
           program="Countertops"
@@ -225,7 +225,7 @@ export const TilePricing = (props ) => {
   
   return (
     <ScrollView>
-      <View style={{ backgroundColor: colors.black, flex: 1, paddingBottom: 300 }}>
+      <View style={{ flex: 1, paddingBottom: 300 }}>
         <DataGridPricing 
           title="Backsplash/Fireplace Wall Tile" 
           program="Tile"
@@ -385,7 +385,7 @@ export const LVPPricing = (props) => {
 
   return (
     <ScrollView>
-      <View style={{ backgroundColor: colors.black, flex: 1, paddingBottom: 300 }}>  
+      <View style={{ flex: 1, paddingBottom: 300 }}>
         <DataGridPricing 
           title="LVP Flooring" 
           program="LVP"
@@ -417,7 +417,7 @@ export const WoodPricing = (props) => {
 
   return (
     <ScrollView>
-      <View style={{ backgroundColor: colors.black, flex: 1, paddingBottom: 300 }}>
+      <View style={{ flex: 1, paddingBottom: 300 }}>
         <DataGridPricing 
           title="Wood Flooring"
           program="Wood" 

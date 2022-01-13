@@ -14,7 +14,6 @@ import theme from '../Library/ThemeProvider';
 import Login from '../screens/Login';
 import Profile from '../screens/Profile';
 import ClientForm from '../screens/BasicInfoForm';
-import readMultiples from '../realm/readMultiples';
 import ClientProfile from '../screens/ClientProfile';
 import AdvInfoForm from '../screens/AdvInfoForm';
 import Program from '../screens/Program';

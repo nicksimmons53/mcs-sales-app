@@ -16,8 +16,6 @@ import { getProgramsByClient } from '../redux/features/programs/programsThunk';
 import { ClientList, DocumentsList, NotificationsList } from '../Modules/List';
 import Toolbar from '../components/Toolbar';
 import styles from '../styles/Screen';
-import deleteObject from '../realm/deleteObject';
-import readMultiples from '../realm/readMultiples';
 import { useIsFocused } from '@react-navigation/native';
 import colors from '../Library/Colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -55,11 +53,11 @@ function Profile({ navigation }) {
     //   dispatch(getClientsByUser(user.id));
     // }
 
-    // const getClients = async(id) => {
-    //   await dispatch(getClientsByUser(id));
-    // }
+    const getClients = async(id) => {
+      await dispatch(getClientsByUser(id));
+    }
     
-    // getClients(user.id);
+    getClients(user.id);
   }, [ isFocused ]);
   
   // Sets the UID when a client is selected for viewing
@@ -86,7 +84,7 @@ function Profile({ navigation }) {
       <View style={styles.row}>
         <Toolbar navigation={navigation} logout={logout}/>
 
-        {clients !== undefined && <ClientList action={fetchClientById} list={clients}/> }
+        {clients.length !== 0 && <ClientList action={fetchClientById} list={clients}/> }
 
         <View style={{ flexDirection: 'column', flex: 1.5 }}>
           <NotificationsList list={[]}/>
