@@ -3,6 +3,8 @@ import { Modal } from 'native-base';
 import Input from './Input';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { Divider } from 'react-native-elements/dist/divider/Divider';
+import { Button } from 'react-native-elements';
+import LottieView from 'lottie-react-native';
 import { ScrollView, View } from 'react-native';
 import { SuccessButtonLarge } from './Button';
 import Dropdown from './Dropdown';
@@ -27,10 +29,10 @@ const AddContacts = ( ) => {
   let client = useSelector((state) => state.clients.selected);
   let newContact = {
     clientId: client.id,
-    name: "", 
-    title: "" , 
-    phone: "", 
-    email: "" 
+    name: "",
+    title: "" ,
+    phone: "",
+    email: ""
   }
 
   React.useEffect(( ) => {
@@ -42,7 +44,7 @@ const AddContacts = ( ) => {
   const onSubmit = async (data) => {
     data = data.contacts.map(contact => Object.values(contact));
     let object = { id: client.id, values: data };
-    
+
     let response = await dispatch(createClientContact(object));
 
     if (response.payload >= 200 && response.payload <= 299) {
@@ -101,13 +103,13 @@ const AddContacts = ( ) => {
           defaultValue=""
           options={{ autoCapitalize: 'none', keyboardType: 'email-address' }}/>
       </View>
-      <IconButton 
-        color={colors.red} 
-        icon="minus-box" 
+      <IconButton
+        color={colors.red}
+        icon="minus-box"
         onPress={( ) => remove(props.index)}
-        size={40} 
+        size={40}
         style={{ margin: 0, padding: 0 }}/>
-    </View>  
+    </View>
   )
 
   return (
@@ -125,11 +127,11 @@ const AddContacts = ( ) => {
       <Divider/>
 
       <View style={{ alignItems: 'center', flexDirection: 'row' }}>
-        <IconButton 
-          color={colors.green} 
-          icon="plus-box" 
+        <IconButton
+          color={colors.green}
+          icon="plus-box"
           onPress={( ) => append(newContact)}
-          size={40} 
+          size={40}
           style={{margin: 0, padding: 0 }}/>
         <SmallText>Add a Row</SmallText>
       </View>
@@ -153,7 +155,7 @@ const EditClient = ( ) => {
     let corporate = addresses.find(address => address.type === "Corporate");
     let billing = addresses.find(address => address.type === "Billing");
     let shipping = addresses.find(address => address.type === "Shipping");
-    
+
     setValue("client", {
       id: client.id,
       name: client.name,
@@ -241,7 +243,7 @@ const EditClient = ( ) => {
             zIndex={100}/>
         </View>
       </View>
-        
+
       <Divider style={{ margin: 10 }}/>
 
       <SmallText>Corporate Address</SmallText>
@@ -289,7 +291,7 @@ const EditClient = ( ) => {
             defaultValue=""/>
         </View>
       </View>
-        
+
       <Divider style={{ margin: 10 }}/>
 
       <SmallText>Billing Address</SmallText>
@@ -395,19 +397,83 @@ const EditClient = ( ) => {
   )
 }
 
+const PushClient = ( ) => {
+  const [ button1Loading, setButton1Loading ] = React.useState(false);
+  const [ button2Loading, setButton2Loading ] = React.useState(false);
+  const [ button3Loading, setButton3Loading ] = React.useState(false);
+  const [ button4Loading, setButton4Loading ] = React.useState(false);
+
+  return (
+    <Modal.Body>
+      <Modal.Header>
+        <MediumText>Pushing Client to Sage 100 Contractor</MediumText>
+      </Modal.Header>
+
+      <Divider style={{ margin: 10 }}/>
+
+      <View style={{ alignItems: 'center', borderColor: colors.grey, borderRadius: 5, borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15, paddingLeft: 15 }}>
+        <SmallText>Basic Information</SmallText>
+        <LottieView
+          source={require("../../assets/Lottie/ProcessLoading.json")}
+          visible={true}
+          autoPlay
+          loop
+          style={{ height: 150, marginVertical: '-4%', marginRight: -20, marginTop: '-2%', width: 150 }}
+        />
+      </View>
+
+      <View  style={{ alignItems: 'center', borderColor: colors.grey, borderRadius: 5, borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15, paddingLeft: 15 }}>
+        <SmallText>Files</SmallText>
+        <LottieView
+          source={require("../../assets/Lottie/ProcessLoading.json")}
+          visible={true}
+          autoPlay
+          loop
+          style={{ height: 150, marginVertical: '-4%', marginRight: -20, marginTop: '-2%', width: 150 }}
+        />
+      </View>
+
+      <View  style={{ alignItems: 'center', borderColor: colors.grey, borderRadius: 5, borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15, paddingLeft: 15 }}>
+        <SmallText>Billing Part Classes</SmallText>
+        <LottieView
+          source={require("../../assets/Lottie/ProcessLoading.json")}
+          visible={true}
+          autoPlay
+          loop
+          style={{ height: 150, marginVertical: '-4%', marginRight: -20, marginTop: '-2%', width: 150 }}
+        />
+      </View>
+
+      <View  style={{ alignItems: 'center', borderColor: colors.grey, borderRadius: 5, borderWidth: 1, flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15, paddingLeft: 15 }}>
+        <SmallText>Billing Parts</SmallText>
+        <LottieView
+          source={require("../../assets/Lottie/ProcessLoading.json")}
+          visible={true}
+          autoPlay
+          loop
+          style={{ height: 150, marginVertical: '-4%', marginRight: -20, marginTop: '-2%', width: 150 }}
+        />
+      </View>
+    </Modal.Body>
+  );
+}
+
 const ActionModal = (props) => {
   return (
-    <Modal 
-      isOpen={props.visible} 
+    <Modal
+      isOpen={props.visible}
       onClose={( ) => props.setVisible(!props.visible)}
       backdropVisible
-      overlayVisible>
+      overlayVisible
+      closeOnOverlayClick={false}
+      size={props.size || "lg"}>
         <Modal.Content>
           <Modal.CloseButton/>
 
           <ScrollView>
             { props.form === "Edit Client" && <EditClient/> }
             { props.form === "Add Contacts" && <AddContacts/> }
+            { props.form === "Push Client" && <PushClient/>}
           </ScrollView>
         </Modal.Content>
     </Modal>

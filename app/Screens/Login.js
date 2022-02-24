@@ -20,7 +20,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 function Login( ) {
   let user = useSelector((state) => state.user.info);
   const dispatch = useDispatch( );
-  console.log(user)
   
   handleLogin = async ( ) => {
     auth0.webAuth

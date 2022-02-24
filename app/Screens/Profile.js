@@ -40,19 +40,11 @@ function Profile({ navigation }) {
     const getClients = async(id) => {
       await dispatch(getClientsByUser(id));
     }
-    
+
     getClients(user.id);
   }, [ ]);
 
   React.useEffect(( ) => {
-    // if (user === null) {
-    //   AsyncStorage.removeItem("sub");
-    //   dispatch(reset( ));
-    //   dispatch(signOut( ));
-    // } else {
-    //   dispatch(getClientsByUser(user.id));
-    // }
-
     const getClients = async(id) => {
       await dispatch(getClientsByUser(id));
     }
@@ -62,12 +54,12 @@ function Profile({ navigation }) {
   
   // Sets the UID when a client is selected for viewing
   const fetchClientById = async (id) => {
-    dispatch(setSelected(id));
+    await dispatch(setSelected(id));
     dispatch(getClientAddresses(id));
-    dispatch(getClientContacts(id))    
+    dispatch(getClientContacts(id));
     dispatch(getProgramsByClient(id));
     dispatch(getClientApprovals(id));
-    
+    console.log(id)
     navigation.push('ClientProfile');
   }
 
@@ -76,15 +68,15 @@ function Profile({ navigation }) {
     dispatch(signOut( ));
     await AsyncStorage.removeItem("sub");
   }
-  
+
   return (
     <View style={{...styles.background, backgroundColor: colors.black}}>
-      <StatusBar barStyle="light-content"/>
+      <StatusBar barStyle="dark-content"/>
 
       <View style={styles.row}>
         <Toolbar navigation={navigation} logout={logout}/>
 
-        {clients.length !== 0 && <ClientList action={fetchClientById} list={clients}/> }
+        <ClientList action={fetchClientById} list={clients.length === 0 ? [] : clients}/>
 
         <View style={{ flexDirection: 'column', flex: 1.5 }}>
           <NotificationsList list={[]}/>

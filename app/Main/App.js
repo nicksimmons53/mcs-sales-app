@@ -13,6 +13,7 @@ import { setSub } from '../redux/features/user/userSlice';
 import theme from '../Library/ThemeProvider';
 import Login from '../screens/Login';
 import Profile from '../screens/Profile';
+import ClientTakeoff from '../screens/ClientTakeoff';
 import ClientForm from '../screens/BasicInfoForm';
 import ClientProfile from '../screens/ClientProfile';
 import AdvInfoForm from '../screens/AdvInfoForm';
@@ -108,6 +109,7 @@ function App( ) {
                     :
                     <>
                       <Stack.Screen name="Profile" component={Profile}/>
+                      <Stack.Screen name="ClientTakeoff" component={ClientTakeoff}/>
                       <Stack.Screen name="ClientForm" component={ClientForm}/>
                       <Stack.Screen name="ClientProfile" component={ClientProfile}/>
                       <Stack.Screen name="ClientDetails" component={AdvInfoForm}/>

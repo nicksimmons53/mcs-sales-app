@@ -4,7 +4,7 @@ import { API_URL } from 'react-native-dotenv';
 const getAll = async(clientId) => {
     try {
         let result = await axios.get(`${API_URL}/programs?clientId=${clientId}`);
-        console.log(result)
+
         return result.data;
     } catch(error) {
         return error;
@@ -28,7 +28,7 @@ const update = async(values) => {
 const getByName = async(values) => {
     try {
         let result = await axios.get(`${API_URL}/programs/info?clientId=${values.id}&programName=${values.program}`);
-        console.log(result)
+
         return result.data;
     } catch(error) {
         return error;

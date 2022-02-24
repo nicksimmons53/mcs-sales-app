@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'OpenSans',
     fontSize: 28,
-    padding: 10,
     color: colors.black,
   },
 
@@ -29,6 +28,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    padding: 10
   },
 
   // Item

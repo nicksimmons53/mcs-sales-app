@@ -4,7 +4,7 @@ import { API_URL } from 'react-native-dotenv';
 const getAll = async(id) => {
     try {
         let result = await axios.get(`${API_URL}/clients?userId=${id}`);
-        console.log(result)
+
         return result.data;
     } catch(error) {
         return error;
@@ -102,7 +102,6 @@ const updateStatus = async(values) => {
     await axios.put(`${API_URL}/clients/${values.id}/status`, values.info)
         .then((response) => {
             status = response.status;
-            console.log(status)
         })
         .catch((error) => {
             console.log(error);

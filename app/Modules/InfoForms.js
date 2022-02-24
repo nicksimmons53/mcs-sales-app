@@ -25,6 +25,7 @@ import colors from '../Library/Colors';
 
 export const BasicInfo = (props) => {
   let zIndex = 100000000000;
+
   return (
     <View style={styles.formRoot}>
       <View style={styles.form}>

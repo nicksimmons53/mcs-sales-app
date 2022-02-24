@@ -9,11 +9,12 @@ import colors from '../Library/Colors';
 const styles = StyleSheet.create({
   // Background Views
   background: {
-    width: 50,
-    height: '100%',
-    borderTopEndRadius: 5,
-    paddingTop: 50,
     backgroundColor: colors.black,
+    borderTopEndRadius: 5,
+    height: '100%',
+    paddingTop: 50,
+    paddingBottom: 100,
+    width: 50,
   },
 
   // Icons
@@ -31,7 +32,8 @@ const Toolbar = ({ navigation, user, logout }) => {
         type="font-awesome"
         color={colors.white}
         underlayColor={colors.black}
-        containerStyle={styles.icons}/>
+        containerStyle={styles.icons}
+        onPress={( ) => navigation.navigate('Profile')}/>
       <Icon
         name="user-plus"
         type="font-awesome"
@@ -39,12 +41,20 @@ const Toolbar = ({ navigation, user, logout }) => {
         underlayColor={colors.black}
         containerStyle={styles.icons}
         onPress={( ) => navigation.push('ClientForm')}/>
+      {/*<Icon*/}
+      {/*  name="file-text"*/}
+      {/*  type="font-awesome"*/}
+      {/*  color={colors.white}*/}
+      {/*  underlayColor={colors.black}*/}
+      {/*  containerStyle={styles.icons}*/}
+      {/*  onPress={( ) => navigation.navigate('ClientTakeoff')}/>*/}
+
       <Icon
         name="sign-out"
         type="font-awesome"
         color={colors.red}
         underlayColor={colors.black}
-        containerStyle={styles.icons}
+        containerStyle={{...styles.icons, marginTop: 75}}
         onPress={( ) => logout( )}/>
     </View>
   )

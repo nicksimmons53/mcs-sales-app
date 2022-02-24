@@ -23,6 +23,8 @@ import AnimatedLoader from 'react-native-animated-loader';
 import { ActionButtonMedium, SuccessButtonLarge } from '../components/Button';
 import ActionModal from '../components/ActionModal';
 import colors from '../Library/Colors';
+import {createPartClasses, createSageClient, getCompiledClient, getPartClasses, getToken} from "../api/Sage";
+import {setSelected} from "../redux/features/clients/clientsSlice";
 
 function ClientProfile(props) {
   const isFocused = useIsFocused( ); 
@@ -38,6 +40,7 @@ function ClientProfile(props) {
   const [ files, setFiles ] = React.useState([ ]);
   const [ showEditClientModal, setShowEditClientModal ] = React.useState(false);
   const [ showAddContactModal, setShowAddContactModal ] = React.useState(false);
+  const [ showPushClientModal, setShowPushClientModal ] = React.useState(false);
 
   React.useEffect(( ) => {
     const getFiles = async( ) => setFiles(await S3.getFiles(user, client.name));
@@ -149,17 +152,48 @@ function ClientProfile(props) {
   };
 
   const pushToSage = async( ) => {
-    let response = await dispatch(pushClientToSage(client.id));
-
-    if (response.payload.status >= 200 || response.payload.status <= 299) {
-      dispatch(updateClientStatus({ id: client.id, info: {status: "Pushed"} }));
-      dispatch(setMessage(`${client.name} successfully pushed to Sage 100 Contractor.`));
-      props.navigation.popToTop();
-    } else {
-      dispatch(setMessage(`${client.name} was not pushed to Sage 100 Contractor. Please try again.`));
+    let token = await getToken( );
+    if (token === null || token === undefined) {
+      dispatch(setMessage("Error: Couldn't retrieve token."));
+      dispatch(show( ));
+      return;
     }
 
-    dispatch(show( ));
+    // Call to get Compiled Client Data
+    let compiledClient = await getCompiledClient(client.id);
+    if (compiledClient === null || compiledClient === undefined) {
+      // set snack error message and return
+      dispatch(setMessage("Error: Couldn't retrieve client data."));
+      dispatch(show( ));
+      return;
+    }
+
+    // // Call to Create Client in Sage
+    // let response = await createSageClient(compiledClient, token);
+    // if (response.status !== 200 || response.data === null) {
+    //   dispatch(setMessage("Error: Couldn't create client in Sage."));
+    //   dispatch(show( ));
+    //   return;
+    // }
+
+    // Call to Get Part Classes
+    let partClasses = await getPartClasses(token);
+    if (partClasses.status !== 200 || partClasses.data === null) {
+      dispatch(setMessage("Error: Couldn't retrieve next part classes."));
+      dispatch(show( ));
+      return;
+    }
+
+    // // Call to Create Part Classes
+    // partClasses = { programs: partClasses.data, name: compiledClient.info.name };
+    // let response = await createPartClasses(partClasses, token);
+    // if (response.status !== 200 || response.data === null) {
+    //   dispatch(setMessage("Error: Couldn't create billing part classes in Sage."));
+    //   dispatch(show( ));
+    //   return;
+    // }
+
+    // Call to Create Parts
   }
 
   const navigate = (page) => {
@@ -170,7 +204,11 @@ function ClientProfile(props) {
     { icon: 'file-upload', label: 'Upload File', onPress: ( ) => addFile( ) },
     { icon: 'account-edit', label: 'Add Contact',  onPress: ( ) => setShowAddContactModal(!showAddContactModal) },
     { icon: 'pencil', label: 'Edit Client', onPress: ( ) => setShowEditClientModal(!showEditClientModal) },
-    { icon: 'home', label: 'Home', onPress: ( ) => { setFiles([ ]); props.navigation.popToTop( )} },
+    { icon: 'home', label: 'Home', onPress: ( ) => {
+        setFiles([ ]);
+        props.navigation.popToTop( )
+      }
+    },
   ];
 
   const emailRequest = ( ) => {
@@ -213,9 +251,9 @@ function ClientProfile(props) {
           <Menu.Item onPress={( ) => navigate("ClientPricing")}>Program Pricing</Menu.Item>
           <Menu.Item>Request COI</Menu.Item>
           <Divider/>
-          <Menu.Item>Submit Client</Menu.Item>
+          <Menu.Item isDisabled={client.status === "Queued"} onPress={( ) => submitForApproval()}>Submit Client</Menu.Item>
           <Divider/>
-          <Menu.Item isDisabled={client.status !== "Approved"} onPress={( ) => pushToSage( )}>Push to Sage</Menu.Item>
+          <Menu.Item isDisabled={client.status !== "Approved"} onPress={( ) => pushToSage()}>Push to Sage</Menu.Item>
         </Menu>
       </View>
 
@@ -283,6 +321,7 @@ function ClientProfile(props) {
       <FloatingButtonGroup actions={buttonIcons}/>
       <ActionModal visible={showEditClientModal} setVisible={setShowEditClientModal} form="Edit Client"/>
       <ActionModal visible={showAddContactModal} setVisible={setShowAddContactModal} form="Add Contacts"/>
+      <ActionModal visible={showPushClientModal} setVisible={setShowPushClientModal} form="Push Client" size="  "/>
     </KeyboardAvoidingView>
   );
 }
