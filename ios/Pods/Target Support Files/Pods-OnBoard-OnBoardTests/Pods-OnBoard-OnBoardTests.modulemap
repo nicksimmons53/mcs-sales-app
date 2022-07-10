@@ -1,0 +1,6 @@
+module Pods_OnBoard_OnBoardTests {
+  umbrella header "Pods-OnBoard-OnBoardTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
