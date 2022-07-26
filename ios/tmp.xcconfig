@@ -1,5 +1,5 @@
 AUTH0_DOMAIN=dev-hfkkr2g4.auth0.com
 AUTH0_CLIENT_ID=dNZJDpWtXjY0IZZmze3UhEyG74azV5vK
-ONBOARD_API_URL=https:/$()/onboard.mcsurfacesinc.com/v1/
+ONBOARD_API_URL=https:/$()/onboard.mcsurfacesinc.com/dev/v1/
 COGNITO_REGION=us-east-1
 COGNITO_POOL_ID=us-east-1:674f6454-6f99-4283-a38d-a89e64866a30

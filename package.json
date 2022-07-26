@@ -29,6 +29,7 @@
     "react-hook-form": "^7.28.1",
     "react-native": "0.64.2",
     "react-native-auth0": "^2.13.0",
+    "react-native-code-push": "^7.0.4",
     "react-native-config": "^1.4.5",
     "react-native-document-picker": "^8.1.1",
     "react-native-dotenv": "^3.3.1",
